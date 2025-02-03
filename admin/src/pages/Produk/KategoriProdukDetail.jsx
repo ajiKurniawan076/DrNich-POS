@@ -2,8 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { navContext } from "../../App2";
 import { AiOutlineRight, AiOutlineWhatsApp } from "react-icons/ai";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import wa from "../../assets/wa.svg";
+
 import axios from "axios";
+import next2 from "../../assets/next2.svg";
 
 export const KategoriProdukDetail = () => {
   const { setNav } = useContext(navContext);
@@ -21,7 +22,7 @@ export const KategoriProdukDetail = () => {
     };
     fetchData();
 
-    setNav("Jenis Product");
+    setNav("Detail");
   }, []);
 
   useEffect(() => {
@@ -42,31 +43,33 @@ export const KategoriProdukDetail = () => {
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-full overflow-auto overflow-y-scroll scrollbar-hide px-9">
       {fetched ? (
         <>
-          <div className="flex flex-col gap-1 px-3 mx-1 rounded-xl border border-[#C2A353]">
-            <label className="text-start font-semibold">
+          <div className="flex flex-col gap-1  mx-1 rounded-xl border border-[#C2A353] px-4 py-6">
+            <label className="text-start font-normal text-[10px] text-[#BDBDBD]">
               Jenis Produk
             </label>
-            <p className="text-start text-[#BDBDBD] font-bold rounded-xl h-[30px]">
+            <p className="text-start text-[#454545]  font-normal text-[12px] h-[30px]">
               {datax?.jenis.jenis}
             </p>
-            <label className="text-start font-semibold">
+            <label className="text-start font-normal text-[10px] text-[#BDBDBD]">
               Nama Kategori Produk
             </label>
-            <p className="text-start text-[#BDBDBD] font-bold rounded-xl h-[30px]">
+            <p className="text-start text-[#454545]  font-normal text-[12px]">
               {datax?.kategori}
             </p>
           </div>
-          <div className="flex justify-between font-semibold mx-2 py-1">
+          <div className="flex justify-between text-[12px] mx-2 py-1 text-[#BDBDBD]">
             <p>Terakhir Diperbaharui</p>
             <p>Tanggal Disini</p>
           </div>
           <div className="mx-1 flex flex-col gap-3 h-full justify-between">
-          <a href={`/pos/produkbykategori/${datax.kategori}`} className=" w-full h-[50px] border-b-2">
-          <span className="hover:scale-110 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-bold px-5 p-3">
+            <a
+              href={`/pos/produkbykategori/${datax.kategori}`}
+              className=" w-full h-[50px] border-b-2"
+            >
+              <span className="w-full  text-[12px] text-[#C2A353] h-full border rounded-xl  border-[#C2A353] flex items-center font-normal px-5 p-3 ">
                 Lihat Daftar Produk
                 <div className="flex ms-auto">
-                  <AiOutlineRight className="text-yellow-300" size={15} />
-                  <AiOutlineRight className="text-yellow-600" size={15} />
+                  <img src={next2} className="h-[18px] w-[18px]" />
                 </div>
               </span>
             </a>
