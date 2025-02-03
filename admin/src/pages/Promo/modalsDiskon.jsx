@@ -1,0 +1,148 @@
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { modalsContext } from "./TambahDiskon3";
+import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
+import iPanahS from "../../assets/iconmanajement/iPanahS.svg";
+
+export const ModalsDiskon = () => {
+  const {
+    modals,
+    setModals,
+    jenis,
+    kategori,
+    produk,
+    produkTerpilih,
+    setProdukTerpilih,
+  } = useContext(modalsContext);
+
+  const [jenisM, setJenisM] = useState("");
+  const [kategoriM, setKategoriM] = useState([]);
+  const [produkM, setProdukM] = useState([]);
+  const jenisRef = useRef(null);
+  const kategoriRef = useRef(null);
+  const handleProduk = (item) => {
+    const exist = produkTerpilih.filter((itemx) => itemx._id == item._id);
+    exist.length == 0
+      ? setProdukTerpilih((prev) => [...prev, item])
+      : setProdukTerpilih((prev) => prev.filter((itemx) => itemx !== item));
+  };
+
+  const gantiKategori = (e) => {
+    e.preventDefault();
+    const filterproduk = produk.filter(
+      (item) => item.kategori.kategori == kategoriRef.current.value
+    );
+    setProdukM(filterproduk);
+  };
+  const gantiRef = (e) => {
+    e.preventDefault();
+    setJenisM(jenisRef.current.value);
+  };
+  useEffect(() => {
+    const filterKategori = kategori.filter(
+      (item) => item.jenis.jenis == jenisM
+    );
+    setKategoriM(filterKategori);
+  }, [jenisM]);
+  document.title = "Modals";
+  return (
+    <div
+      className={`fixed flex flex-col items-center top-0 h-full start-0 w-full ${
+        modals == true ? "" : "hidden"
+      }`}
+    >
+      <button
+        className="text-[#454545] font-semibold"
+        onClick={(e) => {
+          e.preventDefault();
+          setModals(false);
+        }}
+      >
+        X
+      </button>
+      <div className="md:w-[700px] lg:w-[900px] w-[500px] border-2 border-[#454545] rounded-xl bg-white overflow-auto h-full px-3">
+        <form className="flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2 mt-4">
+          <img src={iCari} alt="Cari" />
+          <input
+            type="text"
+            className="text-sm w-full h-[30px] focus:outline-none"
+            placeholder="Cari..."
+          ></input>
+        </form>
+        <form className="h-full">
+          <div className="flex justify-between gap-2 mt-4">
+            <div className="relative w-full mt-1">
+              <select
+                ref={jenisRef}
+                onChange={gantiRef}
+                name="options"
+                id="kategoriproduk"
+                className="relative bg-white border text-sm border-gray-300 rounded-xl w-full px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+                aria-label="Kategori Produk"
+              >
+                <option value="" selected className="text-[#BDBDBD]">
+                  Semua Jenis
+                </option>
+                {jenis.map((item) => (
+                  <option value={item.jenis}>{item.jenis}</option>
+                ))}
+              </select>
+              <img
+                src={iPanahS}
+                alt="Dropdown icon"
+                className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4"
+              />
+            </div>
+            <div className="relative w-full mt-1">
+              <select
+                ref={kategoriRef}
+                onChange={gantiKategori}
+                name="options"
+                id="kategoriproduk"
+                className="relative bg-white border text-sm border-gray-300 rounded-xl w-full px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+                aria-label="Kategori Produk"
+              >
+                <option value="" selected className="text-[#BDBDBD]">
+                  Semua Kategori
+                </option>
+                {kategoriM.map((item, i) => (
+                  <option key={i} value={item.kategori}>
+                    {item.kategori}
+                  </option>
+                ))}
+              </select>
+              <img
+                src={iPanahS}
+                alt="Dropdown icon"
+                className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4"
+              />
+            </div>
+          </div>
+          {produkM.map((item, i) => (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleProduk(item);
+              }}
+              className={`flex justify-between border border-[#BDBDBD] rounded-xl p-4 mt-2 w-full ${
+                produkTerpilih.some((itemx) => itemx._id === item._id)
+                  ? "border-2 border-[#C2A353]"
+                  : ""
+              }`}
+            >
+              <p>{item.namaProduk}</p>
+              <p className="text-[#BDBDBD]">
+                {item.jenis.jenis} | {item.kategori.kategori}
+              </p>
+            </button>
+          ))}
+          <div className="flex items-end h-full">
+            <button className="flex justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full">
+              <p>Tambah</p>
+              <p>| 5 Produk</p>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
