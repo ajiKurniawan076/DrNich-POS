@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   AiFillPlusCircle,
   AiOutlineRightCircle,
@@ -11,25 +11,44 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const Terapis = () => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, asc } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [search, setSearch] = useState("");
+  const [tampil, setTampil] = useState([]);
+  const cariRef = useRef(null)
   useEffect(() => {
     const fetchData = async () => {
       await axios
         .get("https://api.drnich.co.id/api/pos/user/terapis")
-        .then((response) => setdatax(response.data));
+        .then((response) => {setdatax(response.data)
+           setTampil(response.data)});
     };
     fetchData();
     setNav("Terapis");
     setSort(true)
   }, []);
+  useEffect(()=>{
 
-  const filterData = datax.filter(
+    if(asc=='asc'){
+      const sorting = [...tampil].sort((a,b)=> a.namaTerapis.localeCompare(b.namaTerapis))
+      console.log(sorting)
+      setTampil(sorting)
+    }
+    else if(asc=='desc'){
+      const sorting = [...tampil].sort((a,b)=> b.namaTerapis.localeCompare(a.namaTerapis))
+      console.log(sorting)
+      setTampil(sorting)
+    }
+  },[asc])
+  const filterData = () => {
+    
+    const filterr =  datax.filter(
     (data) =>
-      data.namaTerapis?.toLowerCase().includes(search.toLowerCase()) ||
-      data.nomorTelepon?.toLowerCase().includes(search.toLowerCase())
-  );
+      data.namaTerapis?.toLowerCase().includes(cariRef.current.value.toLowerCase()) ||
+      data.nomorTelepon?.toLowerCase().includes(cariRef.current.value.toLowerCase())
+  )
+  setTampil(filterr)
+}
   // console.log(search);
   // console.log(filterData);
 
@@ -39,20 +58,21 @@ export const Terapis = () => {
       <form className="mt-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
         <AiOutlineSearch size={20} />
         <input
-          onChange={(e) => setSearch(e.target.value)}
+          ref={cariRef}
+          onChange={filterData}
           type="text"
           className="w-full focus:outline-none"
           placeholder="Cari..."
         ></input>
       </form>
       <div className="flex flex-col justify-between w-full h-full py-3 px-3 text-[12px] overflow-auto">
-        {filterData.length === 0 ? (
+        {tampil.length === 0 ? (
           <div className="flex flex-col w-full h-full items-center justify-center text-[#454545]">
             Tidak Ada Data
           </div>
         ) : (
           <div className="flex flex-col gap-3 w-full h-full items-center justify-start">
-            {filterData.map((data, i) => (
+            {tampil.map((data, i) => (
               <Link
                 to={{
                   pathname: `/pos/terapisdetail/${data._id}`,

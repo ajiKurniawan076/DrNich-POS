@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   AiFillPlusCircle,
   AiOutlineRightCircle,
@@ -12,27 +12,48 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export const Supplier = () => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, asc } = useContext(navContext);
   const [datax, setDatax] = useState([]);
+  const [tampil, setTampil] = useState([]);
   const [datasupplier, setdatasupplier] = useState([]);
-  const [cari, setCari] = useState("");
+  const cari = useRef(null)
 
   useEffect(() => {
     const fetchData = async () => {
       await axios
         .get("https://api.drnich.co.id/api/pos/user/supplier")
-        .then((response) => setDatax(response.data));
+        .then((response) => (setDatax(response.data),setTampil(response.data)));
     };
     fetchData();
     setNav("Supplier");
     setSort(true)
   }, []);
 
-  const filterData = datax.filter(
+useEffect(()=>{
+
+  if(asc=='asc'){
+    const sorting = [...tampil].sort((a,b)=> a.namaPerusahaan.localeCompare(b.namaPerusahaan))
+    console.log(sorting)
+    setTampil(sorting)
+  }
+  else if(asc=='desc'){
+    const sorting = [...tampil].sort((a,b)=> b.namaPerusahaan.localeCompare(a.namaPerusahaan))
+    console.log(sorting)
+    setTampil(sorting)
+  }
+},[asc])
+
+
+
+  const filterData = () =>{ 
+    
+    const filter = datax.filter(
     (data) =>
-      data.namaPerusahaan?.toLowerCase().includes(cari.toLowerCase()) ||
-      data.nomorTelepon?.toLowerCase().includes(cari.toLowerCase())
+      data.namaPerusahaan?.toLowerCase().includes(cari.current.value.toLowerCase()) ||
+      data.nomorTelepon?.toLowerCase().includes(cari.current.value.toLowerCase())
   );
+  setTampil(filter)
+}
   // console.log(filterData);
 
   document.title = "Supplier";
@@ -41,6 +62,8 @@ export const Supplier = () => {
       <form className="mt-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
         <AiOutlineSearch size={20} />
         <input
+        onChange={filterData}
+          ref={cari}
           type="text"
           className="w-full focus:outline-none"
           placeholder="Cari..."
@@ -53,7 +76,7 @@ export const Supplier = () => {
           </div>
         ) : (
           <div className="flex flex-col gap-3 w-full h-full items-center justify-start">
-            {datax.map((supp) => (
+            {tampil.map((supp) => (
               <Link
                 to={{
                   pathname: `/pos/supplierdet/${supp._id}`,

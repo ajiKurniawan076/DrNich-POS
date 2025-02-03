@@ -32,8 +32,8 @@ export const Kasir4 = () => {
             status : "Done"
         }
         console.log(data)
-        axios.post('https://api.drnich.co.id/api/pos/kasir/transaksi', data).then(response =>{
-            response.status==200 && navigate(0)
+        axios.post('https://api.drnich.co.id/api/pos/kasir/transaksi', data, {withCredentials: true}).then(response =>{
+            response.status==200 ? navigate(0) : console.log(response)
         })
     }
     
