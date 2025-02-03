@@ -155,224 +155,284 @@ function App2() {
 
   return (
     <navContext.Provider value={{ nav, setNav, sort, setSort,  asc, setasc, showsort, setshowsort }}>
-      <div id='root2'>
-      <div id="root-container">
-        <Navbar className="navbar" />
-        <div className="main-content">
-      <Routes>
-        <Route path="/" element={<HomeAdmin />} />
-        <Route path="/users" element={<USer />} />
-        <Route path="/produks" element={<Products />} />
-        <Route path="/laporan" element={<Laporan />} />
-        <Route path="/promo" element={<Promo />} />
-        <Route path="/supplier" element={<Supplier />} />
-        <Route path="/addsupplier" element={<Addsupplier />} />
-        <Route path="/supplierdet/:id" element={<SupplierDetail />} />
-        <Route path="/updatesupplier/:id" element={<Editsupplier />} />
-        <Route path="/kategoriproduk/" element={<KategoriProduk />} />
-        <Route path="/kategoridet/:Kategori" element={<DaftarProduk />} />
-        <Route path="/kategoridet/" element={<DaftarProduk />} />
-        <Route path="/riwayatsupplier/" element={<RiwayatSupplier />} />
-        <Route path="/transdetail/:id" element={<RiwayatDetail />} />
-        <Route path="/productdetail/:id" element={<DetailProduk />} />
-        <Route path="/produkbyjenis/:jenis" element={<DaftarProdukByJenis />} />
-        <Route path="/produkbykategori/:kategori" element={<DaftarProdukByKategori />} />
-        <Route path="/terapis" element={<Terapis />} />
-        <Route path="/addterapis" element={<Addterapis />} />
-        <Route path="/terapisdetail/:id" element={<TerapisDetail />} />
-        <Route path="/marketing/" element={<Marketing />} />
-        <Route path="/addmarketing/" element={<MarketingAdd />} />
-        <Route path="/marketingdetail/:id" element={<MarketingDetail />} />
-        <Route path="/UpdateMarketing/:id" element={<UpdateMarketing />} />
-        <Route path="/terapisdetail/:id" element={<TerapisDetail />} />
-        <Route path="/pelanggan/" element={<Pelanggan />} />
-        <Route path="/addpelanggan/" element={<PelangganAnd />} />
-        <Route path="/pelanggandetail/:id" element={<PelangganDetail />} />
-        <Route path="/jenisproduk/" element={<JenisProduct />} />
-        <Route path="/addjenisproduk/" element={<JenisProductAdd />} />
-        <Route path="/updatejenisproduk/:id" element={<UpdateJenisProduk />} />
-        <Route path="/jenisprodukdetail/:id" element={<JenisProductDetail />} />
-        <Route path="/kategoriproduks/" element={<KategoriProduks />} />
-        <Route path="/addkategoriproduk/" element={<KategoriProdukAdd />} />
-        <Route
-          path="/kategoriprodukdetail/:id"
-          element={<KategoriProdukDetail />}
-        />
-        <Route path="/transaksipelanggan/:id" element={<USer />} />
-        <Route path="/daftarproduk/" element={<DaftarProduk2 />} />
-        <Route path="/adddaftarproduk/" element={<DaftarProdukAdd />} />
-        <Route path="/Produkdetail/:id" element={<DetailProduk />} />
-        <Route path="/DaftarBelanja/" element={<DaftarBelanja />} />
-        <Route path="/DetailDaftarBelanja/" element={<DetailDaftarBelanja />} />
-        <Route path="/PembelianStok/" element={<PembelianStok />} />
-        <Route path="/DaftarBelanja2/" element={<DaftarBelanja2 />} />
-        <Route path="/PembelianProduk/" element={<PembelianProduk />} />
-        <Route path="/PembayaranProduk/" element={<PembayaranProduk />} />
-        <Route path="/RiwayatProduk/" element={<RiwayatProduk />} />
-        <Route path="/DetailRiwayat/" element={<DetailRiwayat />} />
-        <Route path="/DetailRiwayatProduk/" element={<DetailRiwayatProduk />} />
-        <Route path="/ManajementStok/" element={<ManajementStok />} />
-        <Route
-          path="/ManajementDetailProduk/"
-          element={<ManajementDetailProduk />}
-        />
-        <Route
-          path="/ManajementKurangiStok/:id"
-          element={<ManajementKurangiStok />}
-        />
-        <Route
-          path="/ManajementTambahStok/:id"
-          element={<ManajementTambahStok />}
-        />
-        <Route
-          path="/ManajementKurangiStok2/"
-          element={<ManajementKurangiStok2 />}
-        />
-        <Route
-          path="/ManajementDetailStok/"
-          element={<ManajementDetailStok />}
-        />
-        <Route
-          path="/ManajementDetailStok/:id"
-          element={<ManajementDetailStok />}
-        />
-        <Route
-          path="/ManajementLihatLogProduk/"
-          element={<ManajementLihatLogProduk />}
-        />
-        <Route path="/LaporanPenjualan/" element={<LaporanPenjualan />} />
-        <Route
-          path="/LaporanRingkasanPenjualan/"
-          element={<LaporanRingkasanPenjualan />}
-        />
-        <Route
-          path="/LaporanDataPenjualan/"
-          element={<LaporanDataPenjualan />}
-        />
-        <Route path="/LaporanPembayaran/" element={<LaporanPembayaran />} />
-        <Route
-          path="/LaporanPenjualanDetail/"
-          element={<LaporanPenjualanDetail />}
-        />
-        <Route
-          path="/LaporanMetodePembayaran/"
-          element={<LaporanMetodePembayaran />}
-        />
-        <Route
-          path="/LaporanPenjualanProduk/"
-          element={<LaporanPenjualanProduk />}
-        />
-        <Route
-          path="/LaporanProdukTerjual/"
-          element={<LaporanProdukTerjual />}
-        />
-        <Route
-          path="/LaporanPilihPerbandingan/"
-          element={<LaporanPilihPerbandingan />}
-        />
-        <Route path="/LaporanPersediaan/" element={<LaporanPersediaan />} />
-        <Route
-          path="/LaporanPersediaanDetail/"
-          element={<LaporanPersediaanDetail />}
-        />
-        <Route path="/LaporanLogProduk/" element={<LaporanLogProduk />} />
-        <Route path="/LaporanLogProduk2/" element={<LaporanLogProduk2 />} />
-        <Route path="/LaporanLogProduk3/" element={<LaporanLogProduk3 />} />
-        <Route path="/LaporanLogProduk4/" element={<LaporanLogProduk4 />} />
-        <Route
-          path="/LaporanDataPembelianStok/"
-          element={<LaporanDataPembelianStok />}
-        />
-        <Route
-          path="/LaporanProdukTerlaris/"
-          element={<LaporanProdukTerlaris />}
-        />
-        <Route
-          path="/LaporanDataPembelianStokDetail/"
-          element={<LaporanDataPembelianStokDetail />}
-        />
-        <Route path="/Kasir/" element={<Kasir />} />
-        <Route path="/Kasir2/" element={<Kasir2 />} />
-        <Route path="/Kasir3/" element={<Kasir3 />} />
-        <Route path="/Kasir4/" element={<Kasir4 />} />
-        <Route path="/PilihPelanggan/" element={<PilihPelanggan />} />
-        <Route path="/DetailPelanggan/" element={<DetailPelanggan />} />
-        <Route path="/PilihPromo/" element={<PilihPromo />} />
-        <Route path="/KasirLengkap/" element={<KasirLengkap />} />
-        <Route path="/PilihPembayaran/" element={<PilihPembayaran />} />
-        <Route path="/DrafTransaksi/" element={<DraftTransaksi />} />
-        <Route path="/DrafTransaksi2/" element={<DraftTransaksi2 />} />
-        <Route path="/DrafTransaksidetail/:id/" element={<DraftTransaksi3 />} />
-        <Route path="/DrafTransaksi4/" element={<DraftTransaksi4 />} />
-        <Route path="/DrafTransaksi5/" element={<DraftTransaksi5 />} />
-        <Route path="/DaftarStokLimit/" element={<DaftarStokLimit />} />
-        <Route
-          path="/DetailDaftarStokLimit/"
-          element={<DetailDaftarStokLimit />}
-        />
-        <Route path="/TambahDiskon/" element={<TambahDiskon />} />
-        <Route path="/TambahDiskon2/" element={<TambahDiskon2 />} />
-        <Route path="/TambahDiskon3/" element={<TambahDiskon3 />} />
-        <Route path="/TambahDiskon4/" element={<TambahDiskon4 />} />
-        <Route path="/TambahDiskon5/" element={<TambahDiskon5 />} />
-        <Route path="/Cashback/" element={<Cashback4 />} />
-        <Route path="/Cashback2/" element={<Cashback2 />} />
-        <Route path="/tambahcashback/" element={<Cashback3 />} />
-        <Route path="/Cashback4/" element={<Cashback4 />} />
-        <Route path="/display" element={<Display />} />
-        <Route path="/sertifikat" element={<Sertifikat />} />
-        <Route path="/sertifikatdetail" element={<SertifikatDetail />} />
-        <Route path="/displaySertifikat" element={<DisplaySertifikat />} />
-        <Route path="/layananKategori" element={<LayananKategori />} />
-        <Route path="/kategoriLayanan" element={<KategoriLayanan />} />
-        <Route path="/kategoriAdd" element={<KategoriAdd />} />
-        <Route path="/kategoridetail/:id" element={<KategoriDetail />} />
-        <Route path="/Layanan" element={<Layanan />} />
-        <Route path="/layananAdd" element={<LayananAdd />} />
-        <Route path="/layananDetail/:id" element={<LayananDetail />} />
-        <Route path="/produk" element={<Produk />} />
-        <Route path="/kategoriProduk2" element={<KategoriProduk2 />} />
-        <Route path="/tambahKategori" element={<TambahKategori />} />
-        <Route path="/Detail1/:id" element={<Detail1 />} />
-        <Route path="/Produktipe" element={<ProdukTipe />} />
-        <Route path="/produkAddtipe" element={<ProdukAddTipe />} />
-        <Route path="/produkDetail1/:id" element={<ProdukDetail />} />
-        <Route path="/produk1" element={<Produk1 />} />
-        <Route path="/tambahProduk" element={<TambahProduk />} />
-        <Route path="/Detail2/:di" element={<Detail2 />} />
-        <Route path="/galeri" element={<Galeri />} />
-        <Route path="/galeriAdd" element={<GaleriAdd />} />
-        <Route path="/galeridetail/:id" element={<GaleriDetail />} />
-        <Route path="/Rating" element={<Rating />} />
-        <Route path="/RetingAdd" element={<RetingAdd />} />
-        <Route path="/Ratingdetail/:id" element={<RatingDetail />} />
-        <Route path="/diskonDetail/:id" element={<DiskonDetail />} />
-        <Route path="/diskon" element={<Diskon />} />
-        <Route path="/cashbackDetail/:id" element={<CashbackDetail />} />
-        {/* belajar */}
-        {/* end belajar */}
-        <Route path="/terapisUpdate/:id" element={<TerapisUpdate />} />
-        <Route path="/pelanggangupdate/:id" element={<PelangganUpdate />} />
-        {/* belum ada id */}
-        <Route path="/UpdateSertifikat" element={<UpdateSertifikat />} />
-        <Route path="/UpdateKategoti" element={<UpdateKategoti />} />
-        <Route path="/UpdateLayanan" element={<UpdateLayanan />} />
-        <Route path="/UpdateKategori" element={<UpdateKategori />} />
-        <Route path="/UpdateTipeProduk" element={<UpdateTipeProduk />} />
-        <Route path="/UpdateDaftarProduk" element={<UpdateDaftarProduk />} />
-        <Route path="/UpdateGaleri" element={<UpdateGaleri />} />
-        <Route path="/UpdateRating" element={<UpdateRating />} />
-        <Route
-          path="/KategoriProdukUpdate/:id"
-          element={<KategoriProdukUpdate />}
-        />
-        <Route
-          path="/DaftarProdukUpdate/:id"
-          element={<DaftarProdukUpdate />}
-        />
-      </Routes>
-      </div>
-      </div>
+      <div id="root2">
+        <div id="root-container">
+          <Navbar className="navbar" />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<HomeAdmin />} />
+              <Route path="/users" element={<USer />} />
+              <Route path="/produks" element={<Products />} />
+              <Route path="/laporan" element={<Laporan />} />
+              <Route path="/promo" element={<Promo />} />
+              <Route path="/supplier" element={<Supplier />} />
+              <Route path="/addsupplier" element={<Addsupplier />} />
+              <Route path="/supplierdet/:id" element={<SupplierDetail />} />
+              <Route path="/updatesupplier/:id" element={<Editsupplier />} />
+              <Route path="/kategoriproduk/" element={<KategoriProduk />} />
+              <Route path="/kategoridet/:Kategori" element={<DaftarProduk />} />
+              <Route path="/kategoridet/" element={<DaftarProduk />} />
+              <Route path="/riwayatsupplier/" element={<RiwayatSupplier />} />
+              <Route path="/transdetail/:id" element={<RiwayatDetail />} />
+              <Route path="/productdetail/:id" element={<DetailProduk />} />
+              <Route
+                path="/produkbyjenis/:jenis"
+                element={<DaftarProdukByJenis />}
+              />
+              <Route
+                path="/produkbykategori/:kategori"
+                element={<DaftarProdukByKategori />}
+              />
+              <Route path="/terapis" element={<Terapis />} />
+              <Route path="/addterapis" element={<Addterapis />} />
+              <Route path="/terapisdetail/:id" element={<TerapisDetail />} />
+              <Route path="/marketing/" element={<Marketing />} />
+              <Route path="/addmarketing/" element={<MarketingAdd />} />
+              <Route
+                path="/marketingdetail/:id"
+                element={<MarketingDetail />}
+              />
+              <Route
+                path="/UpdateMarketing/:id"
+                element={<UpdateMarketing />}
+              />
+              <Route path="/terapisdetail/:id" element={<TerapisDetail />} />
+              <Route path="/pelanggan/" element={<Pelanggan />} />
+              <Route path="/addpelanggan/" element={<PelangganAnd />} />
+              <Route
+                path="/pelanggandetail/:id"
+                element={<PelangganDetail />}
+              />
+              <Route path="/jenisproduk/" element={<JenisProduct />} />
+              <Route path="/addjenisproduk/" element={<JenisProductAdd />} />
+              <Route
+                path="/updatejenisproduk/:id"
+                element={<UpdateJenisProduk />}
+              />
+              <Route
+                path="/jenisprodukdetail/:id"
+                element={<JenisProductDetail />}
+              />
+              <Route path="/kategoriproduks/" element={<KategoriProduks />} />
+              <Route
+                path="/addkategoriproduk/"
+                element={<KategoriProdukAdd />}
+              />
+              <Route
+                path="/kategoriprodukdetail/:id"
+                element={<KategoriProdukDetail />}
+              />
+              <Route path="/transaksipelanggan/:id" element={<USer />} />
+              <Route path="/daftarproduk/" element={<DaftarProduk2 />} />
+              <Route path="/adddaftarproduk/" element={<DaftarProdukAdd />} />
+              <Route path="/Produkdetail/:id" element={<DetailProduk />} />
+              <Route path="/DaftarBelanja/" element={<DaftarBelanja />} />
+              <Route
+                path="/DetailDaftarBelanja/"
+                element={<DetailDaftarBelanja />}
+              />
+              <Route path="/PembelianStok/" element={<PembelianStok />} />
+              <Route path="/DaftarBelanja2/" element={<DaftarBelanja2 />} />
+              <Route path="/PembelianProduk/" element={<PembelianProduk />} />
+              <Route
+                path="/PembayaranProduk/:id"
+                element={<PembayaranProduk />}
+              />
+              <Route path="/RiwayatProduk/" element={<RiwayatProduk />} />
+              <Route path="/DetailRiwayat/" element={<DetailRiwayat />} />
+              <Route
+                path="/DetailRiwayatProduk/"
+                element={<DetailRiwayatProduk />}
+              />
+              <Route path="/ManajementStok/" element={<ManajementStok />} />
+              <Route
+                path="/ManajementDetailProduk/"
+                element={<ManajementDetailProduk />}
+              />
+              <Route
+                path="/ManajementKurangiStok/:id"
+                element={<ManajementKurangiStok />}
+              />
+              <Route
+                path="/ManajementTambahStok/:id"
+                element={<ManajementTambahStok />}
+              />
+              <Route
+                path="/ManajementKurangiStok2/"
+                element={<ManajementKurangiStok2 />}
+              />
+              <Route
+                path="/ManajementDetailStok/"
+                element={<ManajementDetailStok />}
+              />
+              <Route
+                path="/ManajementDetailStok/:id"
+                element={<ManajementDetailStok />}
+              />
+              <Route
+                path="/ManajementLihatLogProduk/"
+                element={<ManajementLihatLogProduk />}
+              />
+              <Route path="/LaporanPenjualan/" element={<LaporanPenjualan />} />
+              <Route
+                path="/LaporanRingkasanPenjualan/"
+                element={<LaporanRingkasanPenjualan />}
+              />
+              <Route
+                path="/LaporanDataPenjualan/"
+                element={<LaporanDataPenjualan />}
+              />
+              <Route
+                path="/LaporanPembayaran/"
+                element={<LaporanPembayaran />}
+              />
+              <Route
+                path="/LaporanPenjualanDetail/"
+                element={<LaporanPenjualanDetail />}
+              />
+              <Route
+                path="/LaporanMetodePembayaran/"
+                element={<LaporanMetodePembayaran />}
+              />
+              <Route
+                path="/LaporanPenjualanProduk/"
+                element={<LaporanPenjualanProduk />}
+              />
+              <Route
+                path="/LaporanProdukTerjual/"
+                element={<LaporanProdukTerjual />}
+              />
+              <Route
+                path="/LaporanPilihPerbandingan/"
+                element={<LaporanPilihPerbandingan />}
+              />
+              <Route
+                path="/LaporanPersediaan/"
+                element={<LaporanPersediaan />}
+              />
+              <Route
+                path="/LaporanPersediaanDetail/"
+                element={<LaporanPersediaanDetail />}
+              />
+              <Route path="/LaporanLogProduk/" element={<LaporanLogProduk />} />
+              <Route
+                path="/LaporanLogProduk2/"
+                element={<LaporanLogProduk2 />}
+              />
+              <Route
+                path="/LaporanLogProduk3/"
+                element={<LaporanLogProduk3 />}
+              />
+              <Route
+                path="/LaporanLogProduk4/"
+                element={<LaporanLogProduk4 />}
+              />
+              <Route
+                path="/LaporanDataPembelianStok/"
+                element={<LaporanDataPembelianStok />}
+              />
+              <Route
+                path="/LaporanProdukTerlaris/"
+                element={<LaporanProdukTerlaris />}
+              />
+              <Route
+                path="/LaporanDataPembelianStokDetail/"
+                element={<LaporanDataPembelianStokDetail />}
+              />
+              <Route path="/Kasir/" element={<Kasir />} />
+              <Route path="/Kasir2/" element={<Kasir2 />} />
+              <Route path="/Kasir3/" element={<Kasir3 />} />
+              <Route path="/Kasir4/" element={<Kasir4 />} />
+              <Route path="/PilihPelanggan/" element={<PilihPelanggan />} />
+              <Route path="/DetailPelanggan/" element={<DetailPelanggan />} />
+              <Route path="/PilihPromo/" element={<PilihPromo />} />
+              <Route path="/KasirLengkap/" element={<KasirLengkap />} />
+              <Route path="/PilihPembayaran/" element={<PilihPembayaran />} />
+              <Route path="/DrafTransaksi/" element={<DraftTransaksi />} />
+              <Route path="/DrafTransaksi2/" element={<DraftTransaksi2 />} />
+              <Route
+                path="/DrafTransaksidetail/:id/"
+                element={<DraftTransaksi3 />}
+              />
+              <Route path="/DrafTransaksi4/" element={<DraftTransaksi4 />} />
+              <Route path="/DrafTransaksi5/" element={<DraftTransaksi5 />} />
+              <Route path="/DaftarStokLimit/" element={<DaftarStokLimit />} />
+              <Route
+                path="/DetailDaftarStokLimit/"
+                element={<DetailDaftarStokLimit />}
+              />
+              <Route path="/TambahDiskon/" element={<TambahDiskon />} />
+              <Route path="/TambahDiskon2/" element={<TambahDiskon2 />} />
+              <Route path="/TambahDiskon3/" element={<TambahDiskon3 />} />
+              <Route path="/TambahDiskon4/" element={<TambahDiskon4 />} />
+              <Route path="/TambahDiskon5/" element={<TambahDiskon5 />} />
+              <Route path="/Cashback/" element={<Cashback4 />} />
+              <Route path="/Cashback2/" element={<Cashback2 />} />
+              <Route path="/tambahcashback/" element={<Cashback3 />} />
+              <Route path="/Cashback4/" element={<Cashback4 />} />
+              <Route path="/display" element={<Display />} />
+              <Route path="/sertifikat" element={<Sertifikat />} />
+              <Route path="/sertifikatdetail" element={<SertifikatDetail />} />
+              <Route
+                path="/displaySertifikat"
+                element={<DisplaySertifikat />}
+              />
+              <Route path="/layananKategori" element={<LayananKategori />} />
+              <Route path="/kategoriLayanan" element={<KategoriLayanan />} />
+              <Route path="/kategoriAdd" element={<KategoriAdd />} />
+              <Route path="/kategoridetail/:id" element={<KategoriDetail />} />
+              <Route path="/Layanan" element={<Layanan />} />
+              <Route path="/layananAdd" element={<LayananAdd />} />
+              <Route path="/layananDetail/:id" element={<LayananDetail />} />
+              <Route path="/produk" element={<Produk />} />
+              <Route path="/kategoriProduk2" element={<KategoriProduk2 />} />
+              <Route path="/tambahKategori" element={<TambahKategori />} />
+              <Route path="/Detail1/:id" element={<Detail1 />} />
+              <Route path="/Produktipe" element={<ProdukTipe />} />
+              <Route path="/produkAddtipe" element={<ProdukAddTipe />} />
+              <Route path="/produkDetail1/:id" element={<ProdukDetail />} />
+              <Route path="/produk1" element={<Produk1 />} />
+              <Route path="/tambahProduk" element={<TambahProduk />} />
+              <Route path="/Detail2/:di" element={<Detail2 />} />
+              <Route path="/galeri" element={<Galeri />} />
+              <Route path="/galeriAdd" element={<GaleriAdd />} />
+              <Route path="/galeridetail/:id" element={<GaleriDetail />} />
+              <Route path="/Rating" element={<Rating />} />
+              <Route path="/RetingAdd" element={<RetingAdd />} />
+              <Route path="/Ratingdetail/:id" element={<RatingDetail />} />
+              <Route path="/diskonDetail/:id" element={<DiskonDetail />} />
+              <Route path="/diskon" element={<Diskon />} />
+              <Route path="/cashbackDetail/:id" element={<CashbackDetail />} />
+              {/* belajar */}
+              {/* end belajar */}
+              <Route path="/terapisUpdate/:id" element={<TerapisUpdate />} />
+              <Route
+                path="/pelanggangupdate/:id"
+                element={<PelangganUpdate />}
+              />
+              {/* belum ada id */}
+              <Route path="/UpdateSertifikat" element={<UpdateSertifikat />} />
+              <Route path="/UpdateKategoti" element={<UpdateKategoti />} />
+              <Route path="/UpdateLayanan" element={<UpdateLayanan />} />
+              <Route path="/UpdateKategori" element={<UpdateKategori />} />
+              <Route path="/UpdateTipeProduk" element={<UpdateTipeProduk />} />
+              <Route
+                path="/UpdateDaftarProduk"
+                element={<UpdateDaftarProduk />}
+              />
+              <Route path="/UpdateGaleri" element={<UpdateGaleri />} />
+              <Route path="/UpdateRating" element={<UpdateRating />} />
+              <Route
+                path="/KategoriProdukUpdate/:id"
+                element={<KategoriProdukUpdate />}
+              />
+              <Route
+                path="/DaftarProdukUpdate/:id"
+                element={<DaftarProdukUpdate />}
+              />
+            </Routes>
+          </div>
+        </div>
       </div>
     </navContext.Provider>
   );

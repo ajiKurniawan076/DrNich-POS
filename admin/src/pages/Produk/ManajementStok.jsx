@@ -4,7 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import axios from "axios";
 
 export const ManajementStok = () => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav } = useContext(navContext);
   const [produklimit, setProlim] = useState([]);
   const [produk, setProduk] = useState([]);
   const [proCari, setProCari] = useState([]);
@@ -42,7 +42,6 @@ export const ManajementStok = () => {
     };
     fetch();
     setNav("Manajemen Stok");
-    setSort(false)
   }, []);
 
     document.title = 'Manajemen Stok'

@@ -11,7 +11,6 @@ import iPel from "../../assets/iconuser/iPel.svg";
 import iLine from "../../assets/iLine.svg";
 import iNext from "../../assets/iNext.svg";
 
-
 export const USer = () => {
     const {setNav} = useContext(navContext)
   useEffect(()=>{
