@@ -11,7 +11,7 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const Pelanggan = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [cari, setCari] = useState("");
   useEffect(() => {
@@ -22,6 +22,7 @@ export const Pelanggan = () => {
     };
     fetchData();
     setNav("Pelanggan");
+    setSort(true)
   }, []);
 
   console.log(datax);

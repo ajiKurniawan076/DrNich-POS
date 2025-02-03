@@ -6,7 +6,7 @@ import axios from "axios";
 
 export const DetailProduk = () => {
   const [product, setproduct] = useState([]);
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const navigate = useNavigate();
   const [fetched, setFetched] = useState(false);
   const { id } = useParams();
@@ -21,6 +21,7 @@ export const DetailProduk = () => {
     };
     fetchData();
     setNav("Daftar Produk");
+    setSort(false)
   }, []);
 
   useEffect(() => {

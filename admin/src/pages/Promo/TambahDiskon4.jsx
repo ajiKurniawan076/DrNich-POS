@@ -7,14 +7,17 @@ import axios from 'axios';
 export const TambahDiskon4 = () => {
     const { setNav } = useContext(navContext)
     const [data, setData] = useState([])
-    useEffect( async () => {
-        await axios.get('https://api.drnich.co.id/api/pos/promo/promo').then(
+    useEffect(() => {
+        const fetchData = async () => { await axios.get('https://api.drnich.co.id/api/pos/promo/promo').then(
             Response => {
                 const filterr = Response.data.filter(item => item.jenis == "Diskon")
                 setData(filterr)
                 console.log(filterr)
-            }
-        )
+                }
+            
+            )
+        }
+        fetchData();
     },[])
 
 setNav('Diskon')   

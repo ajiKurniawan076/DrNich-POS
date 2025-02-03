@@ -117,16 +117,16 @@ setNav('Tambah Diskon')
 document.title = 'Tambah Diskon'
 return (
     <modalsContext.Provider value={{modals, setModals, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriName}}>
-    <form onSubmit={handleSubmit} className="flex flex-col py-8 gap-1 bg-white w-full h-fit min-h-screen pt-8 text-[#454545] text-[12px] px-9">
-        <div className='grid place-items-start'>
+    <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
+        <div className='flex flex-col px-3 h-full'>
             <p>Kategori Diskon</p>
-            <div className="relative w-full mt-1">
+            <div className="relative w-full mt-[5px]">
                 <select
                         ref={keteranganRef}
                         onChange={gantiKategori}
                     name="options"
                     id="kategoriproduk"
-                    className="relative bg-white border text-sm border-gray-300 rounded-xl w-full p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+                    className="relative bg-white border text-sm border-gray-300 rounded-xl w-full h-[45px] py-[12px] p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none mb-[20px]"
                     aria-label="Kategori Produk"
                 >
                     <option value="" disabled selected className="text-gray-300">
@@ -139,19 +139,19 @@ return (
                 <img
                     src={iPanahB}
                     alt="Dropdown icon"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4"
+                    className="absolute right-4 top-[35%] -translate-y-1/2 pointer-events-none w-4 h-4"
                 />
             </div>
         </div>
-        <div className='grid place-items-start w-full mt-4'>
+        <div className='flex flex-col px-3 h-full'>
             <p>Nama Diskon</p>
-            <input ref={namaPromoRef} type='text' placeholder='Nama Promo Diskon' className='flex justify-start border border-[#BDBDBD] rounded-xl p-4 w-full mt-1'>
+            <input ref={namaPromoRef} type='text' placeholder='Nama Promo Diskon' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
             </input>
         </div>
-        <div className='grid place-items-start w-full mt-4'>
+        <div className='gflex flex-col px-3 h-full'>
             <p>Jumlah diskon</p>
-            <div className='flex justify-start border border-[#BDBDBD] rounded-xl p-4 w-full mt-1'>
-                <input ref={potonganRef} placeholder='20.000/20' className='outline-none flex justify-between w-full text-start items-center'>
+            <div className='flex justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
+                <input ref={potonganRef} placeholder='20.000/20' className='outline-none flex justify-between text-start items-center w-full'>
                 </input>
                 <div className='flex w-[30%]'>
                     <button onClick={(e) => {
@@ -167,22 +167,22 @@ return (
                 </div>
             </div>
         </div>
-        <div className='grid place-items-start mt-4'>
+        <div className='flex flex-col px-3 h-full'>
                 <p>Khusus {kategoriName}</p>
                 <button onClick={(e) => {
                     e.preventDefault()
                     setModals(true)}
-                } className='flex justify-start text-cemter w-full border border-[#BDBDBD] rounded-xl px-4 py-4 mt-1'>
+                } className='flex justify-start text-cemter border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                 Tambah {kategoriName}
             </button>
         </div>
         
         
-        <div className='Grid place-items-start mt-4'>
+        <div className='flex flex-col px-3 h-full'>
             <p>Masa Berlaku</p>
-            <div className='flex flex-col gap-2 justify-between w-full mt-1'>
+            <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
                 <p>Dari :</p>
-                    <div className="w-full relative flex justify-center items-center border border-gray-300 rounded-xl p-3">
+                    <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                         <DatePicker
                             selected={startDate}
                             onChange={(date) => setStartDate(date)}
@@ -205,7 +205,7 @@ return (
             
             
                 <p>Sampai :</p>
-                <div className="w-full relative flex justify-center items-center border border-gray-300 rounded-xl p-3">
+                <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                     <DatePicker
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
@@ -229,7 +229,7 @@ return (
         </div>
 
 
-        <div className='Grid place-items-start mt-4'>
+        <div className='flex flex-col px-3 h-full'>
             <p>Produk Terpilih</p>
                 {produkTerpilih.map((item, i) => (
                 <div className='flex justify-between w-full border border-[#BDBDBD] rounded-xl p-4 mt-1'>

@@ -11,7 +11,7 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const Terapis = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [search, setSearch] = useState("");
   useEffect(() => {
@@ -22,6 +22,7 @@ export const Terapis = () => {
     };
     fetchData();
     setNav("Terapis");
+    setSort(true)
   }, []);
 
   const filterData = datax.filter(

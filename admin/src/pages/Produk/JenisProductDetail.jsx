@@ -7,7 +7,7 @@ import axios from "axios";
 import next2 from "../../assets/next2.svg";
 
 export const JenisProductDetail = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const navigate = useNavigate();
   const [datax, setDatax] = useState([]);
   const { id } = useParams();

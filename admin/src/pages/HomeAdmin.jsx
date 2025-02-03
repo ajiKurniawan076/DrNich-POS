@@ -19,26 +19,26 @@ export const HomeAdmin = () => {
   }, []);
 
   return (
-    <div className="w-full h-full relative overflow-hidden">
+    <div className="w-full h-full  overflow-auto mb-8 md:mb-0">
       {/* Super Admin section */}
       <div className="admin-section">
         <div className="grid z-50 absolute top-4 place-items-center">
           <img src={Ava} className="rounded-full h-auto w-[100px]" />
-          <h5 className="bottom-[-10px]">Super Admin</h5>
+          <h5 className="mt-3 font-semibold text-[16px]">Super Admin</h5>
         </div>
       </div>
 
       {/* Grid items */}
-      <div className="relative w-full h-full rounded-t-[2rem] bg-white justify-center pt-28">
-        <div>
-          <div className="grid-container grid-cols-2 md:grid-cols-3 place-items-center">
+      <div className=" w-full h-full rounded-t-[2rem] bg-white flex justify-center pt-28">
+        <div className="w-fit h-fit flex justify-center items-center">
+          <div className="grid-container md:gap-[50px] gap-[20px] grid-cols-2 md:grid-cols-3 place-items-center">
             {/* Data User */}
             <a
               href="pos/users"
-              className="h-[125px] w-[150px] group relative z-20 group-hover:z-30 group-hover:scale-105 transition-all duration-300"
+              className=" h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl"
             >
-              <span className="bg-white h-[125px] w-[150px] border-2 border-yellow-700 rounded-2xl md:rounded-xl hover:scale-105 duration-300 flex flex-col justify-center items-center font-bold">
-                <img src={iUser} color="brown" size={50} className="w-[50px] h-[50px]" />
+              <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
+                <img src={iUser} color="brown" className="w-[36px] h-[36px]" />
                 Data User
               </span>
             </a>
@@ -46,40 +46,40 @@ export const HomeAdmin = () => {
             {/* Produk */}
             <a
               href="pos/produks"
-              className="h-[125px] w-[150px] group relative z-20 group-hover:z-30 group-hover:scale-105 transition-all duration-300"
+              className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl"
             >
-              <span className="bg-white h-[125px] w-[150px] border-2 border-yellow-700 rounded-2xl md:rounded-xl hover:scale-105 duration-300 flex flex-col justify-center items-center font-bold">
-              <img src={iProduk} color="brown" size={50} className="w-[50px] h-[50px]" />
+              <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
+              <img src={iProduk} color="brown" className="w-[36px] h-[36px]" />
                 Produk
               </span>
             </a>
 
             {/* Other Links */}
             <a href="pos/laporan" 
-              className="h-[125px] w-[150px] group relative z-20 group-hover:z-30 group-hover:scale-105 transition-all duration-300">
-              <span className="bg-white h-[125px] w-[150px] border-2 border-yellow-700 rounded-2xl md:rounded-xl hover:scale-105 duration-300 flex flex-col justify-center items-center font-bold">
-              <img src={iLaporan} color="brown" size={50} className="w-[50px] h-[50px]" />
+              className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
+              <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
+              <img src={iLaporan} color="brown" className="w-[36px] h-[36px]" />
                 Laporan
               </span>
             </a>
             <a href="pos/promo" 
-              className="h-[125px] w-[150px] group relative z-20 group-hover:z-30 group-hover:scale-105 transition-all duration-300">
-              <span className="bg-white h-[125px] w-[150px] border-2 border-yellow-700 rounded-2xl md:rounded-xl hover:scale-105 duration-300 flex flex-col justify-center items-center font-bold">
-              <img src={iPromo} color="brown" size={50} className="w-[50px] h-[50px]" />
+              className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
+              <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
+              <img src={iPromo} color="brown" className="w-[36px] h-[36px]" />
                 Promo
               </span>
             </a>
-            <a href="pos/statistik" 
-              className="h-[125px] w-[150px] group relative z-20 group-hover:z-30 group-hover:scale-105 transition-all duration-300">
-            <span className="bg-white h-[125px] w-[150px] border-2 border-yellow-700 rounded-2xl md:rounded-xl hover:scale-105 duration-300 flex flex-col justify-center items-center font-bold">
-            <img src={iStat} color="brown" size={50} className="w-[50px] h-[50px]" />
+            <a href="pos/display" 
+              className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
+            <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
+            <img src={iStat} color="brown" className="w-[36px] h-[36px]" />
                 Statistik
               </span>
             </a>
             <a href="pos/Kasir" 
-                   className="h-[125px] w-[150px] group relative z-20 group-hover:z-30 group-hover:scale-105 transition-all duration-300">
-              <span className="bg-white h-[125px] w-[150px] border-2 border-yellow-700 rounded-2xl md:rounded-xl hover:scale-105 duration-300 flex flex-col justify-center items-center font-bold">
-              <img src={iPenj} color="brown" size={50} className="w-[50px] h-[50px]" />
+                   className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
+              <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
+              <img src={iPenj} color="brown" className="w-[36px] h-[36px]" />
                 Penjualan
               </span>
             </a>

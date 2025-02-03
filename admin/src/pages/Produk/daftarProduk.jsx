@@ -6,7 +6,7 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 export const DaftarProduk = () => {
   const [products, setproducts] = useState([]);
   const { Kategori } = useParams();
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   useEffect(() => {
     fetch("/produk.json")
       .then((response) => response.json())
@@ -21,6 +21,7 @@ export const DaftarProduk = () => {
       });
 
     setNav(Kategori);
+    setSort(true)
   }, []);
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">

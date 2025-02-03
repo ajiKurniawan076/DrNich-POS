@@ -28,6 +28,18 @@ export const KategoriProdukAdd = () => {
   const navigate = useNavigate()
   const jenisRef = useRef(null)
   const kategoriRef = useRef(null)
+  const [isFilled, setIsFilled] = useState(false)
+
+  const checkFormFilled = () => {
+    if (
+      jenisRef.current?.value &&
+      kategoriRef.current?.value
+    ) {
+      setIsFilled(true);
+    } else {
+      setIsFilled(false);
+    }
+  };
 
 
   const handleSubmit = (e) => {
@@ -44,13 +56,14 @@ export const KategoriProdukAdd = () => {
   document.title = 'Tambah Marketing'
   const [supstat, setsupstat] = useState(false)
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col px-0 py-3 gap-1 justify-between bg-white w-full h-full">
-      <div className="flex flex-col gap-1  px-3">
-        <label className="text-start font-semibold text-sm">Nama Jenis Produk</label>
+    <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
+      <div className="flex flex-col px-3 h-full">
+        <label className="text-start font-semibold mb-[5px]">Nama Jenis Produk</label>
         <select
           ref={jenisRef}
           name="options"
-          className="px-2 border text-[12px] border-black/30 rounded-lg h-[30px]"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
           id="jenis"
         >
           <option value="" className="text-gray-300" selected disabled>
@@ -60,10 +73,18 @@ export const KategoriProdukAdd = () => {
             <option key={i} value={item._id}>{item.jenis}</option>
           ))}
         </select>
-        <label className="text-start font-semibold text-sm">Nama Kategori Produk</label>
-        <input ref={kategoriRef} type='text' placeholder='Contoh : Lotion / Sunscreen' className="px-2 border text-sm border-black/30 rounded-xl h-[30px]"></input>
+        <label className="text-start font-semibold mb-[5px]">Nama Kategori Produk</label>
+        <input ref={kategoriRef} type='text' placeholder='Contoh : Lotion / Sunscreen' className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}></input>
       </div>
-      <button type="submit" className="bg-gray-800/50 text-white mx-5 rounded-xl">Simpan</button>
+      <div className="flex items-end mt-auto w-full h-full px-3">
+        <button
+          type="submit"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
+        >
+          Simpan
+        </button>
+      </div>
     </form>
   )
 }

@@ -11,7 +11,7 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const Marketing = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [cari, setCari] = useState("");
   useEffect(() => {
@@ -22,6 +22,7 @@ export const Marketing = () => {
     };
     fetchData();
     setNav("Marketing");
+    setSort(true)
   }, []);
 
   const filterData = datax.filter(

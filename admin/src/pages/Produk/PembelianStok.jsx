@@ -7,7 +7,7 @@ import { modalContext } from "./DaftarBelanja";
 import { modalsContext } from "./DaftarBelanjaModals";
 
 export const PembelianStok = (props) => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const {
     modals,
     setModals,

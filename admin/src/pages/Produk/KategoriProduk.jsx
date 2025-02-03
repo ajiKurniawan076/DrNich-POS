@@ -5,13 +5,14 @@ import { Link } from "react-router-dom"
 
 export const KategoriProduk = () => {
     const[kategori, setKategori] = useState([])
-    const {setNav} = useContext(navContext)
+    const {setNav, setSort} = useContext(navContext)
     useEffect(()=>{
         fetch("/kategoriproduk.json").then(
             (response) => response.json()
           ).then((data)=>(setKategori(data)
           ))
-          setNav('Kategori Produk')
+      setNav('Kategori Produk')
+      setSort(true)
     },[])
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] h-screen  overflow-auto overflow-y-scroll scrollbar-hide px-7">

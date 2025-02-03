@@ -17,6 +17,27 @@ export const Addsupplier = () => {
   const bankRef = useRef(null);
   const nomorRekeningRef = useRef(null);
   const keteranganRekRef = useRef(null);
+  const [isFilled, setIsFilled] = useState(false);
+
+  const checkFormFilled = () => {
+    if (
+      namaPerusahaanRef.current?.value &&
+      namaKontakRef.current?.value &&
+      emailRef.current?.value &&
+      noTeleponRef.current?.value &&
+      namaRekeningRef.current?.value &&
+      AlamatRef.current?.value &&
+      bankRef.current?.value &&
+      nomorRekeningRef.current?.value &&
+      keteranganRekRef.current?.value &&
+      keteranganRef.current?.value
+
+    ) {
+      setIsFilled(true);
+    } else {
+      setIsFilled(false);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,95 +72,123 @@ export const Addsupplier = () => {
       onSubmit={handleSubmit}
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
     >
-      <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">
-          Nama Perusahaan
-        </label>
-        <input
-          ref={namaPerusahaanRef}
-          type="text"
-          placeholder="Contoh : PT.BEAUTY"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold ">Nama Kontak</label>
-        <input
-          ref={namaKontakRef}
-          type="text"
-          placeholder="Contoh : Agus"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold">Email</label>
-        <input
-          ref={emailRef}
-          type="text"
-          placeholder="Contoh : agus@gmail.com"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold ">
-          Nomor Telepon
-        </label>
-        <input
-          ref={noTeleponRef}
-          type="text"
-          placeholder="Contoh : 081000000000"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold ">Alamat</label>
-        <input
-          ref={AlamatRef}
-          type="text"
-          placeholder="Contoh : Jl.Merak No.10, Sidorejo, Kota Salatiga, Jawa Tengah, Indonesia"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold ">Keterangan</label>
-        <input
-          ref={keteranganRef}
-          type="text"
-          placeholder="Contoh : Supplier Sunscreen"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
+      <div className="flex flex-col gap-[20px] px-3">
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">Nama Perusahaan</label>
+          <input
+            ref={namaPerusahaanRef}
+            type="text"
+            placeholder="Contoh : Aji"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+            />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">Nama Kontak</label>
+          <input
+            ref={namaKontakRef}
+            type="text"
+            placeholder="Contoh : Agus"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">Email</label>
+          <input
+            ref={emailRef}
+            type="text"
+            placeholder="Contoh : agus@gmail.com"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">
+            Nomor Telepon
+          </label>
+          <input
+            ref={noTeleponRef}
+            type="text"
+            placeholder="Contoh : 081000000000"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">Alamat</label>
+          <input
+            ref={AlamatRef}
+            type="text"
+            placeholder="Contoh : Jl.Merak No.10, Sidorejo, Kota Salatiga, Jawa Tengah, Indonesia"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+          <input
+            ref={keteranganRef}
+            type="text"
+            placeholder="Contoh : Supplier Sunscreen"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
       </div>
       <div className="text-start  font-medium bg-[#F6F6F6] text-[#BDBDBD] my-3 py-2">
         <span className="ms-2">Informasi Rekening</span>
       </div>
-      <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold ">
-          Nama Pemilik Rekening
-        </label>
-        <input
-          ref={namaRekeningRef}
-          type="text"
-          placeholder="Contoh : Hana"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold">Bank</label>
-        <input
-          ref={bankRef}
-          type="text"
-          placeholder="Contoh : BCA"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold ">
-          Nomor Rekening
-        </label>
-        <input
-          ref={nomorRekeningRef}
-          type="text"
-          placeholder="Contoh : 5670019288493"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
-        <label className="text-start font-semibold ">Keterangan</label>
-        <input
-          ref={keteranganRekRef}
-          type="text"
-          placeholder="Contoh : Admin PT.BEAUTY"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        ></input>
+      <div className="flex flex-col gap-[20px] px-3">
+        <div className="flex flex-col"> 
+          <label className="text-start font-semibold mb-[5px]">
+            Nama Pemilik Rekening
+          </label>
+          <input
+            ref={namaRekeningRef}
+            type="text"
+            placeholder="Contoh : Hana"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">Bank</label>
+          <input
+            ref={bankRef}
+            type="text"
+            placeholder="Contoh : BCA"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">
+            Nomor Rekening
+          </label>
+          <input
+            ref={nomorRekeningRef}
+            type="text"
+            placeholder="Contoh : 5670019288493"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+          <input
+            ref={keteranganRekRef}
+            type="text"
+            placeholder="Contoh : Admin PT.BEAUTY"
+            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            onChange={checkFormFilled}
+          ></input>
+        </div>
       </div>
       <div className="mt-4 w-full h-full px-3">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>

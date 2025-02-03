@@ -6,7 +6,7 @@ import axios from "axios";
 import wa from "../../assets/wa.svg";
 
 export const SupplierDetail = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datasupp, setDataSupp] = useState([]);
   const { id } = useParams();
   const navigasi = useNavigate();
@@ -19,6 +19,7 @@ export const SupplierDetail = () => {
     fetchData();
 
     setNav("Detail Supplier");
+    setSort(false)
   }, []);
   const handleDelete = async () => {
     await axios
