@@ -26,7 +26,7 @@ export const DaftarBelanja = () => {
   const [modals, setModals] = useState(false);
   const [produkKategori, setProdukKategori] = useState([]);
   const [pilihKategori, setPilihKategori] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const min = (isi) => {
     setCart((prev) =>
       prev.map((item) =>
@@ -48,15 +48,20 @@ export const DaftarBelanja = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const data = {
       total: total,
       belanjaDetail: cart,
     };
-    await axios
-      .post("https://api.drnich.co.id/api/pos/produk/belanjapos", data)
-      .then((response) =>
-        response.status == 200 ? navigate(0) : console.log(response)
-      );
+    const response = await axios.post(
+      "https://api.drnich.co.id/api/pos/produk/belanjapos",
+      data
+    );
+    if (response.status === 201) {
+      navigate(`/pos/pembayaranProduk/${response.data.belanja._id}`);
+    } else {
+      console.error("Terjadi kesalahan dalam transaksi");
+    }
   };
   const tambahKeranjang = (isi) => {
     if (cart.some((item) => item._id == isi._id)) {
@@ -96,14 +101,15 @@ export const DaftarBelanja = () => {
         });
     };
     fetch();
+    setNav("Daftar Belanja");
+    document.title = "Daftar Belanja";
   }, []);
+
   useEffect(() => {
     setTotal(0);
     cart.map((item) => setTotal((prev) => prev + item.jumlah * item.hargaBeli));
   }, [cart]);
 
-  setNav("Daftar Belanja");
-  document.title = "Daftar Belanja";
   return (
     <modalContext.Provider
       value={{
@@ -208,13 +214,12 @@ export const DaftarBelanja = () => {
               }}
               className="flex justify-center items-center text-center gap-2 border border-[#C2A353] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-semibold rounded-r-xl px-3 h-[50px] w-full text-[14px]"
             >
-              <img src={iTambahP} alt="" className="" /> Tambah Daftar
-              Belanja
+              <img src={iTambahP} alt="" className="" /> Tambah Daftar Belanja
             </button>
           </div>
         </div>
       </form>
-      <PembelianStok source = {"DaftarBelanja"} />
+      <PembelianStok source={"DaftarBelanja"} />
     </modalContext.Provider>
   );
 };
