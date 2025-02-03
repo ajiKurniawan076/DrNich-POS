@@ -7,6 +7,8 @@ import iPenj from "../../assets/iconlaporan/iPenj.svg";
 import iPers from "../../assets/iconlaporan/iPers.svg";
 import iStok from "../../assets/iconlaporan/iStok.svg";
 import iLine from "../../assets/iLine.svg";
+import iNext from "../../assets/iNext.svg";
+
 
 export const Laporan = () => {
   const {setNav} = useContext(navContext)
@@ -16,35 +18,31 @@ export const Laporan = () => {
   document.title = 'Laporan'
 
   return (
-    <div className="w-full h-full flex flex-col gap-2 px-10 py-10 bg-white items-start place-items-center">  
-        <a href="LaporanRingkasanPenjualan" className="w-full h-[80px]"><span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold"><img src={iLine} className="ms-[15px]"/><img src={iPenj} className="ms-[25px]"/><p className="ms-[15px]">Penjualan</p>
-        <div className="flex ms-auto me-[15px]">
-        <AiOutlineRight className="text-yellow-300" size={15}/>
-        <AiOutlineRight className="text-yellow-600" size={15}/>
+    <div className="w-full h-full flex flex-col gap-y-[15px] px-10 py-10 bg-white items-start place-items-center">  
+        <a href="LaporanRingkasanPenjualan" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iPenj} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Penjualan</p>
+        <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+          <img src={iNext} alt="next" />
+        
         </div>
         </span></a>
-            <a href="supplier" className="w-full h-[80px]"><span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold"><img src={iLine} className="ms-[15px]"/><img src={iPers} className="ms-[25px]"/><p className="ms-[15px]">Laporan Produk</p>
+            <a href="supplier" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iPers} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Laporan Produk</p>
             <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15}/>
-            <AiOutlineRight className="text-yellow-600" size={15}/>
+            <img src={iNext} alt="next" />
             </div>
             </span></a>
-                <a href="LaporanPersediaan" className="w-full h-[80px]"><span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold"><img src={iLine} className="ms-[15px]"/><img src={iPers} className="ms-[25px]"/><p className="ms-[15px]">Laporan Persediaan</p>
+                <a href="LaporanPersediaan" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iPers} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Laporan Persediaan</p>
                 <div className="flex ms-auto me-[15px]">
-                <AiOutlineRight className="text-yellow-300" size={15}/>
-                <AiOutlineRight className="text-yellow-600" size={15}/>
+                <img src={iNext} alt="next" />
                 </div>
                 </span></a>
-                    <a href="DaftarStokLimit" className="w-full h-[80px]"><span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold"><img src={iLine} className="ms-[15px]"/><img src={iStok} className="ms-[25px]"/><p className="ms-[15px]">Stok Limit</p>
+                    <a href="DaftarStokLimit" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iStok} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Stok Limit</p>
                     <div className="flex ms-auto me-[15px]">
-                    <AiOutlineRight className="text-yellow-300" size={15}/>
-                    <AiOutlineRight className="text-yellow-600" size={15}/>
+                    <img src={iNext} alt="next" />
                     </div>
                     </span></a>
-                        <a href="LaporanProdukTerlaris" className="w-full h-[80px]"><span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold"><img src={iLine} className="ms-[15px]"/><img src={iBar} className="ms-[25px]"/><p className="ms-[15px]">Produk Terlaris</p>
+                        <a href="LaporanProdukTerlaris" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iBar} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Produk Terlaris</p>
                         <div className="flex ms-auto me-[15px]">
-                        <AiOutlineRight className="text-yellow-300" size={15}/>
-                        <AiOutlineRight className="text-yellow-600" size={15}/>
+                        <img src={iNext} alt="next" />
                         </div>
                         </span></a>
     </div>

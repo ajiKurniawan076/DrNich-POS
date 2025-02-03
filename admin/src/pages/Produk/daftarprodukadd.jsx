@@ -25,6 +25,23 @@ export const DaftarProdukAdd = () => {
   const stokRef = useRef(null);
   const minStokRef = useRef(null);
   const navigate = useNavigate();
+  const [isFilled, setIsFilled] = useState(false);
+
+  const checkFormFilled = () => {
+    if (
+      namaProdukRef.current?.value &&
+      hargaJualRef.current?.value &&
+      hargaBeliRef.current?.value &&
+      kategoriRef.current?.value
+    ) {
+      setIsFilled(true);
+    } else {
+      setIsFilled(false);
+    }
+    console.log(isFilled);
+  };
+
+
   useEffect(() => {
     const fetchall = async () => {
       await axios
@@ -114,14 +131,15 @@ export const DaftarProdukAdd = () => {
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
-      <div className="flex flex-col gap-3 px-3">
-        <label className="text-start font-semibold ">Jenis Produk</label>
+      <div className="flex flex-col px-3 h-full">
+        <label className="text-start font-semibold mb-[5px]">Jenis Produk</label>
         <select
           ref={jenisRef}
           onChange={changeJenis}
           name="options"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px]"
           id="jenis"
         >
           <option value="" className="text-[#BDBDBD]" selected disabled>
@@ -133,14 +151,14 @@ export const DaftarProdukAdd = () => {
             </option>
           ))}
         </select>
-        <label className="text-start font-semibold ">
+        <label className="text-start font-semibold mb-[5px]">
           Kategori Produk
         </label>
         <select
           ref={kategoriRef}
           onChange={kategoriChange}
           name="options"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px]"
           id="Gender"
         >
           <option value="" className="text-gray-300" selected disabled>
@@ -155,7 +173,7 @@ export const DaftarProdukAdd = () => {
         <select
           ref={supplierRef}
           name="options"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px]"
           id="Gender"
         >
           <option value="" className="text-gray-300" selected disabled>
@@ -167,39 +185,40 @@ export const DaftarProdukAdd = () => {
             </option>
           ))}
         </select>
-        <label className="text-start font-semibold ">Nama Produk</label>
+        <label className="text-start font-semibold mb-[5px]">Nama Produk</label>
         <input
           ref={namaProdukRef}
           type="text"
           placeholder="Contoh : Viva Milk Cleanser"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold ">Harga Beli</label>
+        <label className="text-start font-semibold mb-[5px]">Harga Beli</label>
         <input
           ref={hargaBeliRef}
           onChange={hitung}
           type="number"
           placeholder="0"
-          className="px-2 bg-gray-400/10 border  border-black/30 rounded-xl h-[30px]"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold ">Harga Jual</label>
+        <label className="text-start font-semibold mb-[5px]">Harga Jual</label>
         <input
           ref={hargaJualRef}
           onChange={hitung}
           type="number"
           placeholder="0"
-          className="px-2 bg-gray-400/10 border  border-black/30 rounded-xl h-[30px]"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px]"
+          
         />
-        <label className="text-start font-semibold ">
+        <label className="text-start font-semibold mb-[5px]">
           Bonus Terapis
         </label>
         <input
           ref={bonusTerapisRef}
           type="number"
           placeholder="Contoh : Rp. 20000"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold ">
+        <label className="text-start font-semibold mb-[5px]">
           Presentase Keuntungan
         </label>
         <input
@@ -207,9 +226,9 @@ export const DaftarProdukAdd = () => {
           disabled
           value = {`${profitprs}%`}
           placeholder=""
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold ">
+        <label className="text-start font-semibold mb-[5px]">
           Nominal Keuntngan
         </label>
         <input
@@ -217,27 +236,27 @@ export const DaftarProdukAdd = () => {
           disabled
           value ={`Rp ${profitrp}`}
           placeholder=""
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold ">Stok</label>
+        <label className="text-start font-semibold mb-[5px]">Stok</label>
         <input
           ref={stokRef}
           type="number"
           placeholder=""
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold ">Min Stok</label>
+        <label className="text-start font-semibold mb-[5px]">Min Stok</label>
         <input
           ref={minStokRef}
           type="number"
           placeholder=""
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
       </div>
-      <div className="mt-4 w-full h-full px-3">
+      <div className="flex items-end mt-auto w-full h-full px-3">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>

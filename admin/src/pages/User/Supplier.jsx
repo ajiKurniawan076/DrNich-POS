@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export const Supplier = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [datasupplier, setdatasupplier] = useState([]);
   const [cari, setCari] = useState("");
@@ -23,6 +23,7 @@ export const Supplier = () => {
     };
     fetchData();
     setNav("Supplier");
+    setSort(true)
   }, []);
 
   const filterData = datax.filter(

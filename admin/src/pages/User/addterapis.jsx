@@ -20,6 +20,23 @@ export const Addterapis = () => {
   const nomorRekeningRef = useRef(null);
   const bankRef = useRef(null);
   const imageRef = useRef(null);
+  const [isFilled, setIsFilled] = useState(false);
+
+  const checkFormFilled = () => {
+    if (
+      namaTerapisRef.current?.value &&
+      nomorTeleponRef.current?.value &&
+      alamatRef.current?.value &&
+      keteranganRef.current?.value &&
+      namaRekeningRef.current?.value &&
+      nomorRekeningRef.current?.value &&
+      bankRef.current?.value
+    ) {
+      setIsFilled(true);
+    } else {
+      setIsFilled(false);
+    }
+  };
 
   const [imagePreview, setImagePreview] = useState(null);  // State to hold the image preview
 
@@ -70,35 +87,38 @@ export const Addterapis = () => {
 
   return (
     <form
-      className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
+      className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
     >
-      <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">Nama Lengkap</label>
+      <div className="flex flex-col px-3 h-full">
+        <label className="text-start font-semibold mb-[5px]">Nama Lengkap</label>
         <input
           ref={namaTerapisRef}
           type="text"
           placeholder="Contoh : Nikita"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold">Nomor Telepon</label>
+        <label className="text-start font-semibold mb-[5px]">Nomor Telepon</label>
         <input
           ref={nomorTeleponRef}
           type="text"
           placeholder="Contoh : 0892323232"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold">Alamat</label>
+        <label className="text-start font-semibold mb-[5px]">Alamat</label>
         <input
           ref={alamatRef}
           type="text"
           placeholder="Contoh : Jalan Kalitaman 22 Salatiga"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold">Upload Foto KTP</label>
+        <label className="text-start font-semibold mb-[5px]">Upload Foto KTP</label>
         <input
           ref={imageRef}
           hidden
@@ -123,43 +143,47 @@ export const Addterapis = () => {
       </div>
 
       <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">Nama Pemilik Rekening</label>
+        <label className="text-start font-semibold mb-[5px]">Nama Pemilik Rekening</label>
         <input
           ref={namaRekeningRef}
           type="text"
           placeholder="Contoh : Hana"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold">Bank</label>
+        <label className="text-start font-semibold mb-[5px]">Bank</label>
         <input
           ref={bankRef}
           type="text"
           placeholder="Contoh : BCA"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold">Nomor Rekening</label>
+        <label className="text-start font-semibold mb-[5px]">Nomor Rekening</label>
         <input
           ref={nomorRekeningRef}
           type="text"
           placeholder="Contoh : 5670019288493"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold">Keterangan</label>
+        <label className="text-start font-semibold mb-[5px]">Keterangan</label>
         <input
           ref={keteranganRef}
           type="text"
           placeholder="Contoh : Admin PT.BEAUTY"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          onChange={checkFormFilled}
         />
       </div>
 
       <div className="mt-4 w-full h-full px-3">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>

@@ -108,16 +108,16 @@ export const Cashback3 = () => {
     document.title = 'Tambah Cashback'
     return (
         <modalContext.Provider value={{ modal, setModal, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriname }}>
-            <form onSubmit={handleSubmit} className="flex flex-col px-5 py-8 gap-1 bg-white w-full min-h-screen h-fit pt-8 text-[#454545] text-[12px]">
-                <div className='grid place-items-start'>
+            <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
+                <div className='flex flex-col px-3 h-full'>
                     <p>Kategori Cashback</p>
-                    <div className="relative w-full mt-1">
+                    <div className="relative w-full mt-[5px]">
                         <select
                             name="options"
                             onChange={gantiKategori}
                             ref={keteranganRef}
                             id="kategoriproduk"
-                            className="relative bg-white border text-sm border-gray-300 rounded-xl w-full p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+                            className="relative bg-white border text-sm border-gray-300 rounded-xl w-full h-[45px] py-[12px] p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none mb-[20px]"
                             aria-label="Kategori Produk"
                         >
                             <option value="" disabled selected className="text-gray-300">
@@ -131,37 +131,37 @@ export const Cashback3 = () => {
                         <img
                             src={iPanahB}
                             alt="Dropdown icon"
-                            className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-4 h-4"
+                            className="absolute right-4 top-[35%] -translate-y-1/2 pointer-events-none w-4 h-4"
                         />
                     </div>
                 </div>
-                <div className='grid place-items-start w-full mt-4'>
+                <div className='flex flex-col px-3 h-full'>
                     <p>Nama Promo Cashback</p>
-                    <input ref={namaPromoRef} type='text' placeholder='Nama Promo Cashback' className='flex justify-start border border-[#BDBDBD] rounded-xl p-4 w-full mt-1'>
+                    <input ref={namaPromoRef} type='text' placeholder='Nama Promo Cashback' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                     </input>
                 </div>
-                <div className='grid place-items-start w-full mt-4'>
+                <div className='flex flex-col px-3 h-full'>
                     <p>Jumlah Cashback</p>
-                    <div className='flex relative justify-start border border-[#BDBDBD] rounded-xl p-4 w-full mt-1'>
+                    <div className='flex justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                         <input ref={cashbackRef} placeholder='100' className='flex justify-between w-full text-start items-center'>
                         </input>
-                        <p className='absolute end-5 text-[#BDBDBD]'>Poin</p>
+                        <p className='absolute end-[60px] text-[#BDBDBD]'>Poin</p>
                     </div>
                 </div>
-                <div className='grid place-items-start mt-4'>
+                <div className='flex flex-col px-3 h-full'>
                     <label htmlFor="">Khusus {kategoriname}</label>
                     <button onClick={(e) => {
                         e.preventDefault()
-                        setModal(true)}} className=' border-2 rounded-xl p-4 w-full text-start'>
+                        setModal(true)}} className=' flex justify-start text-cemter border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                         Tambah {kategoriname}
                     </button>
                 </div>
 
-                <div className='Grid place-items-start mt-4'>
+                <div className='flex flex-col px-3 h-full'>
                     <p>Masa Berlaku</p>
-                    <div className='flex flex-col gap-2 justify-between w-full mt-1'>
+                    <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
                         <p>Dari :</p>
-                        <div className="w-full relative flex justify-center items-center border border-gray-300 rounded-xl p-3">
+                        <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                             <DatePicker
                                 selected={startDate}
                                 onChange={(date) => setStartDate(date)}
@@ -184,7 +184,7 @@ export const Cashback3 = () => {
 
 
                         <p>Sampai :</p>
-                        <div className="w-full relative flex justify-center items-center border border-gray-300 rounded-xl p-3">
+                        <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                             <DatePicker
                                 selected={endDate}
                                 onChange={(date) => setEndDate(date)}
@@ -208,10 +208,10 @@ export const Cashback3 = () => {
                     </div>
                 </div>
 
-                <div className='Grid place-items-start mt-4'>
+                <div className='flex flex-col px-3 h-full'>
                     <p>Produk Terpilih</p>
                     {produkTerpilih.map((item, i) => (
-                        <div className='flex justify-between w-full border border-[#BDBDBD] rounded-xl p-4 mt-1'>
+                        <div className='flex justify-between w-full border border-[#BDBDBD] rounded-xl p-4 mt-1 mb-3'>
                             <p>{item.namaProduk}</p>
                             <button onClick={
                                 (e) => {

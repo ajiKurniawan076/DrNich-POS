@@ -16,7 +16,7 @@ import { PembelianStok } from "./PembelianStok";
 
 export const modalContext = createContext();
 export const DaftarBelanja = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [angka, setAngka] = useState(0);
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState([]);
@@ -96,14 +96,15 @@ export const DaftarBelanja = () => {
         });
     };
     fetch();
+    setNav("Daftar Belanja");
+    setSort(false)
+    document.title = "Daftar Belanja";
   }, []);
   useEffect(() => {
     setTotal(0);
     cart.map((item) => setTotal((prev) => prev + item.jumlah * item.hargaBeli));
   }, [cart]);
 
-  setNav("Daftar Belanja");
-  document.title = "Daftar Belanja";
   return (
     <modalContext.Provider
       value={{

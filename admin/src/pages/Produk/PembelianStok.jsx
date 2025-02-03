@@ -7,7 +7,7 @@ import { modalContext } from './DaftarBelanja';
 import { modalsContext } from './DaftarBelanjaModals';
 
 export const PembelianStok = (props) => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setSort } = useContext(navContext)
     const { modals, setModals, produkKategori, setProdukKategori, pilihKategori, cart, setCart } = props.source == "DaftarBelanja" ? useContext(modalContext) : useContext(modalsContext)
     const [kategoriTerpilih, setKategoriTerpilih] = useState('')
     const kategoriRef = useRef(null)
@@ -51,7 +51,7 @@ export const PembelianStok = (props) => {
     }, [kategoriTerpilih])
     
 
-setNav('Pembelian Stok')
+    setNav('Pembelian Stok')
 document.title = 'Pembelian Stok'
     return (
     <div className={`flex flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-white w-full h-full overflow-scroll ${modals ? "" : "hidden"}`}>

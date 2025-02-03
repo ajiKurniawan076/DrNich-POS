@@ -6,7 +6,7 @@ import wa from "../../assets/wa.svg";
 import axios from "axios";
 
 export const MarketingDetail = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const { id } = useParams();
   const navigasi = useNavigate();
@@ -26,6 +26,7 @@ export const MarketingDetail = () => {
     setDatax("Detail Marketing");
     // })
     setNav("Detail Marketing");
+    setSort(false)
   }, []);
   console.log(datax);
 

@@ -6,7 +6,7 @@ import wa from "../../assets/wa.svg";
 import axios from "axios";
 
 export const PelangganDetail = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const { id } = useParams();
   const navigasi = useNavigate();
@@ -18,6 +18,7 @@ export const PelangganDetail = () => {
     };
     fetchData();
     setNav("Detail Pelanggan");
+    setSort(false)
   }, []);
 
   const handleDelete = async () => {

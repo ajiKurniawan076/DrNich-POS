@@ -21,6 +21,8 @@ import imes from "../../assets/iconDisplay/imes.svg";
 import iproduk from "../../assets/iconDisplay/iproduk.svg";
 import ipromo from "../../assets/iconDisplay/ipromo.svg";
 import irating from "../../assets/iconDisplay/irating.svg";
+import iNext from "../../assets/iNext.svg";
+
 
 export const Display = () => {
   const { setNav } = useContext(navContext);
@@ -29,108 +31,101 @@ export const Display = () => {
   }, []);
   document.title = " Display";
   return (
-    <div className="w-full h-full flex flex-col gap-2 px-10 py-10 bg-white items-start place-items-center">
+    <div className="w-full h-fit flex flex-col gap-y-[15px] px-10 py-10 bg-white items-start place-items-center">
       <Link
         to={{
           pathname: `/sertifikat`,
         }}
-        className="w-full h-[80px]"
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
       >
-        <span className="hover:scale-110 w-full h-[80px] border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
-          <img src={iLine} className="ms-[15px]" />
+        <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
+          <img src={iLine} />
           <img src={iserti} className="ms-[25px]" />
-          <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">
             Sertifikat
           </p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
+          <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+                    <img src={iNext} alt="next" />
+                  </div>
         </span>
       </Link>
       <Link
         to={{
           pathname: `/layananKategori`,
         }}
-        className="w-full h-[80px]"
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
       >
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
-          <img src={iLine} className="ms-[15px]" />
+        <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
+          <img src={iLine} />
           <img src={ilaya} className="ms-[25px]" />
-          <p className="ms-[15px] text-[#454545] font-medium text-[14px]">
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">
             Layanan
           </p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
+          <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+                    <img src={iNext} alt="next" />
+                  </div>
         </span>
       </Link>
 
-      <Link to={{ pathname: "" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
-          <img src={iLine} className="ms-[15px]" />
+      <Link to={{ pathname: "" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+        <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
+          <img src={iLine} />
           <img src={imes} className="ms-[25px]" />
-          <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">
             Mesin
           </p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
+          <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+                    <img src={iNext} alt="next" />
+                  </div>
         </span>
       </Link>
 
-      <Link to={{ pathname: "/produk" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
-          <img src={iLine} className="ms-[15px]" />
+      <Link to={{ pathname: "/produk" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+        <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
+          <img src={iLine} />
           <img src={iproduk} className="ms-[25px]" />
-          <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">
             Produk
           </p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
+          <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+                    <img src={iNext} alt="next" />
+                  </div>
         </span>
       </Link>
-      <Link to={{ pathname: "/galeri" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
-          <img src={iLine} className="ms-[15px]" />
+      <Link to={{ pathname: "/galeri" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+        <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
+          <img src={iLine} />
           <img src={igaleri} className="ms-[25px]" />
-          <p className="ms-[15px] text-[14px]">Galeri</p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">Galeri</p>
+          <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+          <img src={iNext} alt="next" />
+        </div>
         </span>
       </Link>
-      <Link className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
-          <img src={iLine} className="ms-[15px]" />
+      <Link className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+        <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
+          <img src={iLine} />
           <img src={ipromo} className="ms-[25px]" />
-          <p className="ms-[15px] text-[14px]">Promo</p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">Promo</p>
+          <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+          <img src={iNext} alt="next" />
+        </div>
         </span>
       </Link>
       <Link
         to={{
           pathname: "/rating",
         }}
-        className="w-full h-[80px]"
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
       >
         {" "}
-        <span className="hover:scale-110 w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
-          <img src={iLine} className="ms-[15px]" />
+        <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
+          <img src={iLine} />
           <img src={irating} className="ms-[25px]" />
-          <p className="ms-[15px] text-[14px]">Rating</p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">Rating</p>
+          <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+          <img src={iNext} alt="next" />
+        </div>
         </span>
       </Link>
     </div>

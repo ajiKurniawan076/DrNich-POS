@@ -5,6 +5,8 @@ import { navContext } from "../../App2"
 import iDis from "../../assets/iconpromo/iDis.svg";
 import iCas from "../../assets/iconpromo/iCash.svg";
 import iLine from "../../assets/iLine.svg";
+import iNext from "../../assets/iNext.svg";
+
 
 
 export const Promo = () => {
@@ -14,19 +16,17 @@ export const Promo = () => {
   },[])
 
   return (
-    <div className="w-full h-full flex flex-col gap-2 px-10 py-10 bg-white items-start place-items-center">  
-    <a href="TambahDiskon4" className="w-full h-[80px]"><span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold"><img src={iLine} className="ms-[15px]"/><img src={iDis} className="ms-[25px]"/><p className="ms-[15px]">Diskon</p>
-                        <div className="flex ms-auto me-[15px]">
-                        <AiOutlineRight className="text-yellow-300" size={15}/>
-                        <AiOutlineRight className="text-yellow-600" size={15}/>
-                        </div>
+    <div className="w-full h-full flex flex-col gap-y-[15px] px-10 py-10 bg-white items-start place-items-center">  
+    <a href="TambahDiskon4" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iDis} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Diskon</p>
+                        <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+                                  <img src={iNext} alt="next" />
+                                </div>
                         </span></a>
 
-    <a href="CashBack" className="w-full h-[80px]"><span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold"><img src={iLine} className="ms-[15px]"/><img src={iCas} className="ms-[25px]"/><p className="ms-[15px]">Cashback</p>
-                        <div className="flex ms-auto me-[15px]">
-                        <AiOutlineRight className="text-yellow-300" size={15}/>
-                        <AiOutlineRight className="text-yellow-600" size={15}/>
-                        </div>
+    <a href="CashBack" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iCas} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Cashback</p>
+                        <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
+                                  <img src={iNext} alt="next" />
+                                </div>
                         </span></a>
     </div>
   )

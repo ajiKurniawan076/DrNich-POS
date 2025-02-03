@@ -6,7 +6,7 @@ import wa from "../../assets/wa.svg";
 import axios from "axios";
 
 export const KategoriProdukDetail = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setSort } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [fetched, setFetched] = useState(false);
   const { id } = useParams();
@@ -22,6 +22,7 @@ export const KategoriProdukDetail = () => {
     fetchData();
 
     setNav("Jenis Product");
+    setSort(false)
   }, []);
 
   useEffect(() => {
