@@ -4,6 +4,8 @@ import {
   AiOutlineRightCircle,
   AiOutlineSearch,
 } from "react-icons/ai";
+import ikon from "../../assets/ikon.svg";
+import add from "../../assets/add.svg";
 import { Link } from "react-router-dom";
 import { navContext } from "../../App2";
 import axios from "axios";
@@ -57,28 +59,28 @@ export const Terapis = () => {
                 className="w-full border flex justify-between items-center rounded-xl border-[#BDBDBD] px-3 py-3"
                 key={i}
               >
-                <ul className=" flex flex-col place-items-start font-semibold">
-                  <li>{data.namaTerapis}</li>
-                  <li className="text-[#BDBDBD]">
+                <ul className=" flex flex-col place-items-start text-[12px]">
+                  <li className="font-medium  text-[#454545]">
+                    {data.namaTerapis}
+                  </li>
+                  <li className="text-[#BDBDBD] font-normal">
                     {data.nomorTelepon}
                   </li>
                 </ul>
-                <AiOutlineRightCircle size={20} />
+                <img src={ikon} className="h-[20px] w-[20px]" />
               </Link>
             ))}
           </div>
         )}
-
-        
       </div>
       <div className="mt-auto">
-          <a
-            href="addterapis"
-            className="flex justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-3"
-          >
-            <AiFillPlusCircle size={16} /> Tambah Terapis
-          </a>
-        </div>
+        <a
+          href="addterapis"
+          className="flex justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-3"
+        >
+          <img src={add} className="h-[20px] w-[20px]" /> Tambah Terapis
+        </a>
+      </div>
     </div>
   );
 };

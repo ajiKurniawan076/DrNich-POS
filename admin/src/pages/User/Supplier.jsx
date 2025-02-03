@@ -4,6 +4,8 @@ import {
   AiOutlineRightCircle,
   AiOutlineSearch,
 } from "react-icons/ai";
+import ikon from "../../assets/ikon.svg";
+import add from "../../assets/add.svg";
 import { useContext, useEffect } from "react";
 import { navContext } from "../../App2";
 import { Link } from "react-router-dom";
@@ -58,27 +60,29 @@ export const Supplier = () => {
                 className="w-full border flex justify-between items-center rounded-xl border-[#BDBDBD] px-3 py-3"
                 key={supp._id}
               >
-                <ul className=" flex flex-col place-items-start font-semibold">
+                <ul className=" flex flex-col place-items-start text-[12px]">
                   {/* <li>{supp.id}</li> */}
-                  <li>{supp.namaPerusahaan}</li>
-                  <li className="text-[#BDBDBD]">
+                  <li className="font-medium  text-[#454545]">
+                    {supp.namaPerusahaan}
+                  </li>
+                  <li className="text-[#BDBDBD] font-normal">
                     {supp.nomorTelepon}
                   </li>
                 </ul>
-                <AiOutlineRightCircle size={20} />
+                <img src={ikon} className="h-[20px] w-[20px]" />
               </Link>
             ))}
           </div>
         )}
       </div>
-        <div className="mt-3">
-          <a
-            href="addsupplier"
-            className="flex justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-3"
-          >
-            <AiFillPlusCircle size={16} /> Tambah Supplier
-          </a>
-        </div>
+      <div className="mt-3">
+        <a
+          href="addsupplier"
+          className="flex justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-3"
+        >
+          <img src={add} className="h-[20px] w-[20px]" /> Tambah Supplier
+        </a>
+      </div>
     </div>
   );
 };

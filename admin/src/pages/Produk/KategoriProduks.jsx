@@ -69,8 +69,8 @@ export const KategoriProduks = () => {
                 key={i}
               >
                 <ul className="flex flex-col place-items-start font-semibold">
-                  <li className="text-[#454545]">{data?.jenis?.jenis}</li>
-                  <li className="text-[#BDBDBD]">{data?.kategori}</li>
+                  <li className="text-[#BDBDBD]">{data?.jenis?.jenis}</li>
+                  <li className="text-[#454545]">{data?.kategori}</li>
                 </ul>
                 <AiOutlineRightCircle size={20} />
               </Link>
