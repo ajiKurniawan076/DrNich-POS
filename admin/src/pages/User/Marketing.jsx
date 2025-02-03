@@ -4,6 +4,8 @@ import {
   AiOutlineRightCircle,
   AiOutlineSearch,
 } from "react-icons/ai";
+import ikon from "../../assets/ikon.svg";
+import add from "../../assets/add.svg";
 import { Link } from "react-router-dom";
 import { navContext } from "../../App2";
 import axios from "axios";
@@ -44,7 +46,7 @@ export const Marketing = () => {
       </form>
       <div className="flex flex-col justify-between w-full h-full py-3 px-3">
         {filterData.length == 0 ? (
-          <div className="flex flex-col w-full h-full items-center justify-center text-[#454545]">
+          <div className="flex flex-col w-full min-h-screen items-center justify-center text-[#cdcdcd]">
             Tidak Ada Data
           </div>
         ) : (
@@ -57,13 +59,15 @@ export const Marketing = () => {
                 className="w-full border flex justify-between items-center rounded-xl border-[#BDBDBD] px-3 py-3"
                 key={i}
               >
-                <ul className=" flex flex-col place-items-start font-semibold">
-                  <li>{data.namaMarketing}</li>
-                  <li className="text-[#BDBDBD]">
+                <ul className=" flex flex-col place-items-start text-[12px]">
+                  <li className="font-medium  text-[#454545]">
+                    {data.namaMarketing}
+                  </li>
+                  <li className="text-[#BDBDBD] font-normal">
                     {data.nomorTelepon}
                   </li>
                 </ul>
-                <AiOutlineRightCircle size={20} />
+                <img src={ikon} className="h-[20px] w-[20px]" />
               </Link>
             ))}
           </div>
@@ -74,7 +78,8 @@ export const Marketing = () => {
           href="addmarketing"
           className="flex justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-3"
         >
-          <AiFillPlusCircle size={20} /> Tambah Marketing
+          <img src={add} className="h-[20px] w-[20px]" />
+          Tambah Marketing
         </a>
       </div>
     </div>

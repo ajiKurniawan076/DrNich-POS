@@ -63,9 +63,9 @@ export const DaftarProduk2 = () => {
                   </li>
                   <li className="w-full flex justify-between">
                     <span>{pro.namaProduk}</span>
-                    <span className="text-[#C2A353]">{pro.hargaJual}</span>
                   </li>
                 </ul>
+                <span className="text-[#C2A353]">Rp.{pro.hargaJual}</span>
               </Link>
             ))}
           </div>
