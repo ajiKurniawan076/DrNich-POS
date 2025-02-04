@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const JenisProductAdd = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Tambah Jenis Produk");
+    setLink('/pos/jenisproduk')
   }, []);
   document.title = "Tambah Jenis Produk";
   const inputRef = useRef(null);

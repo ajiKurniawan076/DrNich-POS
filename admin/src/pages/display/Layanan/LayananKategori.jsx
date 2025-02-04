@@ -16,7 +16,7 @@ import ikategori from "../../../assets/iconDisplay/Layanan/ikategori.svg";
 
 
 export const LayananKategori = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     useEffect(() => {
         setNav('Layanan')
     }, [])

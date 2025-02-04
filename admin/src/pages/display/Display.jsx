@@ -25,7 +25,7 @@ import iNext from "../../assets/iNext.svg";
 
 
 export const Display = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Display");
   }, []);

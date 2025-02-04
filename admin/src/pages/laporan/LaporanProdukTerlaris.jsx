@@ -7,7 +7,7 @@ import i3 from "../../assets/iconLaporanPenjualan/i3.svg";
 import i4 from "../../assets/iconLaporanPenjualan/i4.svg";
 
 export const LaporanProdukTerlaris = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Produk Terlaris')   

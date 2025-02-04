@@ -4,7 +4,7 @@ import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iPanahB from "../../assets/iconmanajement/iPanahB.svg";
 
 export const Cashback2 = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   setNav("Produk");
   document.title = "Produk";

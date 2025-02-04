@@ -9,7 +9,7 @@ import iFrameKet2 from "../../assets/iconLaporanPenjualan/iFrameKet2.svg";
 
 
 export const LaporanPenjualanProduk = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     
 setNav('Laporan Produk')   
 document.title = 'Laporan Produk'

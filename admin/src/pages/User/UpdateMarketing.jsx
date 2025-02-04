@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export const UpdateMarketing = () => {
   const navigate = useNavigate();
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   const namaMarketingRef = useRef(null);
   const nomorTeleponRef = useRef(null);
@@ -85,10 +85,11 @@ export const UpdateMarketing = () => {
       }
     };
     fetchData();
+    setLink('/pos/marketing')
+    setNav("Edit Marketing");
+    document.title = "Edit Marketing";
   }, [id]);
 
-  setNav("Edit Marketing");
-  document.title = "Edit Marketing";
 
   return (
     <form

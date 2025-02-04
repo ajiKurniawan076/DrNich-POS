@@ -3,7 +3,7 @@ import { navContext } from "../../App2"
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 
 export const LaporanProdukTerjual = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Produk Terjual')   

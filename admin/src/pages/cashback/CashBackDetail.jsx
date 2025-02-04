@@ -6,7 +6,7 @@ import axios from "axios";
 
 const CashbackDetail = () => {
   const lokasi = useLocation();
-  const { setNav } = useContext(navContext); // Mengambil setNav dari context
+  const { setNav, setLink } = useContext(navContext); // Mengambil setNav dari context
   const [datax, setDatax] = useState({}); // State untuk data, ubah default ke objek kosong
   const { id } = useParams();
 

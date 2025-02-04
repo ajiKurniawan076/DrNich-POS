@@ -8,7 +8,7 @@ import axios from "axios";
 export const DaftarProdukByJenis = () => {
   const [products, setproducts] = useState([]);
   const { Kategori } = useParams();
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [cari, setCari] = useState("");
   const {jenis} = useParams()
   useEffect(() => {
@@ -22,6 +22,7 @@ export const DaftarProdukByJenis = () => {
     };
     fetchData();
     setNav("Daftar Produk");
+    setLink('/pos/jenisproduk')
   }, []);
   const filterData = products.filter(
     (data) =>

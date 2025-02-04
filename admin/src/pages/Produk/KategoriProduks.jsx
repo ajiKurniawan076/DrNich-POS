@@ -9,7 +9,7 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const KategoriProduks = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [search, setSearch] = useState(""); // Untuk pencarian
 
@@ -25,7 +25,8 @@ export const KategoriProduks = () => {
       }
     };
     fetchData();
-    setNav("Kategori Product");
+    setNav("Kategori Produk");
+    setLink('/pos/produks')
   }, []);
 
   // Filter data berdasarkan pencarian

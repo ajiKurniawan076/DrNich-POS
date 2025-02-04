@@ -6,7 +6,7 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 export const DaftarProduk = () => {
   const [products, setproducts] = useState([]);
   const { Kategori } = useParams();
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, setLink } = useContext(navContext);
   useEffect(() => {
     fetch("/produk.json")
       .then((response) => response.json())

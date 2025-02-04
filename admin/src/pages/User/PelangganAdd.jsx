@@ -7,10 +7,11 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 export const PelangganAnd = () => {
-  const { setNav } = useContext(navContext)
+  const { setNav, setLink } = useContext(navContext)
   const navigate = useNavigate()
   useEffect(() => {
     setNav('Tambah Pelanggan')
+    setLink('/pos/pelanggan')
   }, [])
 
   const namaPelangganRef = useRef(null);

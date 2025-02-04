@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const modalsContext = createContext()
 export const TambahDiskon3 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [produkTerpilih, setProdukTerpilih] = useState([])
     const [modals, setModals] = useState(false)
     const [jenis, setJenis] = useState([])
@@ -70,7 +70,7 @@ export const TambahDiskon3 = () => {
         }
         console.log(data)
         await axios.post('https://api.drnich.co.id/api/pos/promo/promo',data).then(
-            response => response.status == 200 ? console.log(response) : console.log('eror')
+            response => response.status == 200 ? navigate('../tambahdiskon4') : console.log('eror')
         )
         navigate("../TambahDiskon3")
     }

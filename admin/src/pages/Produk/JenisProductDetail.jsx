@@ -7,7 +7,7 @@ import axios from "axios";
 import next2 from "../../assets/next2.svg";
 
 export const JenisProductDetail = () => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const [datax, setDatax] = useState([]);
   const { id } = useParams();
@@ -21,6 +21,7 @@ export const JenisProductDetail = () => {
     };
     fetchData();
     setNav("Jenis Product");
+    setLink('/pos/jenisproduk')
     setSort(false)
   }, []);
   const deleteModel = async () => {

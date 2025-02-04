@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 export const PembayaranProduk = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const { id } = useParams();
   console.log(id);

@@ -4,7 +4,7 @@ import axios from "axios";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 export const ManajementKurangiStok = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [produk, setProduk] = useState([null]);
   const [fetched, setFetched] = useState(false);
   const jumlahRef = useRef(null);
@@ -22,6 +22,9 @@ export const ManajementKurangiStok = () => {
         });
     };
     fetch();
+    setNav("Kurangi Stok");
+    document.title = "Manajemen Kurangi Stok";
+    setLink('/pos/manajementStok')
   }, []);
 
   const handeSubmit = (e) => {
@@ -40,8 +43,6 @@ export const ManajementKurangiStok = () => {
       );
   };
 
-  setNav("Kurangi Stok");
-  document.title = "Manajemen Kurangi Stok";
   return (
     <form
       onSubmit={handeSubmit}

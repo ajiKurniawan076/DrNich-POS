@@ -17,7 +17,7 @@ import { Link } from "react-router-dom"
 
 
 export const Produk = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     useEffect(() => {
         setNav('Layanan')
     }, [])

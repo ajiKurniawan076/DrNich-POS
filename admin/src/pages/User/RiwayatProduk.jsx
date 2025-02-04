@@ -5,7 +5,7 @@ import iRiwa from "../../assets/iconproduk/iRiwa.svg";
 
 
 export const RiwayatProduk = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Riwayat')   
 document.title = 'Riwayat'

@@ -7,7 +7,7 @@ import iShare from "../../assets/iconLaporanPenjualan/iShare.svg";
 
 
 export const LaporanPembayaran = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('')   
 document.title = 'Pembayaran'

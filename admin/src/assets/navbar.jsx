@@ -7,7 +7,7 @@ import iBack from "../assets/iBack.svg"
 import iSortir from "../assets/iSortir.svg"
 import iClose from "../assets/iClose.svg"
 export const Navbar = () => {
-    const { nav, sort, asc, setasc, showsort, setshowsort } = useContext(navContext)
+    const { nav, sort, asc, setasc, showsort, setshowsort, link } = useContext(navContext)
     const back = useNavigate()  
 
     const klikasc =(e) => {
@@ -38,7 +38,7 @@ export const Navbar = () => {
                 }
             </div>
             <div className={` items-center gap-4 cursor-pointer ${nav!='home'?'absolute start-5':''}`}>
-               {nav=='home'? <img src={iLogout} className="mt-2 me-5"/>:<button onClick={()=>{back(-1)}}><img src={iBack} className="mt-2"/></button>}
+               {nav=='home'? <img src={iLogout} className="mt-2 me-5"/>:<button onClick={()=>{back(link)}}><img src={iBack} className="mt-2"/></button>}
             </div>
             <div className={`absolute items-center gap-4 cursor-pointer ${sort?'end-9':'hidden'}`}>
                {nav=='home'?<></>:<button onClick={()=>{setshowsort(true)}}><img src={iSortir} className="mt-2"/></button>}

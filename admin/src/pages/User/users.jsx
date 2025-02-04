@@ -12,9 +12,10 @@ import iLine from "../../assets/iLine.svg";
 import iNext from "../../assets/iNext.svg";
 
 export const USer = () => {
-    const {setNav} = useContext(navContext)
+    const {setNav, setLink} = useContext(navContext)
   useEffect(()=>{
     setNav('Data User')
+    setLink('/pos')
   },[])
   document.title = 'Data Users'
 

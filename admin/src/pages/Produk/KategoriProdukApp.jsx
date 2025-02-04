@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 
 export const KategoriProdukAdd = () => {
 
-  const { setNav } = useContext(navContext)
+  const { setNav, setLink } = useContext(navContext)
   const [jenis, setJenis] = useState([])
   const [select, setSelected] = useState("")
   useEffect(() => {
@@ -21,7 +21,8 @@ export const KategoriProdukAdd = () => {
       )
     }
     fetchJenis()
-    setNav('Tambah Marketing')
+    setNav('Tambah Kategori Produk')
+    setLink('/pos/kategoriproduk')
   }, [])
 
 

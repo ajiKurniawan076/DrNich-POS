@@ -14,7 +14,7 @@ import i4 from "../../assets/iconLaporanPenjualan/i4.svg";
 
 
 export const LaporanRingkasanPenjualan = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Ringkasan Penjualan')   

@@ -12,6 +12,7 @@ export const KategoriProduk = () => {
           ).then((data)=>(setKategori(data)
           ))
       setNav('Kategori Produk')
+      setLink('/pos/produks')
       setSort(true)
     },[])
   return (

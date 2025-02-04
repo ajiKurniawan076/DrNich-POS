@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const modaltransaksi = createContext()
 export const Kasir4 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const {totalAkhir, handleDraft, potongan, cashback, modal, setModal, cart, setCart, invoice, total, pelanggan,promo,terapis,marketing, setPelangganTerpilih, pelangganTerpilih, promoTerpilih, setPromoTerpilih} = useContext(kasirContext)
     const [modalPel, setModalPel] = useState(false)
     const [modalPro, setModalPro] = useState(false)

@@ -22,9 +22,10 @@ import iNext from "../../assets/iNext.svg";
 
 
 export const Products = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Produk");
+    setLink('/pos')
   }, []);
   document.title = "Produk";
 

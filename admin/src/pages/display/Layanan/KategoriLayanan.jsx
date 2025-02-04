@@ -5,7 +5,7 @@ import { navContext } from "../../../App2"
 
 export const KategoriLayanan = () => {
 
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [datax, setdatax] = useState([])
     useEffect(() => {
         const dummyData = [

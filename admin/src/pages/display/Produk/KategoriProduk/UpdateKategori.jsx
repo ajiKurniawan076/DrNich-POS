@@ -9,7 +9,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const UpdateKategori = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const gambarRef = useRef(null);
   const namaKategoriRef = useRef(null);

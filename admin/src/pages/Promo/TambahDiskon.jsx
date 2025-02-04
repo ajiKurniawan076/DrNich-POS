@@ -5,7 +5,7 @@ import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 
 
 export const TambahDiskon = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Tambah Diskon')   
 document.title = 'Tambah Diskon'

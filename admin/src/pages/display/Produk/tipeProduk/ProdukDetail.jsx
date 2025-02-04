@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom"
 export const ProdukDetail = () => {
     const lokasi = useLocation();
     const dammyData = lokasi.state
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [datax, setdatax] = useState([])
     useEffect(() => {
         fetch("/marketing.json").then(

@@ -4,7 +4,7 @@ import axios from "axios";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 export const ManajementTambahStok = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [produk, setProduk] = useState([null]);
   const [fetched, setFetched] = useState(false);
   const jumlahRef = useRef(null);

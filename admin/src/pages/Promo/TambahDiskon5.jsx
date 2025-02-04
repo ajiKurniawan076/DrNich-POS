@@ -8,7 +8,7 @@ import iTgl from '../../assets/iconproduk/iTgl.svg'
 
 
 export const TambahDiskon5 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Diskon')   
 document.title = 'Diskon'

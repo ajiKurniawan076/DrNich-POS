@@ -10,7 +10,7 @@ import { DaftarBelanjaModals } from './DaftarBelanjaModals'
 
 export const modalStokContext = createContext()
 export const ManajementDetailStok = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [produk, setProduk] = useState([])
     const { id } = useParams()
     const [modalStok, setModalStok] = useState(false)
@@ -29,6 +29,7 @@ export const ManajementDetailStok = () => {
         }
         fetch()
         setNav('Manajemen Stok')
+        setLink('/pos/manajementstok')
     }, [])
 
 setNav('Detail')   

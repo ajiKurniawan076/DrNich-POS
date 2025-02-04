@@ -12,10 +12,11 @@ import iPenj from "../assets/iconpenjuala.svg";
 
 export const modalContext = createContext(null)
 export const HomeAdmin = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   useEffect(() => {
     setNav('home');
+    setLink('/pos')
   }, []);
 
   return (

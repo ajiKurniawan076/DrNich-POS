@@ -5,7 +5,7 @@ import iPan from "../../assets/iconkasir/iPan.svg";
 import iPanahB from "../../assets/iconmanajement/iPanahB.svg";
 
 export const DraftTransaksi4 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Kasir')   
 document.title = 'Kasir'

@@ -4,7 +4,7 @@ import iPan from "../../assets/iconproduk/iPan.svg";
 
 
 export const DetailRiwayatProduk = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Detail Riwayat Produk')   
 document.title = 'Detail Riwayat Produk'

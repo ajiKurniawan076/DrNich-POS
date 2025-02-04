@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { set } from "date-fns";
 
 export const UpdateDaftarProduk = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const [dataDummyx, setDataDummyx] = useState([]);
   const [dataDummiy, setDataDummiy] = useState([]);

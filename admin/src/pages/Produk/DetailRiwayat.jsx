@@ -3,7 +3,7 @@ import { navContext } from "../../App2"
 import iPanah from "../../assets/iconproduk/iPanah.svg";
 
 export const DetailRiwayat = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Detail Riwayat')   
 document.title = 'Detail Riwayat'

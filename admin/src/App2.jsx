@@ -149,12 +149,13 @@ export const navContext = createContext();
 
 function App2() {
   const [nav, setNav] = useState(null);
+  const [link, setLink] = useState('')
   const [sort, setSort] = useState(false);
   const [asc,setasc] = useState('')
   const [showsort, setshowsort] = useState(false)
 
   return (
-    <navContext.Provider value={{ nav, setNav, sort, setSort,  asc, setasc, showsort, setshowsort }}>
+    <navContext.Provider value={{ nav, setNav, sort, setSort,  asc, setasc, showsort, setshowsort, link, setLink }}>
       <div id="root2">
         <div id="root-container">
           <Navbar className="navbar" />
