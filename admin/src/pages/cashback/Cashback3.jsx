@@ -108,7 +108,7 @@ export const Cashback3 = () => {
     document.title = 'Tambah Cashback'
     return (
         <modalContext.Provider value={{ modal, setModal, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriname }}>
-            <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
+            <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-full h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
                 <div className='flex flex-col px-3 h-full'>
                     <p>Kategori Cashback</p>
                     <div className="relative w-full mt-[5px]">
@@ -223,8 +223,8 @@ export const Cashback3 = () => {
                     ))}
 
                 </div>
-                <div className='flex items-end h-full'>
-                    <button type='submit' className='flex justify-center text-[14px] text-white bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 '>
+                <div className='flex items-end h-full mt-auto'>
+                    <button type='submit' className=' flex justify-center text-[14px] text-white bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 '>
                         Simpan
                     </button>
                 </div>

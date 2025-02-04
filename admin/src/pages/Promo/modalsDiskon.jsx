@@ -46,7 +46,7 @@ export const ModalsDiskon = () => {
   document.title = "Modals";
   return (
     <div
-      className={`fixed flex flex-col items-center top-0 h-full start-0 w-full ${
+      className={`fixed flex flex-col items-center bg-black/20 top-0 h-full overflow-auto start-0 w-full ${
         modals == true ? "" : "hidden"
       }`}
     >
@@ -59,16 +59,8 @@ export const ModalsDiskon = () => {
       >
         X
       </button>
-      <div className="md:w-[700px] lg:w-[900px] w-[500px] border-2 border-[#454545] rounded-xl bg-white overflow-auto h-full px-3">
-        <form className="flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2 mt-4">
-          <img src={iCari} alt="Cari" />
-          <input
-            type="text"
-            className="text-sm w-full h-[30px] focus:outline-none"
-            placeholder="Cari..."
-          ></input>
-        </form>
-        <form className="h-full">
+      <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[500px] border-2 border-[#454545] rounded-xl bg-white overflow-auto min-h-full px-3">
+        <form className="h-full grid">
           <div className="flex justify-between gap-2 mt-4">
             <div className="relative w-full mt-1">
               <select
@@ -135,8 +127,8 @@ export const ModalsDiskon = () => {
               </p>
             </button>
           ))}
-          <div className="flex items-end h-full">
-            <button className="flex justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full">
+          <div className="flex items-end h-fit mt-auto">
+            <button className="flex mt-auto justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full">
               <p>Tambah</p>
               <p>| 5 Produk</p>
             </button>

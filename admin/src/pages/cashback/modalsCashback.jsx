@@ -40,14 +40,14 @@ export const ModalsCashback = () => {
         produk.length>0 && setProdukM(produk)
     },[produk])
     return (
-        <div className={`fixed flex flex-col items-center top-0 start-0 w-full bg-white h-full ${modal == true ? '' : 'hidden'}`}>
+        <div className={`fixed flex flex-col items-center top-0 start-0 w-full overflow-auto bg-black/20 h-full ${modal == true ? '' : 'hidden'}`}>
             <button className='text-[#454545] font-semibold'
                 onClick={(e) => {
                     e.preventDefault()
                     setModal(false)
                 }}>X</button>
-      <div className="md:w-[700px] lg:w-[900px] w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full overflow-auto px-3">
-      <form className='h-full'>
+      <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit overflow-auto px-3">
+      <form className='h-full grid'>
                     <div className='flex justify-between mt-4'>
                         <div className="relative w-full mt-1">
                             <select
@@ -111,8 +111,8 @@ export const ModalsCashback = () => {
                         </button>
                     ))
                     }
-                    <div className='flex items-end h-full'>
-                        <button className='flex justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full'>
+                    <div className='flex items-end h-fit mt-auto'>
+                        <button className='mt-auto flex justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full'>
                             <p>Tambah</p>
                             <p>| 5 Produk</p>
                         </button>
