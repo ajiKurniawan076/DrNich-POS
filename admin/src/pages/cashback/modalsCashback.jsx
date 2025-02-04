@@ -41,12 +41,12 @@ export const ModalsCashback = () => {
     },[produk])
     return (
         <div className={`fixed flex flex-col items-center top-0 start-0 w-full overflow-auto bg-black/20 h-full ${modal == true ? '' : 'hidden'}`}>
-            <button className='text-[#454545] font-semibold'
+            <button className='text-[#454545] font-semibold mt-[75px]'
                 onClick={(e) => {
                     e.preventDefault()
                     setModal(false)
                 }}>X</button>
-      <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit overflow-auto px-3">
+      <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit overflow-auto px-3">
       <form className='h-full grid'>
                     <div className='flex justify-between mt-4'>
                         <div className="relative w-full mt-1">

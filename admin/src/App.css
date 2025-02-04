@@ -35,7 +35,6 @@
 
 .admin-section {
   position: relative;
-  z-index: 50; /* Keep it above other content */
   display: flex;
   justify-content: center;
   align-items: center;

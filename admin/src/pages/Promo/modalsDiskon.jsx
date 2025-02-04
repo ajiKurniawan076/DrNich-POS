@@ -51,7 +51,7 @@ export const ModalsDiskon = () => {
       }`}
     >
       <button
-        className="text-[#454545] font-semibold"
+        className="text-[#454545] font-semibold mt-[75px]"
         onClick={(e) => {
           e.preventDefault();
           setModals(false);
@@ -59,7 +59,7 @@ export const ModalsDiskon = () => {
       >
         X
       </button>
-      <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[500px] border-2 border-[#454545] rounded-xl bg-white overflow-auto min-h-full px-3">
+      <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white overflow-auto min-h-full px-3">
         <form className="h-full grid">
           <div className="flex justify-between gap-2 mt-4">
             <div className="relative w-full mt-1">
