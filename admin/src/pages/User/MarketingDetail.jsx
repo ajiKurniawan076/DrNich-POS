@@ -42,17 +42,17 @@ export const MarketingDetail = () => {
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-9">
       <div className="flex flex-col gap-1 px-3 mx-1 rounded-xl border border-[#C2A353] pt-2">
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nama
         </label>
         <p className="text-start font-semibold h-[30px]">
           {datax.namaMarketing}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Alamat
         </label>
         <p className="text-start font-semibold h-[30px]">{datax.alamat}</p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nomor Telepon
         </label>
         <button
@@ -69,7 +69,7 @@ export const MarketingDetail = () => {
             {datax.nomorTelepon}
           </p>
         </button>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Foto
         </label>
         <div className="max-w-[300px] h-auto mx-auto mb-2">
@@ -80,23 +80,23 @@ export const MarketingDetail = () => {
         <span className="ms-2">Informasi Rekening</span>
       </div>
       <div className="flex flex-col gap-1 px-3 mx-1 rounded-xl border border-[#C2A353]  pt-2">
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nama Pemilik Rekening
         </label>
         <p className="text-start font-semibold h-[30px]">
           {datax.namaRekening}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Bank
         </label>
         <p className="text-start font-semibold h-[30px]">{datax.bank}</p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nomor Rekening
         </label>
         <p className="text-start font-semibold h-[30px]">
           {datax.nomorRekening}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Keterangan
         </label>
         <p className="text-start font-semibold h-[30px]">{datax.keterangan}</p>

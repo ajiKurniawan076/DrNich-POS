@@ -36,7 +36,7 @@ export const DaftarProdukByKategori = () => {
           onChange={(e) => setCari(e.target.value)}
           value={cari}
           type="text"
-          className="text-sm w-full focus:outline-none"
+          className="text-sm w-full h-[30px] focus:outline-none"
           placeholder="Cari..."
         ></input>
       </form>

@@ -48,7 +48,7 @@ export const ManajementStok = () => {
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-screen h-fit pt-8">
       {/* Form Pencarian */}
-      <form className="mt-5 flex gap-2 h-[42px] mx-3 border border-black rounded-xl items-center px-2">
+      <form className="mb-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
         <AiOutlineSearch size={20} />
         <input
           onChange={(e) => setCari(e.target.value)}

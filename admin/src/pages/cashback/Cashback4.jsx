@@ -37,20 +37,17 @@ export const Cashback4 = () => {
   setNav("Cashback");
   document.title = "Cashback";
   return (
-    <div className="flex flex-col px-5 py-8 gap-1 bg-white w-full min-h-full h-fit pt-8 text-[#454545] text-[12px]">
+    <div className="flex flex-col px-7 py-8 gap-1 bg-white w-full min-h-screen h-full pt-8 text-[#454545] text-[12px]">
       {kesbek.length === 0 ? (
         <div className="flex justify-center items-center h-full my-auto ">
           Data tidak ada
         </div>
       ) : (
-        <>
-          <form className="flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
+        <div className='flex flex-col overflow-auto gap-[10px] mx-3 h-full'>
+          <form className="mb-5 flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
             <img src={iCari} alt="Cari" />
-            <input
-              type="text"
-              className="text-sm w-full h-[30px] focus:outline-none"
-              placeholder="Cari..."
-            ></input>
+              <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."
+            />
           </form>
           {kesbek.map((data, i) => (
             <Link
@@ -58,7 +55,7 @@ export const Cashback4 = () => {
                 pathname: `/cashbackDetail/${data._id}`,
               }}
               state={dataKorup}
-              className="grid place-items-start mt-4 w-full border border-[#BDBDBD] rounded-xl p-4"
+              className="grid place-items-start w-full border border-[#BDBDBD] rounded-xl p-4"
               key={i}
             >
               <p className="font-medium">{data.namaPromo}</p>
@@ -68,18 +65,14 @@ export const Cashback4 = () => {
               </div>
             </Link>
           ))}
-        </>
+        </div>
       )}
-
-      <div className="flex items-end h-full">
-        <a
-          href="tambahcashback"
-          className="flex justify-center gap-2 text-white text-[14px] bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4"
-        >
+      <a href='tambahcashback' className='flex mt-auto mx-2'>
+        <button className='flex justify-center gap-2 text-white text-[14px] bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 mx-3'>
           <img src={iTamPu} alt="TambahPu" />
           <p>Tambah Cashback</p>
-        </a>
-      </div>
+        </button>
+      </a>
     </div>
   );
 };

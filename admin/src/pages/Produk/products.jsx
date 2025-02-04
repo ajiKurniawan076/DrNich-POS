@@ -59,18 +59,6 @@ export const Products = () => {
             <img src={iNext} alt="next" />
             </div>
             </span></a>
-
-      <a href="ManajementStok" className="w-full h-[80px]">
-        <span className="w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center">
-          <img src={iLine} className="ms-[15px]" />
-          <img src={iMan} className="ms-[25px]" />
-          <p className="ms-[15px]">Manajemen Stok</p>
-          <div className="flex ms-auto me-[15px]">
-            <AiOutlineRight className="text-yellow-300" size={15} />
-            <AiOutlineRight className="text-yellow-600" size={15} />
-          </div>
-        </span>
-      </a>
     </div>
   );
 };

@@ -29,7 +29,7 @@ export const DaftarProduk = () => {
         <AiOutlineSearch size={20} />
         <input
           type="text"
-          className="text-sm w-full focus:outline-none"
+          className="text-sm w-full h-[30px] focus:outline-none"
           placeholder="Cari..."
         ></input>
       </form>

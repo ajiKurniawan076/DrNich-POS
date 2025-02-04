@@ -23,22 +23,24 @@ export const TambahDiskon4 = () => {
 setNav('Diskon')   
 document.title = 'Diskon'
 return (
-    <div className="flex flex-col px-5 py-8 gap-1 bg-white w-full min-h-full h-fit pt-8 text-[#454545] text-[12px]">
-        <form className="flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
-            <img src={iCari} alt="Cari" />
-            <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."></input>
-        </form>
-        {data.map((item, i) => (
-            <div key={i} className='grid place-items-start mt-4 w-full border border-[#BDBDBD] rounded-xl p-4'>
-                <p className='font-medium'>{item.namaPromo}</p>
-                <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                    <p>{item.potongan}</p>
-                    <p className='text-[10px] text-[#EAC564]'>{item.keterangan}</p>
+    <div className="flex flex-col px-7 py-8 gap-1 bg-white w-full h-full pt-8 text-[#454545] text-[12px]">
+        <div className='flex flex-col overflow-auto gap-[10px] mx-3 h-full'>
+            <form className="mb-5 flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
+                <img src={iCari} alt="Cari" />
+                <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."></input>
+            </form>
+            {data.map((item, i) => (
+                <div key={i} className='grid place-items-start w-full border border-[#BDBDBD] rounded-xl px-[20px] py-[15px]'>
+                    <p className='font-semibold'>{item.namaPromo}</p>
+                    <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
+                        <p>{item.potongan}</p>
+                        <p className='text-[#EAC564]'>{item.keterangan}</p>
+                    </div>
                 </div>
-            </div>
-        ))}
+            ))}
+        </div>
         
-        <a href='TambahDiskon3' className='flex items-end mt-auto h-fit'>
+        <a href='TambahDiskon3' className='flex mt-auto mx-2'>
             <button className='flex justify-center gap-2 text-white text-[14px] bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4'>
                 <img src={iTamPu} alt="TambahPu" />
                 <p>Tambah diskon</p>

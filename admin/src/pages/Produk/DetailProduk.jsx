@@ -3,6 +3,7 @@ import { AiOutlineRight } from "react-icons/ai";
 import { navContext } from "../../App2";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
+import iNext from "../../assets/iNext.svg";
 
 export const DetailProduk = () => {
   const [product, setproduct] = useState([]);
@@ -36,59 +37,58 @@ export const DetailProduk = () => {
       );
   };
   return (
-    <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-full overflow-auto overflow-y-scroll scrollbar-hide px-9">
+    <div className="flex flex-col py-5 gap-[10px] bg-white w-full text-[12px] text-[#454545] min-h-screen h-full overflow-auto overflow-y-scroll scrollbar-hide px-9">
       {fetched == false ? (
         <></>
       ) : (
         <>
           <a href="#" className="w-full mb-2 px-1 flex h-[80px]">
-            <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-[#C2A353] flex items-center font-semibold text-[16px]">
+            <span className="w-full h-full border rounded-xl px-0 py-[20px] border-[#C2A353] flex items-center font-semibold text-[14px]">
               <p className="ms-[15px]">{product.jenis.jenis}</p>
-              <div className="flex ms-auto me-[15px]">
-                <AiOutlineRight className="text-yellow-300" size={15} />
-                <AiOutlineRight className="text-yellow-600" size={15} />
+              <div className="flex ms-auto me-[15px] w-[18px] h-[18px]">
+                <img src={iNext} alt="" />
               </div>
             </span>
           </a>
-          <div className="flex flex-col gap-1 px-3 mx-1 rounded-xl border border-[#C2A353]">
-            <label className="text-start font-light mt-3">
+          <div className="flex flex-col p-[20px] rounded-xl border border-[#C2A353] mx-1">
+            <label className="text-start font-light">
               Kategori Produk
             </label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]">
+            <p className="text-start font-semibold h-[20px]">
               {product.kategori.kategori}
             </p>
-            <label className="text-start font-light">Nama Produk</label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]">
+            <label className="text-start font-light mt-[10px]">Nama Produk</label>
+            <p className="text-start font-semibold h-[20px]">
               {product.namaProduk}
             </p>
-            <label className="text-start font-light">SKU</label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]"></p>
-            <label className="text-start font-light">Harga Beli</label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]">
+            <label className="text-start font-light mt-[10px]">SKU</label>
+            <p className="text-start font-semibold h-[20px]"></p>
+            <label className="text-start font-light mt-[10px]">Harga Beli</label>
+            <p className="text-start font-semibold h-[20px]">
               {product.hargaBeli}
             </p>
-            <label className="text-start font-light">Harga Jual</label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]">
+            <label className="text-start font-light mt-[10px]">Harga Jual</label>
+            <p className="text-start font-semibold h-[20px]">
               {product.hargaJual}
             </p>
-            <label className="text-start font-light">
+            <label className="text-start font-light mt-[10px]">
               Persentase Keuntungan
             </label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]">
+            <p className="text-start font-semibold h-[20px]">
               {((product.hargaJual - product.hargaBeli) / product.hargaBeli) *
                 100}
               %
             </p>
-            <label className="text-start font-light">
+            <label className="text-start font-light mt-[10px]">
               Nominal Keuntungan
             </label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]">
+            <p className="text-start font-semibold h-[20px]">
               {product.hargaJual - product.hargaBeli}
             </p>
-            <label className="text-start font-light">
+            <label className="text-start font-light mt-[10px]">
               Stok Minimum
             </label>
-            <p className="text-start font-bold px-2 rounded-xl h-[30px]">
+            <p className="text-start font-semibold h-[20px]">
               {product.minStok}
             </p>
           </div>
@@ -99,19 +99,17 @@ export const DetailProduk = () => {
         <a href="#" className=" w-full h-[50px] mt-2">
           <span className="hover:scale-110 w-full  h-full border rounded-xl text-yellow-700/70 border-yellow-700 flex items-center font-bold px-5">
             Lihat Daftar Produk
-            <div className="flex ms-auto">
-              <AiOutlineRight className="text-yellow-300" size={15} />
-              <AiOutlineRight className="text-yellow-600" size={15} />
-            </div>
+              <div className="flex ms-auto w-[18px] h-[18px]">
+                <img src={iNext} alt="" />
+              </div>
           </span>
         </a>
         <a href="../riwayatsupplier" className=" w-full h-[50px]">
           <span className="hover:scale-110 w-full  h-full border rounded-xl text-yellow-700/70 border-yellow-700 flex items-center font-bold px-5">
             Lihat Riwayat Terakhir
-            <div className="flex ms-auto">
-              <AiOutlineRight className="text-yellow-300" size={15} />
-              <AiOutlineRight className="text-yellow-600" size={15} />
-            </div>
+              <div className="flex ms-auto w-[18px] h-[18px]">
+                <img src={iNext} alt="" />
+              </div>
           </span>
         </a>
         <div className="flex gap-5 w-full justify-between text-[14px]">

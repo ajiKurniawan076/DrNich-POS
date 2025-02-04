@@ -21,7 +21,7 @@ export const Terapis = () => {
       await axios
         .get("https://api.drnich.co.id/api/pos/user/terapis")
         .then((response) => {setdatax(response.data)
-           setTampil(response.data)});
+          setTampil(response.data)});
     };
     fetchData();
     setNav("Terapis");
@@ -55,13 +55,13 @@ export const Terapis = () => {
   document.title = "Terapis";
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] h-screen overflow-y-scroll scrollbar-hide px-7">
-      <form className="mt-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
+      <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
         <AiOutlineSearch size={20} />
         <input
           ref={cariRef}
           onChange={filterData}
           type="text"
-          className="w-full focus:outline-none"
+          className="text-sm w-full h-[30px] focus:outline-none"
           placeholder="Cari..."
         ></input>
       </form>
@@ -94,10 +94,10 @@ export const Terapis = () => {
           </div>
         )}
       </div>
-      <div className="mt-auto">
+      <div className="flex mt-auto mx-2">
         <a
           href="addterapis"
-          className="flex justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-3"
+          className="flex w-full justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-3"
         >
           <img src={add} className="h-[20px] w-[20px]" /> Tambah Terapis
         </a>

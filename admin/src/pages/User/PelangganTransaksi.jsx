@@ -27,7 +27,7 @@ export const PelangganTransaksi = () => {
       <button onClick={console.log(datax)}>asd</button>
       <form className="mt-5 flex gap-2 h-[42px] mx-3 border border-black rounded-xl items-center px-2">
         <AiFillCalendar size={20}/>
-        <input type="text" className="text-sm w-full focus:outline-none" placeholder="Tanggal di sini"></input>
+        <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Tanggal di sini"></input>
       </form>
       <div className="flex flex-col justify-between w-full h-full py-3 px-3">
         {datax=={}? 
