@@ -14,6 +14,14 @@ export const Navbar = () => {
         e.preventDefault()
         setasc("asc")
     }
+    const klikascPoin = (e) => {
+        e.preventDefault()
+        setasc("ascP")
+    }
+    const klikdescPoin =(e) => {
+        e.preventDefault()
+        setasc("descP")
+    }
     const klikdesc =(e) => {
         e.preventDefault()
         setasc("desc")
@@ -44,13 +52,15 @@ export const Navbar = () => {
                     setshowsort(false)
                 }}><img src={iClose}/></button>
                 </div>
-                <div className="flex w-full justify-between">
-                    <button className="border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white" onClick={klikasc}>A-Z</button>
-                    <button className="border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white" onClick={klikdesc}>Z-A</button>
+                <div className="flex gap-[10px] w-full justify-between">
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'asc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikasc}>A-Z</button>
+                    
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'desc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdesc}>Z-A</button>
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'ascP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikascPoin}>Poin Terbanyak</button>
                 </div>
                 <div className="flex w-full justify-between">
-                    <button className="border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white" onClick={klikasc}>Poin Terbesar</button>
-                    <button className="border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white" onClick={klikasc}>Poin Terkecil</button>
+                    
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'descP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdescPoin}>Poin Tersedikit</button>
                 </div>
                 </div>
             </div>

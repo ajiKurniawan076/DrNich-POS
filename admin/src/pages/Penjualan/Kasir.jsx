@@ -43,6 +43,8 @@ export const Kasir = () => {
     const cari =(e) => {
         e.preventDefault()
         const list = produk.filter(item => item.namaProduk.toLowerCase().includes(cariRef.current.value))
+        console.log(list);
+        
         setProdukTampil(list)
     }
     useEffect(() => {
