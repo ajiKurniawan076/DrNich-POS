@@ -114,7 +114,7 @@ export const ModalsCashback = () => {
                     <div className='flex items-end h-fit mt-auto'>
                         <button className='mt-auto flex justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full'>
                             <p>Tambah</p>
-                            <p>| 5 Produk</p>
+                            <p>| {produkTerpilih.length} Produk</p>
                         </button>
                     </div>
                 </form>
