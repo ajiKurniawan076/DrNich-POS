@@ -19,7 +19,7 @@ export const HomeAdmin = () => {
   }, []);
 
   return (
-    <div className="w-full h-full  overflow-auto mb-8 md:mb-0">
+    <div className="w-full h-full overflow-auto md:overflow-hidden">
       {/* Super Admin section */}
       <div className="admin-section">
         <div className="grid z-50 absolute top-4 place-items-center">
@@ -29,12 +29,12 @@ export const HomeAdmin = () => {
       </div>
 
       {/* Grid items */}
-      <div className=" w-full h-full rounded-t-[2rem] bg-white flex justify-center pt-28">
+      <div className=" w-full min-h-screen h-fit rounded-t-[2rem] bg-white flex justify-center pt-28">
         <div className="w-fit h-fit flex justify-center items-center">
           <div className="grid-container md:gap-[50px] gap-[20px] grid-cols-2 md:grid-cols-3 place-items-center">
             {/* Data User */}
             <a
-              href="pos/users"
+              href="/pos/users"
               className=" h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl"
             >
               <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
@@ -45,7 +45,7 @@ export const HomeAdmin = () => {
 
             {/* Produk */}
             <a
-              href="pos/produks"
+              href="/pos/produks"
               className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl"
             >
               <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
@@ -55,28 +55,28 @@ export const HomeAdmin = () => {
             </a>
 
             {/* Other Links */}
-            <a href="pos/laporan" 
+            <a href="/pos/laporan" 
               className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
               <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
               <img src={iLaporan} color="brown" className="w-[36px] h-[36px]" />
                 Laporan
               </span>
             </a>
-            <a href="pos/promo" 
+            <a href="/pos/promo" 
               className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
               <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
               <img src={iPromo} color="brown" className="w-[36px] h-[36px]" />
                 Promo
               </span>
             </a>
-            <a href="pos/display" 
+            <a href="/pos/display" 
               className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
             <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
             <img src={iStat} color="brown" className="w-[36px] h-[36px]" />
                 Statistik
               </span>
             </a>
-            <a href="pos/Kasir" 
+            <a href="/pos/Kasir" 
                    className="h-[125px] w-[150px] z-20 p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl">
               <span className="gap-[15px] bg-white h-full w-full border border-[#C2A353] rounded-xl md:rounded-xl flex flex-col justify-center items-start py-[20px] px-[25px] font-medium text-[14px]">
               <img src={iPenj} color="brown" className="w-[36px] h-[36px]" />
