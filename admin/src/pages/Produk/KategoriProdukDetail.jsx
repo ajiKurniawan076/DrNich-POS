@@ -22,12 +22,8 @@ export const KategoriProdukDetail = () => {
     };
     fetchData();
 
-<<<<<<< HEAD
     setNav("Jenis Product");
     setSort(false)
-=======
-    setNav("Detail");
->>>>>>> 3f687f35ef8299ce63fd6c10d865ec7fa60abf03
   }, []);
 
   useEffect(() => {
