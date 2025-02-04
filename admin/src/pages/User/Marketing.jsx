@@ -14,7 +14,6 @@ export const Marketing = () => {
   const { setNav, setSort, asc } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [tampil, setTampil] = useState([]);
-  const [cari, setCari] = useState("");
   const cariRef = useRef(null)
   useEffect(() => {
     const fetchData = async () => {

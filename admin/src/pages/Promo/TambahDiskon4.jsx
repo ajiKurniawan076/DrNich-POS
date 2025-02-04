@@ -23,7 +23,7 @@ export const TambahDiskon4 = () => {
 setNav('Diskon')   
 document.title = 'Diskon'
 return (
-    <div className="flex flex-col px-5 py-8 gap-1 bg-white w-full h-full pt-8 text-[#454545] text-[12px]">
+    <div className="flex flex-col px-5 py-8 gap-1 bg-white w-full min-h-full h-fit pt-8 text-[#454545] text-[12px]">
         <form className="flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
             <img src={iCari} alt="Cari" />
             <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."></input>
@@ -38,7 +38,7 @@ return (
             </div>
         ))}
         
-        <a href='TambahDiskon3' className='flex items-end h-full'>
+        <a href='TambahDiskon3' className='flex items-end mt-auto h-fit'>
             <button className='flex justify-center gap-2 text-white text-[14px] bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4'>
                 <img src={iTamPu} alt="TambahPu" />
                 <p>Tambah diskon</p>
