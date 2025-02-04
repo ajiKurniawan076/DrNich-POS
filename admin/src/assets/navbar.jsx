@@ -53,14 +53,14 @@ export const Navbar = () => {
                 }}><img src={iClose}/></button>
                 </div>
                 <div className="flex gap-[10px] w-full justify-between">
-                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'asc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikasc}>A-Z</button>
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'asc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikasc}>A-Z</button>
                     
-                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'desc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdesc}>Z-A</button>
-                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'ascP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikascPoin}>Poin Terbanyak</button>
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'desc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdesc}>Z-A</button>
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'ascP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikascPoin}>Poin Terbanyak</button>
                 </div>
                 <div className="flex w-full justify-between">
                     
-                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] bg-white ${asc == 'descP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdescPoin}>Poin Tersedikit</button>
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'descP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdescPoin}>Poin Tersedikit</button>
                 </div>
                 </div>
             </div>

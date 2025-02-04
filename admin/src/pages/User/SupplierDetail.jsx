@@ -30,23 +30,23 @@ export const SupplierDetail = () => {
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-9">
       <div className="flex flex-col gap-1 px-3 rounded-xl border border-[#C2A353] pt-2 mx-1">
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nama Perusahaan
         </label>
-        <p className="text-start font-semibold h-[30px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">
           {datasupp.namaPerusahaan}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nama Kontak
         </label>
-        <p className="text-start font-semibold h-[30px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">
           {datasupp.namaKontak}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Email
         </label>
-        <p className="text-start font-semibold h-[30px]">{datasupp.email}</p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">{datasupp.email}</p>
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nomor Telepon
         </label>
         <button
@@ -59,18 +59,18 @@ export const SupplierDetail = () => {
           <span>
             <img src={wa} />
           </span>
-          <p className="flex items-center text-start font-semibold h-[30px]">
+          <p className="flex items-center text-start font-semibold h-[30px] text-[14px]">
             {datasupp.nomorTelepon}
           </p>
         </button>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Alamat
         </label>
-        <p className="text-start font-semibold h-[30px]">{datasupp.alamat}</p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">{datasupp.alamat}</p>
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Keterangan
         </label>
-        <p className="text-start font-semibold h-[30px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">
           {datasupp.keterangan}
         </p>
       </div>
@@ -78,26 +78,26 @@ export const SupplierDetail = () => {
         <span className="ms-2">Informasi Rekening</span>
       </div>
       <div className="flex flex-col gap-1 px-3 mx-1 rounded-xl border border-[#C2A353]  pt-2">
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nama Pemilik Rekening
         </label>
-        <p className="text-start font-semibold h-[30px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">
           {datasupp.namaRekening}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Bank
         </label>
-        <p className="text-start font-semibold h-[30px]">{datasupp.bank}</p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">{datasupp.bank}</p>
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Nomor Rekening
         </label>
-        <p className="text-start font-semibold h-[30px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">
           {datasupp.nomorRekening}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[10px] md:text-[12px]">
+        <label className="text-start text-[#BDBDBD] text-[12px]">
           Keterangan
         </label>
-        <p className="text-start font-semibold h-[30px]">
+        <p className="text-start font-semibold h-[30px] text-[14px]">
           {datasupp.keteranganRek}
         </p>
       </div>

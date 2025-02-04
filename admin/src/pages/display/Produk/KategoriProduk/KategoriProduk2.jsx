@@ -27,7 +27,7 @@ export const KategoriProduk2 = () => {
             <div className="flex flex-col justify-between w-full gap-3 h-full py-3 px-3">
                 <form className="mt-5 flex h-[50px] gap-3 border border-black rounded-xl items-center px-2">
                     <AiOutlineSearch size={20} />
-                    <input type="text" className="text-sm w-full focus:outline-none" placeholder="Cari..."></input>
+                    <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."></input>
                 </form>
                 {datax.length === 0 ?
                     <div className="flex flex-col w-full h-full items-center  justify-center text-black/40">Belum Ada Data Kategori Produk</div>

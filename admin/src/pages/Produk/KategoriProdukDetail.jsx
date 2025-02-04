@@ -45,13 +45,13 @@ export const KategoriProdukDetail = () => {
       {fetched ? (
         <>
           <div className="flex flex-col gap-1  mx-1 rounded-xl border border-[#C2A353] px-4 py-6">
-            <label className="text-start font-normal text-[10px] text-[#BDBDBD]">
+            <label className="text-start font-normal text-[12px] text-[#BDBDBD]">
               Jenis Produk
             </label>
             <p className="text-start text-[#454545]  font-normal text-[12px] h-[30px]">
               {datax?.jenis.jenis}
             </p>
-            <label className="text-start font-normal text-[10px] text-[#BDBDBD]">
+            <label className="text-start font-normal text-[12px] text-[#BDBDBD]">
               Nama Kategori Produk
             </label>
             <p className="text-start text-[#454545]  font-normal text-[12px]">
