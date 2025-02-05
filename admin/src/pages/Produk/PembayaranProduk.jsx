@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { navContext } from "../../App2";
 import iPemSu from "../../assets/iconproduk/iPemSu.svg";
 import iDown from "../../assets/iconproduk/iDown.svg";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export const PembayaranProduk = () => {
   const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
+  const navigasi = useNavigate();
   const { id } = useParams();
   console.log(id);
   useEffect(() => {
@@ -72,12 +73,12 @@ export const PembayaranProduk = () => {
               <button className="bg-gradient-to-r from-[#C2A353] to-[#EAC564] w-[90px] p-3 rounded-xl flex justify-center">
                 <img src={iDown} alt="iDownload" />
               </button>
-              <a
-                href=""
+              <button
+                onClick={() => navigasi("/pos/Kasir")}
                 className="border ml-2 border-[#C2A353] w-full rounded-xl flex justify-center items-center text-[#C2A353]"
               >
                 Kembali
-              </a>
+              </button>
             </div>
           </div>
         </>
