@@ -40,7 +40,7 @@ export const ModalsCashback = () => {
         produk.length>0 && setProdukM(produk)
     },[produk])
     return (
-        <div className={`fixed flex flex-col items-center top-0 start-0 w-full overflow-auto bg-black/20 h-full ${modal == true ? '' : 'hidden'}`}>
+        <div className={`fixed z-50 flex flex-col items-center top-0 start-0 w-full overflow-auto bg-black/20 h-full ${modal == true ? '' : 'hidden'}`}>
             <button className='text-[#454545] font-semibold mt-[75px]'
                 onClick={(e) => {
                     e.preventDefault()

@@ -7,6 +7,7 @@ export const ManajementKurangiStok = () => {
   const { setNav, setLink } = useContext(navContext);
   const [produk, setProduk] = useState([null]);
   const [fetched, setFetched] = useState(false);
+  const [jumlah, setJumlah] = useState(0)
   const jumlahRef = useRef(null);
   const keteranganRef = useRef(null);
   const navigate = useNavigate();
@@ -26,6 +27,14 @@ export const ManajementKurangiStok = () => {
     document.title = "Manajemen Kurangi Stok";
     setLink('/pos/manajementStok')
   }, []);
+
+  useEffect(()=>{
+    jumlah > produk.stok && setJumlah(produk.stok)
+  },[jumlah])
+  
+  const handleChange = ()  => {
+    setJumlah(jumlahRef.current.value)
+  }
 
   const handeSubmit = (e) => {
     e.preventDefault();
@@ -68,7 +77,9 @@ export const ManajementKurangiStok = () => {
             </label>
             <input
               ref={jumlahRef}
-              type="text"
+              onChange={handleChange}
+              value = {jumlah}
+              type="number"
               placeholder="0"
               className="w-full text-[12px] mx-3 px-4 border text-sm text-black border-black/30 rounded-xl h-[40px] "
             />

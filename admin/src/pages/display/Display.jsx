@@ -35,7 +35,7 @@ export const Display = () => {
     <div className="w-full h-fit flex flex-col gap-y-[15px] px-10 py-10 bg-white items-start place-items-center">
       <Link
         to={{
-          pathname: `/sertifikat`,
+          pathname: `/pos/sertifikat`,
         }}
         className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
       >
@@ -52,7 +52,7 @@ export const Display = () => {
       </Link>
       <Link
         to={{
-          pathname: `/layananKategori`,
+          pathname: `/pos/layananKategori`,
         }}
         className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
       >
@@ -81,7 +81,7 @@ export const Display = () => {
         </span>
       </Link>
 
-      <Link to={{ pathname: "/produk" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+      <Link to={{ pathname: "/pos/produk" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={iproduk} className="ms-[25px]" />
@@ -93,7 +93,7 @@ export const Display = () => {
                   </div>
         </span>
       </Link>
-      <Link to={{ pathname: "/galeri" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+      <Link to={{ pathname: "/pos/galeri" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={igaleri} className="ms-[25px]" />
@@ -115,7 +115,7 @@ export const Display = () => {
       </Link>
       <Link
         to={{
-          pathname: "/rating",
+          pathname: "/pos/rating",
         }}
         className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
       >

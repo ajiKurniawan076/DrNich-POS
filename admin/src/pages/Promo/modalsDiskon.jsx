@@ -46,7 +46,7 @@ export const ModalsDiskon = () => {
   document.title = "Modals";
   return (
     <div
-      className={`fixed flex flex-col items-center bg-black/20 top-0 h-full overflow-auto start-0 w-full ${
+      className={`fixed z-50 flex flex-col items-center bg-black/20 top-0 h-full overflow-auto start-0 w-full ${
         modals == true ? "" : "hidden"
       }`}
     >

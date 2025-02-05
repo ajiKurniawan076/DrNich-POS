@@ -27,8 +27,8 @@ export const PilihPelanggan = () => {
     }
 return (
     
-    <div className={`fixed top-0 start-0 w-full h-full overflow-scroll ${modalPel ? '' : 'hidden'}`}>
-    <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full h-full pt-8 text-[#454545] text-[12px]'>
+    <div className={`fixed z-50 top-0 start-0 w-full h-full flex justify-center overflow-scroll ${modalPel ? '' : 'hidden'}`}>
+    <div className='flex flex-col px-5 py-8 gap-1 bg-white max-w-[550px] w-[100%] md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] h-full pt-8 text-[#454545] text-[12px]'>
         <form className="mt-5 flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
             <img src={iCari} alt="Cari" />
             <input

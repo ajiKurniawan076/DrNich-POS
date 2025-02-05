@@ -53,7 +53,7 @@ export const Cashback4 = () => {
           {kesbek.map((data, i) => (
             <Link
               to={{
-                pathname: `/cashbackDetail/${data._id}`,
+                pathname: `/pos/cashbackDetail/${data._id}`,
               }}
               state={dataKorup}
               className="grid place-items-start w-full border border-[#BDBDBD] rounded-xl p-4"

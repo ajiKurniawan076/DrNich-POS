@@ -67,7 +67,7 @@ export const Kasir = () => {
                 setPelanggan(response.data)
             }
             )
-            await axios.get('https://api.drnich.co.id/api/pos/promo/promo').then(response => {
+            await axios.get('https://api.drnich.co.id/api/pos/promo/promoaktif').then(response => {
                 setPromo(response.data)
             }
             )
