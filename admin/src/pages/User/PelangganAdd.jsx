@@ -103,7 +103,7 @@ export const PelangganAnd = () => {
           </option>
           <option value="pria">Pria</option>
           <option value="wanita">Wanita</option>
-        </select>
+          </select>
         </div>
         <div className="flex flex-col">
           <label className="text-start font-semibold mb-[5px]">Alamat</label>

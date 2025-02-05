@@ -181,18 +181,24 @@ export const Kasir = () => {
 
     return (
         <kasirContext.Provider value={{totalAkhir, handleDraft, potongan, cashback, total, promo, invoice, cart, setCart, pelanggan, setPelangganTerpilih, pelangganTerpilih, promoTerpilih, setPromoTerpilih, modal, setModal}}>
-        <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full h-fit min-h-full pt-8 text-[#454545] text-[12px]'>
+        <div className='flex flex-col px-10 py-8 gap-1 bg-white w-full h-fit min-h-full pt-8 text-[#454545] text-[12px]'>
             <button className='flex justify-between'>
-                <button className='border-b-2 border-[#C2A353] w-[50%] shadow-md'>  
+                <button className='border-b-2 border-[#C2A353] text-[#C2A353] w-[50%] shadow-md'>  
                     <p>Transaksi</p>
                 </button>
-                <a href='DrafTransaksi2' className='border-b-2 w-[50%]'>
+                <a href='DrafTransaksi2' className='border-b-2 w-[50%] text-[#BDBDBD]'>
                     <p>Draft Transaksi</p>
                 </a>
             </button>
-            <form className="mt-5 flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
+            <form className="mt-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
                 <img src={iCari} alt="Cari" />
-                <input ref = {cariRef} onChange={cari} type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."></input>
+                <input
+                    onChange={cari}
+                    ref={cariRef}
+                    type="text"
+                    className="text-sm w-full h-[30px] focus:outline-none"
+                    placeholder="Cari..."
+                ></input>
             </form>
             <div className='flex justify-between mt-5'>
                 <div className='relative flex justify-between border border-[#C2A353] appearance-none rounded-xl p-2 px-4 w-[49%]'>
@@ -266,7 +272,7 @@ export const Kasir = () => {
                         e.preventDefault()
                         setModal(true)
                     }}
-                    className='flex justify-between border rounded-xl bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-white w-[59%] p-4'>
+                    className='flex justify-between border rounded-xl bg-gradient-to-l from-[#C2A353] to-[#EAC564] text-white w-[59%] p-4'>
                         <p>{cart.length} Produk</p>
                         <img src={iPan} alt="panah putih" />
                     </button>
