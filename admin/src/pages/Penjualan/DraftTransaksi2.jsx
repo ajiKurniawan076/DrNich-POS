@@ -20,15 +20,15 @@ export const DraftTransaksi2 = () => {
         return (
     <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full min-h-screen h-fit pt-8 text-[#454545] text-[12px]'>
         <div className='flex justify-between'>
-            <a href='Kasir' className='border-b-2 w-[50%] text-[#BDBDBD] p-2'>
+            <a href='Kasir' className='flex justify-center text-center border-b-2 w-[50%] text-[#BDBDBD]'>
                 <p>Transaksi</p>
             </a>
-            <button className='border-b-2 border-[#C2A353] text-[#C2A353] w-[50%] shadow-md p-2'>
+            <button className='border-b-2 border-[#C2A353] text-[#C2A353] w-[50%] shadow-md'>
                 <p>Draf Transaksi</p>
             </button>
         </div>
         {transaksi.map((item, i) => (
-            <a href={`DrafTransaksiDetail/${item._id}`} className='bg-[#C2A353] flex justify-between w-full hover:scale-105 border border-[#BDBDBD] rounded-b-lg rounded-t-xl pt-4 mt-4' key={i}>
+            <a href={`DrafTransaksiDetail/${item._id}`} className='bg-[#C2A353] flex justify-between w-full border border-[#BDBDBD] rounded-b-lg rounded-t-xl pt-4 mt-4' key={i}>
             <div className='grid w-full'>
                 <p className='text-white font-bold px-3'>{item?.pelanggan?.namaPelanggan || 'Anonim'}</p>
             <div className='bg-white p-2 mt-1 rounded-b-lg'> 

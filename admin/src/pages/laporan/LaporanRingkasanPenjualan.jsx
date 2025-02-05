@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { navContext } from "../../App2"
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iTgl from "../../assets/iconproduk/iTgl.svg";
@@ -10,123 +10,215 @@ import i1 from "../../assets/iconLaporanPenjualan/i1.svg";
 import i2 from "../../assets/iconLaporanPenjualan/i2.svg";
 import i3 from "../../assets/iconLaporanPenjualan/i3.svg";
 import i4 from "../../assets/iconLaporanPenjualan/i4.svg";
+import DatePicker from 'react-datepicker'
+import axios from 'axios';
+import { toDate } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export const LaporanRingkasanPenjualan = () => {
     const { setNav, setLink } = useContext(navContext)
+    const cari = useRef(null)
+    const [button, setButton] = useState();
+    const [button2, setButton2] = useState();
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const [data, setData] = useState();
+    const navigate = useNavigate();
 
+    const handleNavigate = (e) => {
+        e.preventDefault()
+        navigate('/pos/laporanDataPenjualan', { state:{transaksi: data.transaksi} })
+        // console.log(data.transaksi)
+    }
+    
+    const datePickerRef = useRef(null); // Create a ref for the DatePicker
+        
+    const handleButtonClick = (e) => {
+        e.preventDefault()
+        if (datePickerRef.current) {
+                datePickerRef.current.setFocus(); // Programmatically focus and open DatePicker
+                setButton(false)
+            }
+    };
+        
+    const datePickerRef2 = useRef(null); // Create a ref for the DatePicker
+        
+    const handleButtonClick2 = (e) => {
+        e.preventDefault()
+        if (datePickerRef2.current) {
+                datePickerRef2.current.setFocus(); // Programmatically focus and open DatePicker
+                setButton2(false)
+            }
+    };
+    
+    useEffect(() => {
+        const tanggal = { dari : "2025-01-01T00:00:00Z", sampai : new Date().toISOString().split('.')[0] + 'Z'}
+        const fetchData = async () => {
+            await axios
+                .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
+                .then((response) => (setData(response.data),console.log(response.data)))
+        }
+        fetchData();
+        console.log(tanggal)
+    },[])
 
+setLink('/pos/laporan')
 setNav('Ringkasan Penjualan')   
 document.title = 'Ringkasan Penjualan'
 return (
-    <div className='flex flex-col px-5 py-3 gap-1 bg-white w-full h-full pt-8'>
-        <form className="mt-5 flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
+    
+    <div className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10">
+        <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
             <img src={iCari} alt="Cari" />
-            <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."></input>
-        </form> 
-        <div className='flex justify-between items-center text-center text-[12px] mt-5'>
-            <div className='flex gap-4 border rounded-xl border-[#BDBDBD] p-3 w-fit'>
-                <img src={iTgl} alt="iTgL" className='w-[20px] h-[20px] ml-1'/>
-                <p>1 Nov 2024 - 30 Nov 2024</p>
+            <input
+                // onChange={filterData}
+                ref={cari}
+                type="text"
+                className="text-sm w-full h-[30px] focus:outline-none"
+                placeholder="Cari..."
+            ></input>
+        </form>
+        <div className='flex flex-col'>
+            <div className='flex flex-col h-full'>
+                <p>Masa Berlaku</p>
+                    <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
+                        <p>Dari :</p>
+                            <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[5px] mt-[5px]">
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    dateFormat="yyyy-MM-dd"
+                                    ref={datePickerRef} // Attach the ref
+                                    className="w-full outline-0 text-center" // Completely hide the DatePicker input
+                                    popperClassName="custom-datepicker-popper"
+                                />
+                                    {/* Button to trigger DatePicker */}
+                                    <div className={`absolute h-full px-4 top-2 start-0 w-full ${button?'':'opacity-0'}`}>
+                                        <button
+                                            onClick={handleButtonClick}
+                                            className="flex text-[#BDBDBD] w-full items-center justify-between space-x-2"
+                                        >
+                                            Tanggal
+                                            <img src={iTgl} alt="Calendar Icon" className="w-6 h-6" />
+                                        </button>
+                                    </div>
+                    </div>
+                        <p>Sampai :</p>
+                        <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[10px] mt-[5px]">
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                dateFormat="yyyy-MM-dd"
+                                ref={datePickerRef2} // Attach the ref
+                                className="w-full outline-0 text-center" // Completely hide the DatePicker input
+                                popperClassName="custom-datepicker-popper"
+                            />
+                                {/* Button to trigger DatePicker */}
+                                <div className={`absolute h-full px-4 top-2 start-0 w-full ${button2?'':'opacity-0'}`}>
+                                    <button
+                                        onClick={handleButtonClick2}
+                                        className="flex text-[#BDBDBD] w-full items-center justify-between space-x-2"
+                                    >
+                                        Tanggal
+                                        <img src={iTgl} alt="Calendar Icon" className="w-6 h-6" />
+                                    </button>
+                                </div>
+                        </div>
+                    </div>
             </div>
-            <div className='flex gap-12 border rounded-xl border-[#BDBDBD] p-3 w-fit'>
-                <p>Minggu ini</p>        
-                <img src={iPanahB} alt="iPanahB" className='w-[20px] h-[20px]' />
-            </div>
-        </div>
 
 
-        <div className='flex justify-between gap-3 text-[12px] w-full h-auto'>
-            <div className='border rounded-xl border-[#C2A353] px-4 pt-3 mt-4 w-full'>
-                <div className='flex items-center text-center gap-2'>
-                    <p>Total Produk</p>
-                    <img src={iSeruTrans} alt="iSeru" />
+            <div className='flex justify-between gap-[10px] text-[12px] w-full'>
+                <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full'>
+                    <div className='flex items-center text-center gap-[5px]'>
+                        <p>Total Produk</p>
+                        <img src={iSeruTrans} alt="iSeru" />
+                    </div>
+                    <div className='flex items-center text-center'>
+                        <p className='font-semibold text-[14px]'>Rp. {data?.totalPendapatan.toLocaleString('id-ID')}</p>
+                    </div>
                 </div>
-                <div className='flex items-center text-center mt-2 mb-3'>
-                    <p className='font-semibold text-[14px]'>Rp 4.000.000</p>
-                </div>
-            </div>
-            <div className='border rounded-xl border-[#C2A353] px-4 py-2 mt-4 w-full'>
-                <div className='flex items-center text-center gap-2'>
-                    <p>HPP</p>
-                    <img src={iSeruTrans} alt="iSeru" />
-                </div>
-                <div className='flex items-center text-center mt-2'>
-                    <p className='font-semibold text-[14px]'>Rp 400.000</p>
-                </div>
-            </div>
-        </div>
-        <div className='flex justify-between gap-3 text-[12px] w-full h-auto'>
-            <div className='border rounded-xl border-[#C2A353] px-4 pt-3 mt-2 w-full'>
-                <div className='flex items-center text-center gap-2'>
-                    <p>Total Laba Kotor</p>
-                    <img src={iSeruTrans} alt="iSeru" />
-                </div>
-                <div className='flex items-center text-center mt-2 mb-3'>
-                    <p className='font-semibold text-[14px]'>Rp 3.600.000</p>
+                <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full'>
+                    <div className='flex items-center text-center gap-[5px]'>
+                        <p>HPP</p>
+                        <img src={iSeruTrans} alt="iSeru" />
+                    </div>
+                    <div className='flex items-center text-center'>
+                        <p className='font-semibold text-[14px]'>Rp 400.000</p>
+                    </div>
                 </div>
             </div>
-            <div className='border rounded-xl border-[#C2A353] px-4 py-2 mt-2 w-full'>
-                <div className='flex items-center text-center gap-2'>
-                    <p>Total Transaksi</p>
-                    <img src={iSeruTrans} alt="iSeru" />
+            <div className='flex justify-between gap-[10px] my-[10px] text-[12px] w-full'>
+                <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full'>
+                    <div className='flex items-center text-center gap-[5px]'>
+                        <p>Total Laba Kotor</p>
+                        <img src={iSeruTrans} alt="iSeru" />
+                    </div>
+                    <div className='flex items-center text-center'>
+                        <p className='font-semibold text-[14px]'>Rp 3.600.000</p>
+                    </div>
                 </div>
-                <div className='flex items-center text-center mt-2'>
-                    <p className='font-semibold text-[14px]'>1000</p>
-                </div>
-            </div>
-        </div>
-
-
-
-        <a href='LaporanDataPenjualan' className='flex justify-between items-center text-center border border-[#C2A353] p-4 rounded-xl my-3 text-[12px]'>
-            <p>Data Penjualan</p>
-            <img src={iPan} alt="Panah" />
-        </a>
-        <a href='LaporanDataPembelianStok' className='flex justify-between items-center text-center border border-[#C2A353] p-4 rounded-xl mb-3 text-[12px]'>
-            <p>Data Pembelian Stok</p>
-            <img src={iPan} alt="Panah" />
-        </a>
-        <a href='LaporanMetodePembayaran' className='flex justify-between items-center text-center border border-[#C2A353] p-4 rounded-xl mb-3 text-[12px]'>
-            <p>Laporan Metode Pembayaran</p>
-            <img src={iPan} alt="Panah" />
-        </a>
-
-
-        <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start mt-2 w-full">
-            <p className="">Grafik Penjualan</p>
-        </div>
-        <div>
-            <img src={iGrafik2} alt="" className='h-fit w-fit' />
-        </div>
-        <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start mt-2 w-full">
-            <p className="">Laporan Promo</p>
-        </div>
-        <div className='grid text-[12px] text-[#454545] mt-2'>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl'>
-                <p>Diskon</p>
-                <img src={iPanahB} alt="PanahBawah" />
-            </div>
-            <div className='flex justify-between text-center items-center border border-[#BDBDBD] rounded-xl p-4 my-3'>
-                <div className='grid text-start gap-2'>
-                    <p>Mega Launching</p>
-                    <p>Rp 2.000.000</p>
-                </div>
-                <div className='text-[#C2A353]'>
-                    <p>200 Transaksi</p>
+                <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full'>
+                    <div className='flex items-center text-center gap-[5px]'>
+                        <p>Total Transaksi</p>
+                        <img src={iSeruTrans} alt="iSeru" />
+                    </div>
+                    <div className='flex items-center text-center'>
+                        <p className='font-semibold text-[14px]'>{data?.totalTransaksi}</p>
+                    </div>
                 </div>
             </div>
-            <div className='flex justify-between text-center items-center border border-[#BDBDBD] rounded-xl p-4 mb-5'>
-                <div className='grid text-start gap-2'>
-                    <p>Birthday Promo</p>
-                    <p>Rp 1.053.000</p>
+            <div className='flex flex-col gap-[10px]'>
+                <button
+                    onClick={handleNavigate}
+                    className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
+                    <p>Data Penjualan</p>
+                    <img src={iPan} alt="Panah" />
+                </button>
+                <a href='LaporanDataPembelianStok' className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
+                    <p>Data Pembelian Stok</p>
+                    <img src={iPan} alt="Panah" />
+                </a>
+                <a href='LaporanMetodePembayaran' className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
+                    <p>Laporan Metode Pembayaran</p>
+                    <img src={iPan} alt="Panah" />
+                </a>
+            </div>
+            <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
+                <p className="">Grafik Penjualan</p>
+            </div>
+            <div>
+                <img src={iGrafik2} alt="" className='h-fit w-fit' />
+            </div>
+            <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
+                <p className="">Laporan Promo</p>
+            </div>
+            <div className='grid text-[12px] text-[#454545] gap-[10px]'>
+                <div className='flex justify-between px-[20px] py-[10px] border border-[#BDBDBD] rounded-xl'>
+                    <p>Diskon</p>
+                    <img src={iPanahB} alt="PanahBawah" />
                 </div>
-                <div className='text-[#C2A353]'>
-                    <p>87 Transaksi</p>
+                <div className='flex justify-between text-center items-center border border-[#BDBDBD] rounded-xl p-[15px]'>
+                    <div className='grid text-start gap-2'>
+                        <p>Mega Launching</p>
+                        <p>Rp 2.000.000</p>
+                    </div>
+                    <div className='text-[#C2A353]'>
+                        <p>200 Transaksi</p>
+                    </div>
+                </div>
+                <div className='flex justify-between text-center items-center border border-[#BDBDBD] rounded-xl p-[15px]'>
+                    <div className='grid text-start gap-2'>
+                        <p>Birthday Promo</p>
+                        <p>Rp 1.053.000</p>
+                    </div>
+                    <div className='text-[#C2A353]'>
+                        <p>87 Transaksi</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
 
         {/* <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start w-full">
@@ -238,56 +330,57 @@ return (
             </div>
         </div> */}
 
-        <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start w-full mt-2">
-            <p className="">Pelanggan Teratas</p>
-        </div>
-        <div className='grid mt-3'>
-            <div className='flex h-full gap-3'>
-                <div className='flex items-center text-center gap-6 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-fit h-[130%]'>
-                    <p>Pendapatan Penjualan</p>        
-                    <img src={iPanahB} alt="iPanahB" className='w-[20px] h-[20px]' />
-                </div>
-                <div className='flex items-center text-center gap-16 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-fit h-[130%]'>
-                    <p>Semua</p>        
-                    <img src={iPanahB} alt="iPanahB" className='w-[20px] h-[20px]' />
+            <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
+                <p className="">Pelanggan Teratas</p>
+            </div>
+            <div className='grid'>
+                <div className='flex h-full gap-3'>
+                    <div className='flex items-center text-center gap-6 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-fit h-[130%]'>
+                        <p>Pendapatan Penjualan</p>        
+                        <img src={iPanahB} alt="iPanahB" className='w-[20px] h-[20px]' />
+                    </div>
+                    <div className='flex items-center text-center gap-16 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-fit h-[130%]'>
+                        <p>Semua</p>        
+                        <img src={iPanahB} alt="iPanahB" className='w-[20px] h-[20px]' />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div className='grid'>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl mt-7 mb-1 text-[12px]'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i1} alt="" />
-                    <p>Hana</p>
+            <div className='flex flex-col gap-[10px] mt-[30px] h-full'>
+                <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
+                    <div className='flex items-center text-center gap-[10px]'>
+                        <img src={i1} alt="" />
+                        <p>Hana</p>
+                    </div>
+                    <div className='text-[#C2A353]'>
+                        <p>Rp 200.000.000</p>
+                    </div>
                 </div>
-                <div className='text-[#C2A353]'>
-                    <p>Rp 200.000.000</p>
+                <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
+                    <div className='flex items-center text-center gap-[10px]'>
+                        <img src={i2} alt="" />
+                        <p>Agus</p>
+                    </div>
+                    <div className='text-[#C2A353]'>
+                        <p>Rp 120.000.000</p>
+                    </div>
                 </div>
-            </div>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px]'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i2} alt="" />
-                    <p>Agus</p>
+                <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
+                    <div className='flex items-center text-center gap-[10px]'>
+                        <img src={i3} alt="" />
+                        <p>Caca</p>
+                    </div>
+                    <div className='text-[#C2A353]'>
+                        <p>Rp 50.000.000</p>
+                    </div>
                 </div>
-                <div className='text-[#C2A353]'>
-                    <p>Rp 120.000.000</p>
-                </div>
-            </div>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px]'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i3} alt="" />
-                    <p>Caca</p>
-                </div>
-                <div className='text-[#C2A353]'>
-                    <p>Rp 50.000.000</p>
-                </div>
-            </div>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px] mb-8'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i4} alt="" />
-                    <p>Diana</p>
-                </div>
-                <div className='text-[#C2A353]'>
-                    <p>Rp. 10.000.000</p>
+                <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px] mb-8'>
+                    <div className='flex items-center text-center gap-[10px]'>
+                        <img src={i4} alt="" />
+                        <p>Diana</p>
+                    </div>
+                    <div className='text-[#C2A353]'>
+                        <p>Rp. 10.000.000</p>
+                    </div>
                 </div>
             </div>
         </div>

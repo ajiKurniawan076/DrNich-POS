@@ -18,10 +18,12 @@ export const TambahDiskon4 = () => {
             )
         }
         fetchData();
+        setLink('/pos/promo')
+        setNav('Diskon')   
+        document.title = 'Diskon'
     },[])
 
-setNav('Diskon')   
-document.title = 'Diskon'
+
 return (
     <div className="flex flex-col px-7 py-8 gap-1 bg-white w-full h-full pt-8 text-[#454545] text-[12px]">
         <div className='flex flex-col overflow-auto gap-[10px] mx-3 h-full'>

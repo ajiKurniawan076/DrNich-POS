@@ -103,6 +103,9 @@ export const TambahDiskon3 = () => {
             await axios.get('https://api.drnich.co.id/api/pos/produk/produk').then(response => setProduk(response.data))
         }
         fetchData()
+        setLink('/pos/TambahDiskon4')
+        setNav('Tambah Diskon')   
+        document.title = 'Tambah Diskon'
     }, [])
     useEffect(() => {
         !tombol ? setJenisPotongan('rupiah') : setJenisPotongan('persen')
@@ -113,8 +116,6 @@ export const TambahDiskon3 = () => {
         setKategoriName(selected.setnama)
 }
 
-setNav('Tambah Diskon')   
-document.title = 'Tambah Diskon'
 return (
     <modalsContext.Provider value={{modals, setModals, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriName}}>
     <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-full h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">

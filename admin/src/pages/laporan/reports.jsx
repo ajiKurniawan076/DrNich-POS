@@ -26,7 +26,7 @@ export const Laporan = () => {
         
         </div>
         </span></a>
-            <a href="supplier" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iPers} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Laporan Produk</p>
+            <a href="LaporanPenjualanProduk" className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"><span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white"><img src={iLine}/><img src={iPers} className="ms-[25px]"/><p className="ms-[15px] text-[14px] text-[#454545] font-medium">Laporan Produk</p>
             <div className="flex ms-auto me-[15px]">
             <img src={iNext} alt="next" />
             </div>
