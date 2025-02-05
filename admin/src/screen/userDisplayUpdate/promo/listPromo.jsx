@@ -11,12 +11,14 @@ function ListPromo() {
   const [name, setName] = useState("");
   const [syarat, setSyarat] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
-  const [image, setImage] = useState("");
+  const [imageDesktop, setimageDesktop] = useState("");
+  const [imageMobile, setimageMobile] = useState("");
 
   const [editName, setEditName] = useState("");
   const [editSyarat, setEditSyarat] = useState("");
   const [editDeskripsi, setEditDeskripsi] = useState("");
-  const [editImage, setEditImage] = useState("");
+  const [editimageDesktop, setEditimageDesktop] = useState("");
+  const [editimageMobile, setEditimageMobile] = useState("");
 
   const [selectedPromo, setSelectedPromo] = useState(null);
 
@@ -54,16 +56,16 @@ function ListPromo() {
     setName("");
     setSyarat("");
     setDeskripsi("");
-    setImage("");
+    setimageDesktop("");
     setEditName("");
     setEditSyarat("");
     setEditDeskripsi("");
-    setEditImage("");
+    setEditimageDesktop("");
   };
 
   const handleAddPromo = async (e) => {
     e.preventDefault();
-    if (!name || !syarat || !deskripsi || !image) {
+    if (!name || !syarat || !deskripsi || !imageDesktop) {
       toast.error("Please fill out all fields before submitting.");
       return;
     }
@@ -75,7 +77,8 @@ function ListPromo() {
           nama: name,
           detail: deskripsi,
           syarat: syarat,
-          foto: image,
+          fotoDesktop: imageDesktop,
+          fotoMobile: imageMobile,
         },
         {
           headers: {
@@ -120,7 +123,7 @@ function ListPromo() {
 
   const updatePromo = async (e) => {
     e.preventDefault();
-    if (!editName || !editSyarat || !editDeskripsi || !editImage) {
+    if (!editName || !editSyarat || !editDeskripsi || !editimageDesktop) {
       toast.error("Please fill out all fields before submitting.");
       return;
     }
@@ -134,7 +137,8 @@ function ListPromo() {
           nama: editName,
           detail: editDeskripsi,
           syarat: editSyarat,
-          foto: editImage,
+          fotoDesktop: editimageDesktop,
+          fotoMobile: editimageMobile,
         },
         {
           headers: {
@@ -166,7 +170,8 @@ function ListPromo() {
     setEditName(item.nama);
     setEditSyarat(item.syarat);
     setEditDeskripsi(item.detail);
-    setEditImage(item.foto);
+    setEditimageMobile(item.fotoMobile);
+    setEditimageDesktop(item.fotoDesktop);
   };
 
   const handleDelete = (item, e) => {
@@ -175,7 +180,7 @@ function ListPromo() {
     setSelectedPromo(item);
   };
 
-  const convertBase64 = (e) => {
+  const convertBase64 = (e, setFunction) => {
     const file = e.target.files[0];
     if (!file) {
       toast.error("No image selected.");
@@ -195,11 +200,10 @@ function ListPromo() {
     reader.readAsDataURL(file);
     reader.onload = () => {
       try {
-        if (editing) setEditImage(reader.result);
-        else setImage(reader.result);
+        setFunction(reader.result);
       } catch (error) {
         toast.error("Failed to process the image. Please try again.");
-        console.error("Image processing error:", error);
+        console.error("image processing error:", error);
       }
     };
   };
@@ -209,41 +213,81 @@ function ListPromo() {
       <Navbar selected={"/listpromo"} />
       <ToastContainer />
       <ConfirmPopup open={open} onClose={() => setOpen(false)}>
-        <div className="w-fit flex space-x-4">
-          <div className="w-full lg:w-fit p-5 border rounded-md shadow-md bg-white">
-            <h3 className="text-xl font-semibold mb-4 font-montserrat">
-              Promo Image
-            </h3>
-            <div className="flex flex-col space-y-4">
-              {image ? (
-                <img
-                  src={image}
-                  alt="Uploaded Preview"
-                  className="w-full h-80 object-cover rounded-md border"
-                />
-              ) : (
-                <div className="w-full h-48 bg-gray-200 rounded-md font-montserrat flex items-center justify-center text-gray-600">
-                  + Add Image
-                </div>
-              )}
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => setImage(null)}
-                  className="px-4 py-2 bg-red-600 font-montserrat text-white rounded-md">
-                  Remove
-                </button>
-                <label className="px-4 py-2 font-montserrat bg-blue-600 text-white rounded-md cursor-pointer">
-                  Add
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={convertBase64}
+        <div className="w-auto flex space-x-4">
+          <div className="flex flex-wrap justify-center gap-6">
+            {/* Desktop Image Uploader */}
+            <div className="w-full max-w-lg p-6 border rounded-lg shadow-lg bg-white">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800 font-montserrat">
+                Promo Image for Desktop
+              </h3>
+              <div className="flex flex-col space-y-4 items-center">
+                {imageDesktop ? (
+                  <img
+                    src={imageDesktop}
+                    alt="Uploaded Preview"
+                    className="w-full max-h-32 object-cover rounded-lg shadow-md border border-gray-300"
                   />
-                </label>
+                ) : (
+                  <div className="w-full max-h-32 aspect-video bg-gray-100 border border-dashed border-gray-400 rounded-lg flex items-center justify-center text-gray-600 text-sm">
+                    + Add image
+                  </div>
+                )}
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setimageDesktop(null)}
+                    className="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition">
+                    Remove
+                  </button>
+                  <label className="px-5 py-2 bg-blue-500 text-white rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition">
+                    Add
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => convertBase64(e, setimageDesktop)}
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Image Uploader */}
+            <div className="w-full max-w-lg p-6 border rounded-lg shadow-lg bg-white">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800 font-montserrat">
+                Promo Image for Mobile
+              </h3>
+              <div className="flex flex-col space-y-4 items-center">
+                {imageMobile ? (
+                  <img
+                    src={imageMobile}
+                    alt="Uploaded Preview"
+                    className="w-28 h-auto aspect-[9/16] object-cover rounded-lg shadow-md border border-gray-300"
+                  />
+                ) : (
+                  <div className="w-28 h-auto aspect-[9/16] bg-gray-100 border border-dashed border-gray-400 rounded-lg flex items-center justify-center text-gray-600 text-sm">
+                    + Add image
+                  </div>
+                )}
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setimageMobile(null)}
+                    className="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition">
+                    Remove
+                  </button>
+                  <label className="px-5 py-2 bg-blue-500 text-white rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition">
+                    Add
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => convertBase64(e, setimageMobile)}
+                    />
+                  </label>
+                </div>
               </div>
             </div>
           </div>
+
           <form
             onSubmit={handleAddPromo}
             className="flex flex-col w-full lg:w-3/4 items-center justify-center p-2 rounded-3xl">
@@ -302,37 +346,76 @@ function ListPromo() {
       </ConfirmPopup>
       <ConfirmPopup open={editing} onClose={() => setEditing(false)}>
         <div className="w-fit flex space-x-4">
-          <div className="w-full lg:w-fit p-5 border rounded-md shadow-md bg-white">
-            <h3 className="text-xl font-semibold mb-4 font-montserrat">
-              Promo Image
-            </h3>
-            <div className="flex flex-col space-y-4">
-              {selectedPromo ? (
-                <img
-                  src={editImage}
-                  alt="Uploaded Preview"
-                  className="w-full h-80 object-cover rounded-md border"
-                />
-              ) : (
-                <div className="w-full h-48 bg-gray-200 rounded-md font-montserrat flex items-center justify-center text-gray-600">
-                  + Add Image
-                </div>
-              )}
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => setEditImage(null)}
-                  className="px-4 py-2 bg-red-600 font-montserrat text-white rounded-md">
-                  Remove
-                </button>
-                <label className="px-4 py-2 font-montserrat bg-blue-600 text-white rounded-md cursor-pointer">
-                  Add
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={convertBase64}
+          <div className="flex flex-wrap justify-center gap-6">
+            {/* Desktop Image Uploader */}
+            <div className="w-full max-w-lg p-6 border rounded-lg shadow-lg bg-white">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800 font-montserrat">
+                Promo Image for Desktop
+              </h3>
+              <div className="flex flex-col space-y-4 items-center">
+                {editimageDesktop ? (
+                  <img
+                    src={editimageDesktop}
+                    alt="Uploaded Preview"
+                    className="w-full max-h-32 object-cover rounded-lg shadow-md border border-gray-300"
                   />
-                </label>
+                ) : (
+                  <div className="w-full max-h-32 aspect-video bg-gray-100 border border-dashed border-gray-400 rounded-lg flex items-center justify-center text-gray-600 text-sm">
+                    + Add image
+                  </div>
+                )}
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setEditimageDesktop(null)}
+                    className="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition">
+                    Remove
+                  </button>
+                  <label className="px-5 py-2 bg-blue-500 text-white rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition">
+                    Add
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => convertBase64(e, setEditimageDesktop)}
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile Image Uploader */}
+            <div className="w-full max-w-lg p-6 border rounded-lg shadow-lg bg-white">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800 font-montserrat">
+                Promo Image for Mobile
+              </h3>
+              <div className="flex flex-col space-y-4 items-center">
+                {editimageMobile ? (
+                  <img
+                    src={editimageMobile}
+                    alt="Uploaded Preview"
+                    className="w-28 h-auto aspect-[9/16] object-cover rounded-lg shadow-md border border-gray-300"
+                  />
+                ) : (
+                  <div className="w-28 h-auto aspect-[9/16] bg-gray-100 border border-dashed border-gray-400 rounded-lg flex items-center justify-center text-gray-600 text-sm">
+                    + Add image
+                  </div>
+                )}
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => setEditimageMobile(null)}
+                    className="px-5 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition">
+                    Remove
+                  </button>
+                  <label className="px-5 py-2 bg-blue-500 text-white rounded-lg shadow-md cursor-pointer hover:bg-blue-600 transition">
+                    Add
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => convertBase64(e, setEditimageMobile)}
+                    />
+                  </label>
+                </div>
               </div>
             </div>
           </div>

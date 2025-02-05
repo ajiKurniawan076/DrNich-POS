@@ -26,7 +26,7 @@ export const Pelanggan = () => {
     fetchData();
     setNav("Pelanggan");
     setSort(true)
-    setLink('/pos/user')
+    setLink('/pos/users')
   }, []);
 
   useEffect(()=>{

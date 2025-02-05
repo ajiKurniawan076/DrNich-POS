@@ -26,7 +26,7 @@ export const Terapis = () => {
     fetchData();
     setNav("Terapis");
     setSort(true)
-    setLink('/pos/user')
+    setLink('/pos/users')
   }, []);
   useEffect(()=>{
 

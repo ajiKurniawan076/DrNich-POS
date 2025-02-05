@@ -26,7 +26,7 @@ export const Supplier = () => {
     };
     fetchData();
     setNav("Supplier");
-    setLink('/pos/user')
+    setLink('/pos/users')
     setSort(true)
   }, []);
 

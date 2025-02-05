@@ -118,7 +118,7 @@ export const DetailProduk = () => {
             Hapus
           </button>
           <Link
-            to={{ pathname: `/DaftarProdukUpdate/${id}` }}
+            to={{ pathname: `/pos/DaftarProdukUpdate/${id}` }}
             className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px] hover:scale-105"
           >
             Edit

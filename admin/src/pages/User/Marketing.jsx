@@ -26,7 +26,7 @@ export const Marketing = () => {
     fetchData();
     setNav("Marketing");
     setSort(true)
-    setLink('/pos/user')
+    setLink('/pos/users')
   }, []);
   useEffect(()=>{
 

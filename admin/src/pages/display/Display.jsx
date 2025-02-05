@@ -28,6 +28,7 @@ export const Display = () => {
   const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Display");
+    setLink('/pos')
   }, []);
   document.title = " Display";
   return (

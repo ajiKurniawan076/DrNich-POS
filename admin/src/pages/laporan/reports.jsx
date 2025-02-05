@@ -11,9 +11,10 @@ import iNext from "../../assets/iNext.svg";
 
 
 export const Laporan = () => {
-  const {setNav} = useContext(navContext)
+  const {setNav, setLink} = useContext(navContext)
   useEffect(()=>{
     setNav('Laporan')
+    setLink('/pos')
   },[])
   document.title = 'Laporan'
 
