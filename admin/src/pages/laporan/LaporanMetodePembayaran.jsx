@@ -9,7 +9,7 @@ import iFrameKet from "../../assets/iconLaporanPenjualan/iFrameKet.svg";
 
 
 export const LaporanMetodePembayaran = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Metode Pembayaran')   
 document.title = 'Metode Pembayaran'

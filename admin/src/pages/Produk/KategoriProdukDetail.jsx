@@ -7,7 +7,7 @@ import axios from "axios";
 import next2 from "../../assets/next2.svg";
 
 export const KategoriProdukDetail = () => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [fetched, setFetched] = useState(false);
   const { id } = useParams();
@@ -22,7 +22,8 @@ export const KategoriProdukDetail = () => {
     };
     fetchData();
 
-    setNav("Jenis Product");
+    setNav("Detail Kategori Produk");
+    setLink('/pos/kategoriproduk')
     setSort(false)
   }, []);
 

@@ -10,7 +10,7 @@ import { modaltransaksi } from './Kasir4'
 
 
 export const PilihPelanggan = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const {modalPel, setModalPel, pelanggan, pelangganTerpilih, setPelangganTerpilih} = useContext(modaltransaksi)
     const [filterPelanggan, setFilterPelanggan] = useState([])
     const cariRef = useRef(null)

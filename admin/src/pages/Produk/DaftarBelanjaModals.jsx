@@ -17,7 +17,7 @@ import { modalStokContext } from "./ManajementDetailStok";
 
 export const modalsContext = createContext();
 export const DaftarBelanjaModals = (props) => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [angka, setAngka] = useState(0);
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState([]);
@@ -88,7 +88,8 @@ export const DaftarBelanjaModals = (props) => {
             setProduk(filterProduk);
             setProdukKategori(filterProduk);
             const filterlimit = response.data.filter(
-              (item) => (item.stok < item.minStok, item.jenis.jenis == "produk")
+              (item) => {item.stok < item.minStok
+                 item.jenis.jenis == "produk"}
             );
             console.log(filterlimit);
             setItems(filterlimit);
@@ -130,19 +131,19 @@ export const DaftarBelanjaModals = (props) => {
       }}
     >
       <div
-        className={`fixed top-0 start-0 w-full h-full bg-black ${
+        className={`fixed top-0 start-0 w-full h-full bg-black/20 flex justify-center overflow-auto ${
           modalStok ? "" : "hidden"
         }`}
       >
-        <form className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
-          <form className="mt-5 flex gap-2 h-[42px] mx-3 border border-black rounded-xl items-center px-2">
-            <AiOutlineSearch size={20} />
-            <input
-              type="text"
-              className="text-sm w-full h-[30px] focus:outline-none"
-              placeholder="Cari..."
-            ></input>
-          </form>
+        <form className="flex flex-col px-7 py-3 gap-1 bg-white md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] h-full mt-[75px]">
+        <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
+          <AiOutlineSearch size={20} />
+          <input
+            type="text"
+            className="text-sm w-full h-[30px] focus:outline-none"
+            placeholder="Cari..."
+          ></input>
+        </form>
           <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start pl-4 mt-4 rounded-lg">
             <p className="">Daftar Stok Limit</p>
           </div>
@@ -206,10 +207,10 @@ export const DaftarBelanjaModals = (props) => {
             ))}
           </div>
           <div className="flex w-full ">
-            <div className="flex flex-col justify-end w-full">
+            <div className="flex flex-col justify-end w-[50%]">
               <button
                 onClick={handleSubmit}
-                className="flex justify-center items-center border border-[#C2A353] bg-white text-[#C2A353] font-semibold rounded-l-xl h-[60px]"
+                className="flex justify-center items-center border border-[#C2A353] bg-white text-[#C2A353] font-semibold rounded-l-xl px-3 h-[50px] w-full text-[14px]"
               >
                 <div className="grid">
                   <p>Beli Sekarang</p>
@@ -217,13 +218,13 @@ export const DaftarBelanjaModals = (props) => {
                 </div>
               </button>
             </div>
-            <div className="flex justify-end w-full">
+            <div className="flex justify-end w-[50%]">
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   setModals(true);
                 }}
-                className="flex items-center text-center border border-[#C2A353] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-semibold rounded-r-xl h-[60px]"
+              className="flex justify-center items-center text-center gap-2 border border-[#C2A353] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-semibold rounded-r-xl px-3 h-[50px] w-full text-[14px]"
               >
                 <img src={iTambahP} alt="" className="pl-4" /> Tambah Daftar
                 Belanja
@@ -232,7 +233,7 @@ export const DaftarBelanjaModals = (props) => {
           </div>
           <div>
             <button
-              className="flex justify-center items-center border border-[#C2A353] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-semibold rounded-xl p-4 w-full mt-2"
+              className="flex justify-center items-center text-center gap-2 border border-[#C2A353] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-semibold rounded-xl px-3 h-[50px] w-full text-[14px]"
               onClick={(e) => {
                 e.preventDefault();
                 setModalStok(false);
@@ -242,7 +243,7 @@ export const DaftarBelanjaModals = (props) => {
             </button>
           </div>
         </form>
-        <PembelianStok source={"DaftarBelanja"} />
+         <PembelianStok source={"PembelianStok"} />
       </div>
     </modalsContext.Provider>
   );

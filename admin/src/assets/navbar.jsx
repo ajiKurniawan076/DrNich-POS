@@ -7,7 +7,7 @@ import iBack from "../assets/iBack.svg"
 import iSortir from "../assets/iSortir.svg"
 import iClose from "../assets/iClose.svg"
 export const Navbar = () => {
-    const { nav, sort, asc, setasc, showsort, setshowsort } = useContext(navContext)
+    const { nav, sort, asc, setasc, showsort, setshowsort, link } = useContext(navContext)
     const back = useNavigate()  
 
     const klikasc =(e) => {
@@ -28,7 +28,7 @@ export const Navbar = () => {
     }
     return (
         
-        <div className={`flex ${nav=='home'?'text-white justify-between':'text-[#454545] justify-center relative bg-white shadow-md'} items-center h-[75px] w-full`}>
+        <div className={`fixed flex z-50 start-50 top-0 max-w-[500px] w-[100%]  ${nav=='home'?'text-white md:w-[80%] md:max-w-[700px] lg:w-[60%]  lg:max-w-[900px] justify-between':'text-[#454545] justify-center md:w-[100%] md:max-w-[700px] lg:w-[100%]  lg:max-w-[900px] relative bg-white shadow-md'} items-center h-[75px] `}>
             
             <div className='mx-2 items-center gap-4 cursor-pointer'>
                 {nav=='home'?
@@ -38,13 +38,13 @@ export const Navbar = () => {
                 }
             </div>
             <div className={` items-center gap-4 cursor-pointer ${nav!='home'?'absolute start-5':''}`}>
-               {nav=='home'? <img src={iLogout} className="mt-2 me-5"/>:<button onClick={()=>{back(-1)}}><img src={iBack} className="mt-2"/></button>}
+               {nav=='home'? <img src={iLogout} className="mt-2 me-5"/>:<button onClick={()=>{back(link)}}><img src={iBack} className="mt-2"/></button>}
             </div>
             <div className={`absolute items-center gap-4 cursor-pointer ${sort?'end-9':'hidden'}`}>
                {nav=='home'?<></>:<button onClick={()=>{setshowsort(true)}}><img src={iSortir} className="mt-2"/></button>}
             </div>
-            <div className={`ps-[30px] pe-[32px] pt-[30px] pb-[48px] gap-[20px] rounded-t-2xl fixed top-0 bg-black/20 start-0 flex min-w-full min-h-screen ${showsort? "" : "hidden"}`}>
-            <div className={`ps-[30px] pe-[32px] pt-[30px] pb-[48px] gap-[20px] rounded-t-2xl mb-auto bg-white mx-auto place-items-center min-w-[375px] min-h-[218px] h-fit grid `}>
+            <div className={`ps-[30px] pe-[32px] pt-[30px] pb-[48px] gap-[20px] rounded-t-2xl fixed bottom-0 bg-black/20 start-0 flex min-w-full min-h-screen ${showsort? "" : "hidden"}`}>
+            <div className={`ps-[30px] pe-[32px] pt-[30px] pb-[48px] gap-[20px] rounded-t-2xl mt-auto bg-white mx-auto place-items-center min-w-[375px] min-h-[218px] h-fit grid `}>
                 <div className="flex justify-between w-full">
                 <label htmlFor="" className="text-[14px] text-[#454545]">Urut Berdasarkan </label>
                 <button onClick={(e)=>{

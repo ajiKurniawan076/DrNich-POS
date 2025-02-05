@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export const UpdateJenisProduk = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const { id } = useParams();
   useEffect(() => {
     setNav("Update Jenis Produk");

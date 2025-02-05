@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { navContext } from "../../App2"
 
 export const LaporanLogProduk4 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Log Produk')   

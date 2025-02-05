@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const KategoriProdukUpdate = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [jenisx, setJenisx] = useState([]);
   const [select, setSelected] = useState("");
@@ -30,6 +30,7 @@ export const KategoriProdukUpdate = () => {
     };
     fetchJenis();
     setNav("Ubah Kategori Produk");
+    setLink('/pos/kategoriproduk')
   }, []);
 
   const navigate = useNavigate();

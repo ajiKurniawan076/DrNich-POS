@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export const Cashback4 = () => {
   const [kesbek, setKesbek] = useState([]);
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const { dataKorup, setDataKorup } = useState([]);
   useEffect(() => {
     const fetchdata = async () => {
@@ -26,15 +26,16 @@ export const Cashback4 = () => {
         });
     };
     fetchdata();
+    setLink('/pos/promo')
+
+    setNav("Cashback");
   }, []);
 
   kesbek.forEach((promo) => {
     console.log(promo.promoDetail);
   });
 
-  console.log(kesbek);
-
-  setNav("Cashback");
+ 
   document.title = "Cashback";
   return (
     <div className="flex flex-col px-7 py-8 gap-1 bg-white w-full min-h-screen h-full pt-8 text-[#454545] text-[12px]">

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export const KategoriAdd = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const [gambar, setGambar] = useState(null);
   const namaKategoriRef = useRef(null);

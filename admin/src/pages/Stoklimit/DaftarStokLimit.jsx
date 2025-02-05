@@ -4,7 +4,7 @@ import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 
 
 export const DaftarStokLimit = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Daftar Stok Limit')   
 document.title = 'Daftar Stok Limit'

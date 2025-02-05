@@ -5,7 +5,7 @@ import iPanahB from "../../assets/iconmanajement/iPanahB.svg";
 import iTgl from "../../assets/iconproduk/iTgl.svg";
 
 export const LaporanDataPembelianStok = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Data Pembelian Stok')   

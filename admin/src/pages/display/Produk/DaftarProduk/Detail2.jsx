@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
 export const Detail2 = () => {
   const lokasi = useLocation();
   const dummData = lokasi.state;
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   useEffect(() => {
     fetch("/marketing.json")

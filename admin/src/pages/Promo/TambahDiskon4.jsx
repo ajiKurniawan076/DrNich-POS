@@ -5,7 +5,7 @@ import iTamPu from "../../assets/iconkasir/iTamPu.svg";
 import axios from 'axios';
 
 export const TambahDiskon4 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [data, setData] = useState([])
     useEffect(() => {
         const fetchData = async () => { await axios.get('https://api.drnich.co.id/api/pos/promo/promo').then(

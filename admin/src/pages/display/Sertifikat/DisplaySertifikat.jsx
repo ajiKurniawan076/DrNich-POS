@@ -8,7 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const DisplaySertifikat = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const imageRef = useRef(null);
   const [gambarname, setGambarName] = useState("");

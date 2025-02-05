@@ -6,7 +6,7 @@ import { navContext } from "../../../App2"
 
 export const Galeri = () => {
 
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [datax, setdatax] = useState([])
     useEffect(() => {
         const dammyData = [

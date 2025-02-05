@@ -23,7 +23,7 @@ import ipromo from "../../assets/iconDisplay/ipromo.svg";
 import irating from "../../assets/iconDisplay/irating.svg";
 
 export const BelajarDisplay = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Display");
   }, []);

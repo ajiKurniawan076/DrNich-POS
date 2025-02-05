@@ -7,7 +7,7 @@ import axios from "axios";
 import { data, useNavigate, useParams } from "react-router-dom";
 
 export const PelangganUpdate = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const [datax, setDatax] = useState([]);
@@ -19,6 +19,7 @@ export const PelangganUpdate = () => {
     };
     fetchData();
     setNav("Edit Pelanggan");
+    setLink('/pos/pelanggan')
   }, []);
   // console.log(datax);
   const namaPelangganRef = useRef(null);

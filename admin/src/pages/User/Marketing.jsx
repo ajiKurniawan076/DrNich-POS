@@ -11,7 +11,7 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const Marketing = () => {
-  const { setNav, setSort, asc } = useContext(navContext);
+  const { setNav, setSort, asc, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [tampil, setTampil] = useState([]);
   const cariRef = useRef(null)
@@ -26,6 +26,7 @@ export const Marketing = () => {
     fetchData();
     setNav("Marketing");
     setSort(true)
+    setLink('/pos/users')
   }, []);
   useEffect(()=>{
 

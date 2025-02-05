@@ -4,7 +4,7 @@ import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iCtgPil from "../../assets/iconLaporanPenjualan/iCtgPil.svg";
 
 export const LaporanPilihPerbandingan = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Pilih Perbandingan')   

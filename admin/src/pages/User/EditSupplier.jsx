@@ -20,7 +20,8 @@ export const Editsupplier = () => {
     const keteranganRekRef = useRef(null);
     const [datax, setDatax] = useState([]);
     const { id } = useParams();
-
+    const { setNav, setLink } = useContext(navContext);
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = {
@@ -50,24 +51,24 @@ export const Editsupplier = () => {
             alert("Terjadi kesalahan saat menyimpan data!");
         });
     };
-
-    const { setNav } = useContext(navContext);
+    
     
     useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`https://api.drnich.co.id/api/pos/user/supplier/${id}`);
-            setDatax(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`https://api.drnich.co.id/api/pos/user/supplier/${id}`);
+                setDatax(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         };
         fetchData();
+        console.log(datax);
+        setNav("Edit Supplier");
+        document.title = "Edit Supplier";
+        setLink('/pos/supplier')
     }, [id]);
     
-    console.log(datax);
-    setNav("Edit Supplier");
-    document.title = "Edit Supplier";
     const [supstat, setsupstat] = useState(false);
     return (
         <form

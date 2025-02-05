@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export const Diskon = () => {
   const [diskon, setDiskon] = useState([]);
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   useEffect(() => {
     const fetch = async () => {

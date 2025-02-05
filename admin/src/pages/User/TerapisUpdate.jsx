@@ -1,11 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg"; // Default KTP image
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const TerapisUpdate = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const { id } = useParams();
   const [imagePreview, setImagePreview] = useState(null); // Store image preview
@@ -20,6 +20,7 @@ export const TerapisUpdate = () => {
     fetchData();
 
     setNav("Ubah Terapis");
+    setLink('/pos/terapis')
   }, [id]);
 
   const navigate = useNavigate();

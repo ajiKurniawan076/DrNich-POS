@@ -3,7 +3,7 @@ import { navContext } from "../../App2"
 import iPanahB from '../../assets/iconmanajement/iPanahB.svg'
 
 export const Cashback = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Tambah Cashback')   
 document.title = 'Tambah Cashback'

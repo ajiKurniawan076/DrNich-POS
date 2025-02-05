@@ -7,7 +7,7 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
 export const DraftTransaksi3 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const {id} = useParams()
     const [transaksi, setTransaksi] = useState({})
     useEffect(()=>{

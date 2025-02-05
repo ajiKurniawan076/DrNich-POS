@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const modalContext = createContext()
 export const Cashback3 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [produkTerpilih, setProdukTerpilih] = useState([])
     const [jenis, setJenis] = useState([])
     const [produk, setProduk] = useState([])
@@ -79,6 +79,7 @@ export const Cashback3 = () => {
         }
         fetchData()
         setNav('Tambah Cashback')
+        setLink('/pos/cashback')
     }, [])
     const namaPromoRef = useRef(null)
     const cashbackRef = useRef(null)

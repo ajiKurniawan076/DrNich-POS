@@ -5,7 +5,7 @@ import iFrame100 from "../../assets/iconkasir/iFrame100.svg";
 
 
 export const DraftTransaksi = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Draf Transaksi')   
 document.title = 'Draf Transaksi'

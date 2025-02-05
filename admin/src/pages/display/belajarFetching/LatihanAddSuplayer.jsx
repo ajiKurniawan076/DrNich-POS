@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react"
 import { navContext } from "../../../App2"
 const LatihanAddSuplayer = () => {
     const [datax, setData] = useState([])
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     useEffect(() => {
         const fetchData = async () => {
             await axios.get('https://api.drnich.co.id/api/pos/user/supplier').then(

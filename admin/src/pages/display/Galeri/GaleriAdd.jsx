@@ -8,7 +8,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 export const GaleriAdd = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const navigate = useNavigate()
     useEffect(() => {
         setNav('Tambah Galeri')

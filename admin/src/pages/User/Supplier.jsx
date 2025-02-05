@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export const Supplier = () => {
-  const { setNav, setSort, asc } = useContext(navContext);
+  const { setNav, setSort, asc, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [tampil, setTampil] = useState([]);
   const [datasupplier, setdatasupplier] = useState([]);
@@ -26,6 +26,7 @@ export const Supplier = () => {
     };
     fetchData();
     setNav("Supplier");
+    setLink('/pos/users')
     setSort(true)
   }, []);
 

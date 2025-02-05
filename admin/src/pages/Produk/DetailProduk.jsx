@@ -7,7 +7,7 @@ import iNext from "../../assets/iNext.svg";
 
 export const DetailProduk = () => {
   const [product, setproduct] = useState([]);
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const [fetched, setFetched] = useState(false);
   const { id } = useParams();
@@ -22,6 +22,7 @@ export const DetailProduk = () => {
     };
     fetchData();
     setNav("Daftar Produk");
+    setLink('/pos/daftarproduk')
     setSort(false)
   }, []);
 
@@ -117,7 +118,7 @@ export const DetailProduk = () => {
             Hapus
           </button>
           <Link
-            to={{ pathname: `/DaftarProdukUpdate/${id}` }}
+            to={{ pathname: `/pos/DaftarProdukUpdate/${id}` }}
             className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px] hover:scale-105"
           >
             Edit

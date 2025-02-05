@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 export const GaleriDetail = () => {
   const lokasi = useLocation();
   const dummyData = lokasi.state;
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   useEffect(() => {
     fetch("/marketing.json")

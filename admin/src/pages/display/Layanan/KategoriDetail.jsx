@@ -12,7 +12,7 @@ import gkategori from "../../../assets/iconDisplay/Layanan/gkategori.svg";
 export const KategoriDetail = () => {
   const lokasi = useLocation();
   const dataDammy = lokasi.state;
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   useEffect(() => {
     // fetch("/marketing.json").then(

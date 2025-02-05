@@ -4,7 +4,7 @@ import iPan from "../../assets/iconLaporanPenjualan/iPan.svg";
 
 
 export const LaporanDataPembelianStokDetail = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Detail')   
 document.title = 'Detail'

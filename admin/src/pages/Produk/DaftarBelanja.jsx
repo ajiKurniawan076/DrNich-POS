@@ -16,7 +16,7 @@ import { PembelianStok } from "./PembelianStok";
 
 export const modalContext = createContext();
 export const DaftarBelanja = () => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, setLink } = useContext(navContext);
   const [angka, setAngka] = useState(0);
   const [total, setTotal] = useState(0);
   const [cart, setCart] = useState([]);
@@ -102,6 +102,7 @@ export const DaftarBelanja = () => {
     };
     fetch();
     setNav("Daftar Belanja");
+    setLink('/pos/produks')
     setSort(false);
     document.title = "Daftar Belanja";
   }, []);

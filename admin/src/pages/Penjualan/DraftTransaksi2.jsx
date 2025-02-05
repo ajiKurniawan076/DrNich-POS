@@ -3,7 +3,7 @@ import { navContext } from "../../App2"
 import axios from 'axios'
 
 export const DraftTransaksi2 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [transaksi, setTransaksi] = useState([])
 
     useEffect(()=>{
@@ -14,6 +14,7 @@ export const DraftTransaksi2 = () => {
         }
         fetch()
         setNav('Transaksi')   
+        setLink('/pos')
         document.title = 'Transaksi'
     },[])
         return (

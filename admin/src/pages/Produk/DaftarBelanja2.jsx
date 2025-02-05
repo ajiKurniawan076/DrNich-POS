@@ -13,7 +13,7 @@ import iTambah from "../../assets/iconproduk/Itambah.svg";
 import { BsCart4 } from "react-icons/bs";
 
 export const DaftarBelanja2 = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   const [angka, setAngka] = useState(0);
   const min = () => {

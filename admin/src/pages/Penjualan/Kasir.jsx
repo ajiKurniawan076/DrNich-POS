@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const kasirContext = createContext()
 export const Kasir = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
     const [modal , setModal] = useState(false)
     const [angka, setAngka] = useState(0)
     const [total, setTotal] = useState(0)
@@ -78,6 +78,7 @@ export const Kasir = () => {
         }
         fetch()
             setNav('Kasir')
+            setLink('/pos')
     document.title = 'Kasir'
     }, [])
     const min = (isi) => {

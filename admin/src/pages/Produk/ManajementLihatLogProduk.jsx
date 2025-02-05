@@ -9,7 +9,7 @@ import iPanahKuning from "../../assets/iconmanajement/iPanahKuning.svg";
 
 
 export const ManajementLihatLogProduk = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Lihat Log Produk')   

@@ -9,7 +9,7 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const JenisProduct = () => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [cari, setCari] = useState("");
 
@@ -23,6 +23,7 @@ export const JenisProduct = () => {
     };
     fetchData();
     setNav("Jenis Product");
+    setLink('/pos/produks')
     setSort(true)
   }, []);
 

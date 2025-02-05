@@ -6,7 +6,7 @@ import iTambahP from "../../assets/iconproduk/iTambahP.svg";
 
 
 export const ManajementDetailProduk = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Detail')   
 document.title = 'Manajemen Detail Produk'

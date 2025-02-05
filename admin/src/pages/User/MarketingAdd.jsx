@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export const MarketingAdd = () => {
   const navigate = useNavigate();
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   const namaMarketingRef = useRef(null);
   const nomorTeleponRef = useRef(null);
@@ -77,7 +77,8 @@ export const MarketingAdd = () => {
 
   useEffect(() => {
     setNav("Tambah Marketing");
-  }, [setNav]);
+    setLink('/pos/marketing')
+  }, []);
 
   document.title = "Tambah Marketing";
 

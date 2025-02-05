@@ -10,7 +10,7 @@ import { navContext } from "../../../App2";
 import gSertifikat from "../../../assets/iconDisplay/Sertifikat/gSertifikat.svg";
 
 export const SertifikatDetail = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   useEffect(() => {
     // fetch("/marketing.json").then(

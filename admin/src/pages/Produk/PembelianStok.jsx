@@ -7,7 +7,7 @@ import { modalContext } from "./DaftarBelanja";
 import { modalsContext } from "./DaftarBelanjaModals";
 
 export const PembelianStok = (props) => {
-  const { setNav, setSort } = useContext(navContext);
+  const { setNav, setSort, setLink } = useContext(navContext);
   const {
     modals,
     setModals,
@@ -72,7 +72,7 @@ export const PembelianStok = (props) => {
       }`}
     >
       <button
-        className="fixed top-1 w-[30%]"
+        className="mt-[80px] fixed top-1 w-[30%]"
         onClick={(e) => {
           e.preventDefault();
           setModals(false);
@@ -80,7 +80,7 @@ export const PembelianStok = (props) => {
       >
         x
       </button>
-      <div className="md:w-[700px] lg:w-[900px] w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
+      <div className="mt-[75px] md:max-w-[700px] md:w-[100%] lg:w-[100%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
         <p className="flex text-start mt-5 text-[14px] text-[#454545] font-medium mb-1">
           Kategori Produk
         </p>

@@ -4,7 +4,7 @@ import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iPanah from "../../assets/iconproduk/iPanah.svg";
 
 export const LaporanPersediaanDetail = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Laporan Persediaan')   

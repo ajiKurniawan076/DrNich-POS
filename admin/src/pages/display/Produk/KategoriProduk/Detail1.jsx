@@ -13,7 +13,7 @@ import gkt from "../../../../assets/iconDisplay/produk/gkt.svg";
 export const Detail1 = () => {
   const lokasi = useLocation();
   const datadummy = lokasi.state;
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   useEffect(() => {
     // fetch("/marketing.json").then(

@@ -3,7 +3,7 @@ import { navContext } from "../../App2"
 import iPan from "../../assets/iconLaporanPenjualan/iPan.svg";
 
 export const LaporanLogProduk2 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 
 setNav('Log Produk')   

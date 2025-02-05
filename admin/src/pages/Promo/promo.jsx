@@ -10,9 +10,10 @@ import iNext from "../../assets/iNext.svg";
 
 
 export const Promo = () => {
-  const {setNav} = useContext(navContext)
+  const {setNav, setLink} = useContext(navContext)
   useEffect(()=>{
     setNav('Promo')
+    setLink('/pos')
   },[])
 
   return (

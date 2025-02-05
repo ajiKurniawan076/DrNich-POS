@@ -5,11 +5,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const Addterapis = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   useEffect(() => {
     setNav('Tambah Terapis');
-  }, [setNav]);
+    setLink('/pos/terapis')
+  }, []);
 
   const navigate = useNavigate();
   const namaTerapisRef = useRef(null);

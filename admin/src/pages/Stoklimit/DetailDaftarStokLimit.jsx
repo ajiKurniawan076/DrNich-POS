@@ -4,7 +4,7 @@ import iPanKu from "../../assets/iconkasir/iPanKu.svg";
 import iKranjang from "../../assets/iconkasir/iKranjang.svg";
 
 export const DetailDaftarStokLimit = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Detail')   
 document.title = 'Detail'

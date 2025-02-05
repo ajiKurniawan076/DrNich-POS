@@ -12,17 +12,19 @@ import iPenj from "../assets/iconpenjuala.svg";
 
 export const modalContext = createContext(null)
 export const HomeAdmin = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
 
   useEffect(() => {
     setNav('home');
+    setLink('/pos')
   }, []);
 
   return (
-    <div className="w-full h-full overflow-auto md:overflow-hidden">
+    <div className="w-full h-full overflow-hidden md:overflow-hidden mt-[75px]">
+              
       {/* Super Admin section */}
       <div className="admin-section">
-        <div className="grid z-50 absolute top-4 place-items-center">
+        <div className="grid absolute top-4 place-items-center">
           <img src={Ava} className="rounded-full h-auto w-[100px]" />
           <h5 className="mt-3 font-semibold text-[16px]">Super Admin</h5>
         </div>

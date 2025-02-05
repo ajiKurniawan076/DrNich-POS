@@ -6,7 +6,7 @@ import iTamKu from "../../assets/iconkasir/iTamKu.svg";
 import iPan from "../../assets/iconkasir/iPan.svg";
 
 export const DraftTransaksi5 = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Kasir')   
 document.title = 'Kasir'

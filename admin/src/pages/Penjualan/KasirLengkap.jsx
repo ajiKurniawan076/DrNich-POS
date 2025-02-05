@@ -10,7 +10,7 @@ import iPan from "../../assets/iconkasir/iPan.svg";
 
 
 export const KasirLengkap = () => {
-    const { setNav } = useContext(navContext)
+    const { setNav, setLink } = useContext(navContext)
 
 setNav('Kasir')   
 document.title = 'Kasir'

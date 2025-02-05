@@ -8,7 +8,7 @@ import { data, useNavigate } from "react-router-dom";
 import { set } from "date-fns";
 
 export const LayananAdd = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [selectet, setselectet] = useState(""); // mengambil nilai yang di pilih
   const navigate = useNavigate();

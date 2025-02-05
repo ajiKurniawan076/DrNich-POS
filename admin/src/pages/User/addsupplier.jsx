@@ -61,9 +61,10 @@ export const Addsupplier = () => {
       });
   };
 
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Tambah Supplier");
+    setLink('/pos/supplier')
   }, []);
   document.title = "Tambah Supplier";
   const [supstat, setsupstat] = useState(false);
