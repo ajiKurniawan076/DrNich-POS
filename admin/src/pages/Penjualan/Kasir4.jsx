@@ -76,7 +76,7 @@ export const Kasir4 = () => {
       }}
     >
       <div
-        className={`fixed z-40 top-0 start-0 w-full overflow-auto inset-0 ${
+        className={`fixed z-40 bg-black/20 top-0 start-0 w-full overflow-auto inset-0 ${
           modal ? "" : "hidden"
         }`}
       >
