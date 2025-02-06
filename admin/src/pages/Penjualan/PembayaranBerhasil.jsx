@@ -18,7 +18,8 @@ export const PembayaranBerhasil = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.drnich.co.id/api/pos/kasir/transaksi/${id}`
+          `https://api.drnich.co.id/api/pos/kasir/transaksi/${id}`,
+          { withCredentials: true }
         );
         console.log(response.data);
         setDataDalam(response.data.transaksiDetail);

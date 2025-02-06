@@ -169,7 +169,7 @@ export const Kasir4 = () => {
             ) : (
               <button
                 onClick={handleTransaksi}
-                className="flex justify-between items-center text-center border rounded-xl bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-white w-[59%] p-4"
+                className="flex justify-between items-center text-center border rounded-xl bg-gradient-to-l from-[#C2A353] to-[#EAC564] text-white w-[59%] p-4"
               >
                 <p>Bayar</p>
                 <img src={iPan} alt="panah putih" />
