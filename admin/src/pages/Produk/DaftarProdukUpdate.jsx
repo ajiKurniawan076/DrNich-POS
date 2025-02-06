@@ -172,7 +172,7 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.hargaBeli}
           ref={hargaBeliRef}
-          type="text"
+          type="number"
           placeholder="0"
           className="px-2 bg-gray-400/10 border border-black/30 rounded-xl h-[30px]"
         />
@@ -180,7 +180,7 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.hargaJual}
           ref={hargaJualRef}
-          type="text"
+          type="number"
           placeholder="0"
           className="px-2 bg-gray-400/10 border border-black/30 rounded-xl h-[30px]"
         />
@@ -190,7 +190,7 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.bonusTerapis}
           ref={bonusTerapisRef}
-          type="text"
+          type="number"
           placeholder="Contoh : Rp. 20000"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -201,7 +201,7 @@ export const DaftarProdukUpdate = () => {
           Value={
             ((product.hargaJual - product.hargaBeli) / product.hargaBeli) * 100
           }
-          type="text"
+          type="number"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -210,7 +210,7 @@ export const DaftarProdukUpdate = () => {
         </label>
         <input
           value={product.hargaJual - product.hargaBeli}
-          type="text"
+          type="number"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -218,7 +218,7 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.stok}
           ref={stokRef}
-          type="text"
+          type="number"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -226,7 +226,7 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.minStok}
           ref={minStokRef}
-          type="text"
+          type="number"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />

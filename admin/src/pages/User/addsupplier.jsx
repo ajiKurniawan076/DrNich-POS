@@ -110,7 +110,7 @@ export const Addsupplier = () => {
           </label>
           <input
             ref={noTeleponRef}
-            type="text"
+            type="number"
             placeholder="Contoh : 081000000000"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
             onChange={checkFormFilled}
@@ -169,7 +169,7 @@ export const Addsupplier = () => {
           </label>
           <input
             ref={nomorRekeningRef}
-            type="text"
+            type="number"
             placeholder="Contoh : 5670019288493"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
             onChange={checkFormFilled}

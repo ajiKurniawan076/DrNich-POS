@@ -100,7 +100,7 @@ export const MarketingAdd = () => {
         <label className="text-start font-semibold mb-[5px]">Nomor Telepon</label>
         <input
           ref={nomorTeleponRef}
-          type="text"
+          type="number"
           placeholder="Contoh : 0892323232"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
           onChange={checkFormFilled}
@@ -161,7 +161,7 @@ export const MarketingAdd = () => {
         <label className="text-start font-semibold mb-[5px]">Nomor Rekening</label>
         <input
           ref={nomorRekeningRef}
-          type="text"
+          type="number"
           placeholder="Contoh : 5670019288493"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
           onChange={checkFormFilled}

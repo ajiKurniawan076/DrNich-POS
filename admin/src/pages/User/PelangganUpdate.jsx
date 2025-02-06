@@ -67,7 +67,7 @@ export const PelangganUpdate = () => {
         <label className="text-start font-semibold">Poin</label>
         <input
           defaultValue={datax.poin}
-          type="text"
+          type="number"
           placeholder="0"
           disabled
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
@@ -78,7 +78,7 @@ export const PelangganUpdate = () => {
         <input
           defaultValue={datax.nomorTelepon}
           ref={nomorTeleponRef}
-          type="text"
+          type="number"
           placeholder="Contoh : 0892323232"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />

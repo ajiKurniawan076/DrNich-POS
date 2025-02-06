@@ -112,7 +112,7 @@ export const Editsupplier = () => {
                     ref={noTeleponRef}
                     defaultValue={datax.nomorTelepon}
                     onSubmit={(e) => setDatax({...datax, nomorTelepon: e.target.value})}
-                    type="text"
+                    type="number"
                     placeholder="Contoh : 081000000000"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
@@ -166,7 +166,7 @@ export const Editsupplier = () => {
                     ref={nomorRekeningRef}
                     defaultValue={datax.nomorRekening}
                     onSubmit={(e) => setDatax({...datax, nomorRekening: e.target.value})}
-                    type="text"
+                    type="number"
                     placeholder="Contoh : 5670019288493"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>

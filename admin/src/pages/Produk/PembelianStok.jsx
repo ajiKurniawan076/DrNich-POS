@@ -67,20 +67,11 @@ export const PembelianStok = (props) => {
   document.title = "Pembelian Stok";
   return (
     <div
-      className={`flex flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-white w-full h-full overflow-scroll ${
+      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-white w-full h-full overflow-scroll ${
         modals ? "" : "hidden"
       }`}
     >
-      <button
-        className="mt-[80px] fixed top-1 w-[30%]"
-        onClick={(e) => {
-          e.preventDefault();
-          setModals(false);
-        }}
-      >
-        x
-      </button>
-      <div className="mt-[75px] md:max-w-[700px] md:w-[100%] lg:w-[100%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
+      <div className="md:max-w-[700px] md:w-[100%] lg:w-[100%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
         <p className="flex text-start mt-5 text-[14px] text-[#454545] font-medium mb-1">
           Kategori Produk
         </p>

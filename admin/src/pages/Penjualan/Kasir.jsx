@@ -237,6 +237,12 @@ export const Kasir = () => {
                             <button onClick={() => plus(item._id)}>
                                 <img src={iPlus} alt="plus" />
                             </button>
+                            <button onClick={
+                                (e) => {
+                                    e.preventDefault()
+                                    setCart((prev) => prev.filter(itemx => itemx._id !== item._id))
+                                }
+                            } className='text-red-600 font-bold'>X</button>
                         </div>
                     </button>
 

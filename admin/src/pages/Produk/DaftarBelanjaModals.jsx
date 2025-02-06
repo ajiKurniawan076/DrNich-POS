@@ -131,7 +131,7 @@ export const DaftarBelanjaModals = (props) => {
       }}
     >
       <div
-        className={`fixed top-0 start-0 w-full h-full bg-black/20 flex justify-center overflow-auto ${
+        className={`fixed z-40 top-0 start-0 w-full h-full bg-black/20 flex justify-center overflow-auto ${
           modalStok ? "" : "hidden"
         }`}
       >
@@ -200,6 +200,12 @@ export const DaftarBelanjaModals = (props) => {
                       <button onClick={() => plus(item._id)}>
                         <img src={iPlus} alt="plus" />
                       </button>
+                      <button onClick={
+                                (e) => {
+                                    e.preventDefault()
+                                    setCart((prev) => prev.filter(itemx => itemx._id !== item._id))
+                                }
+                            } className='text-red-600 font-bold'>X</button>
                     </div>
                   </div>
                 </Link>

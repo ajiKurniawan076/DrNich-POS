@@ -109,7 +109,7 @@ export const UpdateMarketing = () => {
         <input
           ref={nomorTeleponRef}
           defaultValue={datax.nomorTelepon}
-          type="text"
+          type="number"
           placeholder="Contoh : 0892323232"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -171,7 +171,7 @@ export const UpdateMarketing = () => {
         <input
           ref={nomorRekeningRef}
           defaultValue={datax.nomorRekening}
-          type="text"
+          type="number"
           placeholder="Contoh : 5670019288493"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />

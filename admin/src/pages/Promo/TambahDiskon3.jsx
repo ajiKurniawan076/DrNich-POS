@@ -152,7 +152,7 @@ return (
         <div className='gflex flex-col px-3 h-full'>
             <p>Jumlah diskon</p>
             <div className='flex justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
-                <input ref={potonganRef} placeholder='20.000/20' className='outline-none flex justify-between text-start items-center w-full'>
+                <input type='number' ref={potonganRef} placeholder='20.000/20' className='outline-none flex justify-between text-start items-center w-full'>
                 </input>
                 <div className='flex w-[30%]'>
                     <button onClick={(e) => {
