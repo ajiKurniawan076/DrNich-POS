@@ -5,6 +5,7 @@ import { navContext } from "../../App2"
 import ktp from "../../assets/ktp.svg";
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast, ToastContainer } from "react-toastify";
 
 export const KategoriProdukAdd = () => {
 
@@ -43,15 +44,38 @@ export const KategoriProdukAdd = () => {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
     const data = {
       jenis: jenisRef.current.value,
       kategori: kategoriRef.current.value
     }
-    axios.post('https://api.drnich.co.id/api/pos/produk/kategoriproduk', data).then(
-      response => response.status == 200 && navigate('../kategoriproduks')
-    )
+    try {
+      const response = await axios.post(
+        'https://api.drnich.co.id/api/pos/produk/kategoriproduk',
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 200) {
+        toast.success("Kategori produk berhasil ditambahkan!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/kategoriproduks";
+        }, 1500);
+      } else {
+        toast.error("Gagal menambahkan kategori produk");
+      }
+    } catch (error) {
+      console.error("Error saat menambahkan kategori produk:", error);
+      toast.error("Terjadi kesalahan saat menambahkan kategori produk");
+    }
+    
 
   }
   document.title = 'Tambah Marketing'
@@ -86,6 +110,7 @@ export const KategoriProdukAdd = () => {
           Simpan
         </button>
       </div>
+      <ToastContainer/>
     </form>
   )
 }

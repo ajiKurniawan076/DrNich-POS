@@ -14,6 +14,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PembelianStok } from "../Produk/PembelianStok";
 import { modalStokContext } from "./ManajementDetailStok";
+import { toast, ToastContainer } from "react-toastify";
 
 export const modalsContext = createContext();
 export const DaftarBelanjaModals = (props) => {
@@ -49,23 +50,39 @@ export const DaftarBelanjaModals = (props) => {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const data = {
       total: total,
       belanjaDetail: cart,
     };
 
-    const response = axios.post(
-      "https://api.drnich.co.id/api/pos/produk/belanjapos",
-      data
-    );
-    if (response.status === 200) {
-      console.log("eror");
-    } else {
-      console.log(response.data.belanja._id);
-      navigate(`/pos/pembayaranProduk/${response.data.belanja._id}`);
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/produk/belanjapos",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 200) {
+        toast.error("Terjadi kesalahan dalam transaksi");
+      } else {
+        toast.success("Transaksi berhasil!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = `/pos/pembayaranProduk/${response.data.belanja._id}`;
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Error dalam transaksi:", error);
+      toast.error("Terjadi kesalahan saat memproses transaksi");
     }
+    
   };
   const tambahKeranjang = (isi) => {
     if (cart.some((item) => item._id == isi._id)) {
@@ -251,6 +268,7 @@ export const DaftarBelanjaModals = (props) => {
         </form>
          <PembelianStok source={"PembelianStok"} />
       </div>
+      <ToastContainer/> 
     </modalsContext.Provider>
   );
 };

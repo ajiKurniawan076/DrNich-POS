@@ -8,6 +8,7 @@ import axios from "axios";
 export const PembayaranProduk = () => {
   const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
+  const [fetched, setFetched] = useState(false)
   const navigasi = useNavigate();
   const { id } = useParams();
   console.log(id);
@@ -19,6 +20,9 @@ export const PembayaranProduk = () => {
     };
 
     fetchData();
+    setLink('/pos/produks')
+    
+    setTimeout(()=>{setFetched(true)},500)
   }, []);
   console.log(datax);
 
@@ -29,7 +33,7 @@ export const PembayaranProduk = () => {
       {datax.map((item, i) => (
         <div key={i}>
           <div className="grid place-items-center">
-            <img src={iPemSu} alt="Pembayaran Berhasil" />
+            <img src={iPemSu} alt="Pembayaran Berhasil" className={`${fetched? 'scale-125' : 'scale-50'} duration-500`}/>
             <p className="text-[14px] text-[#27AE60] pt-8">
               Pembayaran Berhasil
             </p>

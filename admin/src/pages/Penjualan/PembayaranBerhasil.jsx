@@ -7,11 +7,12 @@ import axios from "axios";
 import { set } from "date-fns";
 
 export const PembayaranBerhasil = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [dataDalam, setDataDalam] = useState([]);
   const navigasi = useNavigate();
   const { id } = useParams();
+  const [fetched, setFetched] = useState(false)
   console.log(id);
 
   useEffect(() => {
@@ -31,15 +32,19 @@ export const PembayaranBerhasil = () => {
     //WEK
 
     fetchData();
+    setNav("Pembayaran ")
+    setLink('/pos/produks')
+    setTimeout(()=>{
+      setFetched(true)
+    },500)
+    document.title = "Pembayaran "
   }, []);
 
-  setNav("Pembayaran ");
-  document.title = "Pembayaran ";
 
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full pt-8">
       <div className="grid place-items-center">
-        <img src={iPemSu} alt="Pembayaran Berhasil" />
+        <img src={iPemSu} alt="Pembayaran Berhasil" className={`${fetched? 'scale-125':'scale-50'} duration-500`}/>
         <p className="text-[14px] text-[#27AE60] pt-8">Pembayaran Berhasil</p>
         <p className="text-[12px] text-[#bdbdbd] mt-4">#DN0928013</p>
         <p className="text-[12px] text-[#bdbdbd]">

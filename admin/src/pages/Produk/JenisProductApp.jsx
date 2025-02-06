@@ -5,6 +5,7 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 export const JenisProductAdd = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -24,27 +25,44 @@ export const JenisProductAdd = () => {
       setIsFilled(false);
     }
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const inputValue = inputRef.current.value;
     const data = {
       jenis: inputValue,
     };
-    axios
-      .post("https://api.drnich.co.id/api/pos/produk/jenisproduk", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials : true})
-      .then((response) => {
-        response.status == 200 && navigate("../jenisproduk");
-      });
-  };
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/produk/jenisproduk",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 200) {
+        toast.success("Jenis produk berhasil ditambahkan!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/jenisproduk";
+        }, 1500);
+      } else {
+        toast.error("Gagal menambahkan jenis produk");
+      }
+    } catch (error) {
+      toast.error("Terjadi kesalahan saat menambahkan jenis produk");
+    }
+    
+    }
   return (
     <form
       onSubmit={handleSubmit}
       className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-screen h-full overflow-auto overflow-y-scroll scrollbar-hide px-7"
     >
+      <ToastContainer/>
       <div className="flex flex-col px-3">
         <label className="text-start font-semibold mb-[5px]">
           Nama Jenis Produk

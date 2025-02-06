@@ -5,6 +5,7 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const KategoriProdukUpdate = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -37,21 +38,39 @@ export const KategoriProdukUpdate = () => {
   const jenisRef = useRef(null);
   const kategoriRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const data = {
       jenis: jenisRef.current.value,
       kategori: kategoriRef.current.value,
     };
     console.log(data);
-    axios
-      .put(
+    try {
+      const response = await axios.put(
         `https://api.drnich.co.id/api/pos/produk/updatekategoriProdukPos/${id}`,
-        data
-      )
-      .then(
-        (response) => response.status == 200 && navigate("../kategoriproduks")
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        }
       );
+    
+      if (response.status == 200) {
+        toast.success("Kategori produk berhasil diperbarui!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/kategoriproduks";
+        }, 1500);
+      } else {
+        toast.error("Gagal memperbarui kategori produk");
+      }
+    } catch (error) {
+      console.error("Error saat memperbarui kategori produk:", error);
+      toast.error("Terjadi kesalahan saat memperbarui kategori produk");
+    }
+    
   };
   document.title = "Ubah Kategori Produk";
   const [supstat, setsupstat] = useState(false);
@@ -69,14 +88,14 @@ export const KategoriProdukUpdate = () => {
           name="options"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
           id="jenis"
-          defaultValue="" // Set default value di React
+          defaultValue={select._id}
         >
-          <option defaultvalue={select._id} className="text-gray-300">
+          <option selected disabled value={select._id} className="text-gray-300">
             {select.jenis}
           </option>
-          {jenisx.map((select, i) => (
-            <option key={i} value={select._id}>
-              {select.jenis}
+          {jenisx.map((selects, i) => (
+            <option key={i} value={selects._id}>
+              {selects.jenis}
             </option>
           ))}
         </select>
@@ -100,6 +119,7 @@ export const KategoriProdukUpdate = () => {
           Simpan
         </button>
       </div>
+      <ToastContainer/>
     </form>
   );
 };

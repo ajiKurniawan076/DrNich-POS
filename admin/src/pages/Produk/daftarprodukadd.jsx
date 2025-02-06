@@ -5,6 +5,7 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const DaftarProdukAdd = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -112,7 +113,7 @@ export const DaftarProdukAdd = () => {
 
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       jenis: selectedNamaJenis,
@@ -126,11 +127,32 @@ export const DaftarProdukAdd = () => {
       supplier: supplierRef.current.value
     };
     console.log(data);
-    axios
-      .post("https://api.drnich.co.id/api/pos/produk/produk", data)
-      .then((response) => {
-        response.status == 200 && navigate("../daftarproduk");
-      });
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/produk/produk",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status == 200) {
+        toast.success("Produk berhasil ditambahkan!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/daftarproduk";
+        }, 1500);
+      } else {
+        toast.error("Gagal menambahkan produk");
+      }
+    } catch (error) {
+      console.error("Error saat menambahkan produk:", error);
+      toast.error("Terjadi kesalahan saat menambahkan produk");
+    }
+    
   };
 
   document.title = "Tambah Produk";
@@ -269,6 +291,7 @@ export const DaftarProdukAdd = () => {
           Simpan
         </button>
       </div>
+      <ToastContainer/>
     </form>
   );
 };
