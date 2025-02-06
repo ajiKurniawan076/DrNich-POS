@@ -27,7 +27,7 @@ export const PembayaranProduk = () => {
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full pt-8">
       {datax.map((item, i) => (
-        <>
+        <div key={i}>
           <div className="grid place-items-center">
             <img src={iPemSu} alt="Pembayaran Berhasil" />
             <p className="text-[14px] text-[#27AE60] pt-8">
@@ -48,6 +48,7 @@ export const PembayaranProduk = () => {
                 .replace("pukul ", ",")}
             </p>
 
+            {/*maping mulai dari sini  */}
             <p className="text-[24px] text-[#454545] font-bold mt-3">
               IDR {item.totalHarga}
             </p>
@@ -81,7 +82,7 @@ export const PembayaranProduk = () => {
               </button>
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

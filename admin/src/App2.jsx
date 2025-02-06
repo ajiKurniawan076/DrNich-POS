@@ -142,6 +142,7 @@ import { UpdateJenisProduk } from "./pages/Produk/UpdateJenisProduk";
 import { ManajementTambahStok } from "./pages/Produk/ManajementTambahStok";
 import { DaftarProdukByJenis } from "./pages/Produk/daftarProdukByJenis";
 import { DaftarProdukByKategori } from "./pages/Produk/daftarProdukByKategori";
+import { PembayaranBerhasil } from "./pages/Penjualan/PembayaranBerhasil";
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
 
@@ -149,13 +150,26 @@ export const navContext = createContext();
 
 function App2() {
   const [nav, setNav] = useState(null);
-  const [link, setLink] = useState('')
+  const [link, setLink] = useState("");
   const [sort, setSort] = useState(false);
-  const [asc,setasc] = useState('')
-  const [showsort, setshowsort] = useState(false)
+  const [asc, setasc] = useState("");
+  const [showsort, setshowsort] = useState(false);
 
   return (
-    <navContext.Provider value={{ nav, setNav, sort, setSort,  asc, setasc, showsort, setshowsort, link, setLink }}>
+    <navContext.Provider
+      value={{
+        nav,
+        setNav,
+        sort,
+        setSort,
+        asc,
+        setasc,
+        showsort,
+        setshowsort,
+        link,
+        setLink,
+      }}
+    >
       <div id="root2">
         <div id="root-container">
           <Navbar className="navbar" />
@@ -430,6 +444,10 @@ function App2() {
               <Route
                 path="/DaftarProdukUpdate/:id"
                 element={<DaftarProdukUpdate />}
+              />
+              <Route
+                path="/pembayaranBerhasil/:id"
+                element={<PembayaranBerhasil />}
               />
             </Routes>
           </div>
