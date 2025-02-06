@@ -22,7 +22,7 @@ const CashbackDetail = () => {
         });
     };
     FetchData();
-
+    setLink('/pos/cashback')
     setNav("Detail CashBack");
   }, [id, setNav]);
 

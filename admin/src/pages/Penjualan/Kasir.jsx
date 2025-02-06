@@ -146,6 +146,7 @@ export const Kasir = () => {
             promo : promoTerpilih._id,
             produks: cart
         }
+        console.log(datax)
         const kalkulasi = async() =>{
             await axios.post('https://api.drnich.co.id/api/pos/kasir/kalkulasiharga/', datax).then(response => 
             {

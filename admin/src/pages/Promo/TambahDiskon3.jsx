@@ -72,7 +72,7 @@ export const TambahDiskon3 = () => {
         await axios.post('https://api.drnich.co.id/api/pos/promo/promo',data).then(
             response => response.status == 200 ? navigate('../tambahdiskon4') : console.log('eror')
         )
-        navigate("../TambahDiskon3")
+        navigate("../TambahDiskon4")
     }
 
 

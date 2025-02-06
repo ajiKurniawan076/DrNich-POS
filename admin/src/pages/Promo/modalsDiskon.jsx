@@ -12,6 +12,7 @@ export const ModalsDiskon = () => {
     produk,
     produkTerpilih,
     setProdukTerpilih,
+    kategoriName
   } = useContext(modalsContext);
 
   const [jenisM, setJenisM] = useState("");
@@ -42,7 +43,18 @@ export const ModalsDiskon = () => {
       (item) => item.jenis.jenis == jenisM
     );
     setKategoriM(filterKategori);
+    if(kategoriName=="Jenis Produk"){
+      const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+  console.log(filterproduk)
+  setProdukTerpilih(filterproduk)
+  setProdukM(filterproduk)
+  }
+ 
   }, [jenisM]);
+
+   useEffect(()=>{
+          produk.length>0 && setProdukM(produk)
+      },[produk])
   document.title = "Modals";
   return (
     <div
