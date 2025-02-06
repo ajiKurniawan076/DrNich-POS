@@ -67,31 +67,32 @@ export const PembelianStok = (props) => {
   document.title = "Pembelian Stok";
   return (
     <div
-      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-white w-full h-full overflow-scroll ${
+      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-black/20 w-full h-full overflow-scroll ${
         modals ? "" : "hidden"
       }`}
     >
-      <div className="md:max-w-[700px] md:w-[100%] lg:w-[100%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
-        <p className="flex text-start mt-5 text-[14px] text-[#454545] font-medium mb-1">
-          Kategori Produk
-        </p>
-        <select
-          onChange={gantiKategori}
-          ref={kategoriRef}
-          name="options"
-          id="kategoriproduk"
-          className="relative bg-white border text-sm border-[#BDBDBD] rounded-xl w-full py-2 px-4 pr-10 focus:outline-none focus:ring-1 focus:ring-[#BDBDBD] focus:border-black appearance-none "
-          aria-label="Kategori Produk"
-        >
-          <option value="" disabled selected className="text-gray-300">
-            Pilih Kategori
-          </option>
-          {pilihKategori.map((item, i) => (
-            <option key={i} value={item._id}>
-              {item.kategori}
+      <div className="md:max-w-[700px] md:w-[80%] lg:w-[60%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit px-3 overflow-auto">
+        <div className="flex flex-col mx-3">
+          <p className="flex text-start mt-5 text-[14px] text-[#454545] font-medium mb-1">
+            Kategori Produk
+          </p>
+          <select
+            onChange={gantiKategori}
+            ref={kategoriRef}
+            name="options"
+            id="kategoriproduk"
+            className=" relative bg-white border text-sm border-[#BDBDBD] rounded-xl w-full py-2 px-4 pr-10 focus:outline-none focus:ring-1 focus:ring-[#BDBDBD] focus:border-black appearance-none"
+            aria-label="Kategori Produk"
+          >
+            <option value="" disabled selected className="text-gray-300">
+              Pilih Kategori
             </option>
-          ))}
-        </select>
+            {pilihKategori.map((item, i) => (
+              <option key={i} value={item._id}>
+                {item.kategori}
+              </option>
+            ))}
+          </select>
         <div className="grid py-2">
           <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
             Supplier
@@ -100,7 +101,7 @@ export const PembelianStok = (props) => {
             type="text"
             placeholder="Pilih Supplier"
             className="text-[12px] py-2 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl "
-          />
+            />
         </div>
         <div className="grid py-2">
           <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
@@ -112,7 +113,8 @@ export const PembelianStok = (props) => {
             list="pilihProduk"
             placeholder="Pilih Produk"
             className="text-[12px] py-2 px-4 w-full border text-sm text-black border-[#BDBDBD] rounded-xl"
-          />
+            />
+        </div>
         </div>
         {produkTerpilih.map((item, i) => (
           <>

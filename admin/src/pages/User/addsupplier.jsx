@@ -23,14 +23,11 @@ export const Addsupplier = () => {
     if (
       namaPerusahaanRef.current?.value &&
       namaKontakRef.current?.value &&
-      emailRef.current?.value &&
       noTeleponRef.current?.value &&
       namaRekeningRef.current?.value &&
       AlamatRef.current?.value &&
       bankRef.current?.value &&
-      nomorRekeningRef.current?.value &&
-      keteranganRekRef.current?.value &&
-      keteranganRef.current?.value
+      nomorRekeningRef.current?.value
 
     ) {
       setIsFilled(true);

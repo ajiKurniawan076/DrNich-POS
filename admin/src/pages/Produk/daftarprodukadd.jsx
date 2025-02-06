@@ -32,7 +32,8 @@ export const DaftarProdukAdd = () => {
       namaProdukRef.current?.value &&
       hargaJualRef.current?.value &&
       hargaBeliRef.current?.value &&
-      kategoriRef.current?.value
+      kategoriRef.current?.value &&
+      minStokRef.current?.value
     ) {
       setIsFilled(true);
     } else {
@@ -73,11 +74,17 @@ export const DaftarProdukAdd = () => {
     setLink('/pos/daftarProduk')
   }, []);
   // console.log(jenis);
-  const hitung =()=>{
-    const  profitpersen= (hargaJualRef.current.value- hargaBeliRef.current.value) / hargaBeliRef.current.value * 100
-    const profitrupiah = hargaJualRef.current.value- hargaBeliRef.current.value
-    setProfitrp(profitrupiah)
-    setProfitprs(profitpersen)
+  const hitung = () => {
+    if (
+      hargaBeliRef.current.value && 
+      hargaJualRef.current.value
+    ) {
+      const  profitpersen= (hargaJualRef.current.value- hargaBeliRef.current.value) / hargaBeliRef.current.value
+      const profitrupiah = hargaJualRef.current.value- hargaBeliRef.current.value
+      setProfitrp(profitrupiah)
+      setProfitprs(profitpersen)
+    }
+    
   }
 
   const jenisRef = useRef(null);

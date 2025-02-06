@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useAsyncError, useNavigate, useParams } from "react-router-dom";
 
 export const UpdateMarketing = () => {
   const navigate = useNavigate();
@@ -21,6 +21,22 @@ export const UpdateMarketing = () => {
   const [datax, setDatax] = useState([]);
   const [imagePreview, setImagePreview] = useState(null); // State to store image preview
   const [imageFile, setImageFile] = useState(null); // State to store the selected image file
+  const [isFilled, setIsFilled] = useState(false)
+
+  const checkFormFilled = () => {
+    if (
+      namaMarketingRef.current.value &&
+      nomorTeleponRef.current.value &&
+      alamatRef.current.value &&
+      namaRekeningRef.current.value &&
+      bankRef.current.value &&
+      nomorRekeningRef.current.value
+    ) {
+      setIsFilled(true)
+    } else {
+      setIsFilled(false)
+    }
+  } 
 
   // Handle image file selection
   const handleFileChange = (e) => {
@@ -95,6 +111,7 @@ export const UpdateMarketing = () => {
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-1 px-3">
         <label className="text-start font-semibold">Nama Lengkap</label>
@@ -188,7 +205,7 @@ export const UpdateMarketing = () => {
       <div className="mt-4 w-full h-full px-3">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>

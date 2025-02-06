@@ -32,6 +32,22 @@ export const TerapisUpdate = () => {
   const nomorRekeningRef = useRef(null);
   const bankRef = useRef(null);
   const imageRef = useRef(null); // Ref for the image input
+  const [isFilled, setIsFilled] = useState(false)
+
+  const checkFormFilled = () => {
+    if (
+      namaTerapisRef.current?.value &&
+      nomorTeleponRef.current?.value &&
+      alamatRef.current?.value &&
+      namaRekeningRef.current?.value &&
+      nomorRekeningRef.current?.value &&
+      bankRef.current?.value
+    ) {
+      setIsFilled(true)
+    } else {
+      setIsFilled(false)
+    }
+  }
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -76,6 +92,7 @@ export const TerapisUpdate = () => {
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-1 px-3">
         <label className="text-start font-semibold">Nama Lengkap</label>
@@ -176,7 +193,7 @@ export const TerapisUpdate = () => {
       <div className="w-full h-full px-3 mt-auto">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>

@@ -16,6 +16,23 @@ export const DaftarProdukUpdate = () => {
   const [product, setproduct] = useState([]);
   const [jenisx, setjenisx] = useState([]);
   const [ketegorix, setKategorix] = useState([]);
+  const [isFilled, setIsFilled] = useState(false)
+
+  const checkFormFilled = () => {
+    if (
+      namaProdukRef.current?.value &&
+      hargaBeliRef.current?.value &&
+      hargaJualRef.current?.value &&
+      kategoriRef.current?.value &&
+      bonusTerapisRef.current?.value &&
+      minStokRef.current?.value
+    ) {
+      setIsFilled(true)
+    } else {
+      setIsFilled(false)
+    }
+    console.log(kategorix)
+  }
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -112,6 +129,7 @@ export const DaftarProdukUpdate = () => {
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-3 px-3">
         <label className="text-start font-semibold">Jenis Produk</label>
@@ -234,7 +252,7 @@ export const DaftarProdukUpdate = () => {
       <div className="mt-4 w-full h-full px-3">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>

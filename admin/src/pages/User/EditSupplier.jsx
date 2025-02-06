@@ -21,6 +21,24 @@ export const Editsupplier = () => {
     const [datax, setDatax] = useState([]);
     const { id } = useParams();
     const { setNav, setLink } = useContext(navContext);
+    const [isFilled, setIsFilled] = useState(false)
+
+    const checkFormFilled = () => {
+        if (
+            namaPerusahaanRef.current?.value &&
+            namaKontakRef.current?.value &&
+            noTeleponRef.current?.value &&
+            namaRekeningRef.current?.value &&
+            AlamatRef.current?.value &&
+            bankRef.current?.value &&
+            nomorRekeningRef.current?.value
+        ) {
+            setIsFilled(true)
+        } else {
+            setIsFilled(false)
+        }
+
+    }
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -72,6 +90,7 @@ export const Editsupplier = () => {
     const [supstat, setsupstat] = useState(false);
     return (
         <form
+            onChange={checkFormFilled}
             onSubmit={handleSubmit}
             className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
         >
@@ -183,8 +202,8 @@ export const Editsupplier = () => {
             <div className="mt-4 w-full h-full px-3">
                 <button
                     type="submit"
-                    className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
-                >
+                    className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
+                    >
                     Simpan
                 </button>
             </div>
