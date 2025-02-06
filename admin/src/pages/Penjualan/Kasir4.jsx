@@ -8,6 +8,7 @@ import axios from "axios";
 import { PilihPelanggan } from "./PilihPelanggan";
 import { PilihPromo } from "./PilihPromo";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const modaltransaksi = createContext();
 export const Kasir4 = () => {
@@ -51,15 +52,33 @@ export const Kasir4 = () => {
       status: "Done",
     };
     console.log(data);
-    await axios
-      .post("https://api.drnich.co.id/api/pos/kasir/transaksi", data, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        response.status == 200
-          ? navigate(`/pos/pembayaranBerhasil/${response.data._id}`)
-          : console.log(response);
-      });
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/kasir/transaksi",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 200) {
+        toast.success("Transaksi berhasil!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = `/pos/pembayaranBerhasil/${response.data._id}`;
+        }, 1500);
+      } else {
+        toast.error("Terjadi kesalahan dalam transaksi");
+        console.log(response);
+      }
+    } catch (error) {
+      console.error("Error dalam transaksi:", error);
+      toast.error("Terjadi kesalahan saat memproses transaksi");
+    }
+    
   };
 
 
@@ -189,6 +208,7 @@ export const Kasir4 = () => {
       </div>
       <PilihPelanggan />
       <PilihPromo />
+      <ToastContainer/>
     </modaltransaksi.Provider>
   );
 };

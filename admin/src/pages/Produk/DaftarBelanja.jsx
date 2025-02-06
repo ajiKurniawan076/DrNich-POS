@@ -13,6 +13,7 @@ import iTambahP from "../../assets/iconproduk/iTambahP.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PembelianStok } from "./PembelianStok";
+import { toast, ToastContainer } from "react-toastify";
 
 export const modalContext = createContext();
 export const DaftarBelanja = () => {
@@ -53,15 +54,32 @@ export const DaftarBelanja = () => {
       total: total,
       belanjaDetail: cart,
     };
-    const response = await axios.post(
-      "https://api.drnich.co.id/api/pos/produk/belanjapos",
-      data
-    );
-    if (response.status === 201) {
-      navigate(`/pos/pembayaranProduk/${response.data.belanja._id}`);
-    } else {
-      console.error("Terjadi kesalahan dalam transaksi");
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/produk/belanjapos",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 201) {
+        toast.success("Transaksi berhasil!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = `/pos/pembayaranProduk/${response.data.belanja._id}`;
+        }, 1500);
+      } else {
+        toast.error("Terjadi kesalahan dalam transaksi");
+      }
+    } catch (error) {
+      console.error("Error dalam transaksi:", error);
+      toast.error("Terjadi kesalahan saat memproses transaksi");
     }
+    
   };
   const tambahKeranjang = (isi) => {
     if (cart.some((item) => item._id == isi._id)) {
@@ -228,6 +246,7 @@ export const DaftarBelanja = () => {
         </div>
       </form>
       <PembelianStok source={"DaftarBelanja"} />
+      <ToastContainer/>
     </modalContext.Provider>
   );
 };

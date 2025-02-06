@@ -5,6 +5,7 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const DaftarProdukUpdate = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -103,7 +104,7 @@ export const DaftarProdukUpdate = () => {
   const stokRef = useRef(null);
   const minStokRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const data = {
       jenis: selectedNamaJenis,
@@ -116,11 +117,32 @@ export const DaftarProdukUpdate = () => {
       minStok: minStokRef?.current?.value,
     };
     console.log(data);
-    axios
-      .put(`https://api.drnich.co.id/api/pos/produk/updateproduk/${id}`, data)
-      .then((response) => {
-        response.status == 200 && navigate("../daftarproduk");
-      });
+    try {
+      const response = await axios.put(
+        `https://api.drnich.co.id/api/pos/produk/updateproduk/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status == 200) {
+        toast.success("Produk berhasil diperbarui!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/daftarproduk";
+        }, 1500);
+      } else {
+        toast.error("Gagal memperbarui produk");
+      }
+    } catch (error) {
+      console.error("Error saat memperbarui produk:", error);
+      toast.error("Terjadi kesalahan saat memperbarui produk");
+    }
+    
   };
 
   document.title = "Ubah Daftar Produk";
@@ -257,6 +279,7 @@ export const DaftarProdukUpdate = () => {
           Simpan
         </button>
       </div>
+      <ToastContainer/>
     </form>
   );
 };
