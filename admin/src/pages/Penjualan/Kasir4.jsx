@@ -56,7 +56,9 @@ export const Kasir4 = () => {
         withCredentials: true,
       })
       .then((response) => {
-        response.status == 200 ? navigate(0) : console.log(response);
+        response.status == 200
+          ? navigate(`/pos/pembayaranBerhasil/${response.data._id}`)
+          : console.log(response);
       });
   };
 
