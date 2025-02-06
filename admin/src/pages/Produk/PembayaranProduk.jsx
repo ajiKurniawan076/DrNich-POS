@@ -19,6 +19,7 @@ export const PembayaranProduk = () => {
     };
 
     fetchData();
+    setLink('/pos/produks')
   }, []);
   console.log(datax);
 

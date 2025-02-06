@@ -7,7 +7,7 @@ import axios from "axios";
 import { set } from "date-fns";
 
 export const PembayaranBerhasil = () => {
-  const { setNav } = useContext(navContext);
+  const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
   const [dataDalam, setDataDalam] = useState([]);
   const navigasi = useNavigate();
@@ -31,10 +31,11 @@ export const PembayaranBerhasil = () => {
     //WEK
 
     fetchData();
+    setNav("Pembayaran ")
+    setLink('/pos/produks')
+    document.title = "Pembayaran "
   }, []);
 
-  setNav("Pembayaran ");
-  document.title = "Pembayaran ";
 
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full pt-8">
