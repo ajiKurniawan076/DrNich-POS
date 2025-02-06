@@ -3,6 +3,8 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useAsyncError, useNavigate, useParams } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 export const UpdateMarketing = () => {
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ export const UpdateMarketing = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const fdata = new FormData();
@@ -66,24 +68,42 @@ export const UpdateMarketing = () => {
       fdata.append('image', imageFile); // Append the image if there's a selected file
     }
 
-    axios
-      .put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, fdata, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type for file upload
-        },
-      })
-      .then((response) => {
+    // axios
+    //   .put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, fdata, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data", // Set content type for file upload
+    //     },
+    //   })
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       console.log(response);
+    //       navigate("../marketing"); // Redirect after successful update
+    //     } else {
+    //       alert("Gagal menyimpan data!");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error saat menyimpan data:", error);
+    //     alert("Terjadi kesalahan saat menyimpan data!");
+    //   });
+    try {
+            const response = await axios.put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, 
+            fdata
+        );
+
         if (response.status === 200) {
-          console.log(response);
-          navigate("../marketing"); // Redirect after successful update
+        toast.success("Berhasil Edit Pelanggan");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/marketing";
+        }, 1500); // Redirect ke halaman supplier
         } else {
-          alert("Gagal menyimpan data!");
+        toast.error(response.data.message || "Gagal Edit Pelanggan");
         }
-      })
-      .catch((error) => {
-        console.error("Error saat menyimpan data:", error);
-        alert("Terjadi kesalahan saat menyimpan data!");
-      });
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Pelanggan");
+        }
   };
 
   useEffect(() => {
@@ -210,6 +230,7 @@ export const UpdateMarketing = () => {
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

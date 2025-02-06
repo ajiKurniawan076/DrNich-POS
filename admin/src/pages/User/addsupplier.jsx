@@ -4,6 +4,9 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import { useContext, useEffect } from "react";
 import { navContext } from "../../App2";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export const Addsupplier = () => {
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ export const Addsupplier = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       namaPerusahaan: namaPerusahaanRef.current.value,
@@ -51,11 +54,25 @@ export const Addsupplier = () => {
       keteranganRek: keteranganRekRef.current.value,
     };
     console.log(data);
-    axios
-      .post("https://api.drnich.co.id/api/pos/user/supplier", data)
-      .then((response) => {
-        response.status == 200 && navigate("../supplier");
-      });
+    try {
+      const response = await axios.post(
+      "https://api.drnich.co.id/api/pos/user/supplier",
+      data
+    );
+
+    if (response.status === 200) {
+      toast.success("Berhasil Menambahkan Supplier");
+      setTimeout(() => {
+        toast.success("Redirecting...");
+        window.location.href = "/pos/supplier";
+      }, 1500); // Redirect ke halaman supplier
+    } else {
+      toast.error(response.data.message || "Gagal menambahkan supplier");
+    }
+    } catch (error) {
+    console.error("Error:", error);
+    toast.error("Terjadi kesalahan saat menambahkan supplier");
+    }
   };
 
   const { setNav, setLink } = useContext(navContext);
@@ -191,6 +208,7 @@ export const Addsupplier = () => {
           Simpan
         </button>
       </div>
+      <ToastContainer/>
     </form>
   );
 };

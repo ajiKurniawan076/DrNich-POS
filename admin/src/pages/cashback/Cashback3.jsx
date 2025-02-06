@@ -10,6 +10,8 @@ import { ModalsCashback } from './modalsCashback'
 import axios from 'axios'
 import DatePicker from 'react-datepicker'
 import { useNavigate } from 'react-router-dom'
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 
 export const modalContext = createContext()
@@ -97,10 +99,26 @@ export const Cashback3 = () => {
             jenis   : "Cashback"
         } 
         console.log(data)
-        await axios.post('https://api.drnich.co.id/api/pos/promo/promo', data).then(
-            response => response.status == 200 ? navigate('../cashback') : console.log('error') 
-        )
-        navigate("../cashback")
+        // await axios.post('https://api.drnich.co.id/api/pos/promo/promo', data).then(
+        //     response => response.status == 200 ? navigate('../cashback') : console.log('error') 
+        // )
+        // navigate("../cashback")
+        try {
+        const response = await axios.post('https://api.drnich.co.id/api/pos/promo/promo', data);
+    
+        if (response.status === 200) {
+            toast.success("Cashback berhasil ditambahkan!");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/Cashback";
+        }, 1500);
+        } else {
+            toast.error("Gagal menambahkan Cashback");
+        }
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat menambahkan Cashback");
+        }
     }
     const gantiKategori = () => {
         const selected =  listkategori.find(item => item.nama == keteranganRef.current.value)
@@ -229,6 +247,7 @@ export const Cashback3 = () => {
                         Simpan
                     </button>
                 </div>
+            <ToastContainer/>
             </form>
                 <ModalsCashback />
         </modalContext.Provider>

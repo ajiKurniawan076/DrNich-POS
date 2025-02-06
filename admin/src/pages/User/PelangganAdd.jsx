@@ -6,6 +6,7 @@ import ktp from "../../assets/ktp.svg";
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const PelangganAnd = () => {
   const { setNav, setLink } = useContext(navContext)
@@ -150,10 +151,8 @@ export const PelangganAnd = () => {
         >
           Simpan
         </button>
-        <button
-        onClick={toasts}
-        >cek toast</button>
       </div>
+    <ToastContainer/>
     </form>
   )
 }

@@ -3,6 +3,8 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg"; // Default KTP image
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const TerapisUpdate = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -61,7 +63,7 @@ export const TerapisUpdate = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fdata = new FormData();
     fdata.append('namaTerapis', namaTerapisRef.current.value);
@@ -76,17 +78,25 @@ export const TerapisUpdate = () => {
     }
 
     axios
-      .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type for file upload
-        },
-      })
-      .then((response) => {
-        response.status === 200 && navigate(`../terapis`); // Redirect after successful update
-      });
+    .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success("Berhasil Edit Terapis");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/terapis"; // Redirect ke halaman terapis
+        }, 1500); // Redirect setelah 1.5 detik
+      } else {
+        toast.error(response.data.message || "Gagal Edit Terapis");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      toast.error("Terjadi kesalahan saat Edit Terapis");
+    });
   };
 
-  document.title = "Ubah Terapis";
+  document.title = "Edit Terapis";
 
   return (
     <form
@@ -198,6 +208,7 @@ export const TerapisUpdate = () => {
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

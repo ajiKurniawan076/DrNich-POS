@@ -3,6 +3,9 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+
 
 export const MarketingAdd = () => {
   const navigate = useNavigate();
@@ -55,7 +58,7 @@ export const MarketingAdd = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fdata = new FormData();
 
@@ -68,11 +71,27 @@ export const MarketingAdd = () => {
     fdata.append('bank', bankRef.current.value);
     fdata.append('image', imageRef.current.files[0]);
 
-    axios
-      .post("https://api.drnich.co.id/api/pos/user/marketing", fdata)
-      .then((response) => {
-        response.status == 200 && navigate("../marketing");
-      });
+    // axios
+    //   .post("https://api.drnich.co.id/api/pos/user/marketing", fdata)
+    //   .then((response) => {
+    //     response.status == 200 && navigate("../marketing");
+    //   });
+    try {
+      const response = await axios.post("https://api.drnich.co.id/api/pos/user/marketing", fdata);
+  
+      if (response.status === 200) {
+        toast.success("Marketing berhasil ditambahkan!");
+      setTimeout(() => {
+        toast.success("Redirecting...");
+        window.location.href = "/pos/marketing";
+      }, 1500);
+      } else {
+        toast.error("Gagal menambahkan Marketing");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Terjadi kesalahan saat menambahkan Marketing");
+    }
   };
 
   useEffect(() => {
@@ -185,6 +204,7 @@ export const MarketingAdd = () => {
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

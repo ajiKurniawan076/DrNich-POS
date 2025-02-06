@@ -5,6 +5,8 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { data, useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const PelangganUpdate = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -42,7 +44,7 @@ export const PelangganUpdate = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const data = {
       namaPelanggan: namaPelangganRef.current.value,
@@ -53,14 +55,33 @@ export const PelangganUpdate = () => {
       keterangan: keteranganRef.current.value,
     };
     // console.log(data);
-    axios
-      .put(`https://api.drnich.co.id/api/pos/user/updatepelanggan/${id}`, data)
-      .then((response) => {
-        response.status == 200 && navigate(`../pelanggan`);
-      });
+    // axios
+    //   .put(`https://api.drnich.co.id/api/pos/user/updatepelanggan/${id}`, data)
+    //   .then((response) => {
+    //     response.status == 200 && navigate(`../pelanggan`);
+    //   });
+    try {
+            const response = await axios.put(
+            `https://api.drnich.co.id/api/pos/user/updatepelanggan/${id}`,
+            data
+        );
+
+        if (response.status === 200) {
+        toast.success("Berhasil Edit Pelanggan");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/pelanggan";
+        }, 1500); // Redirect ke halaman supplier
+        } else {
+        toast.error(response.data.message || "Gagal Edit Pelanggan");
+        }
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Pelanggan");
+        }
   };
 
-  document.title = "Edit Marketing";
+  document.title = "Edit Pelanggan";
   const [supstat, setsupstat] = useState(false);
   return (
     <form
@@ -149,6 +170,7 @@ export const PelangganUpdate = () => {
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

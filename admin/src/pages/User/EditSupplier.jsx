@@ -5,6 +5,8 @@ import { useContext, useEffect } from "react";
 import { navContext } from "../../App2";
 import axios from "axios";
 import { set } from "date-fns";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Editsupplier = () => {
     const navigate = useNavigate();
@@ -40,7 +42,7 @@ export const Editsupplier = () => {
 
     }
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
         namaPerusahaan: namaPerusahaanRef.current.value,
@@ -55,19 +57,25 @@ export const Editsupplier = () => {
         keteranganRek: keteranganRekRef.current.value,
         };
         console.log(data);
-        axios
-        .put(`https://api.drnich.co.id/api/pos/user/updatesupplier/${id}`, data) // Menggunakan method PUT
-        .then((response) => {
-            if (response.status === 200) {
-                navigate("../supplier"); // Navigasi ke halaman lain setelah berhasil
-            } else {
-                alert("Gagal menyimpan data!");
-            }
-        })
-        .catch((error) => {
-            console.error("Error saat menyimpan data:", error);
-            alert("Terjadi kesalahan saat menyimpan data!");
-        });
+        try {
+            const response = await axios.put(
+            `https://api.drnich.co.id/api/pos/user/updatesupplier${id}`,
+            data
+        );
+
+        if (response.status === 200) {
+        toast.success("Berhasil Edit Supplier");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/supplier";
+        }, 1500); // Redirect ke halaman supplier
+        } else {
+        toast.error(response.data.message || "Gagal Edit Supplier");
+        }
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Supplier");
+        }
     };
     
     
@@ -207,6 +215,7 @@ export const Editsupplier = () => {
                     Simpan
                 </button>
             </div>
+            <ToastContainer/>
         </form>
     );
 };
