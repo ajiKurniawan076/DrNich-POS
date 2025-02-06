@@ -37,7 +37,7 @@ export const Kasir4 = () => {
   const [modalTer, setModalTer] = useState(false);
   const [modalMar, setModalMar] = useState(false);
   const navigate = useNavigate();
-  const handleTransaksi = (e) => {
+  const handleTransaksi = async (e) => {
     e.preventDefault();
     const data = {
       pelanggan: pelangganTerpilih._id,
@@ -51,7 +51,7 @@ export const Kasir4 = () => {
       status: "Done",
     };
     console.log(data);
-    axios
+    await axios
       .post("https://api.drnich.co.id/api/pos/kasir/transaksi", data, {
         withCredentials: true,
       })
