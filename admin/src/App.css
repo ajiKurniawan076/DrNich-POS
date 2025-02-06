@@ -10,7 +10,7 @@
 }
 
 #root-container {
-  background: linear-gradient(to right, rgb(230, 190, 14), rgb(172, 120, 7));
+  background: linear-gradient(to right, #EAC564, #C2A353);
   display: flex;
   flex-direction: column;
   width: 100%;

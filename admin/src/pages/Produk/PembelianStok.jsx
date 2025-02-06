@@ -176,7 +176,7 @@ export const PembelianStok = (props) => {
         <div className="flex justify-between gap-2 w-full pt-4 py-3 px-2">
           <button
             onClick={handleTambah}
-            className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-white text-yellow-500 border border-yellow-500 font-bold rounded-xl"
+            className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-white text-[#C2A353] border border-[#C2A353] font-bold rounded-xl"
           >
             <img src={iTambah} alt="" /> Tambah
           </button>
