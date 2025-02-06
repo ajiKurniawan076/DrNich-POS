@@ -46,22 +46,13 @@ export const ModalsDiskon = () => {
   document.title = "Modals";
   return (
     <div
-      className={`fixed flex flex-col items-center bg-black/20 top-0 h-full overflow-auto start-0 w-full ${
+      className={`fixed z-50 flex flex-col items-center bg-black/20 top-0 h-full overflow-auto start-0 w-full ${
         modals == true ? "" : "hidden"
       }`}
     >
-      <button
-        className="text-[#454545] font-semibold mt-[75px]"
-        onClick={(e) => {
-          e.preventDefault();
-          setModals(false);
-        }}
-      >
-        X
-      </button>
       <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white overflow-auto min-h-full px-3">
-        <form className="h-full grid">
-          <div className="flex justify-between gap-2 mt-4">
+        <form className="h-full flex flex-col">
+          <div className="flex gap-[10px] justify-between mt-4">  
             <div className="relative w-full mt-1">
               <select
                 ref={jenisRef}
@@ -128,7 +119,12 @@ export const ModalsDiskon = () => {
             </button>
           ))}
           <div className="flex items-end h-fit mt-auto">
-            <button className="flex mt-auto justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full">
+            <button
+            onClick={(e) => {
+              e.preventDefault();
+              setModals(false);
+            }}
+            className="flex mt-auto justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full">
               <p>Tambah</p>
               <p>| {produkTerpilih.length} Produk</p>
             </button>

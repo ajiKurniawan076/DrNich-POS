@@ -23,7 +23,7 @@ export const KategoriProdukDetail = () => {
     fetchData();
 
     setNav("Detail Kategori Produk");
-    setLink('/pos/kategoriproduk')
+    setLink('/pos/kategoriproduks')
     setSort(false)
   }, []);
 

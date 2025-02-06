@@ -22,7 +22,7 @@ export const KategoriProdukAdd = () => {
     }
     fetchJenis()
     setNav('Tambah Kategori Produk')
-    setLink('/pos/kategoriproduk')
+    setLink('/pos/kategoriproduks')
   }, [])
 
 

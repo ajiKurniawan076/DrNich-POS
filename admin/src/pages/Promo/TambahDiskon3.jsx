@@ -103,6 +103,9 @@ export const TambahDiskon3 = () => {
             await axios.get('https://api.drnich.co.id/api/pos/produk/produk').then(response => setProduk(response.data))
         }
         fetchData()
+        setLink('/pos/TambahDiskon4')
+        setNav('Tambah Diskon')   
+        document.title = 'Tambah Diskon'
     }, [])
     useEffect(() => {
         !tombol ? setJenisPotongan('rupiah') : setJenisPotongan('persen')
@@ -113,8 +116,6 @@ export const TambahDiskon3 = () => {
         setKategoriName(selected.setnama)
 }
 
-setNav('Tambah Diskon')   
-document.title = 'Tambah Diskon'
 return (
     <modalsContext.Provider value={{modals, setModals, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriName}}>
     <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-full h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
@@ -151,7 +152,7 @@ return (
         <div className='gflex flex-col px-3 h-full'>
             <p>Jumlah diskon</p>
             <div className='flex justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
-                <input ref={potonganRef} placeholder='20.000/20' className='outline-none flex justify-between text-start items-center w-full'>
+                <input type='number' ref={potonganRef} placeholder='20.000/20' className='outline-none flex justify-between text-start items-center w-full'>
                 </input>
                 <div className='flex w-[30%]'>
                     <button onClick={(e) => {

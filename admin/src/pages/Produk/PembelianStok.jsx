@@ -67,20 +67,11 @@ export const PembelianStok = (props) => {
   document.title = "Pembelian Stok";
   return (
     <div
-      className={`flex flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-white w-full h-full overflow-scroll ${
+      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-white w-full h-full overflow-scroll ${
         modals ? "" : "hidden"
       }`}
     >
-      <button
-        className="mt-[80px] fixed top-1 w-[30%]"
-        onClick={(e) => {
-          e.preventDefault();
-          setModals(false);
-        }}
-      >
-        x
-      </button>
-      <div className="mt-[75px] md:max-w-[700px] md:w-[100%] lg:w-[100%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
+      <div className="md:max-w-[700px] md:w-[100%] lg:w-[100%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
         <p className="flex text-start mt-5 text-[14px] text-[#454545] font-medium mb-1">
           Kategori Produk
         </p>
@@ -148,7 +139,7 @@ export const PembelianStok = (props) => {
               <input
                 onChange={Pembelian}
                 ref={jumlahPembelianRef}
-                type="text"
+                type="number"
                 placeholder="0"
                 className="text-[12px] items-end mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] "
               />
@@ -183,16 +174,18 @@ export const PembelianStok = (props) => {
         <div className="flex justify-between gap-2 w-full pt-4 py-3 px-2">
           <button
             onClick={handleTambah}
-            className="flex justify-center items-center w-[170px] gap-2 h-[40px] bg-white text-yellow-500 border border-yellow-500 font-bold rounded-xl"
+            className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-white text-yellow-500 border border-yellow-500 font-bold rounded-xl"
           >
             <img src={iTambah} alt="" /> Tambah
           </button>
-          <a
-            href="DetailDaftarBelanja"
-            className="flex justify-center items-center w-full gap-2 h-[40px] bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-bold rounded-xl"
+          <button
+            onClick={(e)=>{
+              e.preventDefault()
+              setModals(false)            }}
+            className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-[#BDBDBD] text-white font-bold rounded-xl"
           >
-            <BsCart4 /> Beli Sekarang
-          </a>
+            Batal
+          </button>
         </div>
       </div>
       <datalist id="pilihProduk" className="bg-[#BDBDBD]">

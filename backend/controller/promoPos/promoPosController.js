@@ -57,6 +57,24 @@ const getPromo = asyncHandler(async (req, res) => {
   }
 });
 
+const getPromoAktif = asyncHandler(async (req, res) => {
+  try {
+    // Find promos where berlakuDari is greater than the current date
+    const promo = await PromoModels.find({ berlakuDari: { $gt: Date.now() } })
+      .populate({
+        path: 'promoDetail',
+        populate: {
+          path: 'produk',
+          model: 'produkPos',
+        },
+      });
+
+    res.send(promo);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 const updatePromo = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { namaPromo, potongan, cashback, jenis, keterangan, jenisPotongan, promoDetail, berlakuDari, berlakuSampai } = req.body;
@@ -112,4 +130,5 @@ export {
   updatePromo,
   deletePromo,
   getPromoByID,
+  getPromoAktif
 };

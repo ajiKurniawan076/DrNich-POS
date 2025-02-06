@@ -223,7 +223,7 @@ export const DaftarProdukAdd = () => {
           Presentase Keuntungan
         </label>
         <input
-          type="text"
+          type="number"
           disabled
           value = {`${profitprs}%`}
           placeholder=""

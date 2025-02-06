@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { navContext } from "../../App2";
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iTamPu from "../../assets/iconkasir/iTamPu.svg";
@@ -8,6 +8,13 @@ import { Link } from "react-router-dom";
 export const Diskon = () => {
   const [diskon, setDiskon] = useState([]);
   const { setNav, setLink } = useContext(navContext);
+  const cariRef = useRef(null)
+  const [tampil, setTampil] = useState([])
+
+  const cari =()=>{
+    const filter = diskon.filter((item)=>item.namaPromo.toLowerCase().includes(cariRef.current.value))
+    setTampil(filter)
+  }
 
   useEffect(() => {
     const fetch = async () => {
@@ -17,6 +24,7 @@ export const Diskon = () => {
           console.log(Response);
           const filter = Response.data.filter((item) => item.jenis == "Diskon");
           setDiskon(filter);
+          setTampil(filter)
         });
     };
     fetch();
@@ -36,12 +44,14 @@ export const Diskon = () => {
           <form className="flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
             <img src={iCari} alt="Cari" />
             <input
+            ref={cariRef}
+            onChange = {cari}
               type="text"
               className="text-sm w-full h-[30px] focus:outline-none"
               placeholder="Cari..."
             ></input>
           </form>
-          {diskon.map((data, i) => (
+          {tampil.map((data, i) => (
             <Link
               to={{
                 pathname: `/diskonDetail/${data._id}`,

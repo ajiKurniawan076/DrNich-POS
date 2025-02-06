@@ -5,6 +5,7 @@ import {
   updatePromo,
   deletePromo,
   getPromoByID,
+  getPromoAktif,
 } from "../../controller/promoPos/promoPosController.js";
 import {
   getPromoDetail,
@@ -16,6 +17,7 @@ import {
 const router = express.Router();
 
 router.get("/promo", getPromo);
+router.get("/promoaktif", getPromoAktif);
 router.get("/promo/:id", getPromoByID);
 router.post("/promo", newPromo);
 router.put("/updatepromoPos/:id", updatePromo);

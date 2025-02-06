@@ -78,11 +78,11 @@ export const Kasir4 = () => {
       }}
     >
       <div
-        className={`fixed top-0 start-0 w-full overflow-auto inset-0 ${
+        className={`fixed z-40 bg-black/20 top-0 start-0 w-full overflow-auto inset-0 ${
           modal ? "" : "hidden"
         }`}
       >
-        <div className="flex mx-auto md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] flex-col px-5 py-8 gap-1 w-[100%] bg-white max-w-[500px] min-h-full h-fit pt-8 text-[#454545] text-[12px]">
+        <div className="flex mx-auto md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] flex-col px-5 py-8 gap-1 w-[100%] bg-white max-w-[500px] min-h-full h-fit pt-8 text-[#454545] text-[12px] mt-[75px]">
           <button
             onClick={(e) => {
               e.preventDefault();

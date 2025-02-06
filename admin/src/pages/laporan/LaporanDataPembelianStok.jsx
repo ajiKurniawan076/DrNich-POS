@@ -7,7 +7,7 @@ import iTgl from "../../assets/iconproduk/iTgl.svg";
 export const LaporanDataPembelianStok = () => {
     const { setNav, setLink } = useContext(navContext)
 
-
+setLink('/pos/laporanRingkasanPenjualan')
 setNav('Data Pembelian Stok')   
 document.title = 'Data Pembelian Stok'
 return (

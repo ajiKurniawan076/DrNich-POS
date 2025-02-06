@@ -22,7 +22,7 @@ export const DaftarProdukByKategori = () => {
     };
     fetchData();
     setNav("Daftar Produk");
-    setLink('/pos/kategoriproduk')
+    setLink('/pos/kategoriproduks')
   }, []);
   const filterData = products.filter(
     (data) =>

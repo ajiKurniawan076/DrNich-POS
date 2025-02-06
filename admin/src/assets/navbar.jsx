@@ -28,7 +28,7 @@ export const Navbar = () => {
     }
     return (
         
-        <div className={`fixed flex z-50 start-50 top-0 max-w-[500px] w-[100%]  ${nav=='home'?'text-white md:w-[80%] md:max-w-[700px] lg:w-[60%]  lg:max-w-[900px] justify-between':'text-[#454545] justify-center md:w-[100%] md:max-w-[700px] lg:w-[100%]  lg:max-w-[900px] relative bg-white shadow-md'} items-center h-[75px] `}>
+        <div className={`fixed flex z-30 start-50 top-0 max-w-[500px] w-[100%]  ${nav=='home'?'text-white md:w-[80%] md:max-w-[700px] lg:w-[60%]  lg:max-w-[900px] justify-between':'text-[#454545] justify-center md:w-[100%] md:max-w-[700px] lg:w-[100%]  lg:max-w-[900px] relative bg-white shadow-md'} items-center h-[75px] `}>
             
             <div className='mx-2 items-center gap-4 cursor-pointer'>
                 {nav=='home'?

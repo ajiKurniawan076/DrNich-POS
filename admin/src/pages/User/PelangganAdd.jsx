@@ -73,7 +73,7 @@ export const PelangganAnd = () => {
         <div className="flex flex-col">
           <label className="text-start font-semibold mb-[5px]">Poin</label>
           <input
-            type="text"
+            type="number"
             placeholder="0"
             disabled
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
@@ -83,7 +83,7 @@ export const PelangganAnd = () => {
           <label className="text-start font-semibold mb-[5px]">Nomor Telepon</label>
           <input
             ref={nomorTeleponRef}
-            type="text"
+            type="number"
             placeholder="Contoh : 0892323232"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
             onChange={checkFormFilled}
@@ -103,7 +103,7 @@ export const PelangganAnd = () => {
           </option>
           <option value="pria">Pria</option>
           <option value="wanita">Wanita</option>
-        </select>
+          </select>
         </div>
         <div className="flex flex-col">
           <label className="text-start font-semibold mb-[5px]">Alamat</label>

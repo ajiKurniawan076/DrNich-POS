@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { navContext } from "../../App2";
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iTamPu from "../../assets/iconkasir/iTamPu.svg";
@@ -9,6 +9,13 @@ export const Cashback4 = () => {
   const [kesbek, setKesbek] = useState([]);
   const { setNav, setLink } = useContext(navContext);
   const { dataKorup, setDataKorup } = useState([]);
+  const [tampil,setTampil] = useState([])
+  const cariRef = useRef(null)
+
+  const cari = () => {
+    const filter = kesbek.filter((item)=>item.namaPromo.toLowerCase().includes(cariRef.current.value))
+    setTampil(filter)
+  }
   useEffect(() => {
     const fetchdata = async () => {
       await axios
@@ -18,7 +25,7 @@ export const Cashback4 = () => {
             (item) => item.jenis == "Cashback"
           );
           setKesbek(filterr);
-
+          setTampil(filterr)
           // filter detailpromo
           // filterr.forEach((promo) => {
           //   console.log(promo.promoDetail);
@@ -47,13 +54,16 @@ export const Cashback4 = () => {
         <div className='flex flex-col overflow-auto gap-[10px] mx-3 h-full'>
           <form className="mb-5 flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
             <img src={iCari} alt="Cari" />
-              <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."
+              <input 
+              ref={cariRef}
+              onChange={cari}
+              type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."
             />
           </form>
-          {kesbek.map((data, i) => (
+          {tampil.map((data, i) => (
             <Link
               to={{
-                pathname: `/cashbackDetail/${data._id}`,
+                pathname: `/pos/cashbackDetail/${data._id}`,
               }}
               state={dataKorup}
               className="grid place-items-start w-full border border-[#BDBDBD] rounded-xl p-4"

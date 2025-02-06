@@ -90,7 +90,7 @@ export const TerapisUpdate = () => {
         <input
           defaultValue={datax.nomorTelepon}
           ref={nomorTeleponRef}
-          type="text"
+          type="number"
           placeholder="Contoh : 0892323232"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />

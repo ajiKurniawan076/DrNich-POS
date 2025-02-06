@@ -112,7 +112,7 @@ return (
             </a>
             <div className='border my-3'></div>
             <div className="flex justify-between gap-2 w-full pb-5 text-[14px]">
-                <a href={`/ManajementKurangiStok/${id}`} className="flex justify-center items-center w-[180px] gap-2 h-[45px] bg-white text-yellow-500 border border-yellow-500 rounded-xl"> Kurangi Stok</a>
+                <a href={`/pos/ManajementKurangiStok/${id}`} className="flex justify-center items-center w-[180px] gap-2 h-[45px] bg-white text-yellow-500 border border-yellow-500 rounded-xl"> Kurangi Stok</a>
                 <button onClick={(e) => {
                     e.preventDefault()
                     setModalStok(true)

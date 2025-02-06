@@ -24,7 +24,7 @@ const DiskonDetail = () => {
       }
     };
     FetchData();
-
+    setLink('/pos/tambahdiskon4')
     setNav("Detail Diskon");
   }, [setNav]);
   // console.log(datax);
