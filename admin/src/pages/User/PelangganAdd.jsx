@@ -28,8 +28,7 @@ export const PelangganAnd = () => {
       namaPelangganRef.current?.value &&
       nomorTeleponRef.current?.value &&
       genderRef.current?.value &&
-      alamatRef.current?.value &&
-      keteranganRef.current?.value
+      alamatRef.current?.value
     ) {
       setIsFilled(true);
     } else {
