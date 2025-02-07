@@ -160,7 +160,7 @@ export const EditDiskon = () => {
     const gantiKategori = () => {
         const selected = listkategori.find(item => item.id == keteranganRef.current.value)
         setKategoriName(selected.setnama)
-}
+    }
 
 return (
     <modalsContext.Provider value={{modals, setModals, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriName}}>
@@ -295,7 +295,7 @@ return (
             ))}
             
         </div>
-        <div className='flex items-end mt-auto h-full'>
+        <div className='flex items-end px-2 mt-[20px] h-full'>
             <button type='submit' className='flex justify-center text-[14px] text-white bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 '>
                 Simpan
             </button>

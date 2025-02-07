@@ -39,7 +39,7 @@ const DiskonDetail = () => {
   document.title = "Detail Diskon";
 
   return (
-    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-screen h-fit">
+    <div className="flex flex-col px-7 py-3 gap-1 bg-white w-full min-h-screen h-fit">
       <div className="flex flex-col justify-between w-full h-full py-3 px-3 gap-5">
         <div className="w-full border flex flex-col p-5 border-[#EAC564] rounded-lg shadow-lg">
           {/* kategori diskon */}

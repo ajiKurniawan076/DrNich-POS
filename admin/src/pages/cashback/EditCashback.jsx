@@ -6,16 +6,16 @@ import iPanahS from '../../assets/iconmanajement/iPanahS.svg'
 import iTgl from '../../assets/iconproduk/iTgl.svg'
 import "react-datepicker/dist/react-datepicker.css"
 import { useState } from 'react'
-import { ModalsCashback } from './modalsCashback'
 import axios from 'axios'
 import DatePicker from 'react-datepicker'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { ModalEditCashback } from './ModalEditCashback'
 
 
-export const modalContext = createContext()
-export const Cashback3 = () => {
+export const modalsContext = createContext()
+export const EditCashback = () => {
     const { setNav, setLink } = useContext(navContext)
     const [produkTerpilih, setProdukTerpilih] = useState([])
     const [jenis, setJenis] = useState([])
@@ -27,6 +27,11 @@ export const Cashback3 = () => {
     const [kategoriname, setKategoriName] = useState('')
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
+    const { id } = useParams();
+    const [data, setData] = useState([])
+    const [tombol, setTombol] = useState()
+    const [jenisPotongan, setJenisPotongan] = useState('rupiah')    
+
     const listkategori = [
         {
             id: 1,
@@ -78,9 +83,10 @@ export const Cashback3 = () => {
             await axios.get('https://api.drnich.co.id/api/pos/produk/jenisproduk').then(response => setJenis(response.data))
             await axios.get('https://api.drnich.co.id/api/pos/produk/kategoriproduk').then(response => setKategori(response.data))
             await axios.get('https://api.drnich.co.id/api/pos/produk/produk').then(response => setProduk(response.data))
+            await axios.get(`https://api.drnich.co.id/api/pos/promo/promo/${id}`).then(response => setData(response.data))
         }
         fetchData()
-        setNav('Tambah Cashback')
+        setNav('Edit Cashback')
         setLink('/pos/cashback')
     }, [])
     const namaPromoRef = useRef(null)
@@ -120,49 +126,66 @@ export const Cashback3 = () => {
         toast.error("Terjadi kesalahan saat menambahkan Cashback");
         }
     }
+    useEffect(() => {
+        if (data?.promoDetail?.length > 0) {
+            const uniqueProduk = new Set(data.promoDetail.map(item => item.produk));
+            setProdukTerpilih([...uniqueProduk]); // Konversi ke array
+            }
+            setStartDate(new Date(data?.berlakuDari));
+            setEndDate(new Date(data?.berlakuSampai));
+            data.jenisPotongan == 'persen' ? setTombol(true) : setTombol(false)
+        console.log(data);
+        const cari = listkategori.find(item => item.nama === data?.keterangan);
+        setKategoriName(cari?.setnama);
+    }, [data]);
+    
+    useEffect(() => {
+        !tombol ? setJenisPotongan('rupiah') : setJenisPotongan('persen')
+    }, [tombol])
+    
     const gantiKategori = () => {
         const selected =  listkategori.find(item => item.nama == keteranganRef.current.value)
         setKategoriName(selected.setnama)
     }
-    document.title = 'Tambah Cashback'
+    document.title = 'Edit Cashback'
     return (
-        <modalContext.Provider value={{ modal, setModal, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriname }}>
+        <modalsContext.Provider value={{ modal, setModal, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriname }}>
             <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-full h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
                 <div className='flex flex-col px-3 h-full'>
                     <p>Kategori Cashback</p>
                     <div className="relative w-full mt-[5px]">
-                        <select
+                        <input
                             name="options"
                             onChange={gantiKategori}
                             ref={keteranganRef}
+                            defaultValue={data?.keterangan}
+                            disabled
                             id="kategoriproduk"
                             className="relative bg-white border text-sm border-gray-300 rounded-xl w-full h-[45px] py-[12px] p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none mb-[20px]"
                             aria-label="Kategori Produk"
                         >
-                            <option value="" disabled selected className="text-gray-300">
-                                Pilih Kategori Cashback
-                            </option>
-                            {listkategori.map((item, i) => (
-                                <option key={i} value={item.nama}>{item.nama}</option>
-                            ))}
-
-                        </select>
-                        <img
-                            src={iPanahB}
-                            alt="Dropdown icon"
-                            className="absolute right-4 top-[35%] -translate-y-1/2 pointer-events-none w-4 h-4"
-                        />
+                        </input>
                     </div>
                 </div>
                 <div className='flex flex-col px-3 h-full'>
                     <p>Nama Promo Cashback</p>
-                    <input ref={namaPromoRef} type='text' placeholder='Nama Promo Cashback' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
+                    <input
+                        ref={namaPromoRef}
+                        defaultValue={data.namaPromo}
+                        type='text'
+                        placeholder='Nama Promo Cashback'
+                        className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                     </input>
                 </div>
                 <div className='flex flex-col px-3 h-full'>
                     <p>Jumlah Cashback</p>
                     <div className='flex relative justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
-                        <input type='number' ref={cashbackRef} placeholder='100' className='flex justify-between w-full text-start items-center'>
+                        <input
+                            type='number'
+                            ref={cashbackRef}
+                            defaultValue={data?.cashback}
+                            placeholder='100'
+                            className='outline-none flex justify-between w-full text-start items-center'>
                         </input>
                         <p className='absolute end-[20px] text-[#BDBDBD]'>Poin</p>
                     </div>
@@ -182,7 +205,7 @@ export const Cashback3 = () => {
                         <p>Dari :</p>
                         <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                             <DatePicker
-                                selected={startDate}
+                                selected={startDate instanceof Date && !isNaN(startDate) ? startDate : null}
                                 onChange={(date) => setStartDate(date)}
                                 dateFormat="yyyy-MM-dd"
                                 ref={datePickerRef} // Attach the ref
@@ -205,7 +228,7 @@ export const Cashback3 = () => {
                         <p>Sampai :</p>
                         <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                             <DatePicker
-                                selected={endDate}
+                                selected={endDate instanceof Date && !isNaN(endDate) ? endDate : null}
                                 onChange={(date) => setEndDate(date)}
                                 dateFormat="yyyy-MM-dd"
                                 ref={datePickerRef2} // Attach the ref
@@ -242,14 +265,14 @@ export const Cashback3 = () => {
                     ))}
 
                 </div>
-                <div className='flex items-end h-full mt-auto'>
+                <div className='flex items-end h-full mt-[20px] mx-3'>
                     <button type='submit' className=' flex justify-center text-[14px] text-white bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 '>
                         Simpan
                     </button>
                 </div>
             <ToastContainer/>
             </form>
-                <ModalsCashback />
-        </modalContext.Provider>
+            <ModalEditCashback/>
+        </modalsContext.Provider>
     )
 }
