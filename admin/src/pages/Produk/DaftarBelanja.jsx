@@ -174,7 +174,7 @@ export const DaftarBelanja = () => {
                   </button>
                   <div className="text-start">
                     <p>{item.namaProduk}</p>
-                    <p>{item.hargaBeli}</p>
+                    <p>Rp. {item.hargaBeli.toLocaleString('id-ID')}</p>
                   </div>
                 </div>
               </Link>
@@ -198,7 +198,7 @@ export const DaftarBelanja = () => {
                   </div>
                   <div className="text-start">
                     <p>{item.namaProduk}</p>
-                    <p>{item.hargaBeli}</p>
+                    <p>Rp. {item.hargaBeli.toLocaleString("id-ID")}</p>
                   </div>
                   <div className="flex gap-4 ms-auto">
                     <button onClick={() => min(item._id)}>
@@ -228,7 +228,7 @@ export const DaftarBelanja = () => {
             >
               <div className="grid">
                 <p>Beli Sekarang</p>
-                <p>Rp.{total}</p>
+                <p>Rp.{total.toLocaleString('id-ID')}</p>
               </div>
             </button>
           </div>

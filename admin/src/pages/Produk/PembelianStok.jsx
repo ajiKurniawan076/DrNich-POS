@@ -45,9 +45,9 @@ export const PembelianStok = (props) => {
     setProdukTerpilih(filterr);
   };
 
-  useEffect(()=>{
-    produkTerpilih.length > 0 && produkTerpilih.map((item)=>setSupplier(item?.supplier))
-  },[produkTerpilih])
+  useEffect(() => {
+    produkTerpilih.length > 0 && produkTerpilih.map((item) => setSupplier(item?.supplier))
+  }, [produkTerpilih])
 
   const Pembelian = () => {
     setJumlahPembelian(jumlahPembelianRef.current.value);
@@ -71,9 +71,8 @@ export const PembelianStok = (props) => {
   document.title = "Pembelian Stok";
   return (
     <div
-      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-black/20 w-full h-full overflow-scroll ${
-        modals ? "" : "hidden"
-      }`}
+      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-black/20 w-full h-full overflow-scroll ${modals ? "" : "hidden"
+        }`}
     >
       <div className="md:max-w-[700px] md:w-[80%] lg:w-[60%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit px-3 overflow-auto">
         <div className="flex flex-col mx-3">
@@ -97,30 +96,30 @@ export const PembelianStok = (props) => {
               </option>
             ))}
           </select>
-        <div className="grid py-2">
-          <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
-            Supplier
-          </label>
-          <input
-            type="text"
-            placeholder="Supplier"
-            disabled
-            value={supplier?.namaPerusahaan}
-            className="text-[12px] py-2 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl "
+          <div className="grid py-2">
+            <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
+              Supplier
+            </label>
+            <input
+              type="text"
+              placeholder="Supplier"
+              disabled
+              value={supplier?.namaPerusahaan}
+              className="text-[12px] py-2 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl "
             />
-        </div>
-        <div className="grid py-2">
-          <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
-            Nama Produk
-          </label>
-          <input
-            onChange={pilihproduk}
-            ref={produkpilihanRef}
-            list="pilihProduk"
-            placeholder="Pilih Produk"
-            className="text-[12px] py-2 px-4 w-full border text-sm text-black border-[#BDBDBD] rounded-xl"
+          </div>
+          <div className="grid py-2">
+            <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
+              Nama Produk
+            </label>
+            <input
+              onChange={pilihproduk}
+              ref={produkpilihanRef}
+              list="pilihProduk"
+              placeholder="Pilih Produk"
+              className="text-[12px] py-2 px-4 w-full border text-sm text-black border-[#BDBDBD] rounded-xl"
             />
-        </div>
+          </div>
         </div>
         {produkTerpilih.map((item, i) => (
           <>
@@ -129,7 +128,7 @@ export const PembelianStok = (props) => {
                 SKU
               </label>
               <label className="text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] ">
-                {}
+                { }
               </label>
             </div>
             <div className="grid py-2">
@@ -157,7 +156,7 @@ export const PembelianStok = (props) => {
                 Harga Produk
               </label>
               <label className="flex text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] items-center">
-                {item?.hargaBeli}
+                Rp. {item?.hargaBeli.toLocaleString("id-ID")}
               </label>
             </div>
             <div className="grid py-2">
@@ -165,7 +164,7 @@ export const PembelianStok = (props) => {
                 Harga Jual
               </label>
               <label className="flex text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] items-center">
-                {item?.hargaJual}
+                Rp. {item?.hargaJual.toLocaleString("id-ID")}
               </label>
             </div>
             <div className="grid py-2">
@@ -173,7 +172,7 @@ export const PembelianStok = (props) => {
                 Harga Total Pembelian
               </button>
               <label className="flex text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] items-center">
-                {jumlahPembelian * item.hargaBeli}
+                Rp. {(jumlahPembelian * item.hargaBeli).toLocaleString("id-ID")}
               </label>
             </div>
           </>
@@ -187,9 +186,10 @@ export const PembelianStok = (props) => {
             <img src={iTambah} alt="" /> Tambah
           </button>
           <button
-            onClick={(e)=>{
+            onClick={(e) => {
               e.preventDefault()
-              setModals(false)            }}
+              setModals(false)
+            }}
             className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-[#BDBDBD] text-white font-bold rounded-xl"
           >
             Batal

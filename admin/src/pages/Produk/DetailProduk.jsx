@@ -66,25 +66,31 @@ export const DetailProduk = () => {
             <p className="text-start font-semibold h-[20px]"></p>
             <label className="text-start font-light mt-[10px]">Harga Beli</label>
             <p className="text-start font-semibold h-[20px]">
-              {product.hargaBeli}
+            Rp. {product.hargaBeli.toLocaleString('id-ID')}
             </p>
             <label className="text-start font-light mt-[10px]">Harga Jual</label>
             <p className="text-start font-semibold h-[20px]">
-              {product.hargaJual}
+            Rp. {product.hargaJual.toLocaleString('id-ID')}
             </p>
             <label className="text-start font-light mt-[10px]">
               Persentase Keuntungan
             </label>
             <p className="text-start font-semibold h-[20px]">
-              {((product.hargaJual - product.hargaBeli) / product.hargaBeli) *
-                100}
+              {(((product.hargaJual - product.hargaBeli) / product.hargaBeli) *
+                100).toFixed(2)}
               %
             </p>
             <label className="text-start font-light mt-[10px]">
               Nominal Keuntungan
             </label>
             <p className="text-start font-semibold h-[20px]">
-              {product.hargaJual - product.hargaBeli}
+              Rp. {(product.hargaJual - product.hargaBeli).toLocaleString('id-ID')}
+            </p>
+            <label className="text-start font-light mt-[10px]">
+              Stok
+            </label>
+            <p className="text-start font-semibold h-[20px]">
+              {product.stok}
             </p>
             <label className="text-start font-light mt-[10px]">
               Stok Minimum

@@ -78,13 +78,13 @@ return (
                 <div className="flex flex-col items-start text-[10px] text-[#BDBDBD] pt-1 pb-2">
                     <label>Harga Beli</label>
                     <div className="text-[12px] text-[#454545]">
-                        <p>{produk.hargaBeli}</p>
+                        <p>Rp. {produk.hargaBeli?.toLocaleString("id-ID")}</p>
                     </div>
                 </div>
                 <div className="flex flex-col items-start text-[10px] text-[#BDBDBD] pt-1 pb-2">
                     <p>Harga Jual</p>
                     <div className="text-[12px] text-[#454545]">
-                        <p>{produk.hargaJual}</p>
+                        <p>Rp. {produk.hargaJual?.toLocaleString("id-ID")}</p>
                     </div>
                 </div>
                 <div className="flex flex-col items-start text-[10px] text-[#BDBDBD] pt-1 pb-2">
@@ -96,7 +96,7 @@ return (
                 <div className="flex flex-col items-start text-[10px] text-[#BDBDBD] pt-1 pb-2">
                     <label>Nominal Keuntungan</label>
                     <div className="text-[12px] text-[#454545]">
-                        <p>Rp. {produk.hargaJual - produk.hargaBeli}</p>
+                        <p>Rp. {(produk.hargaJual - produk.hargaBeli).toLocaleString("id-ID")}</p>
                     </div>
                 </div>
                 <div className="flex flex-col items-start text-[10px] text-[#BDBDBD] pt-1 pb-2">
