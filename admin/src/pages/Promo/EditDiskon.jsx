@@ -7,13 +7,14 @@ import iTgl from '../../assets/iconproduk/iTgl.svg'
 import { ModalsDiskon } from './modalsDiskon'
 import axios from 'axios'
 import DatePicker from 'react-datepicker'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { ModalEditDiskon } from './ModalEditDiskon'
 
 
 export const modalsContext = createContext()
-export const TambahDiskon3 = () => {
+export const EditDiskon = () => {
     const { setNav, setLink } = useContext(navContext)
     const [produkTerpilih, setProdukTerpilih] = useState([])
     const [modals, setModals] = useState(false)
@@ -24,8 +25,11 @@ export const TambahDiskon3 = () => {
     const [button, setButton] = useState(true)
     const [button2, setButton2] = useState(true)
     const [kategoriName, setKategoriName] = useState('')
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
+    const [startDate, setStartDate] = useState(new Date(""));
+    const [endDate, setEndDate] = useState(new Date(""));
+    const [promo, setPromo] = useState();
+    const [data, setData] = useState([]);
+    const { id } = useParams();
     const [jenisPotongan, setJenisPotongan] = useState('rupiah')
     const listkategori = [
         {
@@ -76,7 +80,7 @@ export const TambahDiskon3 = () => {
         // )
         // navigate("../TambahDiskon4")
         try {
-        const response = await axios.post('https://api.drnich.co.id/api/pos/promo/promo',data);
+        const response = await axios.put(`https://api.drnich.co.id/api/pos/promo/updatepromoPos/${id}`,data);
     
         if (response.status === 200) {
             toast.success("Diskon berhasil ditambahkan!");
@@ -116,15 +120,39 @@ export const TambahDiskon3 = () => {
     
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get('https://api.drnich.co.id/api/pos/produk/jenisproduk').then(response => setJenis(response.data))
+            await axios.get(`https://api.drnich.co.id/api/pos/produk/jenisproduk`).then(response => setJenis(response.data))
             await axios.get('https://api.drnich.co.id/api/pos/produk/kategoriproduk').then(response => setKategori(response.data))
             await axios.get('https://api.drnich.co.id/api/pos/produk/produk').then(response => setProduk(response.data))
+            await axios.get(`https://api.drnich.co.id/api/pos/promo/promo/${id}`).then(response => setData(response.data))
         }
         fetchData()
         setLink('/pos/TambahDiskon4')
-        setNav('Tambah Diskon')   
-        document.title = 'Tambah Diskon'
+        setNav('Edit Diskon')   
+        document.title = 'Edit Diskon'
+        
     }, [])
+    // useEffect(() => {
+    //     data?.promoDetail?.length > 0 && data.promoDetail.map((item, i)=> setProdukTerpilih((prev) => [...prev, item.produk]))
+    //     // data?.promoDetail?.length > 0 && data?.promoDetail.map((item, i) => (console.log('item')))
+    //     console.log(data)
+    //     const cari = listkategori.find(item => item.nama == data?.keterangan)
+    //     setKategoriName(cari?.setnama)
+    // }, [data])
+
+    // bisa tambah data lebih dari satu
+    useEffect(() => {
+    if (data?.promoDetail?.length > 0) {
+        const uniqueProduk = new Set(data.promoDetail.map(item => item.produk));
+        setProdukTerpilih([...uniqueProduk]); // Konversi ke array
+        }
+        setStartDate(new Date(data?.berlakuDari));
+        setEndDate(new Date(data?.berlakuSampai));
+        data.jenisPotongan == 'persen' ? setTombol(true) : setTombol(false)
+    console.log(data);
+    const cari = listkategori.find(item => item.nama === data?.keterangan);
+    setKategoriName(cari?.setnama);
+    }, [data]);
+    
     useEffect(() => {
         !tombol ? setJenisPotongan('rupiah') : setJenisPotongan('persen')
     }, [tombol])
@@ -140,37 +168,38 @@ return (
         <div className='flex flex-col px-3 h-full'>
             <p>Kategori Diskon</p>
             <div className="relative w-full mt-[5px]">
-                <select
-                        ref={keteranganRef}
-                        onChange={gantiKategori}
+                <input
+                    ref={keteranganRef}
+                    defaultValue={data?.keterangan}
+                    onChange={gantiKategori}
+                    disabled
                     name="options"
                     id="kategoriproduk"
                     className="relative bg-white border text-sm border-gray-300 rounded-xl w-full h-[45px] py-[12px] p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none mb-[20px]"
                     aria-label="Kategori Produk"
                 >
-                    <option value="" disabled selected className="text-gray-300">
-                        Pilih Kategori diskon
-                    </option>
-                    {listkategori.map((item, i) => (
-                        <option key={i} value={item.nama}>{item.nama}</option>
-                    ))}
-                </select>
-                <img
-                    src={iPanahB}
-                    alt="Dropdown icon"
-                    className="absolute right-4 top-[35%] -translate-y-1/2 pointer-events-none w-4 h-4"
-                />
+                </input>
             </div>
         </div>
         <div className='flex flex-col px-3 h-full'>
-            <p>Nama Diskon</p>
-            <input ref={namaPromoRef} type='text' placeholder='Nama Promo Diskon' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
-            </input>
+                <p>Nama Diskon</p>
+                <input
+                    ref={namaPromoRef}
+                    defaultValue={data?.namaPromo}
+                    type='text'
+                    placeholder='Nama Promo Diskon'
+                    className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
+                </input>
         </div>
         <div className='gflex flex-col px-3 h-full'>
             <p>Jumlah diskon</p>
             <div className='flex justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
-                <input type='number' ref={potonganRef} placeholder='20.000/20' className='outline-none flex justify-between text-start items-center w-full'>
+                <input
+                    type='number'
+                    ref={potonganRef}
+                    defaultValue={data?.potongan}
+                    placeholder='20.000/20'
+                    className='outline-none flex justify-between text-start items-center w-full'>
                 </input>
                 <div className='flex w-[30%]'>
                     <button onClick={(e) => {
@@ -203,7 +232,8 @@ return (
                 <p>Dari :</p>
                     <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                         <DatePicker
-                            selected={startDate}
+                            // selected={startDate}
+                            selected={startDate instanceof Date && !isNaN(startDate) ? startDate : null}
                             onChange={(date) => setStartDate(date)}
                             dateFormat="yyyy-MM-dd"
                             ref={datePickerRef} // Attach the ref
@@ -226,7 +256,9 @@ return (
                 <p>Sampai :</p>
                 <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]">
                     <DatePicker
-                        selected={endDate}
+                        // selected={endDate}
+                            // selected={endDate instanceof Date ? endDate : null}
+                        selected={endDate instanceof Date && !isNaN(endDate) ? endDate : null}
                         onChange={(date) => setEndDate(date)}
                         dateFormat="yyyy-MM-dd"
                         ref={datePickerRef2} // Attach the ref
@@ -270,7 +302,7 @@ return (
         </div>
         <ToastContainer/>
     </form>
-    <ModalsDiskon/>
+    <ModalEditDiskon/>
     </modalsContext.Provider>
 )
 }

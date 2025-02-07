@@ -143,6 +143,7 @@ import { ManajementTambahStok } from "./pages/Produk/ManajementTambahStok";
 import { DaftarProdukByJenis } from "./pages/Produk/daftarProdukByJenis";
 import { DaftarProdukByKategori } from "./pages/Produk/daftarProdukByKategori";
 import { PembayaranBerhasil } from "./pages/Penjualan/PembayaranBerhasil";
+import { EditDiskon } from "./pages/Promo/EditDiskon";
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
 
@@ -448,6 +449,10 @@ function App2() {
               <Route
                 path="/pembayaranBerhasil/:id"
                 element={<PembayaranBerhasil />}
+              />
+              <Route
+                path="/EditDiskon/:id"
+                element={<EditDiskon />}
               />
             </Routes>
           </div>
