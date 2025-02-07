@@ -49,7 +49,7 @@ export const Kasir4 = () => {
       totalAkhir: totalAkhir,
       transaksiDetail: cart,
       potongan: potongan,
-      status: "Done",
+      status: "Pending",
     };
     console.log(data);
     try {
@@ -65,10 +65,10 @@ export const Kasir4 = () => {
       );
     
       if (response.status === 200) {
-        toast.success("Transaksi berhasil!");
+        toast.success("Lanjut Ke Pembayaran");
         setTimeout(() => {
           toast.success("Redirecting...");
-          window.location.href = `/pos/pembayaranBerhasil/${response.data._id}`;
+          window.location.href = `/pos/pilihPembayaran/${response.data._id}`;
         }, 1500);
       } else {
         toast.error("Terjadi kesalahan dalam transaksi");
@@ -146,7 +146,7 @@ export const Kasir4 = () => {
                   <p>x {item.jumlah}</p>
                 </div>
                 <p className="font-semibold">
-                  Rp {item.hargaJual * item.jumlah}
+                  Rp {(item.hargaJual * item.jumlah).toLocaleString('id-ID')}
                 </p>
               </div>
             </>
@@ -154,15 +154,15 @@ export const Kasir4 = () => {
           <div className="border border-dashed border-[#BDBDBD] my-5"></div>
           <div className="flex justify-between w-full">
             <p>Total </p>
-            <p className="font-semibold">Rp {total}</p>
+            <p className="font-semibold">Rp {total.toLocaleString('id-ID')}</p>
           </div>
           <div className="flex justify-between w-full">
             <p>Potongan</p>
-            <p className="font-semibold">Rp {potongan}</p>
+            <p className="font-semibold">Rp {potongan.toLocaleString('id-ID')}</p>
           </div>
           <div className="flex justify-between w-full">
             <p>Total Akhir</p>
-            <p className="font-semibold">Rp {totalAkhir}</p>
+            <p className="font-semibold">Rp {totalAkhir.toLocaleString('id-ID')}</p>
           </div>
           <div className="flex justify-between w-full">
             <p>Pendapatan Poin</p>

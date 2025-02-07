@@ -363,7 +363,7 @@ function App2() {
               <Route path="/DetailPelanggan/" element={<DetailPelanggan />} />
               <Route path="/PilihPromo/" element={<PilihPromo />} />
               <Route path="/KasirLengkap/" element={<KasirLengkap />} />
-              <Route path="/PilihPembayaran/" element={<PilihPembayaran />} />
+              <Route path="/PilihPembayaran/:id" element={<PilihPembayaran />} />
               <Route path="/DrafTransaksi/" element={<DraftTransaksi />} />
               <Route path="/DrafTransaksi2/" element={<DraftTransaksi2 />} />
               <Route

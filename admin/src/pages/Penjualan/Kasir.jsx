@@ -139,31 +139,85 @@ export const Kasir = () => {
     //     cart.map((item)=>(setTotal(prev=>prev+item.jumlah*item.hargaJual)))
     // },[cart])
 
-    useEffect(()=>{
-        setTotal(0)
-        setTotalAkhir(0)
-        cart.map((item)=>(setTotal(prev=>prev+item.jumlah*item.hargaJual,
-            setTotalAkhir(prev=>prev+item.jumlah*item.hargaJual)
-        )))
+    const kalkulasi = async() => {
+
+        setTotal(0);
+        setTotalAkhir(0);
+    
+        // Calculate total price
+        const totalHarga = cart.reduce((acc, item) => acc + item.jumlah * item.hargaJual, 0);
+        setTotal(totalHarga);
+        setTotalAkhir(totalHarga);
+    
         const datax = {
-            promo : promoTerpilih._id,
-            produks: cart
-        }
-        console.log(datax)
-        const kalkulasi = async() =>{
-            await axios.post('https://api.drnich.co.id/api/pos/kasir/kalkulasiharga/', datax).then(response => 
-            {
-                if(response.status==200){
-                    setPotongan(response.data.kalkulasi.potongan)
-                    setCashback(response.data.kalkulasi.cashback)
-                    setTotalAkhir(total-response.data.kalkulasi.potongan)
+            promo: promoTerpilih._id,
+            produks: cart,
+        };
+    
+    
+        
+            try {
+                const response = await axios.post(
+                    "https://api.drnich.co.id/api/pos/kasir/kalkulasiharga/",
+                    datax,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        withCredentials: true,
+                    }
+                );
+    
+                if (response.status === 200) {
+                    setPotongan(response.data.kalkulasi.potongan);
+                    setCashback(response.data.kalkulasi.cashback);
+                    setTotalAkhir(totalHarga - response.data.kalkulasi.potongan);
                 }
-                else{}
+            } catch (error) {
+                console.error("Error fetching calculation:", error);
             }
-            )
-        }
-        kalkulasi()
-    },[cart, promoTerpilih])
+    }
+    useEffect(() => {
+        setTotal(0);
+        setTotalAkhir(0);
+    
+        // Calculate total price
+        const totalHarga = cart.reduce((acc, item) => acc + item.jumlah * item.hargaJual, 0);
+        setTotal(totalHarga);
+        setTotalAkhir(totalHarga);
+    
+        const datax = {
+            promo: promoTerpilih._id,
+            produks: cart,
+        };
+    
+        console.log(datax);
+    
+        const kalkulasi = async () => {
+            try {
+                const response = await axios.post(
+                    "https://api.drnich.co.id/api/pos/kasir/kalkulasiharga/",
+                    datax,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        withCredentials: true,
+                    }
+                );
+    
+                if (response.status === 200) {
+                    setPotongan(response.data.kalkulasi.potongan);
+                    setCashback(response.data.kalkulasi.cashback);
+                    setTotalAkhir(totalHarga - response.data.kalkulasi.potongan);
+                }
+            } catch (error) {
+                console.error("Error fetching calculation:", error);
+            }
+        };
+    
+        kalkulasi();
+    }, [ promoTerpilih]);
     const handleDraft =(e)=>{
             e.preventDefault()
             const data = {
@@ -232,7 +286,7 @@ export const Kasir = () => {
                             <p className='font-semibold'>{item.namaProduk}</p>
                             <p className='text-[#BDBDBD]'>{item.jenis.jenis}</p>
                         </div>
-                        <p>Rp {item.hargaJual}</p>
+                        <p>Rp {item.hargaJual.toLocaleString('id-ID')}</p>
                         <div className="flex gap-4 ms-auto">
                             <button onClick={() => min(item._id)}>
                                 <img src={iMin} alt="minus" />
@@ -267,7 +321,7 @@ export const Kasir = () => {
                         <p className='font-semibold'>{item.namaProduk}</p>
                         <p className='text-[#BDBDBD]'>{item.jenis.jenis}</p>
                     </div>
-                    <p>Rp {item.hargaJual}</p>
+                    <p>Rp {item.hargaJual.toLocaleString('id-ID')}</p>
 
                 </button>
             ))}
@@ -280,6 +334,7 @@ export const Kasir = () => {
                     <button
                     onClick={(e)=>{
                         e.preventDefault()
+                        kalkulasi()
                         setModal(true)
                     }}
                     className='flex justify-between border rounded-xl bg-gradient-to-l from-[#C2A353] to-[#EAC564] text-white w-[59%] p-4'>

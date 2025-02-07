@@ -66,7 +66,7 @@ export const DaftarProduk2 = () => {
                     <span>{pro.namaProduk}</span>
                   </li>
                 </ul>
-                <span className="text-[#C2A353]">Rp.{pro.hargaJual}</span>
+                <span className="text-[#C2A353]">Rp.{pro.hargaJual.toLocaleString('id-ID')}</span>
               </Link>
             ))}
           </div>
