@@ -33,6 +33,7 @@ export const PilihPembayaran = () => {
         await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/'+id, {status : 'Done'}).then(
             response => {
                 if(response.status==200){
+                    toast.success('Pembayaran Berhasil')
                     setTimeout(()=>{
                         toast.success('Redirecting...')
                         window.location.href = `/pos/pembayaranberhasil/${id}`
