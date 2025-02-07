@@ -99,25 +99,28 @@ export const Kasir = () => {
 
         );
     }
-    const pilihJenis = () => {
-        if (jenisRef.current.value == "reset") {
+    
+    const pilihJenisKategori = () => {
+        if(jenisRef.current.value == "reset" && kategoriRef.current.value == "reset"){
+            setProdukTampil(produk)
             setKategoriTampil(kategori)
+        }
+        else if (jenisRef.current.value != "reset" && kategoriRef.current.value =='reset'){
+            const filter = kategori.filter(item => item.jenis._id == jenisRef.current.value)
+            setKategoriTampil(filter)
+            const filtere = produk.filter(item => item.jenis._id == jenisRef.current.value)
+            setProdukTampil(filtere)
+        }
+        else if (jenisRef.current.value == "reset" && kategoriRef.current.value !='reset'){
+            setKategoriTampil(kategori)
+            const filtere = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+            setProdukTampil(filtere)
         }
         else {
             const filter = kategori.filter(item => item.jenis._id == jenisRef.current.value)
             setKategoriTampil(filter)
-            console.log(filter)
-        }
-
-    }
-    const pilihKategori = () => {
-        if (kategoriRef.current.value == "reset") {
-            setProdukTampil(produk)
-        }
-        else {
-            const filter = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-            setProdukTampil(filter)
-            console.log(filter)
+            const filtere = produk.filter(item => (item.kategori._id == kategoriRef.current.value) && (item.jenis._id == jenisRef.current.value))
+            setProdukTampil(filtere)
         }
     }
     const klikbarang = (isi) => {
@@ -203,7 +206,7 @@ export const Kasir = () => {
             </form>
             <div className='flex justify-between mt-5'>
                 <div className='relative flex justify-between border border-[#C2A353] appearance-none rounded-xl p-2 px-4 w-[49%]'>
-                    <select onChange={pilihJenis} ref={jenisRef} className='appearance-none w-full outline-none' name="" id="">
+                    <select onChange={pilihJenisKategori} ref={jenisRef} className='appearance-none w-full outline-none' name="" id="">
                         <option value="reset">Semua Jenis</option>
                         {jenis.map((item, i) => (
                             <option key={i} value={item._id}>{item.jenis}</option>
@@ -212,7 +215,7 @@ export const Kasir = () => {
                     <img src={iPanahB} className='absolute top-50 end-2' />
                 </div>
                 <div className='relative flex justify-between border border-[#C2A353] appearance-none rounded-xl p-2 px-4 w-[49%]'>
-                    <select onChange={pilihKategori} ref={kategoriRef} className='appearance-none w-full outline-none' name="" id="">
+                    <select onChange={pilihJenisKategori} ref={kategoriRef} className='appearance-none w-full outline-none' name="" id="">
                         <option value="reset">Semua Kategori</option>
                         {kategoriTampil.map((item, i) => (
                             <option key={i} value={item._id}>{item.kategori}</option>
