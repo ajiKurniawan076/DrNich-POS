@@ -24,6 +24,7 @@ export const PembelianStok = (props) => {
   const kategoriRef = useRef(null);
   const produkpilihanRef = useRef(null);
   const jumlahPembelianRef = useRef(null);
+  const [supplier, setSupplier] = useState({})
   const [jumlahPembelian, setJumlahPembelian] = useState([]);
   const [produkTerpilih, setProdukTerpilih] = useState([]);
 
@@ -42,9 +43,12 @@ export const PembelianStok = (props) => {
       (item) => item.namaProduk == produkpilihanRef.current.value
     );
     setProdukTerpilih(filterr);
-    console.log(filterr);
-    console.log(produkTerpilih);
   };
+
+  useEffect(()=>{
+    produkTerpilih.length > 0 && produkTerpilih.map((item)=>setSupplier(item?.supplier))
+  },[produkTerpilih])
+
   const Pembelian = () => {
     setJumlahPembelian(jumlahPembelianRef.current.value);
     console.log(jumlahPembelianRef.current.value);
@@ -99,7 +103,9 @@ export const PembelianStok = (props) => {
           </label>
           <input
             type="text"
-            placeholder="Pilih Supplier"
+            placeholder="Supplier"
+            disabled
+            value={supplier?.namaPerusahaan}
             className="text-[12px] py-2 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl "
             />
         </div>
