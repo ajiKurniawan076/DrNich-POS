@@ -229,7 +229,9 @@ export const Kasir = () => {
                 totalAkhir : totalAkhir,
                 transaksiDetail : cart,
                 potongan : potongan,
-                status : "Pending"
+                status: "Pending",
+                pembayaran: 0,
+                kembalian: 0,
             }
             console.log(data)
             axios.post('https://api.drnich.co.id/api/pos/kasir/transaksi', data).then(response =>{

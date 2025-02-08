@@ -50,6 +50,8 @@ export const Kasir4 = () => {
       transaksiDetail: cart,
       potongan: potongan,
       status: "Pending",
+      pembayaran: 0,
+      kembalian: 0,
     };
     console.log(data);
     try {

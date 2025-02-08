@@ -9,7 +9,7 @@ export const PilihPembayaran = () => {
     const [transaksi, setTransaksi] = useState([])
     const {id} = useParams()
     const [tunai,setTunai] = useState('')
-    const [tunaiR,setTunaiR] = useState(0)
+    const [tunaiR, setTunaiR] = useState(0)
     const tunaiRef = useRef(null)
     useEffect(()=>{
         const fetch = async()=>{
@@ -24,13 +24,15 @@ export const PilihPembayaran = () => {
         setTunaiR(tunaiRef.current.value.replace(/\D/g, ""))
         setTunai(Number(tunaiRef.current.value.replace(/\D/g, "")).toLocaleString('id-ID'))
     }
+    
 
     const bayar = async (e) => {
         e.preventDefault()
         if(tunaiR < transaksi.totalAkhir) { toast.error('Uang Tunai Tidak Cukup')} 
-        else{
+        else {
+            const kembalian = tunaiR - transaksi.totalAkhir
         try{
-        await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/'+id, {status : 'Done'}).then(
+            await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/' + id, { status: 'Done', pembayaran: tunaiR , kembalian : kembalian}).then(
             response => {
                 if(response.status==200){
                     toast.success('Pembayaran Berhasil')
@@ -46,8 +48,9 @@ export const PilihPembayaran = () => {
         catch(error){
             toast.error('Gagal Melakukan Transaksi')
         }
+        }
     }
-    }
+
 setNav('Pembayaran')   
 document.title = 'Pembayaran'
 return (
@@ -60,7 +63,14 @@ return (
         </div>
         <div className='flex justify-start items-start text-[14px] border border-[#BDBDBD] rounded-xl w-full px-4 py-2'>
             <span>{`Rp. `}<span className='ms-2'></span></span>
-            <input ref={tunaiRef} onChange={changeTunai} value={tunai} type="text" placeholder='180.000' className='w-full outline-none'/>
+            <input
+                ref={tunaiRef}
+                onChange={changeTunai}
+                value={tunai}
+                type="text"
+                placeholder='180.000'
+                className='w-full outline-none' 
+            />
         </div>
         <div className='flex justify-between my-2 w-full text-[#C2A353]'>
             <div className='border border-[#C2A353] rounded-xl p-2 w-[35%]'>
