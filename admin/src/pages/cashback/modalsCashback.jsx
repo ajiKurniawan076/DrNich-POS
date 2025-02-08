@@ -21,6 +21,19 @@ export const ModalsCashback = () => {
         console.log(filterproduk)
         setProdukM(filterproduk)
         if(kategoriname=="Kategori Produk"){setProdukTerpilih(filterproduk)}
+        if(jenisRef.current.value == 'reset' ){
+            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+            setProdukM(filterproduk)
+        }
+
+        else if(jenisRef.current.value != 'reset' && kategoriRef.current.value =='reset'){
+            const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+            setProdukM(filterproduk)
+        }
+        else if(jenisRef.current.value == 'reset' && kategoriRef.current.value !='reset'){
+            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+            setProdukM(filterproduk)
+        }
     }
     const gantiRef = (e) => {
         e.preventDefault()
@@ -35,6 +48,21 @@ export const ModalsCashback = () => {
         setProdukTerpilih(filterproduk)
         setProdukM(filterproduk)
         }
+        if(jenisRef.current?.value == 'reset'){
+            setKategoriM(kategori)
+            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+            setProdukM(filterproduk)
+            setProdukM(produk)
+        }
+        else if(jenisRef.current?.value != 'reset' && kategoriRef.current?.value =='reset'){
+            const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+            setProdukM(filterproduk)
+        }
+        else if(jenisRef.current?.value == 'reset' && kategoriRef.current?.value !='reset'){
+            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+            setProdukM(filterproduk)
+        }
+
     }, [jenisM])
     useEffect(()=>{
         produk.length>0 && setProdukM(produk)
@@ -53,7 +81,7 @@ export const ModalsCashback = () => {
                                 className="relative bg-white border text-sm border-gray-300 rounded-xl w-full p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none"
                                 aria-label="Kategori Produk"
                             >
-                                <option value="" selected className="text-gray-300">
+                                <option value="reset" selected className="text-gray-300">
                                     Semua Jenis
                                 </option>
                                 {jenis.map((item, i) => (
@@ -76,7 +104,7 @@ export const ModalsCashback = () => {
                                     className={`relative bg-white border text-sm border-gray-300 rounded-xl w-full p-4 pr-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 appearance-none`}
                                     aria-label="Kategori Produk"
                                 >
-                                    <option value="" selected className="text-gray-300">
+                                    <option value="reset" selected className="text-gray-300">
                                         Semua Kategori
                                     </option>
                                     {kategoriM.map((item, i) => (
