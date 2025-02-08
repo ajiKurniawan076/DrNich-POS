@@ -12,6 +12,7 @@ function AddProduct() {
   const navigate = useNavigate();
   const [categoryProduct, setCategoryProduct] = useState([]);
   const [productType, setProductType] = useState([]);
+  const [tipeKulitList, setTipeKulitList] = useState([]);
 
   const [nama, setNama] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
@@ -21,6 +22,7 @@ function AddProduct() {
   const [harga, setHarga] = useState("");
   const [kategori, setKategori] = useState("");
   const [tipeProduk, setTipeProduk] = useState("");
+  const [tipeKulit, setTipeKulit] = useState("");
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -39,9 +41,13 @@ function AddProduct() {
             import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/getAllproductType`
         );
+        const resKulit = await axios.get(
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getAlltipeKulit`
+        );
         if (!resCat?.data || !resType?.data) {
           throw new Error("Data is empty or undefined");
         }
+        setTipeKulitList(resKulit.data);
         setCategoryProduct(resCat.data);
         setProductType(resType.data);
       } catch (error) {
@@ -103,6 +109,7 @@ function AddProduct() {
         harga: parsedHarga,
         kategori,
         tipeProduk: tipeProduk || null, // Set null if empty or undefined
+        tipeKulit: tipeKulit || null,
       };
 
       const { data } = await axios.post(
@@ -131,6 +138,7 @@ function AddProduct() {
       setHarga("");
       setKategori("");
       setTipeProduk(""); // Reset tipeProduk
+      setTipeKulit("");
     } catch (error) {
       toast.error(
         error.response?.data?.message || error.message || "An error occurred",
@@ -354,6 +362,37 @@ function AddProduct() {
                           </option>
                           {productType && productType.length > 0 ? (
                             productType.map((cat) => (
+                              <option
+                                className="font-montserrat text-sm"
+                                value={cat._id}
+                                key={cat._id}>
+                                {cat.name}
+                              </option>
+                            ))
+                          ) : (
+                            <option
+                              disabled
+                              className=" lg:p-2 p-1 rounded-md   ">
+                              <p className="font-normal">
+                                Tipe produk tidak ditemukan
+                              </p>
+                            </option>
+                          )}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-gray-700 font-montserrat mb-1">
+                          Tipe Kulit
+                        </label>
+                        <select
+                          className="w-full p-2 border rounded-md font-SFPro pt-2"
+                          value={tipeKulit}
+                          onChange={(e) => setTipeKulit(e.target.value)}>
+                          <option className="" value="" disabled>
+                            Pilih tipe kulit
+                          </option>
+                          {tipeKulitList && tipeKulitList.length > 0 ? (
+                            tipeKulitList.map((cat) => (
                               <option
                                 className="font-montserrat text-sm"
                                 value={cat._id}
