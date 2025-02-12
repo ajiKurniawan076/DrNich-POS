@@ -27,6 +27,7 @@ export const DaftarBelanja = () => {
   const [modals, setModals] = useState(false);
   const [produkKategori, setProdukKategori] = useState([]);
   const [pilihKategori, setPilihKategori] = useState([]);
+  const [tombol, setTombol] = useState(true);
   const navigate = useNavigate();
   const min = (isi) => {
     setCart((prev) =>
@@ -49,6 +50,7 @@ export const DaftarBelanja = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTombol(false)
 
     const data = {
       total: total,

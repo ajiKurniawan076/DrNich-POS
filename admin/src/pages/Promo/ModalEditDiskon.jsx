@@ -40,18 +40,28 @@ export const ModalEditDiskon = () => {
         setJenisM(jenisRef.current.value);
     };
     useEffect(() => {
-        const filterKategori = kategori.filter(
-        (item) => item.jenis.jenis == jenisM
-        );
-        setKategoriM(filterKategori);
-        if(kategoriName=="Jenis Produk"){
-        const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
-    console.log(filterproduk)
-    setProdukTerpilih(filterproduk)
-    setProdukM(filterproduk)
-    }
-    
-    }, [jenisM]);
+        const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
+        setKategoriM(filterKategori)
+            if(kategoriName=="Jenis Produk"){
+                const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+                console.log(filterproduk)
+                setProdukTerpilih(filterproduk)
+                setProdukM(filterproduk)
+            }
+            if(jenisRef.current?.value == 'reset'){
+                const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+                setProdukM(filterproduk)
+                setProdukM(produk)
+            }
+            else if(jenisRef.current?.value != 'reset' && kategoriRef.current?.value =='reset'){
+                const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+                setProdukM(filterproduk)
+            }
+            else if(jenisRef.current?.value == 'reset' && kategoriRef.current?.value !='reset'){
+                const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+                setProdukM(filterproduk)
+            }
+    }, [jenisM])
 
     useEffect(()=>{
             produk.length>0 && setProdukM(produk)

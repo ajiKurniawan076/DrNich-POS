@@ -20,7 +20,7 @@ export const HomeAdmin = () => {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-hidden md:overflow-hidden mt-[75px]">
+    <div className="w-full h-full overflow-hidden md:overflow-hidden mt-[75px] no-scrollbar">
               
       {/* Super Admin section */}
       <div className="admin-section">
@@ -31,7 +31,7 @@ export const HomeAdmin = () => {
       </div>
 
       {/* Grid items */}
-      <div className=" w-full min-h-screen h-fit rounded-t-[2rem] bg-white flex justify-center pt-28">
+      <div className=" w-full min-h-screen h-fit rounded-t-[2rem] bg-white flex justify-center pt-28 over">
         <div className="w-fit h-fit flex justify-center items-center">
           <div className="grid-container md:gap-[50px] gap-[20px] grid-cols-2 md:grid-cols-3 place-items-center">
             {/* Data User */}

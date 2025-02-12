@@ -5,7 +5,7 @@
   justify-content: flex-start; /* Align to top */
   width: 100vw; /* Full width */
   height: 100vh; /* Full viewport height */
-  background-color: rgb(226, 217, 178);
+  background-color: #e2d9b2;
   overflow: hidden; /* Hide overflow in the root */
 }
 
@@ -16,7 +16,7 @@
   width: 100%;
   max-width: 500px;
   height: 100vh; /* Ensure full height */
-  overflow: auto; /* Allow content to scroll if needed */
+  overflow: hidden; /* Allow content to scroll if needed */
   position: relative;
 }
 
@@ -51,6 +51,12 @@
 }
 ::-webkit-scrollbar {
   display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+  width: 0px;
+  height: 0px;
+}
+.no-scrollbar {
+  -ms-overflow-style:none;
+  scrollbar-width: none;
 }
 
 .logo {
