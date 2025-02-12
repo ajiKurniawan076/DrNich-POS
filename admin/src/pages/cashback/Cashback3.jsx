@@ -162,7 +162,7 @@ export const Cashback3 = () => {
                 <div className='flex flex-col px-3 h-full'>
                     <p>Jumlah Cashback</p>
                     <div className='flex relative justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
-                        <input type='number' ref={cashbackRef} placeholder='100' className='flex justify-between w-full text-start items-center'>
+                        <input type='number' ref={cashbackRef} placeholder='100' className='outline-none flex justify-between w-full text-start items-center'>
                         </input>
                         <p className='absolute end-[20px] text-[#BDBDBD]'>Poin</p>
                     </div>

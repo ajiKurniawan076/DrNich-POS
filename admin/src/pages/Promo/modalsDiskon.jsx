@@ -28,55 +28,54 @@ export const ModalsDiskon = () => {
   };
 
   const gantiKategori = (e) => {
-    e.preventDefault();
-    const filterproduk = produk.filter(
-      (item) => item.kategori.kategori == kategoriRef.current.value
-    );
-    setProdukM(filterproduk);
-    if(kategoriName=="Kategori Produk"){setProdukTerpilih(filterproduk)}
-    if(jenisRef.current.value == 'reset'){
-      const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-            setProdukM(filterproduk)
-      setProdukM(produk)
-  }
-  else if(jenisRef.current.value != 'reset' && kategoriRef.current.value =='reset'){
-      const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
-      setProdukM(filterproduk)
-  }
-  else if(jenisRef.current.value == 'reset' && kategoriRef.current.value !='reset'){
-      const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-      setProdukM(filterproduk)
-  }
-  };
-  const gantiRef = (e) => {
-    e.preventDefault();
-    setJenisM(jenisRef.current.value);
-  };
-
-  useEffect(() => {
-          const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
-          setKategoriM(filterKategori)
-          if(kategoriName=="Jenis Produk"){
-              const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
-          console.log(filterproduk)
-          setProdukTerpilih(filterproduk)
+          e.preventDefault()
+          const filterproduk = produk.filter(item => item.kategori.kategori == kategoriRef?.current?.value)
           setProdukM(filterproduk)
-          }
-          if(jenisRef.current?.value == 'reset'){
-            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+          if(kategoriName=="Kategori Produk"){setProdukTerpilih(filterproduk)}
+          if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value == 'reset' ){
+            setKategoriM(kategori)
+            setProdukM(produk)
+        }
+        else if(jenisRef?.current?.value != 'reset' && kategoriRef?.current?.value =='reset'){
+            const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
+            setKategoriM(filterKategori)
+            const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef?.current?.value)
             setProdukM(filterproduk)
-              setProdukM(produk)
-          }
-          else if(jenisRef.current?.value != 'reset' && kategoriRef.current?.value =='reset'){
-              const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+        }
+        else if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value !='reset'){
+            setKategoriM(kategori)
+            const filterproduk = produk.filter(item => item.kategori.kategori == kategoriRef?.current?.value)
+            setProdukM(filterproduk)
+        }
+      }
+      const gantiRef = (e) => {
+          e.preventDefault();
+          setJenisM(jenisRef.current.value);
+      };
+      useEffect(() => {
+              
+              if(kategoriName=="Jenis Produk"){
+                  const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+              console.log(filterproduk)
+              setProdukTerpilih(filterproduk)
               setProdukM(filterproduk)
-          }
-          else if(jenisRef.current?.value == 'reset' && kategoriRef.current?.value !='reset'){
-              const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-              setProdukM(filterproduk)
-          }
-  
-      }, [jenisM])
+              }
+              if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value == 'reset' ){
+                setKategoriM(kategori)
+                setProdukM(produk)
+            }
+            else if(jenisRef?.current?.value != 'reset' && kategoriRef?.current?.value =='reset'){
+                const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
+                setKategoriM(filterKategori)
+                const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef?.current?.value)
+                setProdukM(filterproduk)
+            }
+            else if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value !='reset'){
+                setKategoriM(kategori)
+                const filterproduk = produk.filter(item => item.kategori.kategori == kategoriRef?.current?.value)
+                setProdukM(filterproduk)
+            }
+          }, [jenisM])
 
    useEffect(()=>{
           produk.length>0 && setProdukM(produk)

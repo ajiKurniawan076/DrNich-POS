@@ -109,7 +109,7 @@ export const Kasir = () => {
             const filter = kategori.filter(item => item.jenis._id == jenisRef.current.value)
             setKategoriTampil(filter)
             const filtere = produk.filter(item => item.jenis._id == jenisRef.current.value)
-            setProdukTampil(filtere)
+                (filtere)
         }
         else if (jenisRef.current.value == "reset" && kategoriRef.current.value !='reset'){
             setKategoriTampil(kategori)

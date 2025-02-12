@@ -4,8 +4,8 @@ import iPemSu from "../../assets/iconproduk/iPemSu.svg";
 import iDown from "../../assets/iconproduk/iDown.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-//import html2canvas from "html2canvas";
-//import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 export const PembayaranBerhasil = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -41,7 +41,7 @@ export const PembayaranBerhasil = () => {
   }, [id, setNav, setLink]);
 
   // ✅ Fungsi downloadPDF sekarang ada di sini
-  /*const downloadPDF = () => {
+  const downloadPDF = () => {
     const input = invoiceRef.current;
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -65,10 +65,10 @@ export const PembayaranBerhasil = () => {
 
       pdf.save("invoice.pdf"); // Simpan file PDF
     });
-  };*/
+  };
 
   return (
-    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-screen h-full pt-8">
+    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-screen h-fit pt-8">
     <div ref={invoiceRef} className={''}>
       <div className="grid place-items-center">
         <img src={iPemSu} alt="Pembayaran Berhasil" className={`${fetched ? 'scale-125' : 'scale-50'} duration-500`} />
@@ -153,7 +153,7 @@ export const PembayaranBerhasil = () => {
         <div className="flex justify-end w-full">
           {/* ✅ Panggil downloadPDF saat tombol ditekan */}
           <button
-            onClick=''
+            onClick={downloadPDF}
             className="bg-gradient-to-l from-[#C2A353] to-[#EAC564] w-[90px] p-3 rounded-xl flex justify-center"
           >
             <img src={iDown} alt="iDownload" />

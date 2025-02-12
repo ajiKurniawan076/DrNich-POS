@@ -254,7 +254,7 @@ export const EditCashback = () => {
                     <p>Produk Terpilih</p>
                     {produkTerpilih.map((item, i) => (
                         <div className='flex justify-between w-full border border-[#BDBDBD] rounded-xl p-4 mt-1 mb-3'>
-                            <p>{item.namaProduk}</p>
+                            <p>{item?.namaProduk}</p>
                             <button onClick={
                                 (e) => {
                                     e.preventDefault()
