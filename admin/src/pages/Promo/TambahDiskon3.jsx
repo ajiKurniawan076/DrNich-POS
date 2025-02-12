@@ -130,7 +130,7 @@ export const TambahDiskon3 = () => {
     }, [tombol])
     
     const gantiKategori = () => {
-        const selected = listkategori.find(item => item.id == keteranganRef.current.value)
+        const selected = listkategori.find(item => item.nama == keteranganRef.current.value)
         setKategoriName(selected.setnama)
 }
 

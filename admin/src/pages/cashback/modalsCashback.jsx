@@ -16,61 +16,62 @@ export const ModalsCashback = () => {
         exist.length == 0 ? setProdukTerpilih((prev) => [...prev, item]) : setProdukTerpilih((prev) => prev.filter(itemx => itemx !== item))
     }
     const gantiKategori = (e) => {
-        e.preventDefault()
-        const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-        console.log(filterproduk)
-        setProdukM(filterproduk)
-        if(kategoriname=="Kategori Produk"){setProdukTerpilih(filterproduk)}
-        if(jenisRef.current.value == 'reset' ){
-            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
+              e.preventDefault()
+            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef?.current?.value)
             setProdukM(filterproduk)
-        }
-
-        else if(jenisRef.current.value != 'reset' && kategoriRef.current.value =='reset'){
-            const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
-            setProdukM(filterproduk)
-        }
-        else if(jenisRef.current.value == 'reset' && kategoriRef.current.value !='reset'){
-            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-            setProdukM(filterproduk)
-        }
-    }
-    const gantiRef = (e) => {
-        e.preventDefault()
-        setJenisM(jenisRef.current.value)
-    }
+            if(kategoriname=="Kategori Produk"){setProdukTerpilih(filterproduk)}
+            if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value == 'reset' ){
+                setKategoriM(kategori)
+                setProdukM(produk)
+            }
+            else if(jenisRef?.current?.value != 'reset' && kategoriRef?.current?.value =='reset'){
+                const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
+                setKategoriM(filterKategori)
+                const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef?.current?.value)
+                setProdukM(filterproduk)
+            }
+            else if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value !='reset'){
+                setKategoriM(kategori)
+                const filterproduk = produk.filter(item => item.kategori._id == kategoriRef?.current?.value)
+                setProdukM(filterproduk)
+            }
+          }
+          const gantiRef = (e) => {
+              e.preventDefault();
+              setJenisM(jenisRef.current.value);
+          };
+          useEffect(() => {
+            const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
+            setKategoriM(filterKategori)
+                  if(kategoriname=="Jenis Produk"){
+                      const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
+                  console.log(filterproduk)
+                  setProdukTerpilih(filterproduk)
+                  setProdukM(filterproduk)
+                  }
+                  if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value == 'reset' ){
+                    setKategoriM(kategori)
+                    setProdukM(produk)
+                }
+                else if(jenisRef?.current?.value != 'reset' && kategoriRef?.current?.value =='reset'){
+                    const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
+                    setKategoriM(filterKategori)
+                    const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef?.current?.value)
+                    setProdukM(filterproduk)
+                }
+                else if(jenisRef?.current?.value == 'reset' && kategoriRef?.current?.value !='reset'){
+                    setKategoriM(kategori)
+                    const filterproduk = produk.filter(item => item.kategori._id == kategoriRef?.current?.value)
+                    setProdukM(filterproduk)
+                }
+              }, [jenisM])
     useEffect(() => {
-        const filterKategori = kategori.filter(item => item.jenis.jenis == jenisM)
-        setKategoriM(filterKategori)
-        if(kategoriname=="Jenis Produk"){
-            const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
-        console.log(filterproduk)
-        setProdukTerpilih(filterproduk)
-        setProdukM(filterproduk)
-        }
-        if(jenisRef.current?.value == 'reset'){
-            setKategoriM(kategori)
-            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-            setProdukM(filterproduk)
-            setProdukM(produk)
-        }
-        else if(jenisRef.current?.value != 'reset' && kategoriRef.current?.value =='reset'){
-            const filterproduk = produk.filter(item => item.jenis.jenis == jenisRef.current.value)
-            setProdukM(filterproduk)
-        }
-        else if(jenisRef.current?.value == 'reset' && kategoriRef.current?.value !='reset'){
-            const filterproduk = produk.filter(item => item.kategori._id == kategoriRef.current.value)
-            setProdukM(filterproduk)
-        }
-
-    }, [jenisM])
-    useEffect(()=>{
-        produk.length>0 && setProdukM(produk)
-    },[produk])
+        produk.length > 0 && setProdukM(produk)
+    }, [produk])
     return (
-        <div className={`fixed z-50 flex flex-col items-center top-0 start-0 w-full overflow-auto bg-black/20 h-full ${modal == true ? '' : 'hidden'}`}> 
-      <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit overflow-auto px-3">
-      <form className='h-full flex flex-col'>
+        <div className={`fixed z-50 flex flex-col items-center top-0 start-0 w-full overflow-auto bg-black/20 h-full ${modal == true ? '' : 'hidden'}`}>
+            <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit overflow-auto px-3">
+                <form className='h-full flex flex-col'>
                     <div className='flex h-fit gap-[10px] justify-between mt-4'>
                         <div className="relative w-full mt-1">
                             <select
@@ -122,27 +123,27 @@ export const ModalsCashback = () => {
 
                     </div>
                     <div className='h-full flex flex-col gap-[10px]'>
-                    {kategoriname=="Produk" && produkM.map((item, i) => (
-                        <button key={i}
-                            onClick={(e) => {
-                                e.preventDefault()
-                                handleProduk(item)
-                            }}
-                            className={`flex justify-between w-full border border-[#BDBDBD] rounded-xl p-4 mt-2 ${produkTerpilih.some((itemx) => itemx._id === item._id) ? 'border-2 border-[#C2A353]' : ''
-                                }`}>
-                            <p>{item.namaProduk}</p>
-                            <p className='text-[#BDBDBD]'>{item.jenis.jenis} | {item.kategori.kategori}</p>
-                        </button>
-                    ))
-                    }
+                        {kategoriname == "Produk" && produkM.map((item, i) => (
+                            <button key={i}
+                                onClick={(e) => {
+                                    e.preventDefault()
+                                    handleProduk(item)
+                                }}
+                                className={`flex justify-between w-full border border-[#BDBDBD] rounded-xl p-4 mt-2 ${produkTerpilih.some((itemx) => itemx._id === item._id) ? 'border-2 border-[#C2A353]' : ''
+                                    }`}>
+                                <p>{item.namaProduk}</p>
+                                <p className='text-[#BDBDBD]'>{item.jenis.jenis} | {item.kategori.kategori}</p>
+                            </button>
+                        ))
+                        }
                     </div>
                     <div className='flex items-end h-fit mt-auto'>
                         <button
-                        onClick={(e) => {
-                            e.preventDefault()
-                            setModal(false)
-                        }}
-                        className='mt-auto flex justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full'>
+                            onClick={(e) => {
+                                e.preventDefault()
+                                setModal(false)
+                            }}
+                            className='mt-auto flex justify-between text-white text-[14px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] p-4 px-5 rounded-xl w-full'>
                             <p>Tambah</p>
                             <p>| {produkTerpilih.length} Produk</p>
                         </button>
