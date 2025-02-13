@@ -212,6 +212,9 @@ export const DaftarProdukAdd = () => {
             </option>
           ))}
         </select>
+        <label className="text-start font-semibold mb-[5px]">
+          Pilih Suplier
+        </label>
         <select
           ref={supplierRef}
           name="options"

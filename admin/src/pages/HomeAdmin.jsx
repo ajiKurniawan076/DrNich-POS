@@ -20,7 +20,7 @@ export const HomeAdmin = () => {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-hidden md:overflow-hidden mt-[75px] no-scrollbar">
+    <div className="w-full h-fit min-h-screen overflow-hidden md:overflow-hidden mt-[75px] no-scrollbar">
               
       {/* Super Admin section */}
       <div className="admin-section">

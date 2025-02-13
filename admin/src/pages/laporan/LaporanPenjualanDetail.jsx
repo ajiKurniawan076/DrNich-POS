@@ -19,7 +19,11 @@ setNav('Detail')
 document.title = 'Detail'
 return (
     <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full h-fit pt-8 text-[#454545] text-[12px]'>
-
+        <button
+            onClick={()=>console.log(transaksi)}
+        >
+            test
+        </button>
         <div className='flex justify-between text-center items-center border rounded-xl border-[#C2A353] p-4'> 
             <div className='Grid text-start'>
                 <p className='text-[10px] text-[#BDBDBD]'>Pelanggan</p>

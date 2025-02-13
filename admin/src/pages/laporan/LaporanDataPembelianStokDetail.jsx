@@ -32,7 +32,7 @@ return (
         <button className='grid place-items-start gap-2 border rounded-xl border-[#C2A353] p-4 mt-1'>
             <div className='grid place-items-start'>
                 <p className='text-[10px] text-[#BDBDBD]'>ID Transaksi</p>
-                <p className='text-[#C2A353]'>DNFS001/25001</p>
+                <p className='text-[#C2A353]'></p>
             </div>
             <div className='grid place-items-start gap-1'>
                 <p>1 Nov 2024, 11:40 WIB</p>
