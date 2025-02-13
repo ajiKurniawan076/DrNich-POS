@@ -24,6 +24,7 @@ export const DaftarBelanja = () => {
   const [bin, setBin] = useState([]);
   const [produk, setProduk] = useState([]);
   const [items, setItems] = useState([]);
+  const [invoice,setInvoice] = useState('')
   const [modals, setModals] = useState(false);
   const [produkKategori, setProdukKategori] = useState([]);
   const [pilihKategori, setPilihKategori] = useState([]);
@@ -54,6 +55,8 @@ export const DaftarBelanja = () => {
 
     const data = {
       total: total,
+      invoice: invoice,
+      supplier: cart[0].supplier._id,
       belanjaDetail: cart,
     };
     try {
@@ -84,8 +87,13 @@ export const DaftarBelanja = () => {
     
   };
   const tambahKeranjang = (isi) => {
+    console.log(isi)
     if (cart.some((item) => item._id == isi._id)) {
-    } else {
+      toast.error('Produk sudah ada di keranjang')}
+    else if(cart.length>0 && cart.some((item)=> item.supplier._id != isi.supplier._id)){
+      toast.error('Produk memiliki supplier yang berbeda')
+    }
+    else {
       const newisi = { ...isi, jumlah: 0 };
       setCart((prev) => [...prev, newisi]);
     }
@@ -103,11 +111,11 @@ export const DaftarBelanja = () => {
             console.log(filterProduk);
             setProduk(filterProduk);
             setProdukKategori(filterProduk);
-            const filterlimit = response.data.filter((item) => {
-              item.stok < item.minStok;
-              item.jenis.jenis == "produk";
-            });
-            console.log(filterlimit);
+            const filterlimit = response.data.filter((item) => (
+              item.stok < item.minStok,
+              item.jenis.jenis == "produk"
+            ));
+            console.log({limit: filterlimit});
             setItems(filterlimit);
           }
         });
@@ -119,6 +127,10 @@ export const DaftarBelanja = () => {
           );
           setPilihKategori(filterPilihKategori);
         });
+
+      await axios
+      .get("https://api.drnich.co.id/api/pos/produk/getInvoiceBelanja")
+      .then(response => setInvoice(response.data))
     };
     fetch();
     setNav("Daftar Belanja");

@@ -25,6 +25,7 @@ export const DaftarBelanjaModals = (props) => {
   const [bin, setBin] = useState([]);
   const [produk, setProduk] = useState([]);
   const [items, setItems] = useState([]);
+  const [invoice, setInvoice] = useState('')
   const [modals, setModals] = useState(false);
   const { modalStok, setModalStok } = useContext(modalStokContext);
   const [produkKategori, setProdukKategori] = useState([]);
@@ -54,6 +55,8 @@ export const DaftarBelanjaModals = (props) => {
     e.preventDefault();
     const data = {
       total: total,
+      invoice: invoice,
+      supplier : cart[0].supplier._id,
       belanjaDetail: cart,
     };
 
@@ -86,7 +89,11 @@ export const DaftarBelanjaModals = (props) => {
   };
   const tambahKeranjang = (isi) => {
     if (cart.some((item) => item._id == isi._id)) {
-    } else {
+    } 
+    else if(cart.length>0 && cart.some((item)=> item.supplier._id != isi.supplier._id)){
+      toast.error('Produk memiliki supplier yang berbeda')
+    }
+    else {
       const newisi = { ...isi, jumlah: 0 };
       setCart((prev) => [...prev, newisi]);
     }
@@ -105,8 +112,8 @@ export const DaftarBelanjaModals = (props) => {
             setProduk(filterProduk);
             setProdukKategori(filterProduk);
             const filterlimit = response.data.filter(
-              (item) => {item.stok < item.minStok
-                 item.jenis.jenis == "produk"}
+              (item) => (item.stok < item.minStok,
+                 item.jenis.jenis == "produk")
             );
             console.log(filterlimit);
             setItems(filterlimit);
@@ -120,6 +127,10 @@ export const DaftarBelanjaModals = (props) => {
           );
           setPilihKategori(filterPilihKategori);
         });
+
+        await axios
+      .get("https://api.drnich.co.id/api/pos/produk/getInvoiceBelanja")
+      .then(response => setInvoice(response.data))
     };
     fetch();
   }, []);
@@ -148,11 +159,11 @@ export const DaftarBelanjaModals = (props) => {
       }}
     >
       <div
-        className={`fixed z-40 top-0 start-0 w-full h-full bg-black/20 flex justify-center overflow-auto ${
+        className={`fixed z-40 top-0 start-0 w-full h-full bg-black/20 flex justify-center overflow-y-auto ${
           modalStok ? "" : "hidden"
         }`}
       >
-        <form className="flex flex-col px-7 py-3 gap-1 bg-white md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] h-full mt-[75px]">
+        <form className="flex flex-col px-7 py-3 gap-1 bg-white md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] h-fit min-h-screen mt-[75px]">
         <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
           <AiOutlineSearch size={20} />
           <input

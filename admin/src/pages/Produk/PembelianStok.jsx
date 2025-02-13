@@ -5,6 +5,7 @@ import { BsCart4 } from "react-icons/bs";
 import iTambah from "../../assets/iconproduk/Itambah.svg";
 import { modalContext } from "./DaftarBelanja";
 import { modalsContext } from "./DaftarBelanjaModals";
+import { toast } from "react-toastify";
 
 export const PembelianStok = (props) => {
   const { setNav, setSort, setLink } = useContext(navContext);
@@ -31,7 +32,12 @@ export const PembelianStok = (props) => {
   const handleTambah = (e) => {
     e.preventDefault();
     if (cart.some((item) => item._id == produkTerpilih[0]._id)) {
-    } else {
+      toast.error('Produk sudah ada di keranjang')
+    } 
+    else if(cart.length>0 && cart.some((item)=> item.supplier._id != produkTerpilih[0].supplier._id)){
+          toast.error('Produk memiliki supplier yang berbeda')
+        }
+    else {
       const newisi = { ...produkTerpilih[0], jumlah: jumlahPembelian };
       setCart((prev) => [...prev, newisi]);
     }
