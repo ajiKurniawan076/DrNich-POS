@@ -145,6 +145,7 @@ import { DaftarProdukByKategori } from "./pages/Produk/daftarProdukByKategori";
 import { PembayaranBerhasil } from "./pages/Penjualan/PembayaranBerhasil";
 import { EditDiskon } from "./pages/Promo/EditDiskon";
 import { EditCashback } from "./pages/cashback/EditCashback";
+import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
 
@@ -458,6 +459,10 @@ function App2() {
               <Route
                 path="/EditCashback/:id"
                 element={<EditCashback />}
+              />
+              <Route
+                path="/LaporanLihatStruk/:id"
+                element={<LaporanLihatStruk />}
               />
             </Routes>
           </div>

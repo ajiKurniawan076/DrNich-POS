@@ -1,5 +1,5 @@
 :root {
-  --tw-bg-opacity : 1 !important;
+  --tw-bg-opacity: 1 !important;
   background-color: rgb(255, 255, 255) !important;
   color: rgb(0, 0, 0) !important;
 }
@@ -47,21 +47,30 @@
   height: 75px; /* Same as Navbar height */
   flex-shrink: 0;
 }
-
 .main-content {
   flex: 1;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Prevents extra height issues */
+  overflow-y: auto; /* Prevents extra height issues */
 }
-::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
-  width: 0px;
-  height: 0px;
+
+.main-content::-webkit-scrollbar {
+  width: 0px; /* Shrinks scrollbar width */
+  background: white; /* Makes it blend with background */
 }
-.no-scrollbar {
-  -ms-overflow-style:none;
-  scrollbar-width: none;
+
+/* Firefox */
+.main-content {
+  scrollbar-width: none; /* Hides scrollbar in Firefox */
+}
+
+/* Ensures smooth scrolling experience */
+.main-content {
+  -webkit-overflow-scrolling: touch; /* Improves scrolling on mobile */
+}
+.main-content div {
+  -webkit-overflow-scrolling: inherit;
+  scrollbar-width: inherit;
 }
 
 .logo {

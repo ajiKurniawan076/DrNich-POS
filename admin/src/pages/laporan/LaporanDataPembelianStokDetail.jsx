@@ -1,19 +1,29 @@
 import React, { useContext } from 'react'
 import { navContext } from "../../App2"
 import iPan from "../../assets/iconLaporanPenjualan/iPan.svg";
+import { useLocation } from 'react-router-dom';
 
 
 export const LaporanDataPembelianStokDetail = () => {
     const { setNav, setLink } = useContext(navContext)
+    const location = useLocation()
+    const { belanja } = location.state || {};
+    
+
 
 setNav('Detail')   
 document.title = 'Detail'
 return (
     <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full h-full pt-8 text-[#454545] text-[12px]'>
+        <button
+            onClick={()=>console.log(belanja)}
+        >
+            test
+        </button>
         <button className='flex justify-between text-center items-center border rounded-xl border-[#C2A353] p-4'>
             <div className='Grid text-start'>
                 <p className='text-[10px] text-[#BDBDBD]'>Supplier</p>
-                <p>PT. BEAUTY</p>
+                <p></p>
             </div>
             <div>
                 <img src={iPan} alt="panah" />

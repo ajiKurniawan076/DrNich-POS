@@ -11,17 +11,17 @@ export const LaporanDataPenjualan = () => {
     const { setNav, setLink } = useContext(navContext)
     const [button, setButton] = useState();
     const [button2, setButton2] = useState();
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [data, setData] = useState();
+    const [data, setData] = useState([]);
     const location = useLocation();
-    const { transaksi } = location.state || [];
+    const { tanggal } = location.state || [];
+    const [startDate, setStartDate] = useState(new Date(tanggal.dari));
+    const [endDate, setEndDate] = useState(new Date(tanggal.sampai));
     const navigate = useNavigate();
     
     const handleNavigate = (e, datax) => {
         e.preventDefault()
         navigate('/pos/LaporanPenjualanDetail', { state:{transaksi: datax} })
-        console.log(data)
+        // console.log(data)
     }
         
     const datePickerRef = useRef(null); // Create a ref for the DatePicker
@@ -50,11 +50,33 @@ export const LaporanDataPenjualan = () => {
         document.title = 'Data Penjualan'
         // console.log(location.state)
     }, [])
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios
+                .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
+                .then((response) => (setData(response.data.transaksi),console.log(response.data.transaksi)))
+        }
+        fetchData();
+        // console.log(tanggal)
+    }, [])
+
+    useEffect(() => {
+        const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z' , sampai: endDate?.toISOString().split('.')[0] + 'Z' }
+        console.log(tanggal)
+        const fetch = async () => {
+            await axios
+                .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
+                .then((response) => (setData(response.data.transaksi), console.log(response.data.transaksi)))
+
+        }
+        fetch()
+        
+    }, [startDate, endDate])
     
 
 return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-        <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
+        {/* <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
             <img src={iCari} alt="Cari" />
             <input
                 // onChange={filterData}
@@ -63,8 +85,8 @@ return (
                 className="text-sm w-full h-[30px] focus:outline-none"
                 placeholder="Cari..."
             ></input>
-        </form>
-        <div className='flex flex-col h-full'>
+        </form> */}
+        <div className='flex flex-col'>
             <p>Masa Berlaku</p>
             <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
                 <p>Dari :</p>
@@ -112,12 +134,12 @@ return (
             </div>
         </div>
         
-        {transaksi?.map((data, i) => (
+        {data.length>0 && data?.map((data, i) => (
             
             <button onClick={(e)=>handleNavigate(e, data)} className='flex justify-between text-start text-[12px] border border-[#BDBDBD] rounded-xl p-4 mt-2'>
             <div>
                 <p className='text-[#C2A353]'>{data.invoice}</p>
-                    <p className='text-[14px]'>Rp {data?.totalAkhir.toLocaleString('id-ID')}</p>
+                    <p className='text-[14px]'>Rp {data?.totalAkhir?.toLocaleString('id-ID')}</p>
             </div>
             <div>
                 <p>{data.createdAt.substring(0, 10)}</p>
