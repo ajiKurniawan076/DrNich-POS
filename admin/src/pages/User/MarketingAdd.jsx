@@ -26,7 +26,6 @@ export const MarketingAdd = () => {
       namaMarketingRef.current?.value &&
       nomorTeleponRef.current?.value &&
       alamatRef.current?.value &&
-      keteranganRef.current?.value &&
       namaRekeningRef.current?.value &&
       nomorRekeningRef.current?.value &&
       bankRef.current?.value
@@ -186,7 +185,7 @@ export const MarketingAdd = () => {
           onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+        <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           ref={keteranganRef}
           type="text"

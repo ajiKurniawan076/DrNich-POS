@@ -153,7 +153,7 @@ export const PelangganUpdate = () => {
           placeholder="Contoh : Jalan Kalitaman 22 Salatiga"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Keterangan</label>
+        <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           defaultValue={datax.keterangan}
           ref={keteranganRef}

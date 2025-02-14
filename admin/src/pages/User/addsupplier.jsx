@@ -141,13 +141,12 @@ export const Addsupplier = () => {
           ></input>
         </div>
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+          <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
           <input
             ref={keteranganRef}
             type="text"
             placeholder="Contoh : Supplier Sunscreen"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
           ></input>
         </div>
       </div>
@@ -190,13 +189,12 @@ export const Addsupplier = () => {
           ></input>
         </div>
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+          <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
           <input
             ref={keteranganRekRef}
             type="text"
             placeholder="Contoh : Admin PT.BEAUTY"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
           ></input>
         </div>
       </div>
