@@ -34,7 +34,7 @@ export const TerapisUpdate = () => {
   const nomorRekeningRef = useRef(null);
   const bankRef = useRef(null);
   const imageRef = useRef(null); // Ref for the image input
-  const [isFilled, setIsFilled] = useState(false)
+  const [isFilled, setIsFilled] = useState(false);
 
   const checkFormFilled = () => {
     if (
@@ -45,11 +45,11 @@ export const TerapisUpdate = () => {
       nomorRekeningRef.current?.value &&
       bankRef.current?.value
     ) {
-      setIsFilled(true)
+      setIsFilled(true);
     } else {
-      setIsFilled(false)
+      setIsFilled(false);
     }
-  }
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -76,25 +76,24 @@ export const TerapisUpdate = () => {
     if (imageFile) {
       fdata.append("image", imageFile); // Append the selected image if available
     }
-    
-    
+
     axios
-    .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
-    .then((response) => {
-      if (response.status === 200) {
-        toast.success("Berhasil Edit Terapis");
-        setTimeout(() => {
-          toast.success("Redirecting...");
-          window.location.href = "/pos/terapis"; // Redirect ke halaman terapis
-        }, 1500); // Redirect setelah 1.5 detik
-      } else {
-        toast.error(response.data.message || "Gagal Edit Terapis");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      toast.error("Terjadi kesalahan saat Edit Terapis");
-    });
+      .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("Berhasil Edit Terapis");
+          setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/terapis"; // Redirect ke halaman terapis
+          }, 1500); // Redirect setelah 1.5 detik
+        } else {
+          toast.error(response.data.message || "Gagal Edit Terapis");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Terapis");
+      });
   };
 
   document.title = "Edit Terapis";
@@ -197,7 +196,9 @@ export const TerapisUpdate = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
 
-        <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
+        <label className="text-start font-semibold">
+          Keterangan <span className="text-[#BDBDBD]">( Optional )</span>
+        </label>
         <input
           defaultValue={datax.keterangan}
           ref={keteranganRef}
@@ -210,12 +211,16 @@ export const TerapisUpdate = () => {
       <div className="w-full h-full px-3 mt-auto">
         <button
           type="submit"
-          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${
+            isFilled
+              ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]"
+              : "bg-[#BDBDBD]"
+          }`}
         >
           Simpan
         </button>
       </div>
-    <ToastContainer/>
+      <ToastContainer />
     </form>
   );
 };

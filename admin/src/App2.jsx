@@ -147,6 +147,7 @@ import { EditDiskon } from "./pages/Promo/EditDiskon";
 import { EditCashback } from "./pages/cashback/EditCashback";
 import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
+
 axios.defaults.withCredentials = true;
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
@@ -173,7 +174,8 @@ function App2() {
         setshowsort,
         link,
         setLink,
-      }}>
+      }}
+    >
       <div id="root2">
         <div id="root-container">
           <Navbar className="navbar" />
@@ -394,7 +396,10 @@ function App2() {
               <Route path="/Cashback4/" element={<Cashback4 />} />
               <Route path="/display" element={<Display />} />
               <Route path="/sertifikat" element={<Sertifikat />} />
-              <Route path="/sertifikatdetail" element={<SertifikatDetail />} />
+              <Route
+                path="/sertifikatdetail/:id"
+                element={<SertifikatDetail />}
+              />
               <Route
                 path="/displaySertifikat"
                 element={<DisplaySertifikat />}
@@ -433,7 +438,10 @@ function App2() {
                 element={<PelangganUpdate />}
               />
               {/* belum ada id */}
-              <Route path="/UpdateSertifikat" element={<UpdateSertifikat />} />
+              <Route
+                path="/UpdateSertifikat/:id"
+                element={<UpdateSertifikat />}
+              />
               <Route
                 path="/UpdateKategoriJenisProduct/:id"
                 element={<UpdateKategori />}
