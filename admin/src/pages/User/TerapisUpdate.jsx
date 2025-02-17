@@ -22,7 +22,7 @@ export const TerapisUpdate = () => {
     fetchData();
 
     setNav("Ubah Terapis");
-    setLink('/pos/terapis')
+    setLink("/pos/terapis");
   }, [id]);
 
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export const TerapisUpdate = () => {
   const nomorRekeningRef = useRef(null);
   const bankRef = useRef(null);
   const imageRef = useRef(null); // Ref for the image input
-  const [isFilled, setIsFilled] = useState(false)
+  const [isFilled, setIsFilled] = useState(false);
 
   const checkFormFilled = () => {
     if (
@@ -45,11 +45,11 @@ export const TerapisUpdate = () => {
       nomorRekeningRef.current?.value &&
       bankRef.current?.value
     ) {
-      setIsFilled(true)
+      setIsFilled(true);
     } else {
-      setIsFilled(false)
+      setIsFilled(false);
     }
-  }
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -66,35 +66,34 @@ export const TerapisUpdate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fdata = new FormData();
-    fdata.append('namaTerapis', namaTerapisRef.current.value);
-    fdata.append('nomorTelepon', nomorTeleponRef.current.value);
-    fdata.append('alamat', alamatRef.current.value);
-    fdata.append('keterangan', keteranganRef.current.value);
-    fdata.append('namaRekening', namaRekeningRef.current.value);
-    fdata.append('nomorRekening', nomorRekeningRef.current.value);
-    fdata.append('bank', bankRef.current.value);
+    fdata.append("namaTerapis", namaTerapisRef.current.value);
+    fdata.append("nomorTelepon", nomorTeleponRef.current.value);
+    fdata.append("alamat", alamatRef.current.value);
+    fdata.append("keterangan", keteranganRef.current.value);
+    fdata.append("namaRekening", namaRekeningRef.current.value);
+    fdata.append("nomorRekening", nomorRekeningRef.current.value);
+    fdata.append("bank", bankRef.current.value);
     if (imageFile) {
-      fdata.append('image', imageFile); // Append the selected image if available
+      fdata.append("image", imageFile); // Append the selected image if available
     }
-    
-    
+
     axios
-    .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
-    .then((response) => {
-      if (response.status === 200) {
-        toast.success("Berhasil Edit Terapis");
-        setTimeout(() => {
-          toast.success("Redirecting...");
-          window.location.href = "/pos/terapis"; // Redirect ke halaman terapis
-        }, 1500); // Redirect setelah 1.5 detik
-      } else {
-        toast.error(response.data.message || "Gagal Edit Terapis");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      toast.error("Terjadi kesalahan saat Edit Terapis");
-    });
+      .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("Berhasil Edit Terapis");
+          setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/terapis"; // Redirect ke halaman terapis
+          }, 1500); // Redirect setelah 1.5 detik
+        } else {
+          toast.error(response.data.message || "Gagal Edit Terapis");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Terapis");
+      });
   };
 
   document.title = "Edit Terapis";
@@ -154,7 +153,11 @@ export const TerapisUpdate = () => {
         {imagePreview && (
           <div className="mt-4">
             <h3>Preview:</h3>
-            <img src={imagePreview} alt="Preview KTP" className="w-full md:w-[50%]" />
+            <img
+              src={imagePreview}
+              alt="Preview KTP"
+              className="w-full md:w-[50%]"
+            />
           </div>
         )}
       </div>
@@ -164,7 +167,9 @@ export const TerapisUpdate = () => {
       </div>
 
       <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">Nama Pemilik Rekening</label>
+        <label className="text-start font-semibold">
+          Nama Pemilik Rekening
+        </label>
         <input
           defaultValue={datax.namaRekening}
           ref={namaRekeningRef}
@@ -191,7 +196,9 @@ export const TerapisUpdate = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
 
-        <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
+        <label className="text-start font-semibold">
+          Keterangan <span className="text-[#BDBDBD]">( Optional )</span>
+        </label>
         <input
           defaultValue={datax.keterangan}
           ref={keteranganRef}
@@ -204,12 +211,16 @@ export const TerapisUpdate = () => {
       <div className="w-full h-full px-3 mt-auto">
         <button
           type="submit"
-          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${
+            isFilled
+              ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]"
+              : "bg-[#BDBDBD]"
+          }`}
         >
           Simpan
         </button>
       </div>
-    <ToastContainer/>
+      <ToastContainer />
     </form>
   );
 };

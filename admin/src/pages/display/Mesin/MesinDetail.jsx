@@ -10,7 +10,7 @@ import { navContext } from "../../../App2";
 import gSertifikat from "../../../assets/iconDisplay/Sertifikat/gSertifikat.svg";
 import axios from "axios";
 
-const MesinDetail = () => {
+export const MesinDetail = () => {
   const {id} = useParams()
   const { setNav, setLink } = useContext(navContext);
     const [datax, setdatax] = useState([]);
@@ -53,4 +53,3 @@ const MesinDetail = () => {
     );
 }
 
-export default MesinDetail

@@ -147,10 +147,12 @@ import { EditDiskon } from "./pages/Promo/EditDiskon";
 import { EditCashback } from "./pages/cashback/EditCashback";
 import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
-import Mesin from "./pages/display/Mesin/Mesin";
-import MesinTambah from "./pages/display/Mesin/MesinTambah";
-import MesinDetail from "./pages/display/Mesin/MesinDetail";
-import MesinEdit from "./pages/display/Mesin/MesinEdit";
+import {Mesin} from "./pages/display/Mesin/Mesin"
+import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
+import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
+import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
+
+
 
 
 
@@ -181,7 +183,8 @@ function App2() {
         setshowsort,
         link,
         setLink,
-      }}>
+      }}
+    >
       <div id="root2">
         <div id="root-container">
           <Navbar className="navbar" />
@@ -441,7 +444,10 @@ function App2() {
                 element={<PelangganUpdate />}
               />
               {/* belum ada id */}
-              <Route path="/UpdateSertifikat" element={<UpdateSertifikat />} />
+              <Route
+                path="/UpdateSertifikat/:id"
+                element={<UpdateSertifikat />}
+              />
               <Route
                 path="/UpdateKategoriJenisProduct/:id"
                 element={<UpdateKategori />}

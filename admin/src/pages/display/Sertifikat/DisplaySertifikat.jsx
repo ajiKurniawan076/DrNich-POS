@@ -34,10 +34,45 @@ export const DisplaySertifikat = () => {
     setGambarName(fileImage.name);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const fileImaga = imageRef.current.files[0];
-    alert(fileImaga.name);
+    const fdata = new FormData();
+    if (imageRef.current.files.length > 0) {
+      fdata.append("foto", imageRef.current.files[0]);
+    } else {
+      toast.error("Harap pilih gambar sebelum mengunggah!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/createSertif`,
+        fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Berhasil menambahkan Sertifikat");
+        setTimeout(() => {
+          navigate("/pos/sertifikat");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan Sertifikat, coba lagi!"
+      );
+      toast.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan Sertifikat, coba lagi!"
+      );
+    }
   };
 
   document.title = "Tambah Sertifikat";

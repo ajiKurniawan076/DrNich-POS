@@ -3,7 +3,7 @@ import { AiFillPlusCircle, AiOutlineRightCircle, AiOutlineSearch } from "react-i
 import { Link } from "react-router-dom"
 import { navContext } from "../../../App2"
 import axios from "axios"
-const Mesin = () => {
+ export const Mesin = () => {
   const { setNav, setLink } = useContext(navContext)
     const [datax, setdatax] = useState([])
     useEffect(() => {
@@ -47,5 +47,4 @@ const Mesin = () => {
   )
 }
 
-export default Mesin
 

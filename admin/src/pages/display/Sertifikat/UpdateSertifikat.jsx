@@ -5,7 +5,7 @@ import { navContext } from "../../../App2";
 import gserti from "../../../assets/iconDisplay/Sertifikat/gserti.svg";
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const UpdateSertifikat = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -13,10 +13,30 @@ export const UpdateSertifikat = () => {
   const imageRef = useRef(null);
   const [gambarname, setGambarName] = useState("");
   const [gambar, setgambar] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
     setNav("Ubah sertifikat");
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_BASE_URL_BACKEND
+          }/api/foto/getSertifbyId/${id}`
+        );
+        setgambar(response.data.foto);
+      } catch (error) {
+        console.error(
+          "Error fetching data:",
+          error.response?.data || error.message
+        );
+      }
+    };
+    fetchData();
+  }, [id]);
 
   const handleImg = (e) => {
     e.preventDefault();
@@ -34,10 +54,44 @@ export const UpdateSertifikat = () => {
     setGambarName(fileImage.name);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const fileImaga = imageRef.current.files[0];
-    alert(fileImaga.name);
+    if (imageRef.current.files.length > 0) {
+      fdata.append("foto", imageRef.current.files[0]);
+    } else {
+      toast.error("Harap pilih gambar sebelum mengunggah!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/editSertif/${id}`,
+        fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Berhasil menambahkan Sertifikat");
+        setTimeout(() => {
+          navigate("/pos/sertifikat");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan Sertifikat, coba lagi!"
+      );
+      toast.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan Sertifikat, coba lagi!"
+      );
+    }
   };
 
   document.title = "Ubah sertifikat";
@@ -64,7 +118,6 @@ export const UpdateSertifikat = () => {
               ) : (
                 <p className="text-[#454545] mb-3">Belum ada gambar</p>
               )}
-
               <div className="flex justify-star text-[#C2A353] pt-2 mb-2">
                 <input
                   accept="image/*"

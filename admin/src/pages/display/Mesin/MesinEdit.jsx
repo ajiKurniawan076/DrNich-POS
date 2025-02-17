@@ -5,7 +5,7 @@ import { navContext } from "../../../App2";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const MesinEdit = () => {
+export const MesinEdit = () => {
     const {id} = useParams()
     const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
@@ -140,4 +140,3 @@ const MesinEdit = () => {
   );
 }
 
-export default MesinEdit

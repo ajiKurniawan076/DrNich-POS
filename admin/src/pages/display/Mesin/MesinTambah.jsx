@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { navContext } from "../../../App2";
 import { useNavigate } from "react-router-dom";
 
-const MesinTambah = () => {
+export const MesinTambah = () => {
   const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const imageRef = useRef(null);
@@ -130,5 +130,3 @@ const MesinTambah = () => {
     </form>
   );
 }
-
-export default MesinTambah
