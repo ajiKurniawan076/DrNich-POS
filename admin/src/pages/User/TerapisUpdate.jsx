@@ -20,7 +20,7 @@ export const TerapisUpdate = () => {
     fetchData();
 
     setNav("Ubah Terapis");
-    setLink('/pos/terapis')
+    setLink("/pos/terapis");
   }, [id]);
 
   const navigate = useNavigate();
@@ -48,15 +48,15 @@ export const TerapisUpdate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const fdata = new FormData();
-    fdata.append('namaTerapis', namaTerapisRef.current.value);
-    fdata.append('nomorTelepon', nomorTeleponRef.current.value);
-    fdata.append('alamat', alamatRef.current.value);
-    fdata.append('keterangan', keteranganRef.current.value);
-    fdata.append('namaRekening', namaRekeningRef.current.value);
-    fdata.append('nomorRekening', nomorRekeningRef.current.value);
-    fdata.append('bank', bankRef.current.value);
+    fdata.append("namaTerapis", namaTerapisRef.current.value);
+    fdata.append("nomorTelepon", nomorTeleponRef.current.value);
+    fdata.append("alamat", alamatRef.current.value);
+    fdata.append("keterangan", keteranganRef.current.value);
+    fdata.append("namaRekening", namaRekeningRef.current.value);
+    fdata.append("nomorRekening", nomorRekeningRef.current.value);
+    fdata.append("bank", bankRef.current.value);
     if (imageFile) {
-      fdata.append('image', imageFile); // Append the selected image if available
+      fdata.append("image", imageFile); // Append the selected image if available
     }
 
     axios
@@ -126,7 +126,11 @@ export const TerapisUpdate = () => {
         {imagePreview && (
           <div className="mt-4">
             <h3>Preview:</h3>
-            <img src={imagePreview} alt="Preview KTP" className="w-full md:w-[50%]" />
+            <img
+              src={imagePreview}
+              alt="Preview KTP"
+              className="w-full md:w-[50%]"
+            />
           </div>
         )}
       </div>
@@ -136,7 +140,9 @@ export const TerapisUpdate = () => {
       </div>
 
       <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">Nama Pemilik Rekening</label>
+        <label className="text-start font-semibold">
+          Nama Pemilik Rekening
+        </label>
         <input
           defaultValue={datax.namaRekening}
           ref={namaRekeningRef}
