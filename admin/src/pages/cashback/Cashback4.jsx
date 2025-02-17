@@ -78,7 +78,7 @@ export const Cashback4 = () => {
           ))}
         </div>
       )}
-      <a href='tambahcashback' className='flex mt-auto mx-2'>
+      <a href='tambahcashback' className='flex mt-auto'>
         <button className='flex justify-center gap-2 text-white text-[14px] bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 mx-3'>
           <img src={iTamPu} alt="TambahPu" />
           <p>Tambah Cashback</p>

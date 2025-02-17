@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dasboard from "./screen/dashboard.jsx";
+import Login from "./screen/login.jsx";
+import RegisterAdmin from "./screen/registerAdmin.jsx";
 
 //layanan
 import ListLayanan from "./screen/userDisplayUpdate/layanan/listLayanan.jsx";
@@ -32,6 +34,8 @@ import { Products } from "./screen/POS/Produk/products.jsx";
 import { Laporan } from "./screen/POS/Laporan/reports.jsx";
 import { Promo } from "./screen/POS/Promo/promo.jsx";
 import App2 from "./App2.jsx";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
@@ -39,7 +43,9 @@ function App() {
       <Router>
         <Routes>
           {/* USER DISPLAY */}
-          <Route path="/" element={<Dasboard />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/registerAdmin" element={<RegisterAdmin />} />
+          <Route path="/test" element={<Dasboard />} />
           <Route path="/layanan" element={<ListLayanan />} />
           <Route path="/layanan/updateLayanan/:id" element={<LayananUD />} />
           <Route

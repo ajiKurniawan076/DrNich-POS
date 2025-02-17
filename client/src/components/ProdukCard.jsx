@@ -6,7 +6,7 @@ function ProdukCard({ item }) {
   return (
     <>
       <div
-        className="w-[184px] h-[276px] flex flex-col justify-start cursor-pointer items-center border border-disable-line rounded-lg p-1 shadow-sm bg-white
+        className="lg:w-[184px] w-48 lg:h-[276px] h-72 flex flex-col justify-start cursor-pointer items-center border border-disable-line rounded-lg p-1 shadow-sm bg-white
         hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.30)] hover:shadow-[0px_8px_12px_6px_rgba(0,0,0,0.15)] 
        duration-300 transition-all ease-in-out"
         onClick={() => navigate(`/produk/detailProduk/${item._id}`)}>

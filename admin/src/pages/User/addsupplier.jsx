@@ -4,6 +4,9 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import { useContext, useEffect } from "react";
 import { navContext } from "../../App2";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export const Addsupplier = () => {
   const navigate = useNavigate();
@@ -23,14 +26,11 @@ export const Addsupplier = () => {
     if (
       namaPerusahaanRef.current?.value &&
       namaKontakRef.current?.value &&
-      emailRef.current?.value &&
       noTeleponRef.current?.value &&
       namaRekeningRef.current?.value &&
       AlamatRef.current?.value &&
       bankRef.current?.value &&
-      nomorRekeningRef.current?.value &&
-      keteranganRekRef.current?.value &&
-      keteranganRef.current?.value
+      nomorRekeningRef.current?.value
 
     ) {
       setIsFilled(true);
@@ -39,7 +39,7 @@ export const Addsupplier = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       namaPerusahaan: namaPerusahaanRef.current.value,
@@ -54,11 +54,25 @@ export const Addsupplier = () => {
       keteranganRek: keteranganRekRef.current.value,
     };
     console.log(data);
-    axios
-      .post("https://api.drnich.co.id/api/pos/user/supplier", data)
-      .then((response) => {
-        response.status == 200 && navigate("../supplier");
-      });
+    try {
+      const response = await axios.post(
+      "https://api.drnich.co.id/api/pos/user/supplier",
+      data
+    );
+
+    if (response.status === 200) {
+      toast.success("Berhasil Menambahkan Supplier");
+      setTimeout(() => {
+        toast.success("Redirecting...");
+        window.location.href = "/pos/supplier";
+      }, 1500); // Redirect ke halaman supplier
+    } else {
+      toast.error(response.data.message || "Gagal menambahkan supplier");
+    }
+    } catch (error) {
+    console.error("Error:", error);
+    toast.error("Terjadi kesalahan saat menambahkan supplier");
+    }
   };
 
   const { setNav, setLink } = useContext(navContext);
@@ -127,13 +141,12 @@ export const Addsupplier = () => {
           ></input>
         </div>
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+          <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
           <input
             ref={keteranganRef}
             type="text"
             placeholder="Contoh : Supplier Sunscreen"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
           ></input>
         </div>
       </div>
@@ -176,13 +189,12 @@ export const Addsupplier = () => {
           ></input>
         </div>
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+          <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
           <input
             ref={keteranganRekRef}
             type="text"
             placeholder="Contoh : Admin PT.BEAUTY"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
           ></input>
         </div>
       </div>
@@ -194,6 +206,7 @@ export const Addsupplier = () => {
           Simpan
         </button>
       </div>
+      <ToastContainer/>
     </form>
   );
 };

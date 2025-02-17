@@ -1,10 +1,11 @@
 import asyncHandler from "express-async-handler";
 import Galeri from "../../models/Gallery/galery.js";
 
+const BASE_URL = "https://api.drnich.co.id/";
 const newGaleri = asyncHandler(async (req, res) => {
   const newGaleri = {
     judul: req.body.judul,
-    thumbnail: req.body.thumbnail,
+    thumbnail: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
     link: req.body.link,
     channel: req.body.channel,
     sosmed: req.body.sosmed,
@@ -31,6 +32,16 @@ const getGaleri = asyncHandler(async (req, res) => {
   }
 });
 
+const getGaleriById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const galeri = await Galeri.findById(id);
+    res.send(galeri);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 const deleteGaleri = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
@@ -45,7 +56,7 @@ const editGaleri = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const newData = {
     judul: req.body.judul,
-    thumbnail: req.body.thumbnail,
+    thumbnail: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
     link: req.body.link,
     channel: req.body.channel,
     sosmed: req.body.sosmed,
@@ -63,4 +74,4 @@ const editGaleri = asyncHandler(async (req, res) => {
   }
 });
 
-export { newGaleri, getGaleri, deleteGaleri, editGaleri };
+export { newGaleri, getGaleri, deleteGaleri, editGaleri, getGaleriById };

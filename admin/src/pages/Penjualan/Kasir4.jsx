@@ -8,6 +8,7 @@ import axios from "axios";
 import { PilihPelanggan } from "./PilihPelanggan";
 import { PilihPromo } from "./PilihPromo";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const modaltransaksi = createContext();
 export const Kasir4 = () => {
@@ -37,7 +38,7 @@ export const Kasir4 = () => {
   const [modalTer, setModalTer] = useState(false);
   const [modalMar, setModalMar] = useState(false);
   const navigate = useNavigate();
-  const handleTransaksi = (e) => {
+  const handleTransaksi = async (e) => {
     e.preventDefault();
     const data = {
       pelanggan: pelangganTerpilih._id,
@@ -48,19 +49,40 @@ export const Kasir4 = () => {
       totalAkhir: totalAkhir,
       transaksiDetail: cart,
       potongan: potongan,
-      status: "Done",
+      status: "Pending",
+      pembayaran: 0,
+      kembalian: 0,
     };
     console.log(data);
-    axios
-      .post("https://api.drnich.co.id/api/pos/kasir/transaksi", data, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        response.status == 200
-          ? navigate(`/pos/pembayaranBerhasil/${response.data._id}`)
-          : console.log(response);
-      });
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/kasir/transaksi",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 200) {
+        toast.success("Lanjut Ke Pembayaran");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = `/pos/pilihPembayaran/${response.data._id}`;
+        }, 1500);
+      } else {
+        toast.error("Terjadi kesalahan dalam transaksi");
+        console.log(response);
+      }
+    } catch (error) {
+      console.error("Error dalam transaksi:", error);
+      toast.error("Terjadi kesalahan saat memproses transaksi");
+    }
+    
   };
+
 
   return (
     <modaltransaksi.Provider
@@ -126,7 +148,7 @@ export const Kasir4 = () => {
                   <p>x {item.jumlah}</p>
                 </div>
                 <p className="font-semibold">
-                  Rp {item.hargaJual * item.jumlah}
+                  Rp {(item.hargaJual * item.jumlah).toLocaleString('id-ID')}
                 </p>
               </div>
             </>
@@ -134,15 +156,15 @@ export const Kasir4 = () => {
           <div className="border border-dashed border-[#BDBDBD] my-5"></div>
           <div className="flex justify-between w-full">
             <p>Total </p>
-            <p className="font-semibold">Rp {total}</p>
+            <p className="font-semibold">Rp {total.toLocaleString('id-ID')}</p>
           </div>
           <div className="flex justify-between w-full">
             <p>Potongan</p>
-            <p className="font-semibold">Rp {potongan}</p>
+            <p className="font-semibold">Rp {potongan.toLocaleString('id-ID')}</p>
           </div>
           <div className="flex justify-between w-full">
             <p>Total Akhir</p>
-            <p className="font-semibold">Rp {totalAkhir}</p>
+            <p className="font-semibold">Rp {totalAkhir.toLocaleString('id-ID')}</p>
           </div>
           <div className="flex justify-between w-full">
             <p>Pendapatan Poin</p>
@@ -168,7 +190,7 @@ export const Kasir4 = () => {
             ) : (
               <button
                 onClick={handleTransaksi}
-                className="flex justify-between items-center text-center border rounded-xl bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-white w-[59%] p-4"
+                className="flex justify-between items-center text-center border rounded-xl bg-gradient-to-l from-[#C2A353] to-[#EAC564] text-white w-[59%] p-4"
               >
                 <p>Bayar</p>
                 <img src={iPan} alt="panah putih" />
@@ -188,6 +210,7 @@ export const Kasir4 = () => {
       </div>
       <PilihPelanggan />
       <PilihPromo />
+      <ToastContainer/>
     </modaltransaksi.Provider>
   );
 };

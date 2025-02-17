@@ -6,7 +6,7 @@ import promoModels from "../../models/PromoPOS/promoPos.js";
 import pelangganModels from "../../models/User/pelangganPos.js";
 
 const newTransaksi = asyncHandler(async (req, res) => {
-  const { promo, total, poin, invoice, totalAkhir, potongan, transaksiDetail, pelanggan, status } = req.body;
+  const { promo, total, poin, invoice, totalAkhir, potongan, transaksiDetail, pelanggan, status, pembayaran, kembalian } = req.body;
 
   try {
     const transaksi = await TransaksiModels.create({
@@ -18,7 +18,9 @@ const newTransaksi = asyncHandler(async (req, res) => {
       potongan,
       pelanggan,
       transaksiDetail,
-      status
+      status,
+      pembayaran,
+      kembalian
     });
     const detailIDS = [];
     if (transaksiDetail && transaksiDetail.length > 0) {
@@ -55,8 +57,15 @@ const newTransaksi = asyncHandler(async (req, res) => {
 
 const getTransaksi = asyncHandler(async (req, res) => {
   try {
-    const transaksi = await TransaksiModels.find()
-      .populate("promo", "namaPromo");
+    const transaksi = await TransaksiModels.find().populate("promo")
+    .populate("pelanggan")
+    .populate({
+      path : "transaksiDetail",
+      populate : {
+        path : 'produk',
+        model : 'produkPos'
+      }
+    });
 
     res.send(transaksi);
   } catch (error) {
@@ -84,40 +93,54 @@ const getTransaksiDraft = asyncHandler(async (req, res) => {
 
 const kalkulasiHarga = asyncHandler(async (req, res) => {
   try {
-    const {promo, produks} = req.body;
-    if(promo && promo.length>0 ){
+    const { promo, produks } = req.body;
+
+    if (promo && promo.length > 0) {
       const promoo = await promoModels.findById(promo).populate({
-        path: 'promoDetail',
+        path: "promoDetail",
         populate: {
-          path: 'produk',
-          model: 'produkPos',
+          path: "produk",
+          model: "produkPos",
         },
       });
-  
+
       let potongan = 0;
       let cashback = 0;
-      for(const detail of produks){
-        const produk = promoo.promoDetail.find((pd) => pd.produk._id.toString() === detail._id);
+
+      // ✅ Convert promoDetail to a Map for faster lookups
+      const promoMap = new Map(
+        promoo.promoDetail.map((pd) => [pd.produk._id.toString(), pd])
+      );
+
+      for (const detail of produks) {
+        const produk = promoMap.get(detail._id);
+
+        if (produk) {
           if (promoo.jenis === "Diskon") {
             if (promoo.jenisPotongan === "persen") {
-              potongan += (produk.produk.hargaJual * promoo.potongan) / 100 * detail.jumlah;
+              potongan +=
+                (produk.produk.hargaJual * promoo.potongan) / 100 * detail.jumlah;
             } else if (promoo.jenisPotongan === "rupiah") {
               potongan += promoo.potongan * detail.jumlah;
             }
           } else if (promoo.jenis === "Cashback") {
             cashback += promoo.cashback;
           }
+        }
       }
-    const kalkulasi = {
-      potongan: potongan,
-      cashback: cashback
-    }
-  res.send({kalkulasi});
+
+      res.send({
+        kalkulasi: {
+          potongan,
+          cashback,
+        },
+      });
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 
 const getTransaksiInvoice = asyncHandler(async (req, res) => {
   try {
@@ -141,12 +164,16 @@ const getTransaksiInvoice = asyncHandler(async (req, res) => {
 
 const updateTransaksi = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { status } = req.body;
-
+  const { status, pembayaran, kembalian } = req.body;
+const newData = {
+  status: status,
+  pembayaran : pembayaran,
+  kembalian : kembalian
+}
   try {
     const transaksi = await TransaksiModels.findByIdAndUpdate(
       id,
-      { $set: { status } },
+      { $set: newData },
       { new: true }
     );
     res.send(transaksi);

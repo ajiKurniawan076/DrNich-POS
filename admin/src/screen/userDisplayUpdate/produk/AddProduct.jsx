@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../../assets/component/navbar";
 import axios from "axios";
 import ConfirmPopUp from "../../../assets/component/confirmPopUp";
@@ -12,6 +12,7 @@ function AddProduct() {
   const navigate = useNavigate();
   const [categoryProduct, setCategoryProduct] = useState([]);
   const [productType, setProductType] = useState([]);
+  const [tipeKulitList, setTipeKulitList] = useState([]);
 
   const [nama, setNama] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
@@ -21,9 +22,11 @@ function AddProduct() {
   const [harga, setHarga] = useState("");
   const [kategori, setKategori] = useState("");
   const [tipeProduk, setTipeProduk] = useState("");
+  const [tipeKulit, setTipeKulit] = useState("");
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const imageRef = useRef(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,9 +42,13 @@ function AddProduct() {
             import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/getAllproductType`
         );
+        const resKulit = await axios.get(
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getAlltipeKulit`
+        );
         if (!resCat?.data || !resType?.data) {
           throw new Error("Data is empty or undefined");
         }
+        setTipeKulitList(resKulit.data);
         setCategoryProduct(resCat.data);
         setProductType(resType.data);
       } catch (error) {
@@ -59,78 +66,67 @@ function AddProduct() {
     e.preventDefault();
     setOpen(false);
     setLoading(true);
-
+  
     try {
-      if (!nama.trim()) {
-        throw new Error("Mohon isi nama produk!");
-      }
-
-      if (!deskripsi.trim()) {
-        throw new Error("Mohon isi deskripsi produk!");
-      }
-
-      if (!image) {
-        throw new Error("Mohon pilih gambar produk!");
-      }
-
-      if (!manfaat.trim()) {
-        throw new Error("Mohon isi manfaat produk!");
-      }
-
-      if (!caraPakai.trim()) {
-        throw new Error("Mohon isi cara pakai produk!");
-      }
-
-      if (!harga.trim()) {
-        throw new Error("Mohon isi harga produk!");
-      }
-
-      if (!kategori) {
-        throw new Error("Mohon pilih kategori produk!");
-      }
-
+      // Validate required fields
+      if (!nama.trim()) throw new Error("Mohon isi nama produk!");
+      if (!deskripsi.trim()) throw new Error("Mohon isi deskripsi produk!");
+      if (!image) throw new Error("Mohon pilih gambar produk!");
+      if (!manfaat.trim()) throw new Error("Mohon isi manfaat produk!");
+      if (!caraPakai.trim()) throw new Error("Mohon isi cara pakai produk!");
+      if (!harga.trim()) throw new Error("Mohon isi harga produk!");
+      if (!kategori) throw new Error("Mohon pilih kategori produk!");
+  
+      // Validate price
       const parsedHarga = parseFloat(harga);
       if (isNaN(parsedHarga) || parsedHarga <= 0) {
         throw new Error("Please enter a valid price");
       }
-
-      const payload = {
-        nama,
-        deskripsi,
-        foto: image,
-        manfaat,
-        cara_pakai: caraPakai,
-        harga: parsedHarga,
-        kategori,
-        tipeProduk: tipeProduk || null, // Set null if empty or undefined
-      };
-
+  
+      // Create FormData
+      const formData = new FormData();
+      formData.append("nama", nama);
+      formData.append("deskripsi", deskripsi);
+      formData.append("foto", imageRef.current.files[0]); // Append image correctly
+      formData.append("manfaat", manfaat);
+      formData.append("cara_pakai", caraPakai);
+      formData.append("harga", parsedHarga);
+      formData.append("kategori", kategori);
+      if (tipeProduk) formData.append("tipeProduk", tipeProduk);
+      if (tipeKulit) formData.append("tipeKulit", tipeKulit);
+  
+      // Send request with multipart/form-data
       const { data } = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/tambahproduk`,
-        payload,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
-
+  
+      // Success toast
       toast.success(data.message || "Product added successfully!", {
         autoClose: 3000,
       });
-
+  
       setTimeout(() => {
         navigate("/produk");
       }, 3000);
-
+  
+      // Reset form
       setNama("");
       setDeskripsi("");
-      setImage("");
+      setImage(null); // Reset image properly
       setManfaat("");
       setCaraPakai("");
       setHarga("");
       setKategori("");
-      setTipeProduk(""); // Reset tipeProduk
+      setTipeProduk("");
+      setTipeKulit("");
     } catch (error) {
       toast.error(
         error.response?.data?.message || error.message || "An error occurred",
@@ -140,6 +136,7 @@ function AddProduct() {
       setLoading(false);
     }
   };
+  
 
   const convertBase64 = (e) => {
     const file = e.target.files[0];
@@ -224,6 +221,7 @@ function AddProduct() {
                       Tambah
                       <input
                         type="file"
+                        ref={imageRef}
                         accept="image/*"
                         className="hidden"
                         onChange={convertBase64}
@@ -354,6 +352,37 @@ function AddProduct() {
                           </option>
                           {productType && productType.length > 0 ? (
                             productType.map((cat) => (
+                              <option
+                                className="font-montserrat text-sm"
+                                value={cat._id}
+                                key={cat._id}>
+                                {cat.name}
+                              </option>
+                            ))
+                          ) : (
+                            <option
+                              disabled
+                              className=" lg:p-2 p-1 rounded-md   ">
+                              <p className="font-normal">
+                                Tipe produk tidak ditemukan
+                              </p>
+                            </option>
+                          )}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-gray-700 font-montserrat mb-1">
+                          Tipe Kulit
+                        </label>
+                        <select
+                          className="w-full p-2 border rounded-md font-SFPro pt-2"
+                          value={tipeKulit}
+                          onChange={(e) => setTipeKulit(e.target.value)}>
+                          <option className="" value="" disabled>
+                            Pilih tipe kulit
+                          </option>
+                          {tipeKulitList && tipeKulitList.length > 0 ? (
+                            tipeKulitList.map((cat) => (
                               <option
                                 className="font-montserrat text-sm"
                                 value={cat._id}

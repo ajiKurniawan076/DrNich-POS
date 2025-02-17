@@ -28,8 +28,8 @@ export const PilihPelanggan = () => {
 return (
     
     <div className={`fixed bg-black/20 z-50 top-0 start-0 w-full h-full overflow-scroll ${modalPel ? '' : 'hidden'}`}>
-    <div className='flex mx-auto md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] flex-col px-5 py-8 gap-1 w-[100%] bg-white max-w-[500px] min-h-full h-fit pt-8 text-[#454545] text-[12px] mt-[75px]'>
-    <form className="mt-5 flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2">
+    <div className='flex mx-auto md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] flex-col px-5 py-8 gap-1 w-[100%] bg-white max-w-[500px] min-h-full h-fit pt-8 text-[#454545] text-[12px] mt-[75px] overflow-auto'>
+        <form className="mt-5 flex gap-2 h-[42px] border border-[#BDBDBD] rounded-xl items-center px-2 ">
             <img src={iCari} alt="Cari" />
             <input
             ref={cariRef}

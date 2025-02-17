@@ -12,7 +12,6 @@ const supplierPosSchema = mongoose.Schema(
     },
 	email: {
       type: String,
-      required: true,
     },
     nomorTelepon:{
       type: String,
@@ -23,7 +22,6 @@ const supplierPosSchema = mongoose.Schema(
     },
     keterangan: {
       type: String,
-	required: true
     },
     namaRekening: {
       type: String,

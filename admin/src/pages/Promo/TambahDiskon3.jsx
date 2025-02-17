@@ -8,6 +8,8 @@ import { ModalsDiskon } from './modalsDiskon'
 import axios from 'axios'
 import DatePicker from 'react-datepicker'
 import { useNavigate } from 'react-router-dom'
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 
 export const modalsContext = createContext()
@@ -69,10 +71,26 @@ export const TambahDiskon3 = () => {
             jenis   : "Diskon"
         }
         console.log(data)
-        await axios.post('https://api.drnich.co.id/api/pos/promo/promo',data).then(
-            response => response.status == 200 ? navigate('../tambahdiskon4') : console.log('eror')
-        )
-        navigate("../TambahDiskon3")
+        // await axios.post('https://api.drnich.co.id/api/pos/promo/promo',data).then(
+        //     response => response.status == 200 ? navigate('../tambahdiskon4') : console.log('eror')
+        // )
+        // navigate("../TambahDiskon4")
+        try {
+        const response = await axios.post('https://api.drnich.co.id/api/pos/promo/promo',data);
+    
+        if (response.status === 200) {
+            toast.success("Diskon berhasil ditambahkan!");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/TambahDiskon4";
+        }, 1500);
+        } else {
+            toast.error("Gagal menambahkan Diskon");
+        }
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat menambahkan Diskon");
+        }
     }
 
 
@@ -112,7 +130,7 @@ export const TambahDiskon3 = () => {
     }, [tombol])
     
     const gantiKategori = () => {
-        const selected = listkategori.find(item => item.id == keteranganRef.current.value)
+        const selected = listkategori.find(item => item.nama == keteranganRef.current.value)
         setKategoriName(selected.setnama)
 }
 
@@ -134,7 +152,7 @@ return (
                         Pilih Kategori diskon
                     </option>
                     {listkategori.map((item, i) => (
-                        <option key={i} value={item.id}>{item.nama}</option>
+                        <option key={i} value={item.nama}>{item.nama}</option>
                     ))}
                 </select>
                 <img
@@ -250,6 +268,7 @@ return (
                 Simpan
             </button>
         </div>
+        <ToastContainer/>
     </form>
     <ModalsDiskon/>
     </modalsContext.Provider>

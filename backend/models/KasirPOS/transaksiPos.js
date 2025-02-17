@@ -24,6 +24,12 @@ const transaksiPosSchema = mongoose.Schema(
     potongan: {
       type : Number,
     },
+    pembayaran : {
+      type : Number
+    },
+    kembalian : {
+      type : Number
+    },
     poin:{
       type: Number,
     },

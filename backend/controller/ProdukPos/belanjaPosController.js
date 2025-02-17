@@ -3,13 +3,37 @@ import BelanjaModels from "../../models/ProdukPOS/belanjaPos.js";
 import ProdukModels from "../../models/ProdukPOS/produkPos.js";
 import belanjaDetailModel from "../../models/ProdukPOS/detailBelanjaPos.js";
 
+const getBelanjaInvoice = asyncHandler(async (req, res) => {
+  try {
+    
+    const year = new Date().getFullYear();
+    const startOfDay = new Date(2025, 0, 1);
+    const endOfDay = new Date(year, 11, 31, 23, 59, 59);
+    const transaksi = await BelanjaModels.find({
+      createdAt: {
+        $gte: startOfDay,
+        $lt: endOfDay,
+      },
+    });
+    const count = transaksi.length;
+    const invoice = `DN135${year}79${count+1}`;
+    res.send(invoice);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 const newBelanja = asyncHandler(async (req, res) => {
-  const { total, belanjaDetail } = req.body;
-
+  const { total, belanjaDetail, supplier, invoice } = req.body;
+  const pembayaran = 0; 
+  const kembalian = 0;
   try {
     // Step 1: Create the `BelanjaPos` document with an empty `belanjaDetail`
     const belanja = await BelanjaModels.create({
       total,
+      supplier,
+      invoice,
+      pembayaran,
+      kembalian,
       belanjaDetail: [], // Start with an empty array
     });
 
@@ -19,7 +43,6 @@ const newBelanja = asyncHandler(async (req, res) => {
       const newDetail = await belanjaDetailModel.create({
         Belanja: belanja._id, // Link to the parent `BelanjaPos`
         produk: detail._id, // Assuming `idProduk` is the correct field
-        supplier: detail.idSupplier, // Assuming `idSupplier` is the correct field
         jumlah: detail.jumlah,
         harga: detail.hargaBeli,
         totalHarga: detail.hargaBeli * detail.jumlah
@@ -117,4 +140,4 @@ const getBelanjaByID = asyncHandler(async (req, res) => {
   }
 });
 
-export { newBelanja, getBelanja, updateBelanja, deleteBelanja, getBelanjaByID };
+export { newBelanja, getBelanja, updateBelanja, deleteBelanja, getBelanjaByID, getBelanjaInvoice };

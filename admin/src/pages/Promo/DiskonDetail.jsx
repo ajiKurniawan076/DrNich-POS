@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react"; // Impor useContext, useState, useEffect dari React
 import { navContext } from "../../App2";
-import { data, useLocation, useNavigate } from "react-router-dom";
+import { data, Link, useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -33,13 +33,13 @@ const DiskonDetail = () => {
     // e.preventdefault();
     await axios
       .delete(`https://api.drnich.co.id/api/pos/promo/deletepromoPos/${id}`)
-      .then((response) => response.status == 200 && navigate("../diskon"));
+      .then((response) => response.status == 200 && navigate("/pos/Tambahdiskon4"));
   };
 
   document.title = "Detail Diskon";
 
   return (
-    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-screen h-fit">
+    <div className="flex flex-col px-7 py-3 gap-1 bg-white w-full min-h-screen h-fit">
       <div className="flex flex-col justify-between w-full h-full py-3 px-3 gap-5">
         <div className="w-full border flex flex-col p-5 border-[#EAC564] rounded-lg shadow-lg">
           {/* kategori diskon */}
@@ -107,12 +107,12 @@ const DiskonDetail = () => {
           >
             Hapus
           </button>
-          <button
-            href=""
+          <Link
+            to={`/pos/EditDiskon/${id}`}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "
           >
             Edit
-          </button>
+          </Link>
         </div>
       </div>
     </div>

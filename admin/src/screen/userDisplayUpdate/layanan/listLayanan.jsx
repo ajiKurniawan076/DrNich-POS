@@ -1,16 +1,17 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../../../assets/component/navbar.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ConfirmPopUp from "../../../assets/component/confirmPopUp";
 import CardJenisLayanan from "../../../assets/component/cardJenisLayanan";
 import CardLayanan from "../../../assets/component/CardLayanan";
-
+import CardPaketLayananBeranda from "../../../assets/component/CardPaketTreatment copy.jsx";
 function ListLayanan() {
   const navigate = useNavigate();
   const [layanan, setLayanan] = useState();
   const [jenisLayanan, setJenisLayanan] = useState([]);
+  const [paketLayanan, setPaketLayanan] = useState([]);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
   const [jenis, setJenis] = useState("");
@@ -19,34 +20,49 @@ function ListLayanan() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const imageRef = useRef(null)
 
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/getAllLayanan`
+      setError(""); // Clear previous errors before fetching
+
+      const [response, jenisLayanan, paketLayanan] = await Promise.all([
+        axios.get(
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/getAllLayanan`
+        ),
+        axios.get(
+          `${
+            import.meta.env.VITE_BASE_URL_BACKEND
+          }/api/layanan/getAllJenisLayanan`
+        ),
+        axios.get(
+          `${
+            import.meta.env.VITE_BASE_URL_BACKEND
+          }/api/paketLayanan/getAllpaketLayanan`
+        ),
+      ]);
+
+      setPaketLayanan(
+        paketLayanan.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
       );
-      const jenisLayanan = await axios.get(
-        `${
-          import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/layanan/getAllJenisLayanan`
+      setJenisLayanan(
+        jenisLayanan.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
       );
-      console.log("Fetched data before sorting:", jenisLayanan.data);
-      const sortedLayanan = response.data.sort(
-        (b, a) => new Date(a.createdAt) - new Date(b.createdAt)
+      setLayanan(
+        response.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
       );
-      const sortedJenisLayanan = jenisLayanan.data.sort(
-        (b, a) => new Date(a.createdAt) - new Date(b.createdAt)
-      );
-      setJenisLayanan(sortedJenisLayanan);
-      setLayanan(sortedLayanan);
+
       setIsLoading(false);
-      console.log("Fetched data:", sortedJenisLayanan);
-      setLayanan(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       setIsLoading(false);
       setError(error.response?.data?.message || "An error occurred");
-      console.error("Error fetching data:", error);
     }
   };
 
@@ -56,33 +72,42 @@ function ListLayanan() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const Djenis = {
-      nama: jenis,
-      foto: image,
-      deskripsi: deskripsi,
-    };
+  
     try {
-      const res = (
-        await axios.post(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
-          }/api/layanan/tambahJenisLayanan`,
-          Djenis,
-          {
-            headers: {
-              "Content-Type": "application/json", // Ensure proper content type
-            },
-          }
-        )
-      ).data;
-      console.log(res);
+      // Validate required fields
+      if (!jenis.trim()) throw new Error("Mohon isi nama layanan!");
+      if (!imageRef.current.files[0]) throw new Error("Mohon pilih gambar layanan!");
+      if (!deskripsi.trim()) throw new Error("Mohon isi deskripsi layanan!");
+  
+      // Create FormData
+      const formData = new FormData();
+      formData.append("nama", jenis);
+      formData.append("foto", imageRef.current.files[0]); // Append file correctly
+      formData.append("deskripsi", deskripsi);
+  
+      // Send request with multipart/form-data
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/tambahJenisLayanan`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+  
+      console.log(data);
       setOpen(false);
       fetchData();
     } catch (error) {
-      setError(error.response?.data?.message || "An error occurred");
-      alert(error.response?.data?.message || "An error occurred");
+      const errorMessage = error.response?.data?.message || "An error occurred";
+      setError(errorMessage);
+      alert(errorMessage);
     }
   };
+  
 
   function convertBase64(e) {
     const file = e.target.files[0];
@@ -145,6 +170,7 @@ function ListLayanan() {
                     Add
                     <input
                       type="file"
+                      ref={imageRef}
                       accept="image/*"
                       className="hidden"
                       onChange={convertBase64}
@@ -277,6 +303,50 @@ function ListLayanan() {
               <p>Data is not in the expected format.</p>
             )}
           </div>
+          <section className="flex flex-col my-[15px] w-[70%] items-center ">
+            <main className="w-full flex justify-between">
+              <h1 className="text-[#464646] text-base lg:text-xl font-medium font-SFPro leading-[25px] tracking-tight">
+                Paket Treatment
+              </h1>
+            </main>
+            {isLoading ? (
+              <div className="h-full w-full flex items-center justify-center">
+                <h1 className="font-SFPro text-base text-secondary font-medium">
+                  Loading..
+                </h1>
+              </div>
+            ) : error ? (
+              <div className="h-full w-full flex items-center justify-center">
+                <h1 className="font-SFPro text-base text-red-800 font-medium">
+                  {error}
+                </h1>
+              </div>
+            ) : (
+              <div className="flex flex-col w-full lg:w-full ">
+                <div className="flex lg:justify-start justify-center items-center ">
+                  <div className="carousel carousel-center w-full lg:w-full  ">
+                    <div className="carousel-item gap-2 py-4  ">
+                      {paketLayanan.length > 0 ? (
+                        paketLayanan
+                          .slice(0, paketLayanan.length)
+                          .map((item) => (
+                            <div key={item._id}>
+                              <CardPaketLayananBeranda item={item} />
+                            </div>
+                          ))
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center">
+                          <h1 className="font-SFPro text-base text-secondary font-medium">
+                            Layanan Tidak Ditemukan
+                          </h1>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </section>
 
           <div className="fixed space-x-4 flex right-0 bottom-0 p-4 rounded-lg">
             <button
@@ -288,6 +358,11 @@ function ListLayanan() {
               onClick={() => setOpen(true)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Tambah Jenis Layanan
+            </button>
+            <button
+              onClick={() => navigate("layanan/tambahPaketLayanan")}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Tambah Paket Layanan
             </button>
           </div>
         </section>

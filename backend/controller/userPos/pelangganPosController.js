@@ -6,7 +6,7 @@ const newpelanggan = asyncHandler(async (req, res) => {
     namaPelanggan: req.body.namaPelanggan,
     nomorTelepon: req.body.nomorTelepon,
     gender: req.body.gender,
-    poin: req.body.manfaat,
+    poin: req.body.poin,
     alamat: req.body.alamat,
     keterangan: req.body.keterangan
   };
@@ -39,7 +39,7 @@ const updatepelanggan = asyncHandler(async (req, res) => {
     namaPelanggan: req.body.namaPelanggan,
     nomorTelepon: req.body.nomorTelepon,
     gender: req.body.gender,
-    poin: req.body.manfaat,
+    poin: req.body.poin,
     alamat: req.body.alamat,
     keterangan: req.body.keterangan
   };

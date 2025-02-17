@@ -14,6 +14,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PembelianStok } from "../Produk/PembelianStok";
 import { modalStokContext } from "./ManajementDetailStok";
+import { toast, ToastContainer } from "react-toastify";
 
 export const modalsContext = createContext();
 export const DaftarBelanjaModals = (props) => {
@@ -24,6 +25,7 @@ export const DaftarBelanjaModals = (props) => {
   const [bin, setBin] = useState([]);
   const [produk, setProduk] = useState([]);
   const [items, setItems] = useState([]);
+  const [invoice, setInvoice] = useState('')
   const [modals, setModals] = useState(false);
   const { modalStok, setModalStok } = useContext(modalStokContext);
   const [produkKategori, setProdukKategori] = useState([]);
@@ -49,27 +51,49 @@ export const DaftarBelanjaModals = (props) => {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const data = {
       total: total,
+      invoice: invoice,
+      supplier : cart[0].supplier._id,
       belanjaDetail: cart,
     };
 
-    const response = axios.post(
-      "https://api.drnich.co.id/api/pos/produk/belanjapos",
-      data
-    );
-    if (response.status === 200) {
-      console.log("eror");
-    } else {
-      console.log(response.data.belanja._id);
-      navigate(`/pos/pembayaranProduk/${response.data.belanja._id}`);
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/produk/belanjapos",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 200) {
+        toast.error("Terjadi kesalahan dalam transaksi");
+      } else {
+        toast.success("Transaksi berhasil!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = `/pos/pembayaranProduk/${response.data.belanja._id}`;
+        }, 1500);
+      }
+    } catch (error) {
+      console.error("Error dalam transaksi:", error);
+      toast.error("Terjadi kesalahan saat memproses transaksi");
     }
+    
   };
   const tambahKeranjang = (isi) => {
     if (cart.some((item) => item._id == isi._id)) {
-    } else {
+    } 
+    else if(cart.length>0 && cart.some((item)=> item.supplier._id != isi.supplier._id)){
+      toast.error('Produk memiliki supplier yang berbeda')
+    }
+    else {
       const newisi = { ...isi, jumlah: 0 };
       setCart((prev) => [...prev, newisi]);
     }
@@ -88,8 +112,8 @@ export const DaftarBelanjaModals = (props) => {
             setProduk(filterProduk);
             setProdukKategori(filterProduk);
             const filterlimit = response.data.filter(
-              (item) => {item.stok < item.minStok
-                 item.jenis.jenis == "produk"}
+              (item) => (item.stok < item.minStok,
+                 item.jenis.jenis == "produk")
             );
             console.log(filterlimit);
             setItems(filterlimit);
@@ -103,6 +127,10 @@ export const DaftarBelanjaModals = (props) => {
           );
           setPilihKategori(filterPilihKategori);
         });
+
+        await axios
+      .get("https://api.drnich.co.id/api/pos/produk/getInvoiceBelanja")
+      .then(response => setInvoice(response.data))
     };
     fetch();
   }, []);
@@ -131,11 +159,11 @@ export const DaftarBelanjaModals = (props) => {
       }}
     >
       <div
-        className={`fixed z-40 top-0 start-0 w-full h-full bg-black/20 flex justify-center overflow-auto ${
+        className={`fixed z-40 top-0 start-0 w-full h-full bg-black/20 flex justify-center overflow-y-auto ${
           modalStok ? "" : "hidden"
         }`}
       >
-        <form className="flex flex-col px-7 py-3 gap-1 bg-white md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] h-full mt-[75px]">
+        <form className="flex flex-col px-7 py-3 gap-1 bg-white md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] h-fit min-h-screen mt-[75px]">
         <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
           <AiOutlineSearch size={20} />
           <input
@@ -166,7 +194,7 @@ export const DaftarBelanjaModals = (props) => {
                     </button>
                     <div className="text-start">
                       <p>{item.namaProduk}</p>
-                      <p>{item.hargaBeli}</p>
+                      <p>Rp. {item.hargaBeli?.toLocaleString('id-ID')}</p>
                     </div>
                   </div>
                 </Link>
@@ -190,7 +218,7 @@ export const DaftarBelanjaModals = (props) => {
                     </div>
                     <div className="text-start">
                       <p>{item.namaProduk}</p>
-                      <p>{item.hargaBeli}</p>
+                      <p>Rp. {item.hargaBeli?.toLocaleString('id-ID')}</p>
                     </div>
                     <div className="flex gap-4 ms-auto">
                       <button onClick={() => min(item._id)}>
@@ -220,7 +248,7 @@ export const DaftarBelanjaModals = (props) => {
               >
                 <div className="grid">
                   <p>Beli Sekarang</p>
-                  <p>Rp.{total}</p>
+                  <p>Rp.{total?.toLocaleString('id-ID')}</p>
                 </div>
               </button>
             </div>
@@ -251,6 +279,7 @@ export const DaftarBelanjaModals = (props) => {
         </form>
          <PembelianStok source={"PembelianStok"} />
       </div>
+      <ToastContainer/> 
     </modalsContext.Provider>
   );
 };

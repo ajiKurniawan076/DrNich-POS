@@ -143,6 +143,11 @@ import { ManajementTambahStok } from "./pages/Produk/ManajementTambahStok";
 import { DaftarProdukByJenis } from "./pages/Produk/daftarProdukByJenis";
 import { DaftarProdukByKategori } from "./pages/Produk/daftarProdukByKategori";
 import { PembayaranBerhasil } from "./pages/Penjualan/PembayaranBerhasil";
+import { EditDiskon } from "./pages/Promo/EditDiskon";
+import { EditCashback } from "./pages/cashback/EditCashback";
+import { Transaksihapus } from "./pages/laporan/transaksihapus";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
 
@@ -168,8 +173,7 @@ function App2() {
         setshowsort,
         link,
         setLink,
-      }}
-    >
+      }}>
       <div id="root2">
         <div id="root-container">
           <Navbar className="navbar" />
@@ -362,7 +366,10 @@ function App2() {
               <Route path="/DetailPelanggan/" element={<DetailPelanggan />} />
               <Route path="/PilihPromo/" element={<PilihPromo />} />
               <Route path="/KasirLengkap/" element={<KasirLengkap />} />
-              <Route path="/PilihPembayaran/" element={<PilihPembayaran />} />
+              <Route
+                path="/PilihPembayaran/:id"
+                element={<PilihPembayaran />}
+              />
               <Route path="/DrafTransaksi/" element={<DraftTransaksi />} />
               <Route path="/DrafTransaksi2/" element={<DraftTransaksi2 />} />
               <Route
@@ -427,9 +434,15 @@ function App2() {
               />
               {/* belum ada id */}
               <Route path="/UpdateSertifikat" element={<UpdateSertifikat />} />
-              <Route path="/UpdateKategoti" element={<UpdateKategoti />} />
+              <Route
+                path="/UpdateKategoriJenisProduct/:id"
+                element={<UpdateKategori />}
+              />
               <Route path="/UpdateLayanan" element={<UpdateLayanan />} />
-              <Route path="/UpdateKategori" element={<UpdateKategori />} />
+              <Route
+                path="/UpdateKategoriJenisTreatment/:id"
+                element={<UpdateKategoti />}
+              />
               <Route path="/UpdateTipeProduk" element={<UpdateTipeProduk />} />
               <Route
                 path="/UpdateDaftarProduk"
@@ -449,6 +462,9 @@ function App2() {
                 path="/pembayaranBerhasil/:id"
                 element={<PembayaranBerhasil />}
               />
+              <Route path="/EditDiskon/:id" element={<EditDiskon />} />
+              <Route path="/EditCashback/:id" element={<EditCashback />} />
+              <Route path="/transaksihapus" element={<Transaksihapus />} />
             </Routes>
           </div>
         </div>

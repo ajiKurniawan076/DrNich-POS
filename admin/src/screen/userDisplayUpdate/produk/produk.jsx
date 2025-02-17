@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../../../assets/component/navbar";
 import ConfirmPopup from "../../../assets/component/confirmPopUp.jsx";
 import axios from "axios";
@@ -19,9 +19,8 @@ const ActionButtons = ({ onEdit, onDelete, deleting }) => (
     </button>
     <button
       onClick={onDelete}
-      className={`bg-red-500 text-sm text-white px-4 py-2 rounded-md ${
-        deleting ? "cursor-not-allowed" : ""
-      }`}
+      className={`bg-red-500 text-sm text-white px-4 py-2 rounded-md ${deleting ? "cursor-not-allowed" : ""
+        }`}
       disabled={deleting}
       aria-label="Delete Item">
       {deleting ? "Deleting..." : "Delete"}
@@ -51,7 +50,11 @@ function ListProduct() {
   const [editTipeKulit, setEditTipeKulit] = useState("");
 
   const [image, setImage] = useState("");
+  const imageRef = useRef(null)
+  const imageRef2 = useRef(null)
   const [newImage, setNewImage] = useState(null);
+  const categoryImageRef = useRef(null)
+  const categoryImageRef2 = useRef(null)
 
   const [newCategoryName, setNewCategoryName] = useState("");
   const [editCategoryName, setEditCategoryName] = useState("");
@@ -91,13 +94,11 @@ function ListProduct() {
           `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getImage`
         ),
         axios.get(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
+          `${import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/getAllkategoriProduk`
         ),
         axios.get(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
+          `${import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/getAllproductType`
         ),
         await axios.get(
@@ -164,8 +165,7 @@ function ListProduct() {
       if (isDeletingCarousel) {
         toast.loading("Deleting carousel image...");
         await axios.delete(
-          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/deleteImage/${
-            selectedContent._id
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/deleteImage/${selectedContent._id
           }`
         );
         setImageCarousel((prev) =>
@@ -174,8 +174,7 @@ function ListProduct() {
       } else if (isDeletingCategory) {
         toast.loading("Deleting category...");
         await axios.delete(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
+          `${import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/deletekategoriProduk/${selectedContent._id}`
         );
         setCategoryProduct((prev) =>
@@ -184,8 +183,7 @@ function ListProduct() {
       } else if (isDeletingProductType) {
         toast.loading("Deleting product type...");
         await axios.delete(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
+          `${import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/deleteproductType/${selectedContent._id}`
         );
         setProductType((prev) =>
@@ -194,8 +192,7 @@ function ListProduct() {
       } else if (isDeletingTipeKulit) {
         toast.loading("Deleting tipe kulit...");
         await axios.delete(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
+          `${import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/deletetipeKulit/${selectedContent._id}`
         );
         setJenisKulit((prev) =>
@@ -205,8 +202,7 @@ function ListProduct() {
         toast.loading("Deleting product...");
 
         const response = await axios.delete(
-          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/deleteproduk/${
-            selectedContent._id
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/deleteproduk/${selectedContent._id
           }`
         );
         console.log(response.data);
@@ -228,39 +224,39 @@ function ListProduct() {
 
   const addCategory = async (e) => {
     e.preventDefault();
-
+  
     try {
+      const formData = new FormData();
+      formData.append("name", newCategoryName);
+      if (categoryImageRef.current.files[0]) {
+        formData.append("image", categoryImageRef.current.files[0]);
+      }
+  
       const response = await axios.post(
-        `${
-          import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/produk/tambahkategoriProduk`,
-        {
-          name: newCategoryName,
-          image: categoryImage,
-        },
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/tambahkategoriProduk`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
-
+  
       setCategoryProduct((prev) => [...prev, response.data]);
-
+  
       setAddCategoryOpen(false);
       toast.success("Category added successfully.");
-
-      //Optionally reset form fields
+  
+      // Optionally reset form fields
       setNewCategoryName("");
       setCategoryImage(null);
     } catch (error) {
-      // Capture more detailed error if available
       if (error.response && error.response.data) {
         console.error("Error adding category:", error.response.data);
         toast.error(
-          `Failed to add category: ${
-            error.response.data.message || "Please try again."
-          }`
+          `Failed to add category: ${error.response.data.message || "Please try again."}`
         );
       } else {
         console.error("Error adding category:", error.message);
@@ -268,6 +264,7 @@ function ListProduct() {
       }
     }
   };
+  
 
   const handleAddJenisKulit = async (e) => {
     e.preventDefault();
@@ -292,8 +289,7 @@ function ListProduct() {
       if (error.response && error.response.data) {
         console.error("Error adding category:", error.response.data);
         toast.error(
-          `Failed to add category: ${
-            error.response.data.message || "Please try again."
+          `Failed to add category: ${error.response.data.message || "Please try again."
           }`
         );
       } else {
@@ -309,13 +305,18 @@ function ListProduct() {
       setLoading(true);
       console.log("data", image);
 
+      const formData = new FormData();
+      formData.append("image", imageRef.current.files[0]);
+
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/newImage`,
-        { image: image }, // Sending as a JSON object
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Correct for JSON data
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
 
@@ -339,8 +340,7 @@ function ListProduct() {
     try {
       const res = (
         await axios.post(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
+          `${import.meta.env.VITE_BASE_URL_BACKEND
           }/api/produk/tambahproductType`,
           {
             name: newProductType,
@@ -432,27 +432,32 @@ function ListProduct() {
   const handleEditCategorySubmit = async (e) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append("name", editCategoryName);
+      if (categoryImageRef2.current.files[0]) {
+        formData.append("image", categoryImageRef2.current.files[0]);
+      }
+  
       await axios.put(
-        `${
-          import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/produk/editkategoriProduk/${selectedContent._id}`,
-        {
-          name: editCategoryName,
-          image: categoryImage,
-        },
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/editkategoriProduk/${selectedContent._id}`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
+  
       setCategoryProduct((prev) =>
         prev.map((item) =>
           item._id === selectedContent._id
-            ? { ...item, name: editCategoryName, image: categoryImage }
+            ? { ...item, name: editCategoryName, image: URL.createObjectURL(categoryImageRef2.current.files[0]) }
             : item
         )
       );
+  
       setEditCategoryOpen(false);
       toast.success("Category updated successfully.");
     } catch (error) {
@@ -460,26 +465,34 @@ function ListProduct() {
       toast.error("Failed to update category. Please try again.");
     }
   };
+  
 
   const handleEditImage = async (e) => {
     e.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append("image", imageRef2.current.files[0]);
+  
       await axios.put(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/updateImage/${
-          selectedImage._id
-        }`,
-        { image: newImage },
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/updateImage/${selectedImage._id}`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
+  
       setImageCarousel((prev) =>
         prev.map((item) =>
-          item._id === selectedImage._id ? { ...item, image: newImage } : item
+          item._id === selectedImage._id
+            ? { ...item, image: URL.createObjectURL(imageRef2.current.files[0]) }
+            : item
         )
       );
+  
       setEditImageOpen(false);
       toast.success("Image updated successfully.");
     } catch (error) {
@@ -487,13 +500,13 @@ function ListProduct() {
       toast.error("Failed to update image. Please try again.");
     }
   };
+  
 
   const handleEditTipeKulitSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/editTipeKulit/${
-          selectedContent._id
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/editTipeKulit/${selectedContent._id
         }`,
         { name: editTipeKulit },
         {
@@ -525,8 +538,7 @@ function ListProduct() {
 
       // API request
       await axios.put(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/editproductType/${
-          selectedContent._id
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/editproductType/${selectedContent._id
         }`,
         { name: editProductTypeName },
         { headers: { "Content-Type": "application/json" } }
@@ -596,33 +608,33 @@ function ListProduct() {
             <div className="grid grid-cols-1 gap-4 w-full max-w-4xl mt-5">
               {categoryProduct.length > 0
                 ? categoryProduct.map((category) => (
-                    <div
-                      key={category._id}
-                      className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
-                      <div className="flex items-center gap-4">
-                        {category.image && (
-                          <img
-                            src={category.image}
-                            alt="Category"
-                            className="w-16 h-16 object-cover rounded-md"
-                          />
-                        )}
-                        <span className="font-SFPro font-normal text-base text-text line-clamp-1">
-                          {category.name}
-                        </span>
-                      </div>
-                      <ActionButtons
-                        onEdit={(e) => handleEditCategory(category, e)}
-                        onDelete={(e) => handleDeleteCategory(category, e)}
-                        deleting={deleting}
-                      />
+                  <div
+                    key={category._id}
+                    className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
+                    <div className="flex items-center gap-4">
+                      {category.image && (
+                        <img
+                          src={category.image}
+                          alt="Category"
+                          className="w-16 h-16 object-cover rounded-md"
+                        />
+                      )}
+                      <span className="font-SFPro font-normal text-base text-text line-clamp-1">
+                        {category.name}
+                      </span>
                     </div>
-                  ))
+                    <ActionButtons
+                      onEdit={(e) => handleEditCategory(category, e)}
+                      onDelete={(e) => handleDeleteCategory(category, e)}
+                      deleting={deleting}
+                    />
+                  </div>
+                ))
                 : !error && (
-                    <div className="text-gray-500 mt-8">
-                      No categories available
-                    </div>
-                  )}
+                  <div className="text-gray-500 mt-8">
+                    No categories available
+                  </div>
+                )}
             </div>
           </section>
 
@@ -633,26 +645,26 @@ function ListProduct() {
             <div className="grid grid-cols-1 gap-4 w-full max-w-4xl mt-5">
               {jenisKulit.length > 0
                 ? jenisKulit.map((item) => (
-                    <div
-                      key={item._id}
-                      className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
-                      <div className="flex items-center gap-4">
-                        <span className="font-SFPro font-normal text-base text-text line-clamp-1">
-                          {item.name}
-                        </span>
-                      </div>
-                      <ActionButtons
-                        onEdit={(e) => handleEditTipeKulit(item, e)}
-                        onDelete={(e) => handedeleteTipeKulit(item, e)}
-                        deleting={deleting}
-                      />
+                  <div
+                    key={item._id}
+                    className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
+                    <div className="flex items-center gap-4">
+                      <span className="font-SFPro font-normal text-base text-text line-clamp-1">
+                        {item.name}
+                      </span>
                     </div>
-                  ))
+                    <ActionButtons
+                      onEdit={(e) => handleEditTipeKulit(item, e)}
+                      onDelete={(e) => handedeleteTipeKulit(item, e)}
+                      deleting={deleting}
+                    />
+                  </div>
+                ))
                 : !error && (
-                    <div className="text-gray-500 mt-8">
-                      No categories available
-                    </div>
-                  )}
+                  <div className="text-gray-500 mt-8">
+                    No categories available
+                  </div>
+                )}
             </div>
           </section>
 
@@ -663,29 +675,29 @@ function ListProduct() {
             <div className="grid grid-cols-3 gap-4 w-full max-w-4xl mt-5">
               {imageCarousel.length > 0
                 ? imageCarousel.map((item) => (
-                    <div
-                      key={item._id}
-                      className="flex flex-col justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
-                      <img
-                        src={item.image}
-                        className="w-full h-full object-cover mb-2 aspect-video rounded-md"
-                        alt="Carousel"
-                      />
-                      <ActionButtons
-                        onEdit={() => {
-                          setSelectedImage(item);
-                          setEditImageOpen(true);
-                        }}
-                        onDelete={(e) => handleDeleteImage(item, e)}
-                        deleting={deleting}
-                      />
-                    </div>
-                  ))
+                  <div
+                    key={item._id}
+                    className="flex flex-col justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
+                    <img
+                      src={item.image}
+                      className="w-full h-full object-cover mb-2 aspect-video rounded-md"
+                      alt="Carousel"
+                    />
+                    <ActionButtons
+                      onEdit={() => {
+                        setSelectedImage(item);
+                        setEditImageOpen(true);
+                      }}
+                      onDelete={(e) => handleDeleteImage(item, e)}
+                      deleting={deleting}
+                    />
+                  </div>
+                ))
                 : !error && (
-                    <div className="text-gray-500 mt-8">
-                      No categories available
-                    </div>
-                  )}
+                  <div className="text-gray-500 mt-8">
+                    No categories available
+                  </div>
+                )}
             </div>
           </section>
 
@@ -699,26 +711,26 @@ function ListProduct() {
             <div className="grid grid-cols-1 gap-4 w-full max-w-4xl mt-5">
               {productType.length > 0
                 ? productType.map((item) => (
-                    <div
-                      key={item._id}
-                      className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
-                      <div className="flex items-center gap-4">
-                        <span className="font-SFPro font-normal text-base text-text line-clamp-1">
-                          {item.name}
-                        </span>
-                      </div>
-                      <ActionButtons
-                        onEdit={(e) => handleEditProductType(item, e)}
-                        onDelete={(e) => handleDeleteProductType(item, e)}
-                        deleting={deleting}
-                      />
+                  <div
+                    key={item._id}
+                    className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
+                    <div className="flex items-center gap-4">
+                      <span className="font-SFPro font-normal text-base text-text line-clamp-1">
+                        {item.name}
+                      </span>
                     </div>
-                  ))
+                    <ActionButtons
+                      onEdit={(e) => handleEditProductType(item, e)}
+                      onDelete={(e) => handleDeleteProductType(item, e)}
+                      deleting={deleting}
+                    />
+                  </div>
+                ))
                 : !error && (
-                    <div className="text-gray-500 mt-8">
-                      No categories available
-                    </div>
-                  )}
+                  <div className="text-gray-500 mt-8">
+                    No categories available
+                  </div>
+                )}
             </div>
           </section>
 
@@ -730,24 +742,24 @@ function ListProduct() {
             <div className="grid grid-cols-1 gap-4 w-full max-w-4xl mt-5">
               {produk.length > 0
                 ? produk.map((item) => (
-                    <div
-                      key={item._id}
-                      className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
-                      <span className="font-SFPro font-normal text-base text-text line-clamp-1">
-                        {item.nama}
-                      </span>
-                      <ActionButtons
-                        onEdit={(e) => handleEdit(item, e)}
-                        onDelete={(e) => handleDeleteProduct(item, e)}
-                        deleting={deleting}
-                      />
-                    </div>
-                  ))
+                  <div
+                    key={item._id}
+                    className="flex justify-between h-fit p-4 items-center border border-disable-line rounded-lg shadow-md">
+                    <span className="font-SFPro font-normal text-base text-text line-clamp-1">
+                      {item.nama}
+                    </span>
+                    <ActionButtons
+                      onEdit={(e) => handleEdit(item, e)}
+                      onDelete={(e) => handleDeleteProduct(item, e)}
+                      deleting={deleting}
+                    />
+                  </div>
+                ))
                 : !error && (
-                    <div className="text-gray-500 mt-8">
-                      No products available
-                    </div>
-                  )}
+                  <div className="text-gray-500 mt-8">
+                    No products available
+                  </div>
+                )}
             </div>
 
             <div className="fixed right-0 bottom-0 p-4 z-0 flex justify-center items-center space-x-4">
@@ -793,9 +805,8 @@ function ListProduct() {
             <button
               onClick={handleDelete}
               disabled={deleting}
-              className={`bg-red-500 text-white px-4 py-2 rounded-md ${
-                deleting ? "opacity-50 cursor-not-allowed" : ""
-              }`}>
+              className={`bg-red-500 text-white px-4 py-2 rounded-md ${deleting ? "opacity-50 cursor-not-allowed" : ""
+                }`}>
               {deleting ? "Deleting..." : "Delete"}
             </button>
           </div>
@@ -820,6 +831,7 @@ function ListProduct() {
             Add Image
             <input
               type="file"
+              ref={categoryImageRef}
               accept="image/*"
               className="hidden"
               onChange={(e) => convertBase64(e, setCategoryImage)}
@@ -858,6 +870,7 @@ function ListProduct() {
           <label className="px-4 py-2 font-montserrat bg-blue-600 text-white rounded-md cursor-pointer">
             Change Image
             <input
+              ref={categoryImageRef2}
               type="file"
               accept="image/*"
               className="hidden"
@@ -906,6 +919,7 @@ function ListProduct() {
               Add
               <input
                 type="file"
+                ref={imageRef}
                 accept="image/*"
                 className="hidden"
                 onChange={(e) => convertBase64(e, setImage)}
@@ -954,6 +968,7 @@ function ListProduct() {
           <form onSubmit={handleEditImage}>
             <input
               type="file"
+              ref={imageRef2}
               accept="image/*"
               onChange={(e) => convertBase64(e, setNewImage)}
               className="mb-4 p-2 border border-gray-300 rounded"
@@ -1013,9 +1028,8 @@ function ListProduct() {
             <button
               type="submit"
               disabled={editingTypeLoading}
-              className={`p-2 bg-blue-500 text-white rounded ${
-                editingTypeLoading ? "cursor-not-allowed opacity-50" : ""
-              }`}>
+              className={`p-2 bg-blue-500 text-white rounded ${editingTypeLoading ? "cursor-not-allowed opacity-50" : ""
+                }`}>
               {editingTypeLoading ? "Saving..." : "Save Changes"}
             </button>
           </form>

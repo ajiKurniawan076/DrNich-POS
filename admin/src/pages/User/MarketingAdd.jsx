@@ -3,6 +3,9 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
+
 
 export const MarketingAdd = () => {
   const navigate = useNavigate();
@@ -23,7 +26,6 @@ export const MarketingAdd = () => {
       namaMarketingRef.current?.value &&
       nomorTeleponRef.current?.value &&
       alamatRef.current?.value &&
-      keteranganRef.current?.value &&
       namaRekeningRef.current?.value &&
       nomorRekeningRef.current?.value &&
       bankRef.current?.value
@@ -55,7 +57,7 @@ export const MarketingAdd = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fdata = new FormData();
 
@@ -68,11 +70,27 @@ export const MarketingAdd = () => {
     fdata.append('bank', bankRef.current.value);
     fdata.append('image', imageRef.current.files[0]);
 
-    axios
-      .post("https://api.drnich.co.id/api/pos/user/marketing", fdata)
-      .then((response) => {
-        response.status == 200 && navigate("../marketing");
-      });
+    // axios
+    //   .post("https://api.drnich.co.id/api/pos/user/marketing", fdata)
+    //   .then((response) => {
+    //     response.status == 200 && navigate("../marketing");
+    //   });
+    try {
+      const response = await axios.post("https://api.drnich.co.id/api/pos/user/marketing", fdata);
+  
+      if (response.status === 200) {
+        toast.success("Marketing berhasil ditambahkan!");
+      setTimeout(() => {
+        toast.success("Redirecting...");
+        window.location.href = "/pos/marketing";
+      }, 1500);
+      } else {
+        toast.error("Gagal menambahkan Marketing");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Terjadi kesalahan saat menambahkan Marketing");
+    }
   };
 
   useEffect(() => {
@@ -167,7 +185,7 @@ export const MarketingAdd = () => {
           onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+        <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           ref={keteranganRef}
           type="text"
@@ -185,6 +203,7 @@ export const MarketingAdd = () => {
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

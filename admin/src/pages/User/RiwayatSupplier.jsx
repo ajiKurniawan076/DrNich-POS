@@ -7,7 +7,7 @@ import iTgl from '../../assets/iconproduk/iTgl.svg'
 
 
 export const RiwayatSupplier = () => {
-  const {setNav} = useContext(navContext)
+  const {setNav, setLink} = useContext(navContext)
   const [trans, setTrans] = useState([])
   const [button, setButton] = useState(true)
   const [button2, setButton2] = useState(true)
@@ -40,6 +40,7 @@ export const RiwayatSupplier = () => {
           ).then((data)=>(setTrans(data)
           ))
           setNav('Riwayat Transaksi')
+          setLink('/pos/supplier')
     },[])
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide p-7">

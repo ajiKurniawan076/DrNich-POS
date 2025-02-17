@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../../../assets/component/navbar";
 import ConfirmPopup from "../../../assets/component/confirmPopUp.jsx";
 import axios from "axios";
@@ -17,6 +17,8 @@ function ListSertif() {
   const [open, setOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editing, setEditing] = useState(false);
+  const imgaeRef = useRef(null)
+  const imgaeRef2 = useRef(null)
 
   const fetchSertif = async () => {
     try {
@@ -46,23 +48,41 @@ function ListSertif() {
   const handleAddContent = async (e) => {
     e.preventDefault();
     try {
+      // Create FormData for file upload
+      const formData = new FormData();
+      
+      // Append image only if selected
+      if (imgaeRef.current.files[0]) {
+        formData.append("foto", imgaeRef.current.files[0]);
+      } else {
+        setError("Please select an image.");
+        return;
+      }
+  
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/createSertif`,
+        formData,
         {
-          foto: image,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
         }
       );
+  
       if (response.status === 200) {
         setOpen(false);
         fetchSertif();
       } else {
-        setError("Failed to add promo. Please try again later.");
+        setError("Failed to add certificate. Please try again later.");
       }
     } catch (err) {
-      console.error("Error adding promo:", err.message);
-      setError("Failed to add promo. Please try again later.");
+      console.error("Error adding certificate:", err.message);
+      setError("Failed to add certificate. Please try again later.");
     }
   };
+  
 
   const deleteGaleri = () => {
     try {
@@ -80,23 +100,42 @@ function ListSertif() {
     console.log("Delete promo with id:", selectedContent._id);
   };
 
-  const editGaleri = () => {
+  const editGaleri =  async (e) => {
+    e.preventDefault()
+    console.log('abc')
     try {
-      const response = axios.put(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/editSertif/${
-          selectedContent._id
-        }`,
+      if (!imgaeRef2.current.files[0]) {
+        setError("Please select an image to update.");
+        return;
+      }
+  
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append("foto", imgaeRef2.current.files[0]);
+      
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+      // Send the PUT request
+      await axios.put(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/editSertif/${selectedContent._id}`,
+        formData,
         {
-          foto: editImage,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
         }
       );
-      fetchSertif();
+      fetchSertif(); // Refresh data after update
+      console.log("Edited promo with ID:", selectedContent._id);
     } catch (error) {
-      console.error("Error editing promo:", error.message);
-      setError("Failed to edit promo. Please try again later.");
+      console.error("Error editing certificate:", error.message);
+      setError("Failed to edit certificate. Please try again later.");
     }
-    console.log("Edit promo with id:", selectedContent._id);
   };
+  
 
   const handleEdit = (item, e) => {
     e.preventDefault();
@@ -171,6 +210,7 @@ function ListSertif() {
                   Add
                   <input
                     type="file"
+                    ref={imgaeRef}
                     accept="image/*"
                     className="hidden"
                     onChange={convertBase64}
@@ -218,6 +258,7 @@ function ListSertif() {
                   Add
                   <input
                     type="file"
+                    ref={imgaeRef2}
                     accept="image/*"
                     className="hidden"
                     onChange={convertBase64}

@@ -10,6 +10,8 @@ import { ModalsCashback } from './modalsCashback'
 import axios from 'axios'
 import DatePicker from 'react-datepicker'
 import { useNavigate } from 'react-router-dom'
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 
 export const modalContext = createContext()
@@ -97,10 +99,26 @@ export const Cashback3 = () => {
             jenis   : "Cashback"
         } 
         console.log(data)
-        await axios.post('https://api.drnich.co.id/api/pos/promo/promo', data).then(
-            response => response.status == 200 ? navigate('../cashback') : console.log('error') 
-        )
-        navigate("../cashback")
+        // await axios.post('https://api.drnich.co.id/api/pos/promo/promo', data).then(
+        //     response => response.status == 200 ? navigate('../cashback') : console.log('error') 
+        // )
+        // navigate("../cashback")
+        try {
+        const response = await axios.post('https://api.drnich.co.id/api/pos/promo/promo', data);
+    
+        if (response.status === 200) {
+            toast.success("Cashback berhasil ditambahkan!");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/Cashback";
+        }, 1500);
+        } else {
+            toast.error("Gagal menambahkan Cashback");
+        }
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat menambahkan Cashback");
+        }
     }
     const gantiKategori = () => {
         const selected =  listkategori.find(item => item.nama == keteranganRef.current.value)
@@ -143,10 +161,10 @@ export const Cashback3 = () => {
                 </div>
                 <div className='flex flex-col px-3 h-full'>
                     <p>Jumlah Cashback</p>
-                    <div className='flex justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
-                        <input type='number' ref={cashbackRef} placeholder='100' className='flex justify-between w-full text-start items-center'>
+                    <div className='flex relative justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
+                        <input type='number' ref={cashbackRef} placeholder='100' className='outline-none flex justify-between w-full text-start items-center'>
                         </input>
-                        <p className='absolute end-[60px] text-[#BDBDBD]'>Poin</p>
+                        <p className='absolute end-[20px] text-[#BDBDBD]'>Poin</p>
                     </div>
                 </div>
                 <div className='flex flex-col px-3 h-full'>
@@ -229,6 +247,7 @@ export const Cashback3 = () => {
                         Simpan
                     </button>
                 </div>
+            <ToastContainer/>
             </form>
                 <ModalsCashback />
         </modalContext.Provider>

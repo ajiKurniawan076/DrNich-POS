@@ -3,6 +3,8 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg"; // Default KTP image
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const TerapisUpdate = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -32,6 +34,22 @@ export const TerapisUpdate = () => {
   const nomorRekeningRef = useRef(null);
   const bankRef = useRef(null);
   const imageRef = useRef(null); // Ref for the image input
+  const [isFilled, setIsFilled] = useState(false)
+
+  const checkFormFilled = () => {
+    if (
+      namaTerapisRef.current?.value &&
+      nomorTeleponRef.current?.value &&
+      alamatRef.current?.value &&
+      namaRekeningRef.current?.value &&
+      nomorRekeningRef.current?.value &&
+      bankRef.current?.value
+    ) {
+      setIsFilled(true)
+    } else {
+      setIsFilled(false)
+    }
+  }
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -45,7 +63,7 @@ export const TerapisUpdate = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fdata = new FormData();
     fdata.append("namaTerapis", namaTerapisRef.current.value);
@@ -58,24 +76,34 @@ export const TerapisUpdate = () => {
     if (imageFile) {
       fdata.append("image", imageFile); // Append the selected image if available
     }
-
+    
+    
     axios
-      .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type for file upload
-        },
-      })
-      .then((response) => {
-        response.status === 200 && navigate(`../terapis`); // Redirect after successful update
-      });
+    .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
+    .then((response) => {
+      if (response.status === 200) {
+        toast.success("Berhasil Edit Terapis");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/terapis"; // Redirect ke halaman terapis
+        }, 1500); // Redirect setelah 1.5 detik
+      } else {
+        toast.error(response.data.message || "Gagal Edit Terapis");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      toast.error("Terjadi kesalahan saat Edit Terapis");
+    });
   };
 
-  document.title = "Ubah Terapis";
+  document.title = "Edit Terapis";
 
   return (
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-1 px-3">
         <label className="text-start font-semibold">Nama Lengkap</label>
@@ -169,7 +197,7 @@ export const TerapisUpdate = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
 
-        <label className="text-start font-semibold">Keterangan</label>
+        <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           defaultValue={datax.keterangan}
           ref={keteranganRef}
@@ -182,11 +210,12 @@ export const TerapisUpdate = () => {
       <div className="w-full h-full px-3 mt-auto">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

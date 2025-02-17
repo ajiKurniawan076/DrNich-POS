@@ -5,6 +5,7 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const DaftarProdukUpdate = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -16,6 +17,28 @@ export const DaftarProdukUpdate = () => {
   const [product, setproduct] = useState([]);
   const [jenisx, setjenisx] = useState([]);
   const [ketegorix, setKategorix] = useState([]);
+  const [isFilled, setIsFilled] = useState(false)
+  const [hargaB, setHargaB] = useState('')
+  const [hargaJ, setHargaj] = useState('')
+  const [bonusT, setBonusT] = useState('')
+  const [hargaBR, setHargaBR] = useState(0)
+  const [hargaJR, setHargajR] = useState(0)
+  const [bonusTR, setBonusTR] = useState(0)
+
+  const checkFormFilled = () => {
+    if (
+      namaProdukRef.current?.value &&
+      hargaBeliRef.current?.value &&
+      hargaJualRef.current?.value &&
+      kategoriRef.current?.value &&
+      bonusTerapisRef.current?.value &&
+      minStokRef.current?.value
+    ) {
+      setIsFilled(true)
+    } else {
+      setIsFilled(false)
+    }
+  }
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -25,6 +48,12 @@ export const DaftarProdukUpdate = () => {
         .get(`https://api.drnich.co.id/api/pos/produk/produk/${id}`)
         .then((response) => {
           setproduct(response.data);
+          setHargaBR(response.data.hargaBeli)
+          setHargaB(response.data.hargaBeli.toLocaleString("id-ID"))
+          setHargajR(response.data.hargaJual)
+          setHargaj(response.data.hargaJual.toLocaleString("id-ID"))
+          setBonusTR(response.data.bonusTerapis)
+          setBonusT(response.data.bonusTerapis.toLocaleString("id-ID"))
           setKategorix(response.data.kategori);
           setjenisx(response.data.jenis);
         });
@@ -54,6 +83,25 @@ export const DaftarProdukUpdate = () => {
     setLink('/pos/daftarproduk')
   }, []);
   // console.log(jenis);
+
+  const CharB = () => {
+    const a = hargaBeliRef.current.value.replace(/\D/g, "")
+    setHargaBR(a)
+    setHargaB(parseFloat(a).toLocaleString("id-ID"))
+
+  }
+  const CharJ = () => {
+    const b = hargaJualRef.current.value.replace(/\D/g, "")
+    setHargajR(b)
+    setHargaj(Number(b).toLocaleString("id-ID"))
+
+  }
+  const CbonT = () => {
+    const c = bonusTerapisRef.current.value.replace(/\D/g, "")
+    setBonusTR(c)
+    setBonusT(Number(c).toLocaleString("id-ID"))
+
+  }
 
   const jenisRef = useRef(null);
   const changeJenis = (e) => {
@@ -86,24 +134,45 @@ export const DaftarProdukUpdate = () => {
   const stokRef = useRef(null);
   const minStokRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       jenis: selectedNamaJenis,
       namaProduk: namaProdukRef.current.value,
-      hargaJual: hargaJualRef.current.value,
-      hargaBeli: hargaBeliRef.current.value,
+      hargaJual: hargaJR,
+      hargaBeli: hargaBR,
       kategori: kategoriRef.current.value,
-      bonusTerapis: bonusTerapisRef.current.value,
+      bonusTerapis: bonusTR,
       stok: stokRef?.current?.value,
       minStok: minStokRef?.current?.value,
     };
     console.log(data);
-    axios
-      .put(`https://api.drnich.co.id/api/pos/produk/updateproduk/${id}`, data)
-      .then((response) => {
-        response.status == 200 && navigate("../daftarproduk");
-      });
+    try {
+      const response = await axios.put(
+        `https://api.drnich.co.id/api/pos/produk/updateproduk/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status == 200) {
+        toast.success("Produk berhasil diperbarui!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = "/pos/daftarproduk";
+        }, 1500);
+      } else {
+        toast.error("Gagal memperbarui produk");
+      }
+    } catch (error) {
+      console.error("Error saat memperbarui produk:", error);
+      toast.error("Terjadi kesalahan saat memperbarui produk");
+    }
+
   };
 
   document.title = "Ubah Daftar Produk";
@@ -112,6 +181,7 @@ export const DaftarProdukUpdate = () => {
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-3 px-3">
         <label className="text-start font-semibold">Jenis Produk</label>
@@ -172,7 +242,9 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.hargaBeli}
           ref={hargaBeliRef}
-          type="number"
+          value={hargaB}
+          onChange={CharB}
+          type="text"
           placeholder="0"
           className="px-2 bg-gray-400/10 border border-black/30 rounded-xl h-[30px]"
         />
@@ -180,7 +252,9 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.hargaJual}
           ref={hargaJualRef}
-          type="number"
+          value={hargaJ}
+          onChange={CharJ}
+          type="text"
           placeholder="0"
           className="px-2 bg-gray-400/10 border border-black/30 rounded-xl h-[30px]"
         />
@@ -190,7 +264,9 @@ export const DaftarProdukUpdate = () => {
         <input
           defaultValue={product.bonusTerapis}
           ref={bonusTerapisRef}
-          type="number"
+          value={bonusT}
+          onChange={CbonT}
+          type="text"
           placeholder="Contoh : Rp. 20000"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -198,10 +274,9 @@ export const DaftarProdukUpdate = () => {
           Presentase Keuntungan
         </label>
         <input
-          Value={
-            ((product.hargaJual - product.hargaBeli) / product.hargaBeli) * 100
-          }
-          type="number"
+          value={`${((hargaJR - hargaBR) / hargaBR * 100).toFixed(2)}%`}
+          type="text"
+          disabled
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -209,8 +284,8 @@ export const DaftarProdukUpdate = () => {
           Nominal Keuntngan
         </label>
         <input
-          value={product.hargaJual - product.hargaBeli}
-          type="number"
+          value={`Rp ${hargaJR - hargaBR}`}
+          type="text"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
@@ -234,11 +309,12 @@ export const DaftarProdukUpdate = () => {
       <div className="mt-4 w-full h-full px-3">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>
       </div>
+      <ToastContainer />
     </form>
   );
 };

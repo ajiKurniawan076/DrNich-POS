@@ -13,6 +13,7 @@ import iTambahP from "../../assets/iconproduk/iTambahP.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PembelianStok } from "./PembelianStok";
+import { toast, ToastContainer } from "react-toastify";
 
 export const modalContext = createContext();
 export const DaftarBelanja = () => {
@@ -23,9 +24,11 @@ export const DaftarBelanja = () => {
   const [bin, setBin] = useState([]);
   const [produk, setProduk] = useState([]);
   const [items, setItems] = useState([]);
+  const [invoice,setInvoice] = useState('')
   const [modals, setModals] = useState(false);
   const [produkKategori, setProdukKategori] = useState([]);
   const [pilihKategori, setPilihKategori] = useState([]);
+  const [tombol, setTombol] = useState(true);
   const navigate = useNavigate();
   const min = (isi) => {
     setCart((prev) =>
@@ -48,24 +51,49 @@ export const DaftarBelanja = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setTombol(false)
 
     const data = {
       total: total,
+      invoice: invoice,
+      supplier: cart[0].supplier._id,
       belanjaDetail: cart,
     };
-    const response = await axios.post(
-      "https://api.drnich.co.id/api/pos/produk/belanjapos",
-      data
-    );
-    if (response.status === 201) {
-      navigate(`/pos/pembayaranProduk/${response.data.belanja._id}`);
-    } else {
-      console.error("Terjadi kesalahan dalam transaksi");
+    try {
+      const response = await axios.post(
+        "https://api.drnich.co.id/api/pos/produk/belanjapos",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+    
+      if (response.status === 201) {
+        toast.success("Transaksi berhasil!");
+        setTimeout(() => {
+          toast.success("Redirecting...");
+          window.location.href = `/pos/pembayaranProduk/${response.data.belanja._id}`;
+        }, 1500);
+      } else {
+        toast.error("Terjadi kesalahan dalam transaksi");
+      }
+    } catch (error) {
+      console.error("Error dalam transaksi:", error);
+      toast.error("Terjadi kesalahan saat memproses transaksi");
     }
+    
   };
   const tambahKeranjang = (isi) => {
+    console.log(isi)
     if (cart.some((item) => item._id == isi._id)) {
-    } else {
+      toast.error('Produk sudah ada di keranjang')}
+    else if(cart.length>0 && cart.some((item)=> item.supplier._id != isi.supplier._id)){
+      toast.error('Produk memiliki supplier yang berbeda')
+    }
+    else {
       const newisi = { ...isi, jumlah: 0 };
       setCart((prev) => [...prev, newisi]);
     }
@@ -83,11 +111,11 @@ export const DaftarBelanja = () => {
             console.log(filterProduk);
             setProduk(filterProduk);
             setProdukKategori(filterProduk);
-            const filterlimit = response.data.filter((item) => {
-              item.stok < item.minStok;
-              item.jenis.jenis == "produk";
-            });
-            console.log(filterlimit);
+            const filterlimit = response.data.filter((item) => (
+              item.stok < item.minStok,
+              item.jenis.jenis == "produk"
+            ));
+            console.log({limit: filterlimit});
             setItems(filterlimit);
           }
         });
@@ -99,6 +127,10 @@ export const DaftarBelanja = () => {
           );
           setPilihKategori(filterPilihKategori);
         });
+
+      await axios
+      .get("https://api.drnich.co.id/api/pos/produk/getInvoiceBelanja")
+      .then(response => setInvoice(response.data))
     };
     fetch();
     setNav("Daftar Belanja");
@@ -156,7 +188,7 @@ export const DaftarBelanja = () => {
                   </button>
                   <div className="text-start">
                     <p>{item.namaProduk}</p>
-                    <p>{item.hargaBeli}</p>
+                    <p>Rp. {item.hargaBeli.toLocaleString('id-ID')}</p>
                   </div>
                 </div>
               </Link>
@@ -180,7 +212,7 @@ export const DaftarBelanja = () => {
                   </div>
                   <div className="text-start">
                     <p>{item.namaProduk}</p>
-                    <p>{item.hargaBeli}</p>
+                    <p>Rp. {item.hargaBeli.toLocaleString("id-ID")}</p>
                   </div>
                   <div className="flex gap-4 ms-auto">
                     <button onClick={() => min(item._id)}>
@@ -210,7 +242,7 @@ export const DaftarBelanja = () => {
             >
               <div className="grid">
                 <p>Beli Sekarang</p>
-                <p>Rp.{total}</p>
+                <p>Rp.{total.toLocaleString('id-ID')}</p>
               </div>
             </button>
           </div>
@@ -228,6 +260,7 @@ export const DaftarBelanja = () => {
         </div>
       </form>
       <PembelianStok source={"DaftarBelanja"} />
+      <ToastContainer/>
     </modalContext.Provider>
   );
 };

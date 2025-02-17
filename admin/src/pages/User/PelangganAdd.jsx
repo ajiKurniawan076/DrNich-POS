@@ -5,6 +5,8 @@ import { navContext } from "../../App2"
 import ktp from "../../assets/ktp.svg";
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const PelangganAnd = () => {
   const { setNav, setLink } = useContext(navContext)
@@ -26,8 +28,7 @@ export const PelangganAnd = () => {
       namaPelangganRef.current?.value &&
       nomorTeleponRef.current?.value &&
       genderRef.current?.value &&
-      alamatRef.current?.value &&
-      keteranganRef.current?.value
+      alamatRef.current?.value
     ) {
       setIsFilled(true);
     } else {
@@ -35,7 +36,7 @@ export const PelangganAnd = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
     const data = {
       namaPelanggan: namaPelangganRef.current.value,
@@ -46,10 +47,26 @@ export const PelangganAnd = () => {
       keterangan: keteranganRef.current.value,
     }
     console.log(data)
-    axios.post("https://api.drnich.co.id/api/pos/user/pelanggan", data).then(
-      response => {
-        response.status == 200 && navigate('../pelanggan')
-      })
+    try {
+      const response = await axios.post("https://api.drnich.co.id/api/pos/user/pelanggan", data);
+  
+      if (response.status === 200) {
+        toast.success("Pelanggan berhasil ditambahkan!");
+      setTimeout(() => {
+        toast.success("Redirecting...");
+        window.location.href = "/pos/pelanggan";
+      }, 1500);
+      } else {
+        toast.error("Gagal menambahkan pelanggan");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Terjadi kesalahan saat menambahkan pelanggan");
+    }
+  }
+
+  const toasts = () => {
+    toast.error('gagal')
   }
 
   document.title = 'Tambah Pelanggan'
@@ -59,6 +76,7 @@ export const PelangganAnd = () => {
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
     >
+    <ToastContainer/>
       <div className="flex flex-col gap-[20px] px-3 h-full">
         <div className="flex flex-col">
           <label className="text-start font-semibold mb-[5px]">Nama Pelanggan</label>
@@ -133,6 +151,7 @@ export const PelangganAnd = () => {
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   )
 }

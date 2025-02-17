@@ -5,6 +5,8 @@ import { useContext, useEffect } from "react";
 import { navContext } from "../../App2";
 import axios from "axios";
 import { set } from "date-fns";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Editsupplier = () => {
     const navigate = useNavigate();
@@ -21,8 +23,26 @@ export const Editsupplier = () => {
     const [datax, setDatax] = useState([]);
     const { id } = useParams();
     const { setNav, setLink } = useContext(navContext);
+    const [isFilled, setIsFilled] = useState(false)
+
+    const checkFormFilled = () => {
+        if (
+            namaPerusahaanRef.current?.value &&
+            namaKontakRef.current?.value &&
+            noTeleponRef.current?.value &&
+            namaRekeningRef.current?.value &&
+            AlamatRef.current?.value &&
+            bankRef.current?.value &&
+            nomorRekeningRef.current?.value
+        ) {
+            setIsFilled(true)
+        } else {
+            setIsFilled(false)
+        }
+
+    }
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
         namaPerusahaan: namaPerusahaanRef.current.value,
@@ -37,19 +57,25 @@ export const Editsupplier = () => {
         keteranganRek: keteranganRekRef.current.value,
         };
         console.log(data);
-        axios
-        .put(`https://api.drnich.co.id/api/pos/user/updatesupplier/${id}`, data) // Menggunakan method PUT
-        .then((response) => {
-            if (response.status === 200) {
-                navigate("../supplier"); // Navigasi ke halaman lain setelah berhasil
-            } else {
-                alert("Gagal menyimpan data!");
-            }
-        })
-        .catch((error) => {
-            console.error("Error saat menyimpan data:", error);
-            alert("Terjadi kesalahan saat menyimpan data!");
-        });
+        try {
+            const response = await axios.put(
+            `https://api.drnich.co.id/api/pos/user/updatesupplier${id}`,
+            data
+        );
+
+        if (response.status === 200) {
+        toast.success("Berhasil Edit Supplier");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/supplier";
+        }, 1500); // Redirect ke halaman supplier
+        } else {
+        toast.error(response.data.message || "Gagal Edit Supplier");
+        }
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Supplier");
+        }
     };
     
     
@@ -72,6 +98,7 @@ export const Editsupplier = () => {
     const [supstat, setsupstat] = useState(false);
     return (
         <form
+            onChange={checkFormFilled}
             onSubmit={handleSubmit}
             className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
         >
@@ -125,7 +152,7 @@ export const Editsupplier = () => {
                     placeholder="Contoh : Jl.Merak No.10, Sidorejo, Kota Salatiga, Jawa Tengah, Indonesia"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
-                <label className="text-start font-semibold">Keterangan</label>
+                <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
                 <input
                     ref={keteranganRef}
                     defaultValue={datax.keterangan}
@@ -170,7 +197,7 @@ export const Editsupplier = () => {
                     placeholder="Contoh : 5670019288493"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
-                <label className="text-start font-semibold">Keterangan</label>
+                <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
                 <input
                     ref={keteranganRekRef}
                     defaultValue={datax.keteranganRek}
@@ -183,11 +210,12 @@ export const Editsupplier = () => {
             <div className="mt-4 w-full h-full px-3">
                 <button
                     type="submit"
-                    className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
-                >
+                    className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
+                    >
                     Simpan
                 </button>
             </div>
+            <ToastContainer/>
         </form>
     );
 };

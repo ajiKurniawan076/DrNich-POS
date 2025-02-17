@@ -26,6 +26,7 @@ import {
   getBelanjaByID,
   updateBelanja,
   deleteBelanja,
+  getBelanjaInvoice
 } from "../../controller/ProdukPos/belanjaPosController.js";
 import {
   newDetailBelanja,
@@ -63,6 +64,7 @@ router.put("/updateproduk/:id", updateproduk);
 router.delete("/deleteproduk/:id", deleteproduk);
 
 router.get("/belanjaPos", getBelanja);
+router.get("/getInvoiceBelanja", getBelanjaInvoice);
 router.get("/belanjaPos/:id", getBelanjaByID);
 router.post("/belanjaPos", newBelanja);
 router.put("/updatebelanjaPos/:id", updateBelanja);

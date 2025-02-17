@@ -2,9 +2,10 @@ import Sertif from "../../models/sertif&mesin/sertif.js";
 import Mesin from "../../models/sertif&mesin/mesin.js";
 import asyncHandler from "express-async-handler";
 
+const BASE_URL = "https://api.drnich.co.id/";
 const newSertif = asyncHandler(async (req, res) => {
   const newSertif = {
-    foto: req.body.foto,
+    foto: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const sertif = await Sertif.create(newSertif);
@@ -27,7 +28,7 @@ const deleteSertif = asyncHandler(async (req, res) => {
 const editSertif = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const newData = {
-    foto: req.body.foto,
+    foto: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const sertif = await Sertif.findByIdAndUpdate(
@@ -62,7 +63,7 @@ const getSertifbyID = asyncHandler(async (req, res) => {
 
 const newMesin = asyncHandler(async (req, res) => {
   const newMesin = {
-    foto: req.body.foto,
+    foto: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const mesin = await Mesin.create(newMesin);
@@ -87,7 +88,7 @@ const deleteMesin = asyncHandler(async (req, res) => {
 const editMesin = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const newData = {
-    foto: req.body.foto,
+    foto: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const mesin = await Mesin.findByIdAndUpdate(

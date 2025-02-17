@@ -5,6 +5,8 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { data, useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const PelangganUpdate = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -27,8 +29,22 @@ export const PelangganUpdate = () => {
   const genderRef = useRef(null);
   const alamatRef = useRef(null);
   const keteranganRef = useRef(null);
+  const [isFilled, setIsFilled] = useState(false)
 
-  const handleSubmit = (e) => {
+  const checkFormFilled = () => {
+    if (
+      namaPelangganRef.current.value &&
+      nomorTeleponRef.current.value &&
+      genderRef.current.value &&
+      alamatRef.current.value
+    ) {
+      setIsFilled (true)
+    } else {
+      setIsFilled(false)
+    }
+  }
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const data = {
       namaPelanggan: namaPelangganRef.current.value,
@@ -39,19 +55,39 @@ export const PelangganUpdate = () => {
       keterangan: keteranganRef.current.value,
     };
     // console.log(data);
-    axios
-      .put(`https://api.drnich.co.id/api/pos/user/updatepelanggan/${id}`, data)
-      .then((response) => {
-        response.status == 200 && navigate(`../pelanggan`);
-      });
+    // axios
+    //   .put(`https://api.drnich.co.id/api/pos/user/updatepelanggan/${id}`, data)
+    //   .then((response) => {
+    //     response.status == 200 && navigate(`../pelanggan`);
+    //   });
+    try {
+            const response = await axios.put(
+            `https://api.drnich.co.id/api/pos/user/updatepelanggan/${id}`,
+            data
+        );
+
+        if (response.status === 200) {
+        toast.success("Berhasil Edit Pelanggan");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/pelanggan";
+        }, 1500); // Redirect ke halaman supplier
+        } else {
+        toast.error(response.data.message || "Gagal Edit Pelanggan");
+        }
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Pelanggan");
+        }
   };
 
-  document.title = "Edit Marketing";
+  document.title = "Edit Pelanggan";
   const [supstat, setsupstat] = useState(false);
   return (
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-1 px-3">
         <label className="text-start font-semibold">
@@ -117,7 +153,7 @@ export const PelangganUpdate = () => {
           placeholder="Contoh : Jalan Kalitaman 22 Salatiga"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Keterangan</label>
+        <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           defaultValue={datax.keterangan}
           ref={keteranganRef}
@@ -129,11 +165,12 @@ export const PelangganUpdate = () => {
       <div className="w-full h-full px-3 mt-auto">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

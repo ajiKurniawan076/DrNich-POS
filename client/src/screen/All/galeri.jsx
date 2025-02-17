@@ -10,31 +10,13 @@ import { useNavigate } from "react-router-dom";
 import ArrowRightDisable from "../../components/ArrowRight-Disable.jsx";
 
 // IMAGE AND ICON
-import klinik from "../../assets/img-profil/klinik.png";
-import bgVM from "../../assets/img-profil/bgVisiMisi.png";
-import bunga from "../../assets/img-profil/bungaIcon.svg";
-import misiIcon from "../../assets/img-profil/misiIcon.svg";
-import arrow from "../../assets/arrow-right.svg";
-//image layanan
-import facialglowacne from "../../assets/img-layanan/facialglowacne.png";
-import laserhollywood from "../../assets/img-layanan/laserhollywood.png";
-
-//  IMAGE & ICONS SERTIFKAT
-import sertifikat1 from "../../assets/img-about/sertifikat1.png";
-
-import { useSwipeable } from "react-swipeable";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import axios from "axios";
-
-// import required modules
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import LoadingSpinner from "../../components/LoadingSpinner.jsx";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import axios from "axios";
 
 function Profile() {
   const navigate = useNavigate();
@@ -88,10 +70,10 @@ function Profile() {
   }, []);
 
   return (
-    <>
+    <main className="w-full flex flex-col items-center overflow-x-hidden">
       <Navbar selected={"Galeri"} />
-      <div className="mt-[18px]">
-        <div className="flex items-center w-[90%] mx-auto justify-start space-x-2 mt-[18px] lg:mx-[120px]">
+      <div className="mt-[18px] flex flex-col w-full items-center">
+        <div className="flex items-center w-[90%] lg:w-4/5  mx-auto justify-start space-x-2 mt-[18px] lg:mx-[120px]">
           <a
             onClick={() => navigate("/")}
             className="cursor-pointer text-xs lg:text-sm text-disable-text font-normal">
@@ -104,48 +86,56 @@ function Profile() {
             Galeri
           </a>
         </div>
-        <div className="w-full h-full flex flex-col mt-[30px]">
-          {/* Galeri */}
-          <div className="w-full h-auto flex flex-col items-center">
-            <div className="w-full h-full grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
-              {content &&
-                content.slice(0, max).map((item) => (
-                  <div
-                    key={item._id}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.location.href = `${item.link}`;
-                    }}>
-                    <GaleriCard item={item} />
-                  </div>
-                ))}
-            </div>
 
-            <div className="flex justify-center items-center mt-8">
-              {/* Show more/less button */}
-              {content.length > 5 && (
-                <button
-                  onClick={toggleShowAllContent}
-                  className="w-[109px] h-[31px] text-[#c2a353] text-xs font-normal rounded-[10px] border border-[#c2a353] text-sm font-medium">
-                  {showAllContent ? "Show Less" : "Show All"}
-                </button>
-              )}
-            </div>
-          </div>
+        <div className="w-[90%] lg:w-4/5  h-full flex flex-col mt-[30px]">
+          {loading ? (
+            <LoadingSpinner />
+          ) : (
+            <>
+              <div className="h-auto  flex flex-col items-start">
+                <div className="w-fit h-full grid grid-cols-1 lg:grid-cols-2 lg:gap-12">
+                  {content &&
+                    content.slice(0, max).map((item) => (
+                      <div
+                        key={item._id}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          window.location.href = `${item.link}`;
+                        }}>
+                        <GaleriCard item={item} />
+                      </div>
+                    ))}
+                </div>
+
+                <div className="flex justify-center items-center mt-8">
+                  {/* Show more/less button */}
+                  {content.length > 5 && (
+                    <button
+                      onClick={toggleShowAllContent}
+                      className="w-[109px] h-[31px] text-[#c2a353] text-xs font-normal rounded-[10px] border border-[#c2a353] text-sm font-medium">
+                      {showAllContent ? "Show Less" : "Show All"}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Galeri */}
 
           <div className="flex flex-col gap-4 z-0 items-center">
             {/* Layanan */}
-            <section className="lg:w-[80%] w-[90%]">
+            <section className="w-full">
               <LayananPopuler />
             </section>
-            <section className="lg:w-[80%] w-[90%]">
+            <section className="w-full">
               <ProdukTerbaru />
             </section>
           </div>
         </div>
       </div>
       <Footer />
-    </>
+    </main>
   );
 }
 

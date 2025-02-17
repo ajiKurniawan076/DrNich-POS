@@ -12,9 +12,11 @@ const promoSchema = mongoose.Schema(
     syarat: {
       type: String,
     },
-    foto: {
+    fotoDesktop: {
       type: String,
-      required: true,
+    },
+    fotoMobile: {
+      type: String,
     },
   },
   {

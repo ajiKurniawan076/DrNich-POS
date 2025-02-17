@@ -20,10 +20,8 @@ import AboutCard from "../../components/AboutCard";
 import CardJenisLayanan from "../../components/cardJenisLayanan.jsx";
 import LayananPopuler from "../../components/layananPopuler.jsx";
 import ProdukTerbaru from "../../components/ProdukTerbaru.jsx";
-import UlasanCard from "../../components/cardUlasan.jsx";
 import StarIcon from "../../assets/star.svg";
-
-import ArrowRight from "../../../../admin/src/assets/icon/ArrowRight";
+import YTicon from "../../assets/logos_youtube-icon.svg";
 
 // IMAGES & ICONS ABOUT
 import img1 from "../../assets/img-carousel/img1.png";
@@ -37,7 +35,11 @@ import muka2 from "../../assets/img-about/gambar2.png";
 import masker from "../../assets/img-about/masker.svg";
 import pori from "../../assets/img-about/pori.svg";
 import air from "../../assets/img-about/air.svg";
+import banner1bg from "../../assets/img-carousel/banner1bg.svg";
+import bannerMobile1 from "../../assets/img-about/bannerMobile1.svg";
+import bannerMobile2 from "../../assets/img-about/bannerMobile2.svg";
 
+import banner2bg from "../../assets/img-carousel/banner2bg.svg";
 //  IMAGE & ICONS SERTIFKAT
 import sertifikat1 from "../../assets/img-about/sertifikat1.png";
 
@@ -46,6 +48,7 @@ import galeri1 from "../../assets/img-about/galeri1.png";
 
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
+import useDeviceType from "../../components/CheckDevice.jsx";
 
 // Import Swiper styles
 import "swiper/css";
@@ -55,6 +58,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 
 import ulasan from "../../../../backend/models/ulasan/ulasanModels.js";
+import CardPaketTreatmentBeranda from "../../components/CardPaketTreatmentBeranda.jsx";
 
 // Carousel Navigation Component
 function CarouselNavigation({ setActiveIndex, activeIndex, length }) {
@@ -76,23 +80,6 @@ function CarouselNavigation({ setActiveIndex, activeIndex, length }) {
 }
 
 // Custom Pagination Component
-function CustomPagination({ progress, length, setProgress }) {
-  return (
-    <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-      {new Array(length).fill("").map((_, i) => (
-        <span
-          key={i}
-          className={`block h-1 cursor-pointer rounded-2xl transition-all ${
-            progress === i
-              ? "w-[19px] h-2.5 bg-[#c2a353]"
-              : "w-2.5 h-2.5 bg-[#dcdcdc]"
-          }`}
-          onClick={() => setProgress(i)}
-        />
-      ))}
-    </div>
-  );
-}
 
 export default function Beranda() {
   const navigate = useNavigate();
@@ -108,16 +95,62 @@ export default function Beranda() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
+
+  const [progress, setProgress] = useState(1);
+  const swiperRef = useRef(null);
+  const deviceType = useDeviceType();
 
   const fetchData = async () => {
     setLoading(true);
 
     try {
-      // Fetch promo data
+      // Check localStorage for cached data
+      const cachedData = [
+        "promo",
+        "jenisLayanan",
+        "fotoMesin",
+        "fotoSertif",
+        "gallery",
+        "ulasan",
+      ].reduce((acc, key) => {
+        const item = localStorage.getItem(key);
+        if (item) {
+          const parsed = JSON.parse(item);
+          const currentTime = new Date().getTime();
+          if (currentTime - parsed.timestamp < 3600000) {
+            acc[key] = parsed.data;
+          }
+        }
+        return acc;
+      }, {});
+
+      // If all data is cached, use it and return early
+      if (Object.keys(cachedData).length === 7) {
+        setPromo(cachedData.promo);
+
+        setJenisLayanan(cachedData.jenisLayanan);
+        setFotoMesin(cachedData.fotoMesin);
+        setFotoSertif(cachedData.fotoSertif);
+        setGallery(cachedData.gallery);
+        setUlasan(cachedData.ulasan);
+        setLimitGallery(
+          cachedData.gallery.length > 5 ? 5 : cachedData.gallery.length + 1
+        );
+        setLimitCarousel(
+          cachedData.jenisLayanan.length > 3
+            ? 3
+            : cachedData.jenisLayanan.length + 1
+        );
+        setLimitUlasan(
+          cachedData.ulasan.length > 3 ? 3 : cachedData.ulasan.length + 1
+        );
+        setLoading(false);
+        return;
+      }
+
+      // Fetch fresh data if cache is expired or missing
       await fetchPromoData();
 
-      // Fetch other data in parallel
       const [
         jenisLayananResponse,
         fotoMesinResponse,
@@ -144,36 +177,44 @@ export default function Beranda() {
         ),
       ]);
 
+      const timestamp = new Date().getTime();
+
       // Process and set jenis layanan
       const sortedJenisLayanan = jenisLayananResponse.data.sort(
         (b, a) => new Date(a.createdAt) - new Date(b.createdAt)
       );
       setJenisLayanan(sortedJenisLayanan);
+      localStorage.setItem(
+        "jenisLayanan",
+        JSON.stringify({ data: sortedJenisLayanan, timestamp })
+      );
 
-      // Store in local storage with timestamp
-      const dataWithTimestamp = {
-        data: sortedJenisLayanan,
-        timestamp: new Date().getTime(),
+      // Save and set other data
+      const saveToLocalStorage = (key, data) => {
+        localStorage.setItem(key, JSON.stringify({ data, timestamp }));
       };
-      localStorage.setItem("jenisLayanan", JSON.stringify(dataWithTimestamp));
 
-      // Set other state
+      setFotoMesin(fotoMesinResponse.data);
+      saveToLocalStorage("fotoMesin", fotoMesinResponse.data);
+
+      setFotoSertif(fotoSertifResponse.data);
+      saveToLocalStorage("fotoSertif", fotoSertifResponse.data);
+
+      setGallery(galeriResponse.data);
+      saveToLocalStorage("gallery", galeriResponse.data);
+
       if (Array.isArray(ulasanResponse.data)) {
         setUlasan(ulasanResponse.data);
+        saveToLocalStorage("ulasan", ulasanResponse.data);
       }
-      setFotoMesin(fotoMesinResponse.data);
-      setFotoSertif(fotoSertifResponse.data);
-      setGallery(galeriResponse.data);
 
-      // Limit gallery and carousel based on data length
+      // Set UI limits
       setLimitGallery(
         galeriResponse.data.length > 5 ? 5 : galeriResponse.data.length + 1
       );
-      // setLimitCarousel(promo.length > 3 ? 3 : promo.length);
       setLimitCarousel(
         sortedJenisLayanan.length > 3 ? 3 : sortedJenisLayanan.length + 1
       );
-      //limit ulasan
       setLimitUlasan(
         ulasanResponse.data.length > 3 ? 3 : ulasanResponse.data.length + 1
       );
@@ -188,12 +229,35 @@ export default function Beranda() {
 
   const fetchPromoData = async () => {
     try {
+      const cachedPromo = localStorage.getItem("promo");
+      console.log(cachedPromo);
+
+      if (cachedPromo) {
+        console.log("using chaced....");
+        const parsedPromo = JSON.parse(cachedPromo);
+        const currentTime = new Date().getTime();
+        if (currentTime - parsedPromo.timestamp < 3600000) {
+          setPromo(parsedPromo.data);
+          console.log("data promo", promo);
+          return;
+        }
+      }
+
+      console.log("Fetching promo...");
+
       const promoResponse = await axios.get(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/promo/getAllPromo`
       );
       if (Array.isArray(promoResponse.data)) {
         setPromo(promoResponse.data);
-        console.log("PROMO DATA : " + promoResponse.data);
+        console.log("data promo", promo);
+        localStorage.setItem(
+          "promo",
+          JSON.stringify({
+            data: promoResponse.data,
+            timestamp: new Date().getTime(),
+          })
+        );
         setError("");
       } else {
         throw new Error("Invalid response format for promo data");
@@ -205,46 +269,34 @@ export default function Beranda() {
   };
 
   useEffect(() => {
-    // const cachedDataLayanan = localStorage.getItem("jenisLayanan");
-
-    // if (!cachedDataLayanan) {
-    //   const parsedData = JSON.parse(cachedDataLayanan);
-    //   const currentTime = new Date().getTime();
-
-    //   if (currentTime - parsedData.timestamp < 3600000) {
-    //     setJenisLayanan(parsedData.data);
-    //   } else {
-    //     fetchData();
-    //   }
-    // } else {
-    //   fetchData();
-    // }
-
     fetchData();
+    fetchPromoData();
   }, []);
 
   const aboutCards = [
     {
-      bg: bgAbout,
-      img: acneFace,
-      logo: logo,
-      title: "Kurang percaya diri dengan masalah kulit?",
-      description:
-        "Jadwalkan konsultasi sekarang dan dapatkan analisis menyeluruh dari spesialis kami!",
-      text: "Biar Wajahmu Bercerita, Kamu Bahagia Bersama Ahlinya",
+      bg: banner1bg,
+      bg2: bannerMobile1,
+      // img: acneFace,
+      // logo: logo,
+      // title: "Kurang percaya diri dengan masalah kulit?",
+      // description:
+      //   "Jadwalkan konsultasi sekarang dan dapatkan analisis menyeluruh dari spesialis kami!",
+      // text: "Biar Wajahmu Bercerita, Kamu Bahagia Bersama Ahlinya",
       button: "Konsultasi Sekarang",
     },
     {
-      bg: bgAbout2,
-      img: muka2,
-      logo: logo,
-      title: "Mau punya kulit sehat dan terawat?",
-      bene1: "Kulit lebih cerah dan merata",
-      iconBene1: masker,
-      bene2: "Menyamarkan noda hitam",
-      iconBene2: pori,
-      bene3: "Menutrisi kulit agar lebih sehat",
-      iconBene3: air,
+      bg: banner2bg,
+      bg2: bannerMobile2,
+      // img: muka2,
+      // logo: logo,
+      // title: "Mau punya kulit sehat dan terawat?",
+      // bene1: "Kulit lebih cerah dan merata",
+      // iconBene1: masker,
+      // bene2: "Menyamarkan noda hitam",
+      // iconBene2: pori,
+      // bene3: "Menutrisi kulit agar lebih sehat",
+      // iconBene3: air,
       button2: "Konsultasi Sekarang",
     },
   ];
@@ -276,8 +328,35 @@ export default function Beranda() {
     }
   };
 
+  function CustomPagination({ progress, length, setProgress, itemsPerSlide }) {
+    const slides = Math.ceil(length / itemsPerSlide);
+
+    return (
+      <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+        {Array.from({ length: slides }).map((_, i) => (
+          <span
+            key={i}
+            className={`block cursor-pointer rounded-2xl transition-all ${
+              Math.ceil(progress / itemsPerSlide) === i
+                ? "w-[19px] h-2.5 bg-[#c2a353]"
+                : "w-2.5 h-2.5 bg-[#dcdcdc]"
+            }`}
+            onClick={() => {
+              if (swiperRef.current) {
+                swiperRef.current.slideTo(i * itemsPerSlide);
+              }
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  const itemsPerSlide =
+    deviceType === "mobile" ? 1 : deviceType === "tablet" ? 2 : 3;
+
   return (
-    <div className="w-full flex flex-col items-center bg-white">
+    <div className="w-full flex flex-col items-center bg-white overflow-x-hidden">
       <div className="fixed w-full z-30">
         {" "}
         <Navbar selected={"Beranda"} />
@@ -285,7 +364,7 @@ export default function Beranda() {
 
       {/* Carousel Component */}
       <Carousel
-        className="pb-10 pt-20"
+        className="pb-10 pt-[70px]"
         autoplay={{
           delay: 3000,
           disableOnInteraction: true,
@@ -297,12 +376,28 @@ export default function Beranda() {
         {promo &&
           promo.map((item, index) => (
             <div key={item._id} className="relative">
-              <img
-                src={item.foto}
-                alt={`Slide ${index + 1}`}
-                className="h-full lg:h-[80vh] w-full object-cover relative lg:object-center"
-              />
-              <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-[#ffffff] via-transparent to-transparent opacity-100"></div>
+              <picture>
+                {/* Show fotoDesktop on screens larger than 1024px */}
+                <source media="(min-width: 1024px)" srcSet={item.fotoDesktop} />
+                {/* Default to fotoMobile for smaller screens */}
+                <img
+                  src={item.fotoMobile}
+                  alt={`Slide ${index + 1}`}
+                  className="h-[70vh] lg:h-[80vh] w-full object-cover relative lg:object-center"
+                />
+              </picture>
+              {/* <div className="absolute lg:hidden bottom-5 left-5 flex items-center justify-center z-10 gap-4">
+                <button className="text-base font-SFPro tracking-tight text-white bg-secondary py-3 px-8 rounded-3xl">
+                  Ambil Promo
+                </button>
+                <button
+                  className="text-base font-SFPro tracking-tight text-secondary bg-transparent border border-secondary py-3 px-6 rounded-3xl"
+                  onClick={() => navigate(`/promo/detail/${item._id}`)}>
+                  Detail
+                </button>
+              </div> */}
+
+              <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-t from-[#ffffff] via-transparent to-transparent opacity-100 translate-y-1"></div>
             </div>
           ))}
       </Carousel>
@@ -319,7 +414,7 @@ export default function Beranda() {
 
       {/* ABOUT Section */}
       <div
-        className="relative flex flex-col items-center  w-full  mx-auto"
+        className="relative flex flex-col items-center  w-full  mx-auto mt-8"
         {...handlers}>
         <div className="relative max-w-3xl w-full lg:max-w-full lg:w-[70%] lg:h-[410px]  mx-auto ">
           {/* Active Card */}
@@ -350,7 +445,7 @@ export default function Beranda() {
 
           {/* Carousel Container */}
           <div className="flex flex-col w-full lg:flex-row lg:space-x-8 lg:justify-between  mt-4 lg:mt-0  gap-[15px] justify-center items-center pt-4 pb-4">
-            <div className="w-[325px] lg:h-[437px] lg:w-[504px] h-auto bg-white rounded-lg border border-gray-200 p-[22px] flex flex-col justify-center items-center shadow-md">
+            <div className="w-[325px] h-[283px]  lg:h-[437px] lg:w-[504px] bg-white rounded-lg border border-gray-200 p-[22px] flex flex-col justify-center items-center shadow-md">
               <h1 className="pb-4 text-[#464646] text-sm font-medium font-SFPro leading-[25px] tracking-tight lg:text-secondary lg:text-xl">
                 Berpengalaman dan Bersertifikat
               </h1>
@@ -392,7 +487,7 @@ export default function Beranda() {
             </div>
 
             {/* Teknologi */}
-            <div className="w-[325px] lg:h-[437px] lg:w-[504px] h-auto bg-white rounded-lg border border-gray-200 p-[22px] flex flex-col justify-center items-center shadow-md">
+            <div className="w-[325px] h-[283px] lg:h-[437px] lg:w-[504px] bg-white rounded-lg border border-gray-200 p-[22px] flex flex-col justify-center items-center shadow-md">
               <h1 className="pb-4 text-[#464646] text-sm font-medium font-SFPro leading-[25px] tracking-tight lg:text-secondary lg:text-xl">
                 Teknologi Terkini & Produk Berkualitas
               </h1>
@@ -439,7 +534,7 @@ export default function Beranda() {
           <main className="w-[90%] flex flex-col items-center lg:w-[80%]   ">
             <div className="flex w-full justify-between items-center lg:py-6  ">
               <h1 className="font-SFPro font-normal text-base lg:text-xl leading-[25px] tracking-tight">
-                Layanan
+                Paket Treatment
               </h1>
               <button
                 className="font-SFPro text-xs text-secondary font-medium lg:text-base tracking-tight"
@@ -448,7 +543,11 @@ export default function Beranda() {
               </button>
             </div>
             {loading ? (
-              <p>Loading...</p>
+              <div className="h-full w-full flex items-center justify-center">
+                <h1 className="font-SFPro text-base text-secondary font-medium">
+                  Loading..
+                </h1>
+              </div>
             ) : (
               <div className="grid w-full  grid-cols-2 gap-4 items-center justify-center xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-4 lg:gap-12 ">
                 {jenisLayanan && jenisLayanan.length > 0 ? (
@@ -461,13 +560,20 @@ export default function Beranda() {
                   <p className="text-center col-span-2">No data available</p>
                 )}
                 {loading && (
-                  <p className="text-center col-span-2">Loading...</p>
+                  <div className="h-full w-full flex items-center justify-center">
+                    <h1 className="font-SFPro text-base text-secondary font-medium">
+                      Loading..
+                    </h1>
+                  </div>
                 )}
               </div>
             )}
           </main>
         </section>
 
+        <section className="lg:w-[80%] w-[90%]">
+          <CardPaketTreatmentBeranda />
+        </section>
         <section className="lg:w-[80%] w-[90%]">
           <LayananPopuler />
         </section>
@@ -483,7 +589,7 @@ export default function Beranda() {
               Galeri
             </h1>
             <h1
-              className="font-SFPro text-xs text-secondary font-medium lg:text-base cursor-pointer tracking-tight"
+              className="font-SFPro text-xs text-secondary font-medium lg:text-base cursor-pointer  tracking-tight"
               onClick={() => navigate("/galeri")}>
               Lihat Semua
             </h1>
@@ -491,38 +597,49 @@ export default function Beranda() {
 
           {/* Carousel */}
           <div className="flex flex-col lg:w-full pt-[15px]">
-            <div className="flex lg:justify-start justify-center items-center pt-[15px]">
+            <div className="flex lg:justify-start justify-center items-center ">
               <div className="carousel carousel-center w-80 lg:w-full space-x-8 h-auto py-5 px-2">
                 {/* Conditional Rendering of Carousel Items */}
-                {gallery && gallery.length > 0 ? (
-                  gallery.slice(0, limitGallery).map((item, index) => (
+                {loading ? (
+                  <div className="h-full w-full flex items-center justify-center">
+                    <h1 className="font-SFPro text-base text-secondary font-medium">
+                      Loading..
+                    </h1>
+                  </div>
+                ) : gallery && gallery.length > 0 ? (
+                  gallery.slice(0, limitGallery).map((item) => (
                     <div
                       key={item._id}
-                      className="carousel-item  transition-all duration-300 cursor-pointer"
+                      className="carousel-item transition-all duration-300 cursor-pointer"
                       onClick={(e) => {
                         e.preventDefault();
-                        window.location.href = `${item.link}`;
+                        window.location.href = item.link; // Consider using `useNavigate`
                       }}>
-                      <div className="w-72 h-auto  relative flex flex-col items-start justify-start">
+                      <div className="w-72 h-auto relative flex flex-col items-start justify-start">
+                        <div className="absolute rounded-[10px] h-[74%] top-0 left-0 right-0 bottom-0 bg-black/50 flex items-center justify-center">
+                          <img
+                            src={YTicon}
+                            className="w-[30px] h-[21px]"
+                            alt="YouTube Icon"
+                          />
+                        </div>
                         {/* Dynamic Image */}
                         <img
-                          src={item.thumbnail} // Assuming `imageUrl` is the property for image source
+                          src={item.thumbnail} // Assuming `imageUrl` is the correct property
                           className="mx-auto rounded-[10px] h-auto w-full aspect-video object-cover"
                           alt={item.judul || "Product Image"} // Fallback alt text
                         />
 
                         {/* Dynamic Product Name */}
-                        <p className="w-full hover:text-secondary mt-2 transition-all duration-150 text-text text-left text-sm font-normal font-SFPro leading-tight tracking-tight">
+                        <p className="w-full hover:text-secondary mt-2 transition-all duration-150 text-text text-left text-sm font-normal font-SFPro leading-[25px] tracking-tight">
                           {item.judul}
                         </p>
 
                         {/* Dynamic Product Type */}
-                        <div className="flex items-center gap-2 text-[#bdbdbd] text-xs font-medium font-SFPro leading-[25px] tracking-tight ">
-                          <p>{item.sosmed}</p>{" "}
-                          {/* Assuming `type` holds the product type */}
-                          <div className="w-[5px] h-[5px] bg-[#efefef] rounded-full font-SFPro" />
-                          <p>{item.channel}</p>{" "}
-                          {/* Assuming `category` holds the product category */}
+                        <div className="flex items-center gap-2 text-[#bdbdbd] text-xs font-medium font-SFPro leading-[25px] tracking-tight">
+                          <p>{item.sosmed}</p>
+                          <div className="w-[5px] h-[5px] bg-[#efefef] rounded-full" />
+                          <p>{item.channel}</p>
                         </div>
                       </div>
                     </div>
@@ -537,69 +654,91 @@ export default function Beranda() {
           </div>
 
           {/* ulasan */}
-          <main className="w-full flex lg:px-0 px-6 justify-between pt-[25px] pb-[25px]">
-            <h1 className="text-[#464646] text-base lg:text-xl font-medium font-SFPro leading-tight tracking-tight">
-              Customer Punya Cerita
-            </h1>
+        </section>
+        <section className="relative  w-full py-10 mx-auto ">
+          <main className="w-full flex lg:px-0 px-6 justify-center pb-[25px]">
+            <div className="w-[90%] lg:w-[80%]">
+              <h1 className="text-[#464646]  text-base lg:text-xl font-medium font-SFPro leading-tight tracking-tight">
+                Customer Punya Cerita
+              </h1>
+            </div>
           </main>
-          {/* Carousel Component */}
-          <Swiper
-            className="py-10"
-            modules={[Autoplay, Navigation]}
-            swipeHandler={true}
-            autoplay={{ delay: 3000 }}
-            loop={true}
-            slidesPerView={window.innerWidth >= 1024 ? 3 : "auto"}
-            spaceBetween={1} // Set gap to 15px
-            centeredSlides={true}
-            onSlideChange={(swiper) => setProgress(swiper.realIndex)} // Update active index
-          >
-            {ulasan &&
-              ulasan.map((item, dex) => (
+
+          <div className=" flex justify-start items-center ml-10 flex-shrink-0">
+            <Swiper
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+              modules={[Autoplay, Navigation]}
+              autoplay={{ delay: 3000 }}
+              loop={true}
+              slidesPerView={deviceType === "mobile" ? "auto" : itemsPerSlide} // ✅ Mobile fix
+              slidesPerGroup={deviceType === "mobile" ? 1 : itemsPerSlide}
+              centeredSlides={deviceType === "mobile"}
+              spaceBetween={deviceType === "mobile" ? 10 : 20} // ✅ Reduced space for mobile
+              breakpoints={{
+                320: {
+                  slidesPerView: "auto",
+                  slidesPerGroup: 1,
+                  spaceBetween: 10,
+                }, // ✅ Fix mobile
+                768: {
+                  slidesPerView: 2,
+                  slidesPerGroup: 2,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  slidesPerGroup: 3,
+                  spaceBetween: 10,
+                },
+              }}
+              onSlideChange={(swiper) => setProgress(swiper.realIndex)}
+              className="py-10 w-full flex-shrink-0">
+              {ulasan.map((item) => (
                 <SwiperSlide
                   key={item.id}
-                  className="w-full flex-shrink-0 max-w-[280px]" // Fixed card width
+                  className="flex justify-center flex-shrink-0 w-[265px] max-w-[280px] lg:max-w-screen-lg py-2 " // ✅ Fixed width
                 >
-                  <div className="bg-white w-[265px] rounded-lg shadow-md p-6 border border-gray-200">
+                  <div className="bg-white w-[265px] h-[188px] flex-shrink-0 lg:w-[341px] lg:h-[214px] rounded-xl shadow-md p-6 border border-gray-200">
                     {/* Header */}
                     <div className="flex items-center gap-4">
                       <img
                         src={item.foto}
                         alt={item.nama}
-                        className="w-12 h-12 rounded-full"
+                        className="!w-12 !h-12 rounded-full"
                       />
                       <div>
                         <p className="text-gray-800 text-sm font-medium">
                           {item.nama}
                         </p>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-0">
                           {Array.from({ length: item.rating }, (_, index) => (
                             <img
                               key={index}
                               src={StarIcon}
-                              className="min-w-5 min-h-5" // Adjust size
+                              className="!w-5 !h-5 flex-shrink-0 "
                             />
                           ))}
                         </div>
                       </div>
                     </div>
-
                     {/* Review Content */}
-                    <p className="mt-4 text-sm text-gray-600 line-clamp-5">
+                    <p className="mt-4 text-sm text-gray-600 line-clamp-4 lg:line-clamp-5">
                       {item.ulasan}
                     </p>
                   </div>
                 </SwiperSlide>
               ))}
-          </Swiper>
+            </Swiper>
+          </div>
 
+          {/* Swiper Carousel */}
+
+          {/* ✅ Fixed Pagination */}
           <CustomPagination
             progress={progress}
             length={ulasan.length}
-            setProgress={(dex) => {
-              setProgress(dex);
-              document.querySelector(".swiper").swiper.slideToLoop(dex); // Slide to the clicked pagination
-            }}
+            setProgress={setProgress}
+            itemsPerSlide={itemsPerSlide}
           />
         </section>
       </div>

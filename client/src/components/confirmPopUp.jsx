@@ -6,12 +6,12 @@ function ConfirmPopUp({ open, onClose, children }) {
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center ${
+      className={`fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center lg:justify-start items-center ${
         open ? "visible" : "hidden"
       }`}>
       <div
         onClick={(e) => e.stopPropagation()}
-        className={` rounded-xl shadow p-6 transition-all duration-300 ${
+        className={` rounded-xl shadow transition-all duration-300 ${
           open ? "scale-100 opacity-100" : "scale-150 opacity-0"
         }`}>
         {children}

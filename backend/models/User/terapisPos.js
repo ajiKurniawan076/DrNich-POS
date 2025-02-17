@@ -15,7 +15,6 @@ const terapisPosSchema = mongoose.Schema(
     },
     keterangan: {
       type: String,
-	required: true
     },
     namaRekening: {
       type: String,

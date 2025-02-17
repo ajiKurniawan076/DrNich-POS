@@ -8,6 +8,7 @@ const pelangganPosSchema = mongoose.Schema(
     },
     nomorTelepon:{
       type: String,
+      required: true
     },
     gender: {
       type: String,
@@ -19,7 +20,6 @@ const pelangganPosSchema = mongoose.Schema(
     },
     poin: {
       type: Number,
-	default: 0,
     },
     keterangan:{
       type: String,

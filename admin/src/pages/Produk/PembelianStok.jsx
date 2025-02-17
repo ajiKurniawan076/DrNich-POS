@@ -5,6 +5,7 @@ import { BsCart4 } from "react-icons/bs";
 import iTambah from "../../assets/iconproduk/Itambah.svg";
 import { modalContext } from "./DaftarBelanja";
 import { modalsContext } from "./DaftarBelanjaModals";
+import { toast } from "react-toastify";
 
 export const PembelianStok = (props) => {
   const { setNav, setSort, setLink } = useContext(navContext);
@@ -24,13 +25,19 @@ export const PembelianStok = (props) => {
   const kategoriRef = useRef(null);
   const produkpilihanRef = useRef(null);
   const jumlahPembelianRef = useRef(null);
+  const [supplier, setSupplier] = useState({})
   const [jumlahPembelian, setJumlahPembelian] = useState([]);
   const [produkTerpilih, setProdukTerpilih] = useState([]);
 
   const handleTambah = (e) => {
     e.preventDefault();
     if (cart.some((item) => item._id == produkTerpilih[0]._id)) {
-    } else {
+      toast.error('Produk sudah ada di keranjang')
+    } 
+    else if(cart.length>0 && cart.some((item)=> item.supplier._id != produkTerpilih[0].supplier._id)){
+          toast.error('Produk memiliki supplier yang berbeda')
+        }
+    else {
       const newisi = { ...produkTerpilih[0], jumlah: jumlahPembelian };
       setCart((prev) => [...prev, newisi]);
     }
@@ -42,9 +49,12 @@ export const PembelianStok = (props) => {
       (item) => item.namaProduk == produkpilihanRef.current.value
     );
     setProdukTerpilih(filterr);
-    console.log(filterr);
-    console.log(produkTerpilih);
   };
+
+  useEffect(() => {
+    produkTerpilih.length > 0 && produkTerpilih.map((item) => setSupplier(item?.supplier))
+  }, [produkTerpilih])
+
   const Pembelian = () => {
     setJumlahPembelian(jumlahPembelianRef.current.value);
     console.log(jumlahPembelianRef.current.value);
@@ -67,52 +77,55 @@ export const PembelianStok = (props) => {
   document.title = "Pembelian Stok";
   return (
     <div
-      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-white w-full h-full overflow-scroll ${
-        modals ? "" : "hidden"
-      }`}
+      className={`flex z-50 flex-col fixed items-center top-0 start-0 px-5 py-3 gap-1 bg-black/20 w-full h-full overflow-scroll ${modals ? "" : "hidden"
+        }`}
     >
-      <div className="md:max-w-[700px] md:w-[100%] lg:w-[100%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full px-3">
-        <p className="flex text-start mt-5 text-[14px] text-[#454545] font-medium mb-1">
-          Kategori Produk
-        </p>
-        <select
-          onChange={gantiKategori}
-          ref={kategoriRef}
-          name="options"
-          id="kategoriproduk"
-          className="relative bg-white border text-sm border-[#BDBDBD] rounded-xl w-full py-2 px-4 pr-10 focus:outline-none focus:ring-1 focus:ring-[#BDBDBD] focus:border-black appearance-none "
-          aria-label="Kategori Produk"
-        >
-          <option value="" disabled selected className="text-gray-300">
-            Pilih Kategori
-          </option>
-          {pilihKategori.map((item, i) => (
-            <option key={i} value={item._id}>
-              {item.kategori}
+      <div className="md:max-w-[700px] md:w-[80%] lg:w-[60%] lg:max-w-[900px] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white min-h-full h-fit px-3 overflow-auto">
+        <div className="flex flex-col mx-3">
+          <p className="flex text-start mt-5 text-[14px] text-[#454545] font-medium mb-1">
+            Kategori Produk
+          </p>
+          <select
+            onChange={gantiKategori}
+            ref={kategoriRef}
+            name="options"
+            id="kategoriproduk"
+            className=" relative bg-white border text-sm border-[#BDBDBD] rounded-xl w-full py-2 px-4 pr-10 focus:outline-none focus:ring-1 focus:ring-[#BDBDBD] focus:border-black appearance-none"
+            aria-label="Kategori Produk"
+          >
+            <option value="" disabled selected className="text-gray-300">
+              Pilih Kategori
             </option>
-          ))}
-        </select>
-        <div className="grid py-2">
-          <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
-            Supplier
-          </label>
-          <input
-            type="text"
-            placeholder="Pilih Supplier"
-            className="text-[12px] py-2 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl "
-          />
-        </div>
-        <div className="grid py-2">
-          <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
-            Nama Produk
-          </label>
-          <input
-            onChange={pilihproduk}
-            ref={produkpilihanRef}
-            list="pilihProduk"
-            placeholder="Pilih Produk"
-            className="text-[12px] py-2 px-4 w-full border text-sm text-black border-[#BDBDBD] rounded-xl"
-          />
+            {pilihKategori.map((item, i) => (
+              <option key={i} value={item._id}>
+                {item.kategori}
+              </option>
+            ))}
+          </select>
+          <div className="grid py-2">
+            <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
+              Supplier
+            </label>
+            <input
+              type="text"
+              placeholder="Supplier"
+              disabled
+              value={supplier?.namaPerusahaan}
+              className="text-[12px] py-2 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl "
+            />
+          </div>
+          <div className="grid py-2">
+            <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
+              Nama Produk
+            </label>
+            <input
+              onChange={pilihproduk}
+              ref={produkpilihanRef}
+              list="pilihProduk"
+              placeholder="Pilih Produk"
+              className="text-[12px] py-2 px-4 w-full border text-sm text-black border-[#BDBDBD] rounded-xl"
+            />
+          </div>
         </div>
         {produkTerpilih.map((item, i) => (
           <>
@@ -121,7 +134,7 @@ export const PembelianStok = (props) => {
                 SKU
               </label>
               <label className="text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] ">
-                {}
+                { }
               </label>
             </div>
             <div className="grid py-2">
@@ -149,7 +162,7 @@ export const PembelianStok = (props) => {
                 Harga Produk
               </label>
               <label className="flex text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] items-center">
-                {item?.hargaBeli}
+                Rp. {item?.hargaBeli.toLocaleString("id-ID")}
               </label>
             </div>
             <div className="grid py-2">
@@ -157,7 +170,7 @@ export const PembelianStok = (props) => {
                 Harga Jual
               </label>
               <label className="flex text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] items-center">
-                {item?.hargaJual}
+                Rp. {item?.hargaJual.toLocaleString("id-ID")}
               </label>
             </div>
             <div className="grid py-2">
@@ -165,7 +178,7 @@ export const PembelianStok = (props) => {
                 Harga Total Pembelian
               </button>
               <label className="flex text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] items-center">
-                {jumlahPembelian * item.hargaBeli}
+                Rp. {(jumlahPembelian * item.hargaBeli).toLocaleString("id-ID")}
               </label>
             </div>
           </>
@@ -174,14 +187,15 @@ export const PembelianStok = (props) => {
         <div className="flex justify-between gap-2 w-full pt-4 py-3 px-2">
           <button
             onClick={handleTambah}
-            className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-white text-yellow-500 border border-yellow-500 font-bold rounded-xl"
+            className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-white text-[#C2A353] border border-[#C2A353] font-bold rounded-xl"
           >
             <img src={iTambah} alt="" /> Tambah
           </button>
           <button
-            onClick={(e)=>{
+            onClick={(e) => {
               e.preventDefault()
-              setModals(false)            }}
+              setModals(false)
+            }}
             className="flex w-[50%] justify-center items-center  gap-2 h-[40px] bg-[#BDBDBD] text-white font-bold rounded-xl"
           >
             Batal
@@ -196,3 +210,4 @@ export const PembelianStok = (props) => {
     </div>
   );
 };
+    

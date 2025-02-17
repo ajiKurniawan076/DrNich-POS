@@ -22,15 +22,21 @@ export const LaporanRingkasanPenjualan = () => {
     const cari = useRef(null)
     const [button, setButton] = useState();
     const [button2, setButton2] = useState();
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
+    const [startDate, setStartDate] = useState(new Date ("2025-01-01T00:00:00Z"));
+    const [endDate, setEndDate] = useState(new Date().toISOString().split('.')[0] + 'Z');
     const [data, setData] = useState();
     const navigate = useNavigate();
 
     const handleNavigate = (e) => {
         e.preventDefault()
-        navigate('/pos/laporanDataPenjualan', { state:{transaksi: data.transaksi} })
-        // console.log(data.transaksi)
+        const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z' , sampai: endDate}
+        navigate('/pos/laporanDataPenjualan', { state: { tanggal: tanggal } })
+        console.log(data.transaksi)
+    }
+    const handleNavigatePs = (e) => {
+        e.preventDefault()
+        const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z' , sampai: endDate}
+        navigate('/pos/LaporanDataPembelianStok', { state:{tanggal: tanggal} })
     }
     
     const datePickerRef = useRef(null); // Create a ref for the DatePicker
@@ -62,15 +68,27 @@ export const LaporanRingkasanPenjualan = () => {
         }
         fetchData();
         console.log(tanggal)
-    },[])
-
+    }, [])
+    
+    useEffect(() => {
+        const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z' , sampai: endDate}
+        console.log(tanggal)
+        const fetch = async () => {
+            await axios
+                .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
+                .then((response) => (setData(response.data)))
+        }
+        fetch()
+    }, [startDate, endDate])
+    
+    
 setLink('/pos/laporan')
 setNav('Ringkasan Penjualan')   
 document.title = 'Ringkasan Penjualan'
 return (
     
     <div className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10">
-        <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
+        {/* <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
             <img src={iCari} alt="Cari" />
             <input
                 // onChange={filterData}
@@ -79,7 +97,7 @@ return (
                 className="text-sm w-full h-[30px] focus:outline-none"
                 placeholder="Cari..."
             ></input>
-        </form>
+        </form> */}
         <div className='flex flex-col'>
             <div className='flex flex-col h-full'>
                 <p>Masa Berlaku</p>
@@ -137,7 +155,7 @@ return (
                         <img src={iSeruTrans} alt="iSeru" />
                     </div>
                     <div className='flex items-center text-center'>
-                        <p className='font-semibold text-[14px]'>Rp. {data?.totalPendapatan.toLocaleString('id-ID')}</p>
+                        <p className='font-semibold text-[14px]'>Rp. {data?.totalPendapatan?.toLocaleString('id-ID')}</p>
                     </div>
                 </div>
                 <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full'>
@@ -146,7 +164,7 @@ return (
                         <img src={iSeruTrans} alt="iSeru" />
                     </div>
                     <div className='flex items-center text-center'>
-                        <p className='font-semibold text-[14px]'>Rp 400.000</p>
+                        <p className='font-semibold text-[14px]'>Rp.</p>
                     </div>
                 </div>
             </div>
@@ -157,7 +175,7 @@ return (
                         <img src={iSeruTrans} alt="iSeru" />
                     </div>
                     <div className='flex items-center text-center'>
-                        <p className='font-semibold text-[14px]'>Rp 3.600.000</p>
+                        <p className='font-semibold text-[14px]'>Rp.</p>
                     </div>
                 </div>
                 <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full'>
@@ -177,10 +195,12 @@ return (
                     <p>Data Penjualan</p>
                     <img src={iPan} alt="Panah" />
                 </button>
-                <a href='LaporanDataPembelianStok' className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
+                <button
+                    onClick={handleNavigatePs}
+                    className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
                     <p>Data Pembelian Stok</p>
                     <img src={iPan} alt="Panah" />
-                </a>
+                </button>
                 <a href='LaporanMetodePembayaran' className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
                     <p>Laporan Metode Pembayaran</p>
                     <img src={iPan} alt="Panah" />

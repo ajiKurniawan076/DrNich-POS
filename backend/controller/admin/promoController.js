@@ -1,12 +1,16 @@
 import asyncHandler from "express-async-handler";
 import promoModels from "../../models/promo/promo.js";
 
+const BASE_URL = "https://api.drnich.co.id/uploads/";
 const newPromo = asyncHandler(async (req, res) => {
+  const fotoDesktop = req.files.fotoDesktop ? req.files.fotoDesktop[0] : null;
+  const fotoMobile = req.files.fotoMobile ? req.files.fotoMobile[0] : null;
   const newPromo = {
     nama: req.body.nama,
     detail: req.body.detail,
     syarat: req.body.syarat,
-    foto: req.body.foto,
+    fotoDesktop: `${BASE_URL}${fotoDesktop.filename}`,
+    fotoMobile: `${BASE_URL}${fotoMobile.filename}`,
   };
   try {
     const isExist = await promoModels.findOne({ nama: newPromo.nama });
@@ -41,12 +45,15 @@ const getPromoById = asyncHandler(async (req, res) => {
 
 const updatePromo = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const newData = {
-    nama: req.body.nama,
-    detail: req.body.detail,
-    syarat: req.body.syarat,
-    foto: req.body.foto,
-  };
+  const fotoDesktop = req.files.fotoDesktop ? req.files.fotoDesktop[0] : null;
+  const fotoMobile = req.files.fotoMobile ? req.files.fotoMobile[0] : null;
+ const newData = {
+   nama: req.body.nama,
+   detail: req.body.detail,
+   syarat: req.body.syarat,
+   fotoDesktop: `${BASE_URL}${fotoDesktop.filename}`,
+   fotoMobile: `${BASE_URL}${fotoMobile.filename}`,
+ };
   try {
     const promo = await promoModels.findByIdAndUpdate(
       id,

@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import TransaksiModels from "../../models/KasirPOS/transaksiPos.js";
+import belanjaModels from "../../models/ProdukPOS/belanjaPos.js";
 import transaksiDetailModels from "../../models/KasirPOS/detailTransaksiPos.js";
 import ProdukModels from "../../models/ProdukPOS/produkPos.js";
 import promoModels from "../../models/PromoPOS/promoPos.js";
@@ -196,16 +197,23 @@ const laporanPenjualan = asyncHandler(async(req,res)=>{
     const {dari, sampai} = req.body;
     const from = new Date(dari)
     const to = new Date(sampai)
-    const transaksi = await TransaksiModels.find({createdAt : {$gte : from, $lte : to}})
-    .populate("promo", "namaPromo");
+    const transaksi = await TransaksiModels.find({createdAt : {$gte : from, $lte : to}}).populate("promo")
+    .populate("pelanggan")
+    .populate({
+      path : "transaksiDetail",
+      populate : {
+        path : 'produk',
+        model : 'produkPos'
+      }
+    });
 
     let total = 0;
     for (const item of transaksi){
-        total += item.total
+        total += item.totalAkhir
     }
     const totalTransaksi = transaksi.length;
     
-    res.status(200).json({totalPendapatan : total, totalTransaksi: totalTransaksi})
+    res.status(200).json({transaksi: transaksi, totalPendapatan : total, totalTransaksi: totalTransaksi})
 }
 catch(error){
     res.status(400).json({ message: error.message });
@@ -213,6 +221,33 @@ catch(error){
 
 });
 
+const laporanBelanja = asyncHandler(async(req,res)=>{
+  try{
+  const {dari, sampai} = req.body;
+  const from = new Date(dari)
+  const to = new Date(sampai)
+  const belanja = await belanjaModels.find({createdAt : {$gte : from, $lte : to}})
+  .populate({
+    path : "belanjaDetail",
+    populate : {
+      path : 'produk',
+      model : 'produkPos'
+    }
+  });
+
+  for (const item of belanja){
+  }
+  const totalBelanja = belanja.length;
+  
+  res.status(200).json({belanja: belanja, totalTransaksi: totalBelanja})
+}
+catch(error){
+  res.status(400).json({ message: error.message });
+}
+
+});
+
 export {
- laporanPenjualan
+ laporanPenjualan,
+ laporanBelanja
 };

@@ -8,6 +8,7 @@ import axios from "axios";
 export const PembayaranProduk = () => {
   const { setNav, setLink } = useContext(navContext);
   const [datax, setDatax] = useState([]);
+  const [fetched, setFetched] = useState(false)
   const navigasi = useNavigate();
   const { id } = useParams();
   console.log(id);
@@ -15,21 +16,22 @@ export const PembayaranProduk = () => {
     const fetchData = async () => {
       await axios
         .get(`https://api.drnich.co.id/api/pos/produk/belanjaPos/${id}`)
-        .then((response) => setDatax(response.data.belanjaDetail));
+        .then((response) => setDatax(response.data));
     };
 
     fetchData();
+    setLink('/pos/produks')
+    
+    setTimeout(()=>{setFetched(true)},500)
   }, []);
   console.log(datax);
 
   setNav("Pembayaran Produk");
   document.title = "Pembayaran Produk";
   return (
-    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full pt-8">
-      {datax.map((item, i) => (
-        <div key={i}>
-          <div className="grid place-items-center">
-            <img src={iPemSu} alt="Pembayaran Berhasil" />
+    <div className="flex flex-col px-9 py-3 gap-1 bg-white w-full h-fit min-h-full pt-8">
+          <div className="flex flex-col w-full place-items-center">
+            <img src={iPemSu} alt="Pembayaran Berhasil" className={`${fetched? 'scale-125' : 'scale-50'} duration-500`}/>
             <p className="text-[14px] text-[#27AE60] pt-8">
               Pembayaran Berhasil
             </p>
@@ -47,13 +49,11 @@ export const PembayaranProduk = () => {
                 })
                 .replace("pukul ", ",")}
             </p>
-
-            {/*maping mulai dari sini  */}
             <p className="text-[24px] text-[#454545] font-bold mt-3">
-              IDR {item.totalHarga}
+              IDR {datax.total}
             </p>
-          </div>
-          <div className="mt-7 text-[12px]">
+        {datax?.belanjaDetail?.map((item, i) => (
+          <div key={i} className="mt-7 text-[12px] w-full">
             <div className="flex justify-between text-start">
               <p>{item.produk.namaProduk}</p>
               <p>Rp {item.totalHarga}</p>
@@ -63,13 +63,14 @@ export const PembayaranProduk = () => {
                 {item.jumlah} x {item.produk.hargaBeli}
               </p>
             </div>
-            <div className="border border-dashed border-[#BDBDBD] my-3"></div>
-            <div className="flex justify-between text-[12px]">
-              <p>Total</p>
-              <p>Rp {item.totalHarga}</p>
-            </div>
           </div>
-          <div className="flex h-full items-end">
+        ))}
+          <div className="w-full border border-dashed border-[#BDBDBD] my-3 mb-[20px]"></div>
+            <div className="w-full flex justify-between text-[12px] font-semibold">
+              <p>Total</p>
+              <p>Rp {datax.total}</p>
+            </div>
+          <div className="flex w-full h-full mt-10 justify-end items-end">
             <div className="flex justify-end w-full">
               <button className="bg-gradient-to-r from-[#C2A353] to-[#EAC564] w-[90px] p-3 rounded-xl flex justify-center">
                 <img src={iDown} alt="iDownload" />
@@ -83,7 +84,6 @@ export const PembayaranProduk = () => {
             </div>
           </div>
         </div>
-      ))}
     </div>
   );
 };

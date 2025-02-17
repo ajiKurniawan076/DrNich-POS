@@ -2,7 +2,9 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useAsyncError, useNavigate, useParams } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 export const UpdateMarketing = () => {
   const navigate = useNavigate();
@@ -21,6 +23,22 @@ export const UpdateMarketing = () => {
   const [datax, setDatax] = useState([]);
   const [imagePreview, setImagePreview] = useState(null); // State to store image preview
   const [imageFile, setImageFile] = useState(null); // State to store the selected image file
+  const [isFilled, setIsFilled] = useState(false)
+
+  const checkFormFilled = () => {
+    if (
+      namaMarketingRef.current.value &&
+      nomorTeleponRef.current.value &&
+      alamatRef.current.value &&
+      namaRekeningRef.current.value &&
+      bankRef.current.value &&
+      nomorRekeningRef.current.value
+    ) {
+      setIsFilled(true)
+    } else {
+      setIsFilled(false)
+    }
+  } 
 
   // Handle image file selection
   const handleFileChange = (e) => {
@@ -35,7 +53,7 @@ export const UpdateMarketing = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const fdata = new FormData();
@@ -50,24 +68,42 @@ export const UpdateMarketing = () => {
       fdata.append('image', imageFile); // Append the image if there's a selected file
     }
 
-    axios
-      .put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, fdata, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type for file upload
-        },
-      })
-      .then((response) => {
+    // axios
+    //   .put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, fdata, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data", // Set content type for file upload
+    //     },
+    //   })
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       console.log(response);
+    //       navigate("../marketing"); // Redirect after successful update
+    //     } else {
+    //       alert("Gagal menyimpan data!");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error saat menyimpan data:", error);
+    //     alert("Terjadi kesalahan saat menyimpan data!");
+    //   });
+    try {
+            const response = await axios.put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, 
+            fdata
+        );
+
         if (response.status === 200) {
-          console.log(response);
-          navigate("../marketing"); // Redirect after successful update
+        toast.success("Berhasil Edit Pelanggan");
+        setTimeout(() => {
+            toast.success("Redirecting...");
+            window.location.href = "/pos/marketing";
+        }, 1500); // Redirect ke halaman supplier
         } else {
-          alert("Gagal menyimpan data!");
+        toast.error(response.data.message || "Gagal Edit Pelanggan");
         }
-      })
-      .catch((error) => {
-        console.error("Error saat menyimpan data:", error);
-        alert("Terjadi kesalahan saat menyimpan data!");
-      });
+        } catch (error) {
+        console.error("Error:", error);
+        toast.error("Terjadi kesalahan saat Edit Pelanggan");
+        }
   };
 
   useEffect(() => {
@@ -95,6 +131,7 @@ export const UpdateMarketing = () => {
     <form
       className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
+      onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-1 px-3">
         <label className="text-start font-semibold">Nama Lengkap</label>
@@ -175,7 +212,7 @@ export const UpdateMarketing = () => {
           placeholder="Contoh : 5670019288493"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Keterangan</label>
+        <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           ref={keteranganRef}
           defaultValue={datax.keterangan}
@@ -188,11 +225,12 @@ export const UpdateMarketing = () => {
       <div className="mt-4 w-full h-full px-3">
         <button
           type="submit"
-          className="bg-[#BDBDBD] text-[14px] text-white w-full rounded-xl p-3"
+          className={`w-full h-[44px] rounded-xl p-3 text-[14px] text-white transition-all duration-300 ${isFilled ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]" : "bg-[#BDBDBD]"}`}
         >
           Simpan
         </button>
       </div>
+    <ToastContainer/>
     </form>
   );
 };

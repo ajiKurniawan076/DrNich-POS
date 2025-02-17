@@ -3,6 +3,8 @@ import { navContext } from "../../App2";
 import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Addterapis = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -59,28 +61,36 @@ export const Addterapis = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fdata = new FormData();
 
     fdata.append('namaTerapis', namaTerapisRef.current.value);
     fdata.append('nomorTelepon', nomorTeleponRef.current.value);
     fdata.append('alamat', alamatRef.current.value);
-    fdata.append('keterangan', keteranganRef.current.value);
     fdata.append('namaRekening', namaRekeningRef.current.value);
     fdata.append('nomorRekening', nomorRekeningRef.current.value);
     fdata.append('bank', bankRef.current.value);
     fdata.append('image', imageRef.current.files[0]);
 
-    axios.post("https://api.drnich.co.id/api/pos/user/terapis", fdata, {
-      headers: {
-        "Content-Type": "multipart/form-data", // Required for file uploads
-      },
-    }).then(response => {
-      if (response.status === 200) {
-        navigate('../terapis');
+    try {
+      const response = await axios.post(
+      "https://api.drnich.co.id/api/pos/user/terapis",fdata
+    );
+
+    if (response.status === 200) {
+      toast.success("Berhasil Menambahkan terapis");
+      setTimeout(() => {
+        toast.success("Redirecting...");
+        window.location.href = "/pos/terapis";
+      }, 1500); // Redirect ke halaman terapis
+    } else {
+      toast.error(response.data.message || "Gagal menambahkan terapis");
+    }
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Terjadi kesalahan saat menambahkan terapis");
       }
-    });
   };
 
   document.title = 'Tambah Terapis';
@@ -171,13 +181,12 @@ export const Addterapis = () => {
           onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+        <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           ref={keteranganRef}
           type="text"
           placeholder="Contoh : Admin PT.BEAUTY"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
         />
       </div>
 
@@ -189,6 +198,7 @@ export const Addterapis = () => {
           Simpan
         </button>
       </div>
+      <ToastContainer/>
     </form>
   );
 };

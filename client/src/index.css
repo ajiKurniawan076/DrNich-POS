@@ -35,13 +35,6 @@
 
 @font-face {
   font-family: "SF Pro Display";
-  src: url("./assets/fonts/SFPRODISPLAYSEMIBOLD.OTF") format("truetype");
-  font-weight: 600; /* Semibold */
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "SF Pro Display";
   src: url("./assets/fonts/SFPRODISPLAYBOLD.OTF") format("truetype");
   font-weight: 700; /* Bold */
   font-style: normal;
@@ -53,7 +46,6 @@
   font-weight: 900; /* Black */
   font-style: normal;
 }
-
 
 .swiper {
   width: 90%;
@@ -78,4 +70,3 @@
   height: 20%;
   object-fit: cover;
 }
-

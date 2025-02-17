@@ -4,7 +4,8 @@ import { AiOutlineRight } from "react-icons/ai";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import wa from "../../assets/wa.svg";
-
+import iNext from "../../assets/iNext.svg"
+  
 export const SupplierDetail = () => {
   const { setNav, setSort, setLink } = useContext(navContext);
   const [datasupp, setDataSupp] = useState([]);
@@ -107,8 +108,7 @@ export const SupplierDetail = () => {
           <span className="hover:scale-105 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5 mt-2">
             Lihat Daftar Produk
             <div className="flex ms-auto">
-              <AiOutlineRight className="text-yellow-300" size={15} />
-              <AiOutlineRight className="text-yellow-600" size={15} />
+              <img src={iNext} alt="" />
             </div>
           </span>
         </a>
@@ -116,8 +116,7 @@ export const SupplierDetail = () => {
           <span className="hover:scale-105 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5">
             Lihat Riwayat Terakhir
             <div className="flex ms-auto">
-              <AiOutlineRight className="text-yellow-300" size={15} />
-              <AiOutlineRight className="text-yellow-600" size={15} />
+              <img src={iNext} alt="" />
             </div>
           </span>
         </a>
