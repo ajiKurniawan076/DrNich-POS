@@ -68,7 +68,6 @@ export const Addterapis = () => {
     fdata.append('namaTerapis', namaTerapisRef.current.value);
     fdata.append('nomorTelepon', nomorTeleponRef.current.value);
     fdata.append('alamat', alamatRef.current.value);
-    fdata.append('keterangan', keteranganRef.current.value);
     fdata.append('namaRekening', namaRekeningRef.current.value);
     fdata.append('nomorRekening', nomorRekeningRef.current.value);
     fdata.append('bank', bankRef.current.value);
@@ -182,13 +181,12 @@ export const Addterapis = () => {
           onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold mb-[5px]">Keterangan</label>
+        <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           ref={keteranganRef}
           type="text"
           placeholder="Contoh : Admin PT.BEAUTY"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
         />
       </div>
 

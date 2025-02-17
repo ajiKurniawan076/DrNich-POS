@@ -212,7 +212,7 @@ export const UpdateMarketing = () => {
           placeholder="Contoh : 5670019288493"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Keterangan</label>
+        <label className="text-start font-semibold">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>
         <input
           ref={keteranganRef}
           defaultValue={datax.keterangan}
