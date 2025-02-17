@@ -1,12 +1,13 @@
 import asyncHandler from "express-async-handler";
 import produkModels from "../../models/produk/produk.js";
 import carouselProducts from "../../models/produk/carouselProducts.js";
+import tipeKulit from "../../models/produk/tipeKulit.js";
 
 /*CAROUSEL PRODUCT*/
-
+const BASE_URL = "https://api.drnich.co.id/";
 const newImage = asyncHandler(async (req, res) => {
   const newImage = {
-    image: req.body.image,
+    image: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const isExist = await carouselProducts.findOne({ image: newImage.image });
@@ -42,7 +43,7 @@ const deleteImage = asyncHandler(async (req, res) => {
 const updateImage = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const newData = {
-    image: req.body.image,
+    image: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const image = await carouselProducts.findByIdAndUpdate(
@@ -61,12 +62,13 @@ const newproduk = asyncHandler(async (req, res) => {
   const newproduk = {
     nama: req.body.nama,
     deskripsi: req.body.deskripsi,
-    foto: req.body.foto,
+    foto: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
     manfaat: req.body.manfaat,
     cara_pakai: req.body.cara_pakai,
     harga: req.body.harga,
     kategori: req.body.kategori,
     tipeProduk: req.body.tipeProduk,
+    tipeKulit: req.body.tipeKulit,
   };
   try {
     const isExist = await produkModels.findOne({ nama: newproduk.nama });
@@ -85,7 +87,8 @@ const getproduk = asyncHandler(async (req, res) => {
     const produk = await produkModels
       .find()
       .populate("kategori") // Populating 'kategori' from the schema
-      .populate("tipeProduk"); // Populating 'tipeProduk' from the schema
+      .populate("tipeProduk")
+      .populate("tipeKulit"); // Populating 'tipeProduk' from the schema
     res.send(produk);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -99,6 +102,7 @@ const getprodukbycategory = asyncHandler(async (req, res) => {
       .find({ kategori: id })
       .populate("kategori")
       .populate("tipeProduk")
+      .populate("tipeKulit")
       .lean();
     res.send(produk);
   } catch (error) {
@@ -111,12 +115,13 @@ const updateproduk = asyncHandler(async (req, res) => {
   const newData = {
     nama: req.body.nama,
     deskripsi: req.body.deskripsi,
-    foto: req.body.foto,
+    foto: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
     manfaat: req.body.manfaat,
     cara_pakai: req.body.cara_pakai,
     harga: req.body.harga,
     kategori: req.body.kategori,
     tipeProduk: req.body.tipeProduk,
+    tipeKulit: req.body.tipeKulit,
   };
   try {
     const produk = await produkModels.findByIdAndUpdate(
@@ -146,7 +151,8 @@ const getprodukbyID = asyncHandler(async (req, res) => {
     const produk = await produkModels
       .findById(id)
       .populate("kategori", "name")
-      .populate("tipeProduk", "name");
+      .populate("tipeProduk", "name")
+      .populate("tipeKulit", "name");
 
     if (!produk) {
       return res.status(404).json({ message: "Product not found" });

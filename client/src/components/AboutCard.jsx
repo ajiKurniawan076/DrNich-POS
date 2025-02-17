@@ -1,4 +1,6 @@
 import React from "react";
+import { button } from "@material-tailwind/react";
+import { sendWhatsAppReservasiMessage } from "../../../backend/controller/whatsappController";
 
 export default function AboutCard({ card }) {
   return (
@@ -6,21 +8,17 @@ export default function AboutCard({ card }) {
       <img
         src={card.bg}
         alt="Background"
-        className="absolute object-cover lg:object-fill z-0 w-full h-full"
+        className="absolute object-cover lg:object-fill z-0 w-full h-full hidden sm:block"
+        style={{ "@media (max-width: 300px)": { display: "none" } }} // Optional
       />
+
       <img
-        src={card.img}
-        alt="Image"
-        className="absolute right-0 bottom-0 object-cover z-10"
+        src={card.bg2}
+        alt="Background"
+        className="absolute object-cover lg:object-fill z-0 w-full h-full block lg:hidden"
       />
-      {card.logo && (
-        <img
-          src={card.logo}
-          alt="Logo"
-          className="relative top-[25px] lg:scale-150 left-[21px] lg:top-[35px] lg:left-[50px] z-20"
-        />
-      )}
-      <div className="relative z-20 px-[21px] text-left">
+
+      <div className="absolute flex flex-col w-full h-full z-20 px-[21px] text-left">
         <h3 className="w-[218px] pt-[50px] text-xl lg:text-4xl lg:w-full font-Cabin lg:leading-[45px] italic text-white font-semibold leading-[25px] lg:tracking-wider tracking-tight">
           {card.title}
         </h3>
@@ -32,11 +30,24 @@ export default function AboutCard({ card }) {
             {card.text}
           </p>
         )}
+
         {card.button && (
-          <button className="bg-white hover:shadow-lg text-[#c2a353] py-2.5 px-5 rounded-[10px] lg:mt-3 text-xs font-normal leading-tight tracking-tight lg:px-8 lg:py-3 lg:tracking-wide lg:text-base">
+          <button className="  hover:shadow-lg text-[#c2a353] py-2.5 px-5 rounded-[10px] lg:mt-3 text-xs font-normal leading-tight tracking-tight lg:px-8 lg:py-3 lg:tracking-wide lg:text-base lg:translate-y-56 lg:translate-x-40 mobile-300:hidden">
             {card.button}
           </button>
         )}
+
+        {/*    button mobile*/}
+        {card.button && (
+          <div className="w-full flex justify-start absolute bottom-16 items-center lg: 2xl:left-14">
+            <button
+              className="bg-white h-fit w-fit hover:shadow-lg text-[#c2a353] py-2.5 px-5 rounded-[10px] lg:mt-3 text-xs font-normal leading-tight tracking-tight lg:px-8 lg:py-3 lg:tracking-wide lg:text-base  "
+              onClick={() => sendWhatsAppReservasiMessage()}>
+              {card.button}
+            </button>
+          </div>
+        )}
+
         {/* Benefits Icons */}
         {card.bene1 && (
           <div className="flex items-center gap-[16px] mt-4">
@@ -57,9 +68,13 @@ export default function AboutCard({ card }) {
           </div>
         )}
         {card.button2 && (
-          <button className="bg-white text-[#c2a353] py-2.5 px-5 rounded-[10px] text-xs font-normal leading-tight tracking-tight">
-            {card.button2}
-          </button>
+          <div className="w-full flex justify-start pt-[37vh] items-center 2xl:ml-14 2xl:pt-[32vh] ">
+            <button
+              className="bg-white h-fit w-fit hover:shadow-lg text-[#c2a353] py-2.5 px-5 rounded-[10px] lg:mt-3 text-xs font-normal leading-tight tracking-tight lg:px-8 lg:py-3 lg:tracking-wide lg:text-base "
+              onClick={() => sendWhatsAppReservasiMessage()}>
+              {card.button2}
+            </button>
+          </div>
         )}
       </div>
     </div>

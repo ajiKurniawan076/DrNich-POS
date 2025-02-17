@@ -76,7 +76,8 @@ export const TerapisUpdate = () => {
     if (imageFile) {
       fdata.append('image', imageFile); // Append the selected image if available
     }
-
+    
+    
     axios
     .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
     .then((response) => {

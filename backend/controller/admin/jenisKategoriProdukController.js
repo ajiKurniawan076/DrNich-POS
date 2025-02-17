@@ -3,11 +3,11 @@ import kategoriProduct from "../../models/produk/kategoriProduct.js";
 import productType from "../../models/produk/productType.js";
 
 //PRODUCT CATEGORY HANDLER
-
+const BASE_URL = "https://api.drnich.co.id/";
 const newCategoryProduct = asyncHandler(async (req, res) => {
   const newCategoryProduct = {
     name: req.body.name,
-    image: req.body.image,
+    image: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const isExist = await kategoriProduct.findOne({
@@ -39,7 +39,7 @@ const editCategoryProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const newData = {
     name: req.body.name,
-    image: req.body.image,
+    image: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
   };
   try {
     const categoryProduct = await kategoriProduct.findByIdAndUpdate(

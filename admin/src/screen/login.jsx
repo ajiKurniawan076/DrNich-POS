@@ -103,7 +103,7 @@ function Login() {
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-3"
+                  className="absolute translate-y-1/2"
                   onClick={() => setOpenPass(!openPass)}>
                   {openPass ? "Hide" : "Show"}
                 </button>

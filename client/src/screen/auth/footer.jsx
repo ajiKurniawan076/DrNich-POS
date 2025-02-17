@@ -50,14 +50,14 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-footer-pattern bg-contain py-8 px-6 lg:px-24">
-
+    <footer className="w-full bg-footer-pattern bg-cover py-8 px-6 lg:px-24 lg:bg-footer-pattern-desktop">
       {/* Main Container */}
       <div className="flex flex-col w-full h-full lg:justify-between lg:items-start">
         {/* <img src={footerbaru} alt="" className="absolute z-0" /> */}
         {/* Logo and Social Media */}
         <div className="flex flex-row gap-11 lg:space-y-6 lg:w-full lg:justify-between z-10">
           <img
+            onClick={handleNavigation("/")}
             src={logoPutih}
             alt="Logo Dr. Nich"
             className="w-[150px] h-auto"
@@ -73,56 +73,67 @@ export default function Footer() {
               alt="LinkedIn"
               className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer"
             />
-            <img
-              src={tt}
-              alt="TikTok"
-              onClick={handleSosmed(
-                "https://www.tiktok.com/@dr.nich_aesthetic"
-              )}
-              className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer"
-            />
+
+            <a
+              className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer flex items-center justify-center"
+              href="https://www.tiktok.com/@dr.nich_aesthetic">
+              <img
+                src={tt}
+                alt="TikTok"
+                onClick={handleSosmed(
+                  "https://www.tiktok.com/@dr.nich_aesthetic"
+                )}
+                className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer"
+              />
+            </a>
             <img
               src={fb}
               alt="Facebook"
               className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer"
             />
-            <img
-              src={ig}
-              onClick={handleSosmed(
-                "https://www.instagram.com/dr.nich_beautyclinic/"
-              )}
-              alt="Instagram"
-              className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer"
-            />
+            <a
+              className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer flex items-center justify-center"
+              href="https://www.instagram.com/dr.nich_beautyclinic/">
+              <img
+                src={ig}
+                onClick={handleSosmed(
+                  "https://www.instagram.com/dr.nich_beautyclinic/"
+                )}
+                alt="Instagram"
+                className="w-[20px] h-[20px] lg:w-[35px] lg:h-[35px] cursor-pointer"
+              />
+            </a>
           </div>
         </div>
 
         {/* Contact Information and Navigation Links */}
         <div className="flex gap-11 lg:gap-0 lg:flex-row lg:justify-between lg:w-full z-10">
           <div className="w-[147px] grid gap-4 lg:gap-6 lg:w-full">
-            <div
-              className="flex items-start space-x-3 cursor-pointer"
-              onClick={handleSosmed(
-                "https://maps.app.goo.gl/benokSLZCgXfyL5C9"
-              )}>
+            <a
+              href="https://maps.app.goo.gl/benokSLZCgXfyL5C9"
+              className="flex items-start space-x-3 cursor-pointer clickable"
+              onClick={() =>
+                handleSosmed("https://maps.app.goo.gl/benokSLZCgXfyL5C9")
+              }>
               <img src={alamat} alt="Alamat" className="w-5 h-5" />
               <p className="text-sm leading-tight text-[#e8ebe0] lg:max-w-[60%]">
-                Jl. Diponegoro No.12, Salatiga, Jawa Tengah, 51552
+                Jl. Pringgodani Gg. Buntu No.4, Tegalrejo, Kec. Argomulyo, Kota
+                Salatiga, Jawa Tengah 50733
               </p>
-            </div>
+            </a>
             <div className="flex items-center space-x-3">
               <img src={email} alt="Email" className="w-5 h-5" />
-              <p className="text-sm text-[#e8ebe0]">drnich@email.com</p>
+              <p className="text-sm text-[#e8ebe0]">drnichofficial@gmail.com</p>
             </div>
             <div
               className="flex items-center space-x-3 cursor-pointer"
               onClick={handleWhatsApp}>
               <img src={kontak} alt="Kontak" className="w-5 h-5" />
-              <p className="text-sm text-[#e8ebe0]">+6289632517280</p>
+              <p className="text-sm text-[#e8ebe0]">+6285700525830</p>
             </div>
             <div className="flex items-center space-x-3">
               <img src={clock} alt="Jam Operasional" className="w-5 h-5" />
-              <p className="text-sm text-[#e8ebe0]">10.00 - 19.00</p>
+              <p className="text-sm text-[#e8ebe0]">10.00 - 18.00</p>
             </div>
           </div>
 

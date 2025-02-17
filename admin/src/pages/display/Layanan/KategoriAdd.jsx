@@ -1,141 +1,156 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { navContext } from "../../../App2";
-import gkategori from "../../../assets/iconDisplay/Layanan/gkategori.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 export const KategoriAdd = () => {
   const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
-  const [gambar, setGambar] = useState(null);
+
+  const [namaGambar, setNamaGambar] = useState("");
+  const [previewURL, setPreviewURL] = useState(null);
+
   const namaKategoriRef = useRef(null);
   const deskripsiRef = useRef(null);
   const gambarRef = useRef(null);
-  const [namaGambar, setNamaGambar] = useState("");
-
-  // handleGambar
-  const handleGambar = (e) => {
-    e.preventDefault();
-    const gambarData = gambarRef.current.files[0];
-    console.log(gambarData);
-    if (gambarData) {
-      const validImage = ["image/jpeg", "image/png", "image/gif"];
-      if (!validImage.includes(gambarData.type)) {
-        alert("bukan gambar");
-        setGambar(null);
-        return;
-      }
-      setGambar(URL.createObjectURL(gambarData));
-      setNamaGambar(gambarData.name);
-    }
-    // console.log(GambarData); //melihat detail file
-  };
 
   useEffect(() => {
     setNav("Tambah Kategori");
+    setLink("/pos/layananKategori");
   }, []);
 
-  const handleSubmit = () => {
-    const datadata = {
-      namaKategori: namaKategoriRef.current.value,
-      deskripsi: deskripsiRef.current.value,
-      gambar: gambar,
+  useEffect(() => {
+    return () => {
+      if (previewURL) URL.revokeObjectURL(previewURL);
     };
-    // memasukan kedalam database
-    // axios
-    //   .post("", datadata)
-    //   .then(
-    //     (response) => response.status == 200 && navigate("../kategorilayanan")
-    //   );
+  }, [previewURL]);
 
-    const handlenavigasi = window.confirm(
-      `nama kategori : ${datadata.namaKategori} anda yakin ?`
-    );
-    if (handlenavigasi) {
-      navigate("../kategorilayanan");
+  const handleGambar = () => {
+    const gambarData = gambarRef.current.files[0];
+
+    if (gambarData) {
+      const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
+      if (!validImageTypes.includes(gambarData.type)) {
+        toast.error("File bukan gambar yang valid!");
+        setNamaGambar("");
+        setPreviewURL(null);
+        return;
+      }
+      setNamaGambar(gambarData.name);
+      setPreviewURL(URL.createObjectURL(gambarData)); // Generate preview
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!namaKategoriRef.current.value || !deskripsiRef.current.value) {
+      toast.error("Semua bidang harus diisi!");
+      return;
     }
 
-    // console.log(datadata);
+    const fdata = new FormData();
+    fdata.append("nama", namaKategoriRef.current.value);
+    fdata.append("deskripsi", deskripsiRef.current.value);
+    if (gambarRef.current.files.length > 0) {
+      fdata.append("foto", gambarRef.current.files[0]);
+    } else {
+      toast.error("Harap pilih gambar sebelum mengunggah!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/layanan/tambahJenisLayanan`,
+        fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Berhasil menambahkan kategori treatment");
+        setTimeout(() => {
+          navigate("/pos/kategorilayanan");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan kategori treatment, coba lagi!"
+      );
+      toast.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan kategori treatment, coba lagi!"
+      );
+    }
   };
 
   document.title = "Tambah Kategori";
-  const [supstat, setsupstat] = useState(false);
+
   return (
     <form
       className="flex flex-col justify-between bg-white min-h-screen px-3 py-3 gap-3 w-full"
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}
-    >
+      onSubmit={handleSubmit}>
       <div className="flex flex-col gap-1 px-3">
+        <ToastContainer />
         <div className="flex flex-col">
-          <label className="text-start text-[454545] text-[12px]">
+          <label className="text-start text-[12px] text-[#454545]">
             Upload Foto
           </label>
           <div className="flex gap-6">
             <img
-              src={gambar}
-              alt=" "
+              src={previewURL || "https://via.placeholder.com/115"} // Default placeholder
+              alt="Preview"
               className="h-[115px] w-[115px] rounded shadow-lg border"
             />
             <div className="flex flex-col items-start text-[10px]">
-              {/* belum ada gambar = belum ada gambar */}
-              {!gambar ? (
-                <p className="text-[#454545] mb-3">belum ada gambar</p>
-              ) : (
-                <p className="text-[#454545] mb-3">{namaGambar}</p>
-              )}
-
+              <p className="text-[#454545] mb-3">
+                {namaGambar || "Belum ada gambar"}
+              </p>
               <div className="flex justify-star text-[#C2A353] pt-2 mb-2">
-                {/* belum ada gambar = pilih gambar */}
                 <input
                   accept="image/*"
                   onChange={handleGambar}
                   ref={gambarRef}
-                  type="File"
+                  type="file"
                   className="border border-[#C2A353] h-[25px] w-[78px] rounded shadow-sm text-[12px]"
                 />
               </div>
               <p className="text-start text-[10px] text-[#BDBDBD]">
-                *Upload foto dengan format .jpg .png maksimal ukuran 100mb{" "}
+                *Upload foto dengan format .jpg .png maksimal ukuran 100MB
               </p>
             </div>
           </div>
-          <label className="text-[#454545] text-start  text-[12px] mt-2">
+          <label className="text-[#454545] text-start text-[12px] mt-2">
             Nama Kategori
           </label>
           <input
             ref={namaKategoriRef}
             type="text"
-            placeholder="Contoh : Facial Series"
+            placeholder="Contoh: Facial Series"
             className="px-2 border text-[12px] border-black/30 rounded-lg h-[48px]"
           />
-          <label className="text-[#454545] text-start  text-[12px] mt-2">
+          <label className="text-[#454545] text-start text-[12px] mt-2">
             Deskripsi
           </label>
           <textarea
             ref={deskripsiRef}
-            name=""
-            id=""
-            cols="auto"
             rows="5"
             className="border rounded-lg text-[12px] p-2"
-            placeholder="Masukan Deskripsi"
-          ></textarea>
+            placeholder="Masukkan deskripsi"></textarea>
         </div>
       </div>
       <button
         type="submit"
-        disabled={!gambar}
-        className={`
-        ${
-          !gambar
-            ? "bg-[#DCDCDC] border-2 "
-            : "bg-gradient-to-r from-[#EAC564] to-[#C2A353]"
-        }
-        flex justify-center items-center h-[44px] text-white font-medium rounded-lg`}
-      >
+        className="bg-gradient-to-r from-[#EAC564] to-[#C2A353] hover:opacity-90 flex justify-center items-center h-[44px] text-white font-medium rounded-lg">
         Simpan
       </button>
     </form>

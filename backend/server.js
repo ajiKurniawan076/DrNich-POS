@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import cors from "cors";
 
+import paketLayananRoutes from "./routes/admin/paketLayananRoutes.js";
 import layananRoutes from "./routes/admin/layananRoutes.js";
 import promoRoutes from "./routes/admin/promoRoutes.js";
 import produkRoutes from "./routes/admin/produkRoutes.js";
@@ -16,7 +17,9 @@ import userPosRoutes from "./routes/admin/userPosRoutes.js";
 import promoPosRoutes from "./routes/admin/promoPosRoutes.js";
 import kasirPosRoutes from "./routes/admin/kasirPosRoutes.js";
 import laporanPosRoutes from "./routes/admin/laporanRoutes.js";
+import adminRoutes from "./routes/admin/adminRoutes.js";
 import dbConfig from "./config/db.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 dotenv.config();
@@ -43,11 +46,11 @@ app.use(
     credentials: true,
   })
 );
-
 app.options("*", cors());
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 app.use(express.json({ limit: "50mb" })); // Adjust the limit as needed
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(cookieParser());
 
 app.use("/api/layanan", layananRoutes);
 app.use("/api/users", userRoutes);
@@ -57,6 +60,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/foto", fotoRoutes);
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/ulasan", ulasanRoutes);
+app.use("/api/paketLayanan", paketLayananRoutes);
 
 //API POS
 
@@ -65,6 +69,7 @@ app.use("/api/pos/user", userPosRoutes);
 app.use("/api/pos/promo", promoPosRoutes);
 app.use("/api/pos/kasir", kasirPosRoutes);
 app.use("/api/pos/laporan", laporanPosRoutes);
+app.use("/api/pos", adminRoutes);
 
 /////////
 

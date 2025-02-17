@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../../assets/component/navbar";
 import axios from "axios";
 import ConfirmPopUp from "../../../assets/component/confirmPopUp";
@@ -26,6 +26,7 @@ function AddProduct() {
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const imageRef = useRef(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,79 +66,66 @@ function AddProduct() {
     e.preventDefault();
     setOpen(false);
     setLoading(true);
-
+  
     try {
-      if (!nama.trim()) {
-        throw new Error("Mohon isi nama produk!");
-      }
-
-      if (!deskripsi.trim()) {
-        throw new Error("Mohon isi deskripsi produk!");
-      }
-
-      if (!image) {
-        throw new Error("Mohon pilih gambar produk!");
-      }
-
-      if (!manfaat.trim()) {
-        throw new Error("Mohon isi manfaat produk!");
-      }
-
-      if (!caraPakai.trim()) {
-        throw new Error("Mohon isi cara pakai produk!");
-      }
-
-      if (!harga.trim()) {
-        throw new Error("Mohon isi harga produk!");
-      }
-
-      if (!kategori) {
-        throw new Error("Mohon pilih kategori produk!");
-      }
-
+      // Validate required fields
+      if (!nama.trim()) throw new Error("Mohon isi nama produk!");
+      if (!deskripsi.trim()) throw new Error("Mohon isi deskripsi produk!");
+      if (!image) throw new Error("Mohon pilih gambar produk!");
+      if (!manfaat.trim()) throw new Error("Mohon isi manfaat produk!");
+      if (!caraPakai.trim()) throw new Error("Mohon isi cara pakai produk!");
+      if (!harga.trim()) throw new Error("Mohon isi harga produk!");
+      if (!kategori) throw new Error("Mohon pilih kategori produk!");
+  
+      // Validate price
       const parsedHarga = parseFloat(harga);
       if (isNaN(parsedHarga) || parsedHarga <= 0) {
         throw new Error("Please enter a valid price");
       }
-
-      const payload = {
-        nama,
-        deskripsi,
-        foto: image,
-        manfaat,
-        cara_pakai: caraPakai,
-        harga: parsedHarga,
-        kategori,
-        tipeProduk: tipeProduk || null, // Set null if empty or undefined
-        tipeKulit: tipeKulit || null,
-      };
-
+  
+      // Create FormData
+      const formData = new FormData();
+      formData.append("nama", nama);
+      formData.append("deskripsi", deskripsi);
+      formData.append("foto", imageRef.current.files[0]); // Append image correctly
+      formData.append("manfaat", manfaat);
+      formData.append("cara_pakai", caraPakai);
+      formData.append("harga", parsedHarga);
+      formData.append("kategori", kategori);
+      if (tipeProduk) formData.append("tipeProduk", tipeProduk);
+      if (tipeKulit) formData.append("tipeKulit", tipeKulit);
+  
+      // Send request with multipart/form-data
       const { data } = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/tambahproduk`,
-        payload,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
-
+  
+      // Success toast
       toast.success(data.message || "Product added successfully!", {
         autoClose: 3000,
       });
-
+  
       setTimeout(() => {
         navigate("/produk");
       }, 3000);
-
+  
+      // Reset form
       setNama("");
       setDeskripsi("");
-      setImage("");
+      setImage(null); // Reset image properly
       setManfaat("");
       setCaraPakai("");
       setHarga("");
       setKategori("");
-      setTipeProduk(""); // Reset tipeProduk
+      setTipeProduk("");
       setTipeKulit("");
     } catch (error) {
       toast.error(
@@ -148,6 +136,7 @@ function AddProduct() {
       setLoading(false);
     }
   };
+  
 
   const convertBase64 = (e) => {
     const file = e.target.files[0];
@@ -232,6 +221,7 @@ function AddProduct() {
                       Tambah
                       <input
                         type="file"
+                        ref={imageRef}
                         accept="image/*"
                         className="hidden"
                         onChange={convertBase64}

@@ -68,7 +68,7 @@ export default function Navbar({ selected }) {
 
   return (
     <div className="w-full h-[70px] shadow-sm bg-white flex items-center relative">
-      <div className="container mx-auto flex items-center justify-between px-6">
+      <div className="mx-auto flex items-center justify-between w-[90%] lg:w-[80%] px-2">
         {/* Left Navigation */}
         <div className="flex items-center gap-4">
           <button
@@ -112,7 +112,7 @@ export default function Navbar({ selected }) {
                 {[
                   { text: "Beranda", path: "/" },
                   { text: "Profile", path: "/profil" },
-                  { text: "Konsultasi", path: "/konsultasi" },
+                  { text: "Konsultasi", path: "/underdevelop" },
                   { text: "Produk", path: "/produk" },
                   { text: "Layanan", path: "/layanan" },
                   { text: "Reservasi", path: "/reservasi" },
@@ -247,8 +247,14 @@ export default function Navbar({ selected }) {
         )}
 
         {/* Logo (Center) */}
-        <div className="absolute left-1/2 transform -translate-x-1/2">
-          <img src={logo} className="max-w-[100px] h-auto" alt="Logo" />
+        <div
+          className="absolute left-1/2 transform -translate-x-1/2"
+          onClick={() => navigate("/")}>
+          <img
+            src={logo}
+            className=" w-[100px] h-[38.59px] lg:w-[130px] lg:h-[56.39px] "
+            alt="Logo"
+          />
         </div>
 
         {/* Right Navigation */}
@@ -291,7 +297,14 @@ export default function Navbar({ selected }) {
           </div>
 
           {/* Bag Icon */}
-          <a href="" aria-label="Bag" className="flex items-center">
+          <a
+            href=""
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/underdevelop");
+            }}
+            aria-label="Bag"
+            className="flex items-center">
             {/* Icon untuk Mobile */}
             <img
               src={bag}

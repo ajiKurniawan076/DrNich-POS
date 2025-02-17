@@ -15,6 +15,8 @@ import ProdukCard from "../../components/ProductCard2.jsx";
 import CloseIcon from "../../assets/close-circle.svg";
 import ConfirmPopUp from "../../components/confirmPopUp.jsx";
 import FilterIcon from "../../components/FILTERICON.svg";
+import bgFilterMobile from "../../components/bg-filter-mobile.svg";
+import bgFilterDesktop from "../../components/bg-filter-dekstop.svg";
 
 function ViewAllProduct() {
   const navigate = useNavigate();
@@ -75,12 +77,16 @@ function ViewAllProduct() {
   // Derived state for filtered products
   const filteredContent = content.filter((item) => {
     // Filtering logic for products
+    console.log(`Filtering: ${item.name}`);
+    const matchesType =
+      filterType === "all" ||
+      (item.tipeProduk !== null && item.tipeProduk.name === filterType);
+    const matchesSkin =
+      filterSkin === "all" ||
+      (item.tipeKulit !== null && item.tipeKulit.name === filterSkin);
 
-    const matchesType = filterType === "all" || item.type === filterType;
-    const matchesSkin = filterSkin === "all" || item.skinType === filterSkin;
-    console.log(
-      `Filtering: ${item.name}, Type Match: ${matchesType}, Skin Match: ${matchesSkin}`
-    );
+    console.log(`Matches type: ${matchesType}, Matches skin: ${matchesSkin}`);
+
     return matchesType && matchesSkin;
   });
 
@@ -117,120 +123,187 @@ function ViewAllProduct() {
           </div>
           <ConfirmPopUp
             open={isFilterOpen}
-            onClose={() => setIsFilterOpen(false)}>
-            <div className="flex flex-col items-start w-[95vw] h-screen">
-              <div className="flex flex-col items-start w-screen h-screen lg:w-[30vw] bg-white px-4">
-                <div className="w-full flex justify-end items-center mt-10">
-                  <button onClick={() => setIsFilterOpen(false)} className="">
-                    <img
-                      src={CloseIcon}
-                      alt="Close"
-                      className="w-7 lg:w-10 lg:h-10 h-7"
-                    />
-                  </button>
-                </div>
-
-                <div className="flex flex-col items-start space-y-2  w-[85%]">
-                  <h1 className="text-base lg:text-xl font-medium font-SFPro text-secondary ">
-                    Jenis Kulit
-                  </h1>
-                  <div className="grid grid-cols-2 w-[90%]">
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        name="filterSkin"
-                        value="all"
-                        checked={filterSkin === "all"}
-                        onChange={() => setFilterSkin("all")}
+            onClose={() => setIsFilterOpen(!isFilterOpen)}>
+            <div className="flex flex-col  items-start w-screen lg:w-full h-screen opacity-90">
+              <div className="flex flex-col space-y-3 items-center w-screen h-screen lg:w-[462px] bg-white px-4">
+                <div className="absolute z-50 mt-14  flex flex-col items-center w-full h-full ">
+                  {/* Close Button */}
+                  <div className="w-full flex justify-end items-center mt-10 lg:hidden">
+                    <button onClick={() => setIsFilterOpen(false)}>
+                      <img
+                        src={CloseIcon}
+                        alt="Close"
+                        className="w-7 lg:w-10 lg:h-10 h-7"
                       />
-                      <label className="text-sm lg:text-base font-normal font-SFPro text-text">
-                        All
-                      </label>
-                    </div>
-                    {jenisKulit ? (
-                      jenisKulit.map((item) => (
+                    </button>
+                  </div>
+                  {/* Skin Type Filter */}
+                  <div className="flex flex-col items-center  lg:items-start space-y-2 w-[85%]">
+                    <h1 className="text-base lg:text-lg font-medium font-SFPro text-secondary leading-snug tracking-normal">
+                      Jenis Kulit
+                    </h1>
+                    <div className="grid grid-cols-2 w-[90%] gap-4">
+                      {/* ALL Skin Types Option */}
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="filterSkin"
+                          value="all"
+                          className="hidden"
+                          checked={filterSkin === "all"}
+                          onChange={() => setFilterSkin("all")}
+                        />
                         <div
-                          className="flex items-center space-x-2"
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all 
+              ${
+                filterSkin === "all" ? "border-[#B2955B]" : "border-[#DCDCDC]"
+              }`}>
+                          {filterSkin === "all" && (
+                            <div className="w-3 h-3 rounded-full bg-[#B2955B]"></div>
+                          )}
+                        </div>
+                        <span className="text-sm lg:text-base font-normal font-SFPro text-text leading-tight tracking-tight">
+                          All
+                        </span>
+                      </label>
+
+                      {/* Dynamic Skin Types */}
+                      {jenisKulit?.map((item) => (
+                        <label
+                          className="flex items-center space-x-2 cursor-pointer"
                           key={item._id}>
                           <input
                             type="radio"
                             name="filterSkin"
+                            className="hidden"
                             value={item.name}
                             checked={filterSkin === item.name}
                             onChange={() => setFilterSkin(item.name)}
                           />
-                          <label className="text-sm lg:text-base font-normal font-SFPro text-text">
+                          <div
+                            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all 
+                ${
+                  filterSkin === item.name
+                    ? "border-[#B2955B]"
+                    : "border-[#DCDCDC]"
+                }`}>
+                            {filterSkin === item.name && (
+                              <div className="w-3 h-3 rounded-full bg-[#B2955B]"></div>
+                            )}
+                          </div>
+                          <span className="text-sm lg:text-base font-normal font-SFPro text-text leading-tight tracking-tight">
                             {item.name}
-                          </label>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="text-center">Loading...</div>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-col items-start space-y-2  w-[85%]">
-                  <h1 className="text-base lg:text-lg font-medium font-SFPro text-secondary ">
-                    Kategori
-                  </h1>
-                  <div className="grid grid-cols-2 w-[90%]">
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="radio"
-                        name="filterSkin"
-                        value="all"
-                        checked={filterType === "all"}
-                        onChange={() => setFilterType("all")}
-                      />
-                      <label className="text-sm lg:text-base font-normal font-SFPro text-text">
-                        All
-                      </label>
+                          </span>
+                        </label>
+                      ))}
                     </div>
-                    {productType ? (
-                      productType.map((item) => (
+                  </div>
+                  {/* Category Filter */}
+                  <div className="flex flex-col items-start space-y-2 w-[85%] mt-12">
+                    <h1 className="text-base lg:text-lg  font-medium font-SFPro text-secondary leading-snug tracking-normal">
+                      Kategori
+                    </h1>
+                    <div className="grid grid-cols-2 w-[90%]  gap-4">
+                      {/* ALL Categories Option */}
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="filterType"
+                          value="all"
+                          className="hidden"
+                          checked={filterType === "all"}
+                          onChange={() => setFilterType("all")}
+                        />
                         <div
-                          className="flex items-center space-x-2"
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all 
+              ${
+                filterType === "all" ? "border-[#B2955B]" : "border-gray-400"
+              }`}>
+                          {filterType === "all" && (
+                            <div className="w-3 h-3 rounded-full bg-[#B2955B]"></div>
+                          )}
+                        </div>
+                        <span className="text-sm lg:text-base font-normal font-SFPro text-text leading-tight tracking-tigh">
+                          All
+                        </span>
+                      </label>
+
+                      {/* Dynamic Product Types */}
+                      {productType?.map((item) => (
+                        <label
+                          className="flex items-center space-x-2 cursor-pointer"
                           key={item._id}>
                           <input
                             type="radio"
-                            name="productType"
+                            name="filterType"
+                            className="hidden"
                             value={item.name}
-                            onChange={(e) => setFilterType(e.target.value)}
                             checked={filterType === item.name}
-                            key={item._id}
+                            onChange={() => setFilterType(item.name)}
                           />
-                          <label className="text-sm lg:text-base font-normal font-SFPro text-text">
+                          <div
+                            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all 
+                ${
+                  filterType === item.name
+                    ? "border-[#B2955B]"
+                    : "border-gray-400"
+                }`}>
+                            {filterType === item.name && (
+                              <div className="w-3 h-3 rounded-full bg-[#B2955B]"></div>
+                            )}
+                          </div>
+                          <span className="text-sm lg:text-base font-normal font-SFPro text-text leading-tight tracking-tigh">
                             {item.name}
-                          </label>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="text-center">Loading...</div>
-                    )}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Apply Button */}
+                  <div className="w-[85%] flex items-center justify-start mt-12">
+                    <button
+                      onClick={() => setIsFilterOpen(false)}
+                      className="mt-2 w-[80%] lg:w-fit bg-secondary text-white lg:text-base text-sm rounded-lg lg:px-5 lg:py-3 p-2
+                      hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.30)]  ">
+                      Terapkan
+                    </button>
                   </div>
                 </div>
-                <button
-                  onClick={() => setIsFilterOpen(false)}
-                  className="mt-2 w-[80%] lg:w-fit bg-secondary text-white rounded-md p-2">
-                  Terapkan
-                </button>
+
+                <div className="absolute bottom-0 left-0 z-0 w-fit h-fit">
+                  <picture>
+                    {/* Show fotoDesktop on screens larger than 1024px */}
+                    <source
+                      media="(min-width: 1024px)"
+                      srcSet={bgFilterDesktop}
+                    />
+                    {/* Default to fotoMobile for smaller screens */}
+                    <img
+                      src={bgFilterMobile}
+                      className="w-screen lg:w-full h-fit object-cover"
+                    />
+                  </picture>
+                </div>
               </div>
             </div>
           </ConfirmPopUp>
 
-          <div className="flex flex-col items-end w-[80%] mt-4">
+          <div className="flex items-center justify-between w-[80%] mt-4">
+            <h1
+              className="font-SFPro font-medium text-base tracking-tight leading-tight text-secondary
+            lg:text-2xl lg:leading-[30px] lg:tracking-wide">
+              Semua Produk
+            </h1>
             <button
               onClick={() => setIsFilterOpen(true)}
-              className="flex items-center bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition">
+              className="flex items-center p-1 rounded-md hover:bg-gray-300 transition">
               <img src={FilterIcon} alt="Filter" className="w-6 h-6" />
             </button>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-[90%] lg:w-[80%] gap-4 mt-[18px]">
             {loading ? (
-              <div className="col-span-full text-center">
-                Loading products...
-              </div>
+              <LoadingSpinner />
             ) : error ? (
               <div className="col-span-full text-center text-red-500">
                 {error}

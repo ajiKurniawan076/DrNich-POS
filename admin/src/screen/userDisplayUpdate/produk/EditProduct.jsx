@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { Children, useEffect, useState } from "react";
+import React, { Children, useEffect, useRef, useState } from "react";
 import Navbar from "../../../assets/component/navbar";
 import axios from "axios";
 import ConfirmPopUp from "../../../assets/component/confirmPopUp";
@@ -24,6 +24,8 @@ function EditProduct() {
   const [messageType, setMessageType] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const imageRef=useRef(null)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,8 +84,8 @@ function EditProduct() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     setLoading(true);
+  
     try {
       // Validate all required fields
       if (
@@ -108,49 +110,48 @@ function EditProduct() {
         });
         throw new Error("Please fill in all fields");
       }
-
+  
       // Validate price as a positive number
       const parsedHarga = parseFloat(harga);
       if (isNaN(parsedHarga) || parsedHarga <= 0) {
         throw new Error("Please enter a valid price");
       }
-
-      // Prepare payload
-      const payload = {
-        nama,
-        deskripsi,
-        foto: image,
-        manfaat,
-        cara_pakai: caraPakai,
-        harga: parsedHarga, // Ensure price is sent as a number
-        kategori,
-        tipeProduk,
-      };
-
+  
+      // Prepare FormData payload for file upload
+      const formData = new FormData();
+      formData.append("nama", nama);
+      formData.append("deskripsi", deskripsi);
+      formData.append("foto", imageRef.current.files[0]); // File must be in FormData
+      formData.append("manfaat", manfaat);
+      formData.append("cara_pakai", caraPakai);
+      formData.append("harga", parsedHarga); // Price as number
+      formData.append("kategori", kategori);
+      formData.append("tipeProduk", tipeProduk);
+  
       // Send data to the server
       const { data } = await axios.put(
-        `${
-          import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/produk/updateproduk/${id}`,
-        payload,
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/updateproduk/${id}`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
-
+  
       // Show success message
-      showMessage(data.message || "Product Edited successfully", "success");
-
+      showMessage(data.message || "Product edited successfully", "success");
+  
       setTimeout(() => {
         navigate("/produk");
       }, 3000);
-
+  
       // Reset form fields
       setNama("");
       setDeskripsi("");
-      setImage("");
+      setImage(null);
       setManfaat("");
       setCaraPakai("");
       setHarga("");
@@ -165,6 +166,7 @@ function EditProduct() {
       setLoading(false);
     }
   };
+  
 
   const showMessage = (msg, type) => {
     setMessage(msg);

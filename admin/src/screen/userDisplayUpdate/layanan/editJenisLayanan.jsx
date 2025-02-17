@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../../../assets/component/navbar";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -17,6 +17,7 @@ function EditJenisLayanan() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const imageRef = useRef(null)
 
   useEffect(() => {
     const fetchJenisLayanan = async () => {
@@ -57,30 +58,36 @@ function EditJenisLayanan() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const Djenis = {
-      nama: nama,
-      foto: image,
-      deskripsi: deskripsi,
-    };
-
+    setIsLoading(true);
+  
     try {
-      setIsLoading(true);
+      // Create FormData to handle file upload
+      const formData = new FormData();
+      formData.append("nama", nama);
+      formData.append("deskripsi", deskripsi);
+      
+      // Append image only if a new file is selected
+      if (imageRef.current.files[0]) {
+        formData.append("foto", imageRef.current.files[0]);
+      }
+  
+      // Send PUT request with FormData
       const res = await axios.put(
-        `${
-          import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/layanan/updateJenisLayanan/${id}`,
-        Djenis,
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/updateJenisLayanan/${id}`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
+  
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
-        navigate(`/layanan`); // Navigate to another page after success (optional)
+        navigate(`/layanan`); // Navigate to another page after success
       }, 3000);
     } catch (error) {
       setError(error.response?.data?.message || "An error occurred");
@@ -88,6 +95,7 @@ function EditJenisLayanan() {
       setIsLoading(false);
     }
   };
+  
 
   const convertBase64 = (e) => {
     const file = e.target.files[0];
@@ -193,6 +201,7 @@ function EditJenisLayanan() {
                       Add Image
                       <input
                         type="file"
+                        ref={imageRef}
                         accept="image/*"
                         className="hidden"
                         onChange={convertBase64}

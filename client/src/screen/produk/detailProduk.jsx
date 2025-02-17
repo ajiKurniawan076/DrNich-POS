@@ -77,7 +77,7 @@ function DetailProduk() {
 
   return (
     <section className="flex flex-col items-center space-y-4">
-      <div className="fixed w-full z-10">
+      <div className="fixed w-full z-50">
         <Navbar selected={"Produk"} />
       </div>
       <div className="flex items-center w-[90%] lg:w-[80%] justify-start space-x-2 mt-4 pt-20">
@@ -146,9 +146,9 @@ function DetailProduk() {
                 </h1>
               </div>
               <div className="w-full justify-between items-start mt-4 hidden lg:flex">
-                <button className ="w-full bg-secondary text-white font-SFPro text-sm py-2 rounded-lg leading-tight tracking-tight hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.30)] hover:shadow-[0px_8px_12px_6px_rgba(0,0,0,0.15)]"
-                  onClick={() => sendWhatsAppProdukMessage(nama)}
-                >
+                <button
+                  className="w-full bg-secondary text-white font-SFPro text-sm py-2 rounded-lg leading-tight tracking-tight hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.30)] hover:shadow-[0px_8px_12px_6px_rgba(0,0,0,0.15)]"
+                  onClick={() => sendWhatsAppProdukMessage(nama)}>
                   Order Melalui WhatsApp
                 </button>
               </div>
@@ -250,9 +250,9 @@ function DetailProduk() {
               </div>
             </div>
             <div className="w-full flex justify-between items-start mt-4 lg:hidden">
-              <button className="w-full bg-secondary text-white font-SFPro text-sm py-2 rounded-lg leading-tight tracking-tight hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.30)] hover:shadow-[0px_8px_12px_6px_rgba(0,0,0,0.15)] "
-              onClick={() => sendWhatsAppProdukMessage(nama)}
-              >
+              <button
+                className="w-full bg-secondary text-white font-SFPro text-sm py-2 rounded-lg leading-tight tracking-tight hover:shadow-[0px_4px_4px_0px_rgba(0,0,0,0.30)] hover:shadow-[0px_8px_12px_6px_rgba(0,0,0,0.15)] "
+                onClick={() => sendWhatsAppProdukMessage(nama)}>
                 Order Melalui WhatsApp
               </button>
             </div>

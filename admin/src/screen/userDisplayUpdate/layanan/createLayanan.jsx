@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Navbar from "../../../assets/component/navbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -18,6 +18,7 @@ function CreateLayanan() {
 
   const [jenisLayanan, setJenisLayanan] = useState([]);
   const [loading, setLoading] = useState(false);
+  const imageRef = useRef(null)
 
   // Fetch Jenis Layanan
   useEffect(() => {
@@ -77,26 +78,47 @@ function CreateLayanan() {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     // Validate Inputs
     if (!nama || !durasi || !harga || !deskripsi || !idJenis || !image) {
       toast.error("All fields are required.");
       setLoading(false);
       return;
     }
-
+  
     try {
+      // Create FormData
+      const formData = new FormData();
+      formData.append("nama", nama);
+      formData.append("durasi", durasi);
+      formData.append("harga", harga);
+      formData.append("deskripsi", deskripsi);
+      formData.append("cardDeskripsi", cardDeskripsi);
+      formData.append("idJenis", idJenis);
+  
+      // Append image only if selected
+      if (imageRef.current.files[0]) {
+        formData.append("image", imageRef.current.files[0]);
+      }
+  
       const { data } = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/tambahLayanan`,
-        { nama, durasi, harga, deskripsi, image, cardDeskripsi, idJenis },
-        { headers: { "Content-Type": "application/json" } }
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
       );
-
+  
       toast.success("Layanan successfully created!");
       setTimeout(() => {
-        toast.success("Redirecting...");
         window.location.href = "/layanan";
       }, 3000);
+  
+      // Reset form
       setNama("");
       setDurasi("");
       setHarga("");
@@ -106,15 +128,12 @@ function CreateLayanan() {
       setImage(null);
     } catch (err) {
       console.error(err);
-      toast.error(
-        `Failed to create layanan: ${
-          err.response?.data?.message || "Unknown error"
-        }`
-      );
+      toast.error(`Failed to create layanan: ${err.response?.data?.message || "Unknown error"}`);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <>
@@ -153,6 +172,7 @@ function CreateLayanan() {
                         Add
                         <input
                           type="file"
+                          ref={imageRef}
                           accept="image/*"
                           className="hidden"
                           onChange={convertBase64}

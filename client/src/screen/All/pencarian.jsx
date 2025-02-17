@@ -36,6 +36,7 @@ import "swiper/css/navigation";
 import { useLocation, useParams } from "react-router-dom";
 import CardLayanan from "../../components/CardLayanan.jsx";
 import ProdukCard from "../../components/ProdukCard.jsx";
+import LoadingSpinner from "../../components/LoadingSpinner.jsx";
 
 function Pencarian() {
   const progressCircle = useRef(null);
@@ -45,7 +46,7 @@ function Pencarian() {
   //Paging
   const [indexlayanan, setIndexL] = useState(0);
   const [indexProduk, setIndexP] = useState(0);
-  const postPerPage = 4;
+  const postPerPage = 6;
   const firstIndexL = indexlayanan * postPerPage;
   const firstIndexP = indexProduk * postPerPage;
   const lastIndexL = firstIndexL + postPerPage;
@@ -90,6 +91,33 @@ function Pencarian() {
     }
   };
 
+  const Pagination = ({ pages, currentIndex, onPrev, onNext, onPageClick }) => {
+    return (
+      <div className="flex gap-1 mt-4 justify-center text-gray-600">
+        <button
+          className="border-2 border-secondary hover:bg-secondary hover:text-white rounded-l-lg w-10"
+          onClick={onPrev}>
+          {"<"}
+        </button>
+        {pages.map((n, i) => (
+          <button
+            key={i}
+            className={`border-2 border-secondary h-10 w-10 hover:bg-secondary hover:text-white rounded-sm ${
+              currentIndex === n - 1 && "text-white bg-secondary"
+            }`}
+            onClick={() => onPageClick(n)}>
+            {n}
+          </button>
+        ))}
+        <button
+          className="border-2 border-secondary hover:bg-secondary hover:text-white rounded-r-lg w-10"
+          onClick={onNext}>
+          {">"}
+        </button>
+      </div>
+    );
+  };
+
   // FETCH DATA
   const location = useLocation();
   const queryParam = new URLSearchParams(location.search);
@@ -115,6 +143,7 @@ function Pencarian() {
       setLoading(false);
     } catch (error) {
       setError(error.response?.data?.message || "An error occurred");
+      setLoading(false);
     }
   };
 
@@ -122,141 +151,103 @@ function Pencarian() {
     fetchData();
   }, []);
   return (
-    <>
+    <main className="w-full flex flex-col items-center">
       <Navbar selected={""} />
-      <div className="mt-[18px]">
-        <div className="flex-col">
-          <div className="flex gap-[6px] mx-[25px] lg:mx-[120px]">
-            <a
-              href="/"
-              className="text-[#bdbdbd] text-xs font-nxormal font-SFPro tracking-tight lg:text-sm">
-              Beranda
-            </a>
-            <img src={arrow} alt="" />
-            <p className="text-[#bdbdbd] text-xs font-nxormal font-SFPro tracking-tight lg:text-sm">
-              Hasil Pencarian dari &quot;{query}&quot;
-            </p>
-          </div>
+      <div className="mt-5 w-full flex flex-col items-center">
+        {/* Breadcrumbs */}
+        <div className="w-[90%] lg:w-[85%] flex justify-start gap-2">
+          <a
+            href="/"
+            className="text-disable-text text-xs lg:text-sm font-SFPro">
+            Beranda
+          </a>
+          <img src={arrow} alt="" />
+          <p className="text-disable-text text-xs lg:text-sm font-SFPro">
+            Hasil Pencarian dari &quot;{query}&quot;
+          </p>
         </div>
-        <div className="w-full h-full flex flex-col items-center mt-[30px]">
-          {/* Layanan */}
-          <div className="w-full h-fit flex flex-col text-center">
-            <h3 className="font-bold">Hasil Pencarian Layanan</h3>
-            <div
-              className={`w-full h-fit mt-5 grid grid-cols-1 place-items-center ${
-                layanan.length > 0 ? "lg:grid-cols-3 lg:gap-4" : ""
-              } gap-2`}>
-              {recordLayanan.length > 0 ? (
-                recordLayanan.map((item) => (
-                  <div className="h-fit w-fit" key={item._id}>
-                    <CardLayanan item={item} />
-                  </div>
-                ))
-              ) : (
-                <div className="flex w-full justify-center">
-                  <h4 className="">Tidak Ada Data</h4>
-                </div>
-              )}
-            </div>
-            {recordLayanan.length > 0 && (
-              <div className="flex gap-1 mt-4 justify-center text-gray-600">
-                <button
-                  className=" border-2 border-gray-700 hover:bg-gray-500 hover:text-white rounded-l-lg w-10"
-                  onClick={() => {
-                    prevL();
-                  }}>
-                  {" "}
-                  {`<`}{" "}
-                </button>
-                {pageslayanan.map((n, i) => (
-                  <button
-                    className={`border-2 border-gray-700 h-10 hover:bg-gray-500 hover:text-white rounded-sm w-10 ${
-                      indexlayanan === n - 1 && "text-white bg-gray-700"
-                    }`}
-                    key={i}
-                    onClick={() => topageL(n)}>
-                    {" "}
-                    {n}{" "}
-                  </button>
-                ))}
-                <button
-                  className=" border-2 border-gray-700 hover:bg-gray-500 hover:text-white rounded-r-lg w-10"
-                  onClick={() => {
-                    nextL();
-                  }}>
-                  {" "}
-                  {`>`}{" "}
-                </button>
+
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <div className="w-[90%] lg:w-[85%] flex flex-col items-center mt-8">
+            {/* If No Data Found, Show Only One Message */}
+            {recordLayanan.length === 0 && recordProduk.length === 0 ? (
+              <div className="w-full flex justify-center items-center mt-10">
+                <h3 className="text-lg font-medium">Tidak Ada Data</h3>
               </div>
+            ) : (
+              <>
+                {/* Layanan */}
+                {recordLayanan.length > 0 && (
+                  <section className="w-full text-center">
+                    <h3 className="font-bold text-lg lg:text-xl w-full text-left   text-[#c2a353]">
+                      Hasil Pencarian Layanan
+                    </h3>
+                    <div className="w-full mt-5 grid place-items-center gap-4 lg:grid-cols-3">
+                      {recordLayanan.map((item) => (
+                        <CardLayanan key={item._id} item={item} />
+                      ))}
+                    </div>
+
+                    {/* Pagination Layanan */}
+                    <Pagination
+                      pages={pageslayanan}
+                      currentIndex={indexlayanan}
+                      onPrev={prevL}
+                      onNext={nextL}
+                      onPageClick={topageL}
+                      color="#c2a353"
+                    />
+                  </section>
+                )}
+
+                {/* Produk */}
+                {recordProduk.length > 0 && (
+                  <section className="w-full text-center mt-6">
+                    <h3 className="font-bold text-lg lg:text-xl w-full text-left  text-[#c2a353]">
+                      Hasil Pencarian Produk
+                    </h3>
+                    <div className="w-full mt-5 grid place-items-center gap-4 lg:grid-cols-4">
+                      {recordProduk.map((item) => (
+                        <div key={item._id} className="rounded-lg p-3">
+                          <ProdukCard item={item} />
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Pagination Produk */}
+                    <Pagination
+                      pages={pagesproduk}
+                      currentIndex={indexProduk}
+                      onPrev={prevP}
+                      onNext={nextP}
+                      onPageClick={topageP}
+                      color="#c2a353"
+                    />
+                  </section>
+                )}
+              </>
             )}
 
-            {/* Produk */}
-            <h3 className="font-bold mt-3">Hasil Pencarian Produk</h3>
-            <div
-              className={`w-full h-fit mt-5 grid grid-cols-1 place-items-center ${
-                produk.length > 0 ? "lg:grid-cols-4 lg:gap-4" : ""
-              } gap-2`}>
-              {recordProduk.length > 0 ? (
-                recordProduk.map((item) => (
-                  <div className="h-fit w-fit bg-black" key={item._id}>
-                    <ProdukCard item={item} />
-                  </div>
-                ))
-              ) : (
-                <div className="flex w-full justify-center">
-                  <h4 className="mb-2">Tidak Ada Data</h4>
-                </div>
-              )}
-            </div>
-            {recordProduk.length > 0 && (
-              <div className="flex gap-1 mt-4 justify-center text-gray-600">
-                <button
-                  className=" border-2 border-gray-700 hover:bg-gray-500 hover:text-white rounded-l-lg w-10"
-                  onClick={() => {
-                    prevP();
-                  }}>
-                  {" "}
-                  {`<`}{" "}
-                </button>
-                {pagesproduk.map((n, i) => (
-                  <button
-                    className={`border-2 border-gray-700 h-10 hover:bg-gray-500 hover:text-white rounded-sm w-10 ${
-                      indexProduk === n - 1 && "text-white bg-gray-700"
-                    }`}
-                    key={i}
-                    onClick={() => topageP(n)}>
-                    {" "}
-                    {n}{" "}
-                  </button>
-                ))}
-                <button
-                  className=" border-2 border-gray-700 hover:bg-gray-500 hover:text-white rounded-r-lg w-10"
-                  onClick={() => {
-                    nextP();
-                  }}>
-                  {" "}
-                  {`>`}{" "}
-                </button>
-              </div>
-            )}
-
-            {/* Lihat Lainnya */}
-            <div className="mt-6 h-full">
-              <button className="w-[109px] h-[31px] text-[#c2a353] rounded-[10px] border border-[#c2a353] text-sm font-medium">
+            {/* Lihat Lainnya Button */}
+            <div className="mt-6">
+              <button className="w-28 h-8 text-[#c2a353] border border-[#c2a353] rounded-md text-sm font-medium transition-all hover:bg-[#c2a353] hover:text-white">
                 Lihat Lainnya
               </button>
             </div>
           </div>
-        </div>
+        )}
       </div>
-      <section className="lg:w-[70%] w-[90%]">
+
+      <section className="lg:w-[80%] w-[90%]">
         <LayananPopuler />
       </section>
-      <section className="lg:w-[70%] w-[90%]">
+      <section className="lg:w-[80%] w-[90%]">
         <ProdukTerbaru />
       </section>
       <Footer />
-    </>
+    </main>
   );
 }
 

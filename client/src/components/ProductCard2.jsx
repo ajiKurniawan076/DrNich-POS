@@ -14,11 +14,11 @@ function ProdukCard({ item }) {
             className="w-[155px] bg-red-100 h-[155px] object-fill mx-auto mt-1 rounded-xl"
             alt=""
           />
-          <p className="w-full h-auto max-w-[155px]   text-[#464646] text-left text-sm mt-1 lg:mt-2 font-normal font-SFPro leading-tight tracking-tight line-clamp-2">
+          <p className="w-full max-w-[155px]   text-[#464646] text-left text-sm mt-1 lg:mt-2 font-normal font-SFPro leading-tight tracking-tight line-clamp-2">
             {item.nama}
           </p>
           {/* type shi */}
-          <div className="flex items-center gap-2 mt-2 text-[#bdbdbd] text-xs font-medium font-SFPro leading-tight tracking-tight">
+          <div className="flex items-center gap-2  text-[#bdbdbd] text-xs font-medium font-SFPro leading-tight tracking-tight">
             <p className="text-xs font-medium font-SFPro leading-tight tracking-tight">
               {item.kategori?.name}
             </p>
@@ -28,7 +28,7 @@ function ProdukCard({ item }) {
             </p>
           </div>
           {/* harga */}
-          <div className="flex items-center gap-2 mx-2 text-[#c2a353] my-2 text-base font-bold font-SFPro leading-tight tracking-tight">
+          <div className="flex items-center gap-2 text-[#c2a353] my-2  text-base font-bold font-SFPro leading-tight tracking-tight">
             <p>Rp {item.harga?.toLocaleString("id-ID")}</p>
           </div>
         </div>

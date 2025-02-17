@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../../../assets/component/navbar.jsx";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,8 @@ function LayananUD() {
   const [deskripsi, setDeskripsi] = useState("");
   const [cardDeskripsi, setCardDeskripsi] = useState("");
   const [idJenis, setIdJenis] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null)
+  const imageRef = useRef(null)
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -80,27 +81,37 @@ function LayananUD() {
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
+  
     try {
-      console.log("jenis update :", idJenis);
+      console.log("jenis update:", idJenis);
+  
+      // Create FormData to handle file upload
+      const formData = new FormData();
+      formData.append("idJenis", idJenis);
+      formData.append("durasi", durasi);
+      formData.append("harga", harga);
+      formData.append("deskripsi", deskripsi);
+      formData.append("cardDeskripsi", cardDeskripsi);
+      formData.append("nama", nama);
+      
+      // Append image only if a new one is selected
+      if (imageRef.current.files[0]) {
+        formData.append("image", imageRef.current.files[0]);
+      }
+  
+      // Send PUT request with FormData
       const { data } = await axios.put(
-        `${
-          import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/layanan/updateLayanan/${id}`,
-        {
-          idJenis: idJenis,
-          durasi: durasi,
-          harga: harga,
-          deskripsi: deskripsi,
-          cardDeskripsi: cardDeskripsi,
-          image: image,
-          nama: nama,
-        },
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/updateLayanan/${id}`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
+  
       console.log("updated", data);
       setSuccessMessage(data.message);
     } catch (error) {
@@ -109,6 +120,7 @@ function LayananUD() {
       setLoading(false);
     }
   };
+  
 
   const handleDelete = async () => {
     setLoading(true);
@@ -207,6 +219,7 @@ function LayananUD() {
                       Add
                       <input
                         type="file"
+                        ref={imageRef}
                         accept="image/*"
                         className="hidden"
                         onChange={convertBase64}

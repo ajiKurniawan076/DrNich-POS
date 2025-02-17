@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../../../assets/component/navbar.jsx";
 import ConfirmPopup from "../../../assets/component/confirmPopUp.jsx";
 import axios from "axios";
@@ -28,6 +28,8 @@ function ListGallery() {
   const [open, setOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [editing, setEditing] = useState(false);
+  const imageRef = useRef(null)
+  const imageRef2 = useRef(null)
 
   const fetchGallery = async () => {
     try {
@@ -57,33 +59,43 @@ function ListGallery() {
   const handleAddContent = async (e) => {
     e.preventDefault();
     try {
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append("judul", judul);
+      formData.append("link", link);
+      formData.append("channel", channel);
+      formData.append("sosmed", sosmed);
+      formData.append("deskripsi", deskripsi);
+  
+      // Append image only if selected
+      if (imageRef.current.files[0]) {
+        formData.append("thumbnail", imageRef.current.files[0]);
+      }
+  
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/gallery/createGaleri`,
-        {
-          judul: judul,
-          thumbnail: image,
-          link: link,
-          channel: channel,
-          sosmed: sosmed,
-          deskripsi: deskripsi,
-        },
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
+  
       if (response.status === 200) {
         setOpen(false);
         fetchGallery();
       } else {
-        setError("Failed to add promo. Please try again later.");
+        setError("Failed to add content. Please try again later.");
       }
     } catch (err) {
-      console.error("Error adding promo:", err.message);
-      setError("Failed to add promo. Please try again later.");
+      console.error("Error adding content:", err.message);
+      setError("Failed to add content. Please try again later.");
     }
   };
+  
 
   const deleteGaleri = () => {
     try {
@@ -101,34 +113,42 @@ function ListGallery() {
     console.log("Delete promo with id:", selectedContent._id);
   };
 
-  const editGaleri = (e) => {
+  const editGaleri = async (e) => {
     e.preventDefault();
     try {
-      const response = axios.put(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/gallery/editGaleri/${
-          selectedContent._id
-        }`,
-        {
-          judul: editJudul,
-          thumbnail: editImage,
-          link: editLink,
-          channel: editChannel,
-          sosmed: editSosmed,
-          deskripsi: editDeskripsi,
-        },
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append("judul", editJudul);
+      formData.append("link", editLink);
+      formData.append("channel", editChannel);
+      formData.append("sosmed", editSosmed);
+      formData.append("deskripsi", editDeskripsi);
+  
+      // Append image only if selected
+      if (imageRef2.current.files[0]) {
+        formData.append("thumbnail", imageRef2.current.files[0]);
+      }
+  
+      await axios.put(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/gallery/editGaleri/${selectedContent._id}`,
+        formData,
         {
           headers: {
-            "Content-Type": "application/json", // Ensure proper content type
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          withCredentials: true,
         }
       );
+  
       fetchGallery();
+      console.log("Edited gallery with id:", selectedContent._id);
     } catch (error) {
-      console.error("Error editing promo:", error.message);
-      setError("Failed to edit promo. Please try again later.");
+      console.error("Error editing gallery:", error.message);
+      setError("Failed to edit gallery. Please try again later.");
     }
-    console.log("Edit promo with id:", selectedContent._id);
   };
+  
 
   const handleEdit = (item, e) => {
     e.preventDefault();
@@ -208,6 +228,7 @@ function ListGallery() {
                   Add
                   <input
                     type="file"
+                    ref={imageRef}
                     accept="image/*"
                     className="hidden"
                     onChange={convertBase64}
@@ -324,6 +345,7 @@ function ListGallery() {
                   Add
                   <input
                     type="file"
+                    ref={imageRef2}
                     accept="image/*"
                     className="hidden"
                     onChange={convertBase64}

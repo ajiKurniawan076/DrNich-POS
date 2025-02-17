@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../../../assets/component/navbar.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ function ListLayanan() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const imageRef = useRef(null)
 
   const fetchData = async () => {
     try {
@@ -71,33 +72,42 @@ function ListLayanan() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const Djenis = {
-      nama: jenis,
-      foto: image,
-      deskripsi: deskripsi,
-    };
+  
     try {
-      const res = (
-        await axios.post(
-          `${
-            import.meta.env.VITE_BASE_URL_BACKEND
-          }/api/layanan/tambahJenisLayanan`,
-          Djenis,
-          {
-            headers: {
-              "Content-Type": "application/json", // Ensure proper content type
-            },
-          }
-        )
-      ).data;
-      console.log(res);
+      // Validate required fields
+      if (!jenis.trim()) throw new Error("Mohon isi nama layanan!");
+      if (!imageRef.current.files[0]) throw new Error("Mohon pilih gambar layanan!");
+      if (!deskripsi.trim()) throw new Error("Mohon isi deskripsi layanan!");
+  
+      // Create FormData
+      const formData = new FormData();
+      formData.append("nama", jenis);
+      formData.append("foto", imageRef.current.files[0]); // Append file correctly
+      formData.append("deskripsi", deskripsi);
+  
+      // Send request with multipart/form-data
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/tambahJenisLayanan`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+  
+      console.log(data);
       setOpen(false);
       fetchData();
     } catch (error) {
-      setError(error.response?.data?.message || "An error occurred");
-      alert(error.response?.data?.message || "An error occurred");
+      const errorMessage = error.response?.data?.message || "An error occurred";
+      setError(errorMessage);
+      alert(errorMessage);
     }
   };
+  
 
   function convertBase64(e) {
     const file = e.target.files[0];
@@ -160,6 +170,7 @@ function ListLayanan() {
                     Add
                     <input
                       type="file"
+                      ref={imageRef}
                       accept="image/*"
                       className="hidden"
                       onChange={convertBase64}

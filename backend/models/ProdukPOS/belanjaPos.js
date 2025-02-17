@@ -6,6 +6,13 @@ const BelanjaPosSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    supplier: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "supplierPos", 
+  },
+    invoice: {},
+    pembayaran: {},
+    kembalian: {},
     belanjaDetail: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "detailBelanjaPos",
