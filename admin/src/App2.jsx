@@ -147,6 +147,8 @@ import { EditDiskon } from "./pages/Promo/EditDiskon";
 import { EditCashback } from "./pages/cashback/EditCashback";
 import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
+import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
+import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
 axios.defaults.withCredentials = true;
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
@@ -330,7 +332,7 @@ function App2() {
                 element={<LaporanPersediaan />}
               />
               <Route
-                path="/LaporanPersediaanDetail/"
+                path="/LaporanPersediaanDetail/:_id"
                 element={<LaporanPersediaanDetail />}
               />
               <Route path="/LaporanLogProduk/" element={<LaporanLogProduk />} />
@@ -465,6 +467,9 @@ function App2() {
               <Route path="/EditDiskon/:id" element={<EditDiskon />} />
               <Route path="/EditCashback/:id" element={<EditCashback />} />
               <Route path="/transaksihapus" element={<Transaksihapus />} />
+              <Route path="/LaporanLihatStruk/:id" element={<LaporanLihatStruk />} />
+              <Route path="/StrukPembelianStok/:id" element={<StrukPembelianStok />} />
+
             </Routes>
           </div>
         </div>

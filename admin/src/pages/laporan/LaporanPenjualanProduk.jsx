@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { navContext } from "../../App2"
 import iTgl from "../../assets/iconproduk/iTgl.svg";
 import iPanahB from "../../assets/iconmanajement/iPanahB.svg";
@@ -7,6 +7,7 @@ import iPan from "../../assets/iconLaporanPenjualan/iPan.svg";
 import iFrameGra from "../../assets/iconLaporanPenjualan/iFrameGra.svg";
 import iFrameKet2 from "../../assets/iconLaporanPenjualan/iFrameKet2.svg";
 import DatePicker from 'react-datepicker'
+import axios from 'axios';
 
 
 export const LaporanPenjualanProduk = () => {
@@ -14,8 +15,9 @@ export const LaporanPenjualanProduk = () => {
     const cari = useRef(null)
     const [button, setButton] = useState();
     const [button2, setButton2] = useState();
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
+    const [startDate, setStartDate] = useState(new Date("2025-01-01T00:00:00Z"));
+    const [endDate, setEndDate] = useState(new Date().toISOString().split('.')[0] + 'Z');
+    const [data, setData] = useState();
         
     const datePickerRef = useRef(null); // Create a ref for the DatePicker
             
@@ -36,6 +38,28 @@ export const LaporanPenjualanProduk = () => {
                 setButton2(false)
             }
     };
+
+    useEffect(() => {
+        const tanggal = { dari : "2025-01-01T00:00:00Z", sampai : new Date().toISOString().split('.')[0] + 'Z'}
+        const fetchData = async () => {
+            await axios
+                .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
+                .then((response) => (setData(response.data),console.log(response.data)))
+        }
+        fetchData();
+        console.log(tanggal)
+    }, [])
+    
+    useEffect(() => {
+        const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z' , sampai: endDate}
+        console.log(tanggal)
+        const fetch = async () => {
+            await axios
+                .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
+                .then((response) => (setData(response.data)))
+        }
+        fetch()
+    }, [startDate, endDate])
 
 setLink('/pos/laporan')
 setNav('Laporan Produk')   
@@ -99,19 +123,27 @@ return (
                 // onChange={}
             >
                 <option value="" className="text-gray-300" selected disabled>
-                    Semua Kategori
+                    Minggu ini
                 </option>
-                <option value="pria">Pria</option>
-                <option value="wanita">Wanita</option>
+                <option value="wanita">Hari ini</option>
+                <option value="pria">Kemarin</option>
+                <option value="pria">Bulan Ini</option>
+                <option value="pria">Minggu Lalu</option>
+                <option value="pria">Bulan Lalu</option>
+                <option value="pria">Tahun Ini</option>
+                <option value="pria">Tahun Lalu</option>
             </select>
         </div>
+        {/* <button onClick={()=>console.log(data)}>
+            sad
+        </button> */}
         <div>
             <div className='flex justify-between gap-[5px] text-start items-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] my-[10px]'>
                 <div className='flex gap-2 w-full '>
                     <p>Total Produk Terjual</p>
                     <img src={iSeruTrans} alt="seru" />
                 </div>
-                    <p className='text-[14px] font-semibold'>110</p>
+                <p className='text-[14px] font-semibold'>{data?.totalProduk}</p>
             </div>
             <div className='flex justify-between gap-[5px] text-start items-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] my-[10px]'>
                 <div className='grid text-start gap-[6px]'>
@@ -119,7 +151,7 @@ return (
                         <p>Total Produk Keseluruhan</p>
                         <img src={iSeruTrans} alt="seru" />
                     </div>
-                        <p className='text-[14px] font-semibold'>120</p>
+                        <p className='text-[14px] font-semibold'>blm</p>
                 </div>
                 <img src={iPan}  alt="" />
             </div>
@@ -129,7 +161,7 @@ return (
                         <p>Total Kategori Keseluruhan</p>
                         <img src={iSeruTrans} alt="seru" />
                     </div>
-                        <p className='text-[14px] font-semibold'>28</p>
+                        <p className='text-[14px] font-semibold'>blm</p>
                 </div>
                 <img src={iPan}  alt="" />
             </div>

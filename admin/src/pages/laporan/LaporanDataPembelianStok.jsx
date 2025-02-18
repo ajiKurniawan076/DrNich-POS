@@ -142,7 +142,7 @@ export const LaporanDataPembelianStok = () => {
                 >
                     <div className='grid text-start'>
                         <p className='text-[#C2A353]'>belum</p>
-                        <p className='font-semibold text-[14px]'>Rp. {data?.total}</p>
+                        <p className='font-semibold text-[14px]'>Rp. {data?.total.toLocaleString('id-ID')}</p>
                     </div>
                     <div className='grid text-end'>
                         <p>{data.createdAt.substring(0, 10)}</p>
