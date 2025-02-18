@@ -1,11 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { navContext } from '../../App2'
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
+import axios from 'axios';
 
 
 export const DaftarStokLimit = () => {
     const { setNav, setLink } = useContext(navContext)
+    const [data, setData] = useState()
+    const [tampil, setTampil] = useState([])
+    const cari = useRef(null)
 
+    useEffect(() => {
+        const fecthData = async () => {
+            await axios
+                .get("https://api.drnich.co.id/api/pos/laporan/laporanlimit")
+                .then((respone) => {
+                    setData(respone.data)
+                    setTampil(respone.data)
+                    console.log(respone.data)
+                })
+        }
+        fecthData();
+    }, [])
+    
+    const filterData = () => {
+        const filter = data.filter(
+            (data) => 
+                data.namaProduk?.toLowerCase().includes(cari.current.value.toLowerCase())
+        )
+        setTampil(filter)
+    }
 
 setLink('/pos/laporan')
 setNav('Daftar Stok Limit')   
@@ -15,62 +39,39 @@ return (
         <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
             <img src={iCari} alt="Cari" />
             <input
-                // onChange={filterData}
-                // ref={cari}
+                onChange={filterData}
+                ref={cari}
                 type="text"
                 className="text-sm w-full h-[30px] focus:outline-none"
                 placeholder="Cari..."
             ></input>
         </form>
         <div className='grid place-items-start gap-[15px]'>
-            <a href='DetailDaftarStokLimit' className='grid place-items-start w-full'>
-                <p>Suncreen SPF 30+ 100ml</p>
-                <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                    <p>Minimum : 25</p>
-                    <p>Tersedia : <span className='text-[#EB5757]'>17</span></p>
-                </div>
-            </a>
-            <div className='border border-[#BDBDBD] w-full'></div>
-            <a href='' className='grid place-items-start w-full'>
-                <p>Suncreen SPF 30+ 100ml</p>
-                <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                    <p>Minimum : 25</p>
-                    <p>Tersedia : <span className='text-[#EB5757]'>17</span></p>
-                </div>
-            </a>
-            <div className='border border-[#BDBDBD] w-full'></div>
-            <a href='' className='grid place-items-start w-full'>
-                <p>Suncreen SPF 30+ 100ml</p>
-                <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                    <p>Minimum : 25</p>
-                    <p>Tersedia : <span className='text-[#EB5757]'>17</span></p>
-                </div>
-            </a>
-            <div className='border border-[#BDBDBD] w-full'></div>
-            <a href='' className='grid place-items-start w-full'>
-                <p>Suncreen SPF 30+ 100ml</p>
-                <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                    <p>Minimum : 25</p>
-                    <p>Tersedia : <span className='text-[#EB5757]'>17</span></p>
-                </div>
-            </a>
-            <div className='border border-[#BDBDBD] w-full'></div>
-            <a href='' className='grid place-items-start w-full'>
-                <p>Suncreen SPF 30+ 100ml</p>
-                <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                    <p>Minimum : 25</p>
-                    <p>Tersedia : <span className='text-[#EB5757]'>17</span></p>
-                </div>
-            </a>
-            <div className='border border-[#BDBDBD] w-full'></div>
-            <a href='' className='grid place-items-start w-full'>
-                <p>Suncreen SPF 30+ 100ml</p>
-                <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                    <p>Minimum : 25</p>
-                    <p>Tersedia : <span className='text-[#EB5757]'>17</span></p>
-                </div>
-            </a>
-            <div className='border border-[#BDBDBD] w-full'></div>
+            {tampil.length === 0 ?
+                (
+                    <div className="flex flex-col w-full h-full items-center justify-center text-[#454545]">
+                        Belum Ada Data!
+                    </div>
+                )
+                :
+                (
+                    <>
+                        {tampil?.map((item, i) => (
+                            <>
+                                <a key={i} href='DetailDaftarStokLimit' className='grid place-items-start w-full'>
+                                    <p>{item.namaProduk}</p>
+                                    <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
+                                        <p>Minimum : {item.minStok}</p>
+                                        <p>Stok Tersedia : <span className='text-[#EB5757]'>{item.stok}</span></p>
+                                    </div>
+                                </a>
+                                <div className='border border-[#BDBDBD] w-full'></div>
+                            </>
+                        ))}
+                    </>
+                )
+            }
+            
         </div>
     </div>
 )
