@@ -28,14 +28,7 @@ export const Produk1 = () => {
   //   console.log(datax);
   useEffect(() => {
     fetchData();
-    const dummy = [
-      { _id: 1, nama: "Andi" },
-      { _id: 2, nama: "Budi" },
-      { _id: 3, nama: "Citra" },
-      { _id: 4, nama: "Dewi" },
-      { _id: 5, nama: "Eko" },
-    ];
-    setDataDummy(dummy);
+
     setNav("Produk");
   }, []);
 
@@ -43,13 +36,13 @@ export const Produk1 = () => {
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
       <div className="flex flex-col justify-between w-full h-full py-3 px-3">
-        {dataDummy.length === 0 ? (
+        {datax.length === 0 ? (
           <div className="flex flex-col w-full h-full items-center justify-center text-black/40">
             Belum Ada Data data Produk
           </div>
         ) : (
           <div className="flex flex-col gap-3 w-full h-full items-center justify-start">
-            {dataDummy.map((data) => (
+            {datax.map((data) => (
               <Link
                 to={{
                   pathname: `/pos/detail2/${data._id}`,
