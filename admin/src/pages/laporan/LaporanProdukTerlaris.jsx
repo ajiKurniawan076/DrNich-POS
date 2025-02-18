@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { navContext } from "../../App2"
 import iPanahB from "../../assets/iconmanajement/iPanahB.svg";
 import i1 from "../../assets/iconLaporanPenjualan/i1.svg";
@@ -11,6 +11,10 @@ export const LaporanProdukTerlaris = () => {
     const { setNav, setLink } = useContext(navContext)
     const [data, setData] = useState([])
     const [datax, setDatax] = useState([])
+    const [tampil, setTampil] = useState("jumlah")
+    const [tampilx, setTampilx] = useState("pendapatan")
+    const tampilRef = useRef()
+    const tampilRefx = useRef()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,13 +26,20 @@ export const LaporanProdukTerlaris = () => {
                 const shortx = sortedDatax.slice(0, 4);
                 setData(short)
                 setDatax(shortx)
-                console.log(response)
             } catch (error) {
                 console.error("Error Fetching data:", error)
             }
         }
         fetchData()
     }, [])
+
+    const PilihProduk = () => {
+        setTampil(tampilRef.current.value)
+    }
+
+    const PilihKategori = () => {
+        setTampilx(tampilRefx.current.value)
+    }
     
     useEffect(() => {
         setLink('/pos/laporan')
@@ -44,8 +55,12 @@ return (
         <div className="flex h-full w-full gap-3 my-3">
             {/* Select pertama */}
             <div className="relative w-[70%]">
-                <select className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
-                <option>Banyak Produk terjual</option>
+                <select
+                    ref={tampilRef}
+                    onChange={PilihProduk}
+                    className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
+                    <option value={"jumlah"}>Banyak Produk terjual</option>
+                    <option value={"pendapatan"}>Pendapatan Penjualan</option>
                 </select>
                 <img 
                 src={iPanahB} 
@@ -56,8 +71,12 @@ return (
 
             {/* Select kedua */}
             <div className="relative w-[30%]">
-                <select className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
-                <option>Jasa</option>
+                <select
+                    
+                    className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
+                    <option value={"semua"}>Semua</option>
+                    <option value={"jasa"}>Jasa</option>
+                    <option value={"produk"}>Produk</option>
                 </select>
                 <img 
                 src={iPanahB} 
@@ -73,7 +92,7 @@ return (
                         <p>{item.namaProduk}</p>
                     </div>
                     <div className='text-[#C2A353]'>
-                        <p>{item.jumlah} terjual</p>
+                        <p>{tampil === "jumlah" ? item.jumlah + "Terjual" : "Rp. " + item.pendapatan.toLocaleString('id-ID')}</p>
                     </div>
                 </div>
             </div>
@@ -84,8 +103,12 @@ return (
         <div className="flex h-full w-full gap-3 my-3">
             {/* Select pertama */}
             <div className="relative w-[70%]">
-                <select className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
-                <option>Pendapatan Penjualan</option>
+                <select
+                    ref={tampilRefx}
+                    onChange={PilihKategori}
+                    className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
+                    <option value={"pendapatan"}>Pendapatan Penjualan</option>
+                    <option value={"jumlah"}>Banyak Produk terjual</option>
                 </select>
                 <img 
                 src={iPanahB} 
@@ -97,7 +120,9 @@ return (
             {/* Select kedua */}
             <div className="relative w-[30%]">
                 <select className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
-                <option>Semua</option>
+                    <option value={"semua"}>Semua</option>
+                    <option value={"jasa"}>jasa</option>
+                    <option value={"produk"}>Produk</option>
                 </select>
                 <img 
                 src={iPanahB} 
@@ -114,7 +139,7 @@ return (
                         <p>{ itemx.kategori }</p>
                     </div>
                     <div className='text-[#C2A353]'>
-                        <p>Rp. {itemx.jumlah.toLocaleString("id-ID")}</p>
+                        <p> {tampilx === "pendapatan" ? "Rp. " + itemx.pendapatan.toLocaleString("id-ID") : itemx.jumlah + "Terjual"}</p>
                     </div>
                 </div>
             </div>
