@@ -22,7 +22,7 @@ import axios from "axios"
             <div className="flex flex-col justify-between w-full h-full py-3 px-3 overflow-auto">
 
                 {datax.length === 0 ?
-                    <div className="flex flex-col w-full h-full items-center justify-center text-black/40">Belum Ada Data sertifikat</div>
+                    <div className="flex flex-col w-full h-full items-center justify-center text-black/40">Belum Ada Data Mesin</div>
                     :
                     <div className="flex flex-col gap-3 w-full h-full items-center justify-start">
                         {datax.map((data,index) => (

@@ -221,6 +221,34 @@ catch(error){
 
 });
 
+const laporanPenjualanProduk = asyncHandler(async(req,res)=>{
+  try{
+  const {dari, sampai} = req.body;
+  const from = new Date(dari)
+  const to = new Date(sampai)
+  const penjualan = await TransaksiModels.find({createdAt : {$gte : from, $lte : to}})
+  .populate({
+    path : "transaksiDetail",
+    populate : {
+      path : 'produk',
+      model : 'produkPos'
+    }
+  });
+  let totalProduk = 0;
+  for (const item of penjualan){
+    for (const items of item.transaksiDetail){
+      totalProduk += items.jumlah;
+    }
+  }
+  
+  res.status(200).json({totalProduk: totalProduk})
+}
+catch(error){
+  res.status(400).json({ message: error.message });
+}
+
+});
+
 const laporanBelanja = asyncHandler(async(req,res)=>{
   try{
   const {dari, sampai} = req.body;
@@ -249,5 +277,6 @@ catch(error){
 
 export {
  laporanPenjualan,
- laporanBelanja
+ laporanBelanja,
+ laporanPenjualanProduk
 };

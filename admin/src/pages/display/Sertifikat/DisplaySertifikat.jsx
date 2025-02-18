@@ -6,6 +6,7 @@ import gserti from "../../../assets/iconDisplay/Sertifikat/gserti.svg";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const DisplaySertifikat = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -82,6 +83,7 @@ export const DisplaySertifikat = () => {
       className="flex flex-col px-0 p-3 gap-2 bg-white w-full min-h-screen justify-between"
       onSubmit={handleSubmit}
     >
+      <ToastContainer/>
       <div className="flex flex-col gap-1 px-3 flex-grow">
         <div className="flex flex-col gap-2">
           <label className="text-start text-[#454545] text-[12px]">

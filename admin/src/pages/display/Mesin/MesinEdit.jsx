@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { useContext, useEffect } from "react";
 import { navContext } from "../../../App2";
-
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const MesinEdit = () => {
     const {id} = useParams()
@@ -50,7 +50,7 @@ export const MesinEdit = () => {
     }
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${
           import.meta.env.VITE_BASE_URL_BACKEND
         }/api/foto//editSertif/:id`,
@@ -65,7 +65,7 @@ export const MesinEdit = () => {
       );
 
       if (response.status === 200) {
-        toast.success("Berhasil menambahkan kategori treatment");
+        toast.success("Berhasil Memperbarui Mesin");
         setTimeout(() => {
           navigate("/pos/Mesin");
         }, 3000);
@@ -89,6 +89,7 @@ export const MesinEdit = () => {
       className="flex flex-col px-0 p-3 gap-2 bg-white w-full min-h-screen justify-between"
       onSubmit={handleSubmit}
     >
+      <ToastContainer/>
       <div className="flex flex-col gap-1 px-3 flex-grow">
         <div className="flex flex-col gap-2">
           <label className="text-start text-[#454545] text-[12px]">

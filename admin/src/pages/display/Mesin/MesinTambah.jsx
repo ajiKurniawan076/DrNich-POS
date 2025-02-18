@@ -2,6 +2,8 @@ import { useRef, useState } from "react";
 import { useContext, useEffect } from "react";
 import { navContext } from "../../../App2";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 export const MesinTambah = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -39,7 +41,6 @@ export const MesinTambah = () => {
       toast.error("Harap pilih gambar sebelum mengunggah!");
       return;
     }
-
     try {
       const response = await axios.post(
         `${
@@ -54,9 +55,9 @@ export const MesinTambah = () => {
           withCredentials: true,
         }
       );
-
+      console.log(response)
       if (response.status === 200) {
-        toast.success("Berhasil menambahkan kategori treatment");
+        toast.success("Berhasil menambahkan mesin");
         setTimeout(() => {
           navigate("/pos/Mesin");
         }, 3000);
@@ -80,6 +81,7 @@ export const MesinTambah = () => {
       className="flex flex-col px-0 p-3 gap-2 bg-white w-full min-h-screen justify-between"
       onSubmit={handleSubmit}
     >
+      <ToastContainer/> 
       <div className="flex flex-col gap-1 px-3 flex-grow">
         <div className="flex flex-col gap-2">
           <label className="text-start text-[#454545] text-[12px]">
