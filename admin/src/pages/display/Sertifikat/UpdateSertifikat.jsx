@@ -6,6 +6,7 @@ import gserti from "../../../assets/iconDisplay/Sertifikat/gserti.svg";
 
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const UpdateSertifikat = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -56,6 +57,7 @@ export const UpdateSertifikat = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const fdata = new FormData()
     if (imageRef.current.files.length > 0) {
       fdata.append("foto", imageRef.current.files[0]);
     } else {
@@ -64,7 +66,7 @@ export const UpdateSertifikat = () => {
     }
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/editSertif/${id}`,
         fdata,
         {
@@ -77,7 +79,7 @@ export const UpdateSertifikat = () => {
       );
 
       if (response.status === 200) {
-        toast.success("Berhasil menambahkan Sertifikat");
+        toast.success("Berhasil Memperbarui Sertifikat");
         setTimeout(() => {
           navigate("/pos/sertifikat");
         }, 3000);
@@ -101,6 +103,7 @@ export const UpdateSertifikat = () => {
       className="flex flex-col px-0 p-3 gap-2 bg-white w-full min-h-screen justify-between"
       onSubmit={handleSubmit}
     >
+      <ToastContainer/>
       <div className="flex flex-col gap-1 px-3 flex-grow">
         <div className="flex flex-col gap-2">
           <label className="text-start text-[#454545] text-[12px]">
