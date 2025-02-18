@@ -26,10 +26,9 @@ export const MarketingDetail = () => {
     setDatax("Detail Marketing");
     // })
     setNav("Detail Marketing");
-    setSort(false)
-    setLink('/pos/marketing')
+    setSort(false);
+    setLink("/pos/marketing");
   }, []);
-  console.log(datax);
 
   const handleDelete = async () => {
     const confirmasiHapus = window.confirm("anda yakin mau hapus");
@@ -43,15 +42,11 @@ export const MarketingDetail = () => {
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-9">
       <div className="flex flex-col gap-1 px-3 mx-1 rounded-xl border border-[#C2A353] pt-2">
-        <label className="text-start text-[#BDBDBD] text-[12px]">
-          Nama
-        </label>
+        <label className="text-start text-[#BDBDBD] text-[12px]">Nama</label>
         <p className="text-start font-semibold h-[30px]">
           {datax.namaMarketing}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[12px]">
-          Alamat
-        </label>
+        <label className="text-start text-[#BDBDBD] text-[12px]">Alamat</label>
         <p className="text-start font-semibold h-[30px]">{datax.alamat}</p>
         <label className="text-start text-[#BDBDBD] text-[12px]">
           Nomor Telepon
@@ -70,9 +65,7 @@ export const MarketingDetail = () => {
             {datax.nomorTelepon}
           </p>
         </button>
-        <label className="text-start text-[#BDBDBD] text-[12px]">
-          Foto
-        </label>
+        <label className="text-start text-[#BDBDBD] text-[12px]">Foto</label>
         <div className="max-w-[300px] h-auto mx-auto mb-2">
           <img src={"https://api.drnich.co.id/" + datax.image} />
         </div>
@@ -87,9 +80,7 @@ export const MarketingDetail = () => {
         <p className="text-start font-semibold h-[30px]">
           {datax.namaRekening}
         </p>
-        <label className="text-start text-[#BDBDBD] text-[12px]">
-          Bank
-        </label>
+        <label className="text-start text-[#BDBDBD] text-[12px]">Bank</label>
         <p className="text-start font-semibold h-[30px]">{datax.bank}</p>
         <label className="text-start text-[#BDBDBD] text-[12px]">
           Nomor Rekening

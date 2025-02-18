@@ -147,8 +147,21 @@ import { EditDiskon } from "./pages/Promo/EditDiskon";
 import { EditCashback } from "./pages/cashback/EditCashback";
 import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
+<<<<<<< HEAD
 import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
+=======
+import {Mesin} from "./pages/display/Mesin/Mesin"
+import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
+import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
+import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
+
+
+
+
+
+
+>>>>>>> b65672e3dc2902fdf242cf22d73f5c7ebce19a77
 axios.defaults.withCredentials = true;
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
@@ -175,7 +188,8 @@ function App2() {
         setshowsort,
         link,
         setLink,
-      }}>
+      }}
+    >
       <div id="root2">
         <div id="root-container">
           <Navbar className="navbar" />
@@ -396,7 +410,7 @@ function App2() {
               <Route path="/Cashback4/" element={<Cashback4 />} />
               <Route path="/display" element={<Display />} />
               <Route path="/sertifikat" element={<Sertifikat />} />
-              <Route path="/sertifikatdetail" element={<SertifikatDetail />} />
+              <Route path="/sertifikatdetail/:id" element={<SertifikatDetail />} />
               <Route
                 path="/displaySertifikat"
                 element={<DisplaySertifikat />}
@@ -435,7 +449,10 @@ function App2() {
                 element={<PelangganUpdate />}
               />
               {/* belum ada id */}
-              <Route path="/UpdateSertifikat" element={<UpdateSertifikat />} />
+              <Route
+                path="/UpdateSertifikat/:id"
+                element={<UpdateSertifikat />}
+              />
               <Route
                 path="/UpdateKategoriJenisProduct/:id"
                 element={<UpdateKategori />}
@@ -467,9 +484,17 @@ function App2() {
               <Route path="/EditDiskon/:id" element={<EditDiskon />} />
               <Route path="/EditCashback/:id" element={<EditCashback />} />
               <Route path="/transaksihapus" element={<Transaksihapus />} />
+<<<<<<< HEAD
               <Route path="/LaporanLihatStruk/:id" element={<LaporanLihatStruk />} />
               <Route path="/StrukPembelianStok/:id" element={<StrukPembelianStok />} />
 
+=======
+              <Route path="/Mesin" element={<Mesin />} />
+              <Route path="/MesinTambah" element={<MesinTambah />} />
+              <Route path="/MesinDetail/:id" element={<MesinDetail />} />
+              <Route path="/MesinEdit/:id" element={<MesinEdit />} />
+              
+>>>>>>> b65672e3dc2902fdf242cf22d73f5c7ebce19a77
             </Routes>
           </div>
         </div>

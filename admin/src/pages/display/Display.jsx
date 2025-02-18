@@ -68,7 +68,7 @@ export const Display = () => {
         </span>
       </Link>
 
-      <Link to={{ pathname: "" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+      <Link to={{ pathname: "/pos/Mesin" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={imes} className="ms-[25px]" />

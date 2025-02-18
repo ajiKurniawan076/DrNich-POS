@@ -7,7 +7,7 @@ import {
   deleteTransaksi,
   getTransaksiInvoice,
   kalkulasiHarga,
-  getTransaksiByID
+  getTransaksiByID,
 } from "../../controller/kasirPos/transaksiController.js";
 import {
   newDetailTransaksi,
@@ -18,8 +18,8 @@ import {
 
 const router = express.Router();
 
-router.get("/transaksi", getTransaksi); 
-router.get("/transaksi/:id", getTransaksiByID); 
+router.get("/transaksi", getTransaksi);
+router.get("/transaksi/:id", getTransaksiByID);
 router.get("/draftTransaksi", getTransaksiDraft);
 router.get("/transaksiinvoice", getTransaksiInvoice);
 router.post("/transaksi", newTransaksi);

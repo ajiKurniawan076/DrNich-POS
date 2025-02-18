@@ -14,42 +14,48 @@ export const Marketing = () => {
   const { setNav, setSort, asc, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [tampil, setTampil] = useState([]);
-  const cariRef = useRef(null)
+  const cariRef = useRef(null);
   useEffect(() => {
     const fetchData = async () => {
       await axios
         .get("https://api.drnich.co.id/api/pos/user/marketing")
-        .then((response) => {setdatax(response.data)
-          setTampil(response.data)
+        .then((response) => {
+          setdatax(response.data);
+          setTampil(response.data);
         });
     };
     fetchData();
     setNav("Marketing");
-    setSort(true)
-    setLink('/pos/users')
+    setSort(true);
+    setLink("/pos/users");
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
+    if (asc == "asc") {
+      const sorting = [...tampil].sort((a, b) =>
+        a.namaMarketing.localeCompare(b.namaMarketing)
+      );
 
-    if(asc=='asc'){
-      const sorting = [...tampil].sort((a,b)=> a.namaMarketing.localeCompare(b.namaMarketing))
-      console.log(sorting)
-      setTampil(sorting)
+      setTampil(sorting);
+    } else if (asc == "desc") {
+      const sorting = [...tampil].sort((a, b) =>
+        b.namaMarketing.localeCompare(a.namaMarketing)
+      );
+
+      setTampil(sorting);
     }
-    else if(asc=='desc'){
-      const sorting = [...tampil].sort((a,b)=> b.namaMarketing.localeCompare(a.namaMarketing))
-      console.log(sorting)
-      setTampil(sorting)
-    }
-  },[asc])
+  }, [asc]);
   const filterData = () => {
-    
-    const filterr =  datax.filter(
-    (data) =>
-      data.namaMarketing?.toLowerCase().includes(cariRef.current.value.toLowerCase()) ||
-      data.nomorTelepon?.toLowerCase().includes(cariRef.current.value.toLowerCase())
-  )
-  setTampil(filterr)
-  }
+    const filterr = datax.filter(
+      (data) =>
+        data.namaMarketing
+          ?.toLowerCase()
+          .includes(cariRef.current.value.toLowerCase()) ||
+        data.nomorTelepon
+          ?.toLowerCase()
+          .includes(cariRef.current.value.toLowerCase())
+    );
+    setTampil(filterr);
+  };
   document.title = "Marketing";
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
@@ -102,5 +108,5 @@ export const Marketing = () => {
         </a>
       </div>
     </div>
-  )
-}
+  );
+};
