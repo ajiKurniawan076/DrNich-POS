@@ -96,7 +96,6 @@ export const TambahKategori = () => {
       className="flex flex-col justify-between px-0 py-3 gap-1 bg-white w-full min-h-screen"
       onSubmit={handleSubmit}
     >
-      {/* Konten Utama */}
       <div className="flex flex-col gap-4 px-3">
         <div className="flex flex-col">
           <label className="text-start text-[#454545] text-[12px]">
@@ -114,7 +113,6 @@ export const TambahKategori = () => {
               ) : (
                 <p className="text-[#454545] mb-3">{gambarname}</p>
               )}
-
               <div className="flex justify-star text-[#C2A353] pt-2 mb-2">
                 <input
                   onChange={handleGambar}
