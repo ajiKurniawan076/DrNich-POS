@@ -147,28 +147,15 @@ import { EditDiskon } from "./pages/Promo/EditDiskon";
 import { EditCashback } from "./pages/cashback/EditCashback";
 import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
-=======
-import {Mesin} from "./pages/display/Mesin/Mesin"
-import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
-import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
+
+import {Mesin} from "./pages/display/Mesin/Mesin";
+import {MesinDetail} from "./pages/display/Mesin/MesinDetail";
+import {MesinEdit} from "./pages/display/Mesin/MesinEdit";
 import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
 
-
-
-
-
-=======
-import { Mesin } from "./pages/display/Mesin/Mesin";
-import { MesinDetail } from "./pages/display/Mesin/MesinDetail";
-import { MesinEdit } from "./pages/display/Mesin/MesinEdit";
-import { MesinTambah } from "./pages/display/Mesin/MesinTambah";
->>>>>>> 92d21e7e59580ad6973d4506926f0a689740d7c1
-
->>>>>>> b65672e3dc2902fdf242cf22d73f5c7ebce19a77
 axios.defaults.withCredentials = true;
 
 // import DetailDiskon from "./pages/display/DetailDiskon";
@@ -494,20 +481,13 @@ function App2() {
               <Route path="/EditDiskon/:id" element={<EditDiskon />} />
               <Route path="/EditCashback/:id" element={<EditCashback />} />
               <Route path="/transaksihapus" element={<Transaksihapus />} />
-<<<<<<< HEAD
+
               <Route path="/LaporanLihatStruk/:id" element={<LaporanLihatStruk />} />
               <Route path="/StrukPembelianStok/:id" element={<StrukPembelianStok />} />
-
-=======
               <Route path="/Mesin" element={<Mesin />} />
               <Route path="/MesinTambah" element={<MesinTambah />} />
               <Route path="/MesinDetail/:id" element={<MesinDetail />} />
               <Route path="/MesinEdit/:id" element={<MesinEdit />} />
-<<<<<<< HEAD
-              
->>>>>>> b65672e3dc2902fdf242cf22d73f5c7ebce19a77
-=======
->>>>>>> 92d21e7e59580ad6973d4506926f0a689740d7c1
             </Routes>
           </div>
         </div>
