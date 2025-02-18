@@ -23,12 +23,11 @@ import ipromo from "../../assets/iconDisplay/ipromo.svg";
 import irating from "../../assets/iconDisplay/irating.svg";
 import iNext from "../../assets/iNext.svg";
 
-
 export const Display = () => {
   const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Display");
-    setLink('/pos')
+    setLink("/pos");
   }, []);
   document.title = " Display";
   return (
@@ -46,8 +45,8 @@ export const Display = () => {
             Sertifikat
           </p>
           <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
-                    <img src={iNext} alt="next" />
-                  </div>
+            <img src={iNext} alt="next" />
+          </div>
         </span>
       </Link>
       <Link
@@ -63,8 +62,8 @@ export const Display = () => {
             Layanan
           </p>
           <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
-                    <img src={iNext} alt="next" />
-                  </div>
+            <img src={iNext} alt="next" />
+          </div>
         </span>
       </Link>
 
@@ -76,12 +75,15 @@ export const Display = () => {
             Mesin
           </p>
           <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
-                    <img src={iNext} alt="next" />
-                  </div>
+            <img src={iNext} alt="next" />
+          </div>
         </span>
       </Link>
 
-      <Link to={{ pathname: "/pos/produk" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+      <Link
+        to={{ pathname: "/pos/produk" }}
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
+      >
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={iproduk} className="ms-[25px]" />
@@ -89,28 +91,35 @@ export const Display = () => {
             Produk
           </p>
           <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
-                    <img src={iNext} alt="next" />
-                  </div>
+            <img src={iNext} alt="next" />
+          </div>
         </span>
       </Link>
-      <Link to={{ pathname: "/pos/galeri" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+      <Link
+        to={{ pathname: "/pos/galeri" }}
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
+      >
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={igaleri} className="ms-[25px]" />
-          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">Galeri</p>
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">
+            Galeri
+          </p>
           <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
-          <img src={iNext} alt="next" />
-        </div>
+            <img src={iNext} alt="next" />
+          </div>
         </span>
       </Link>
       <Link className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={ipromo} className="ms-[25px]" />
-          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">Promo</p>
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">
+            Promo
+          </p>
           <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
-          <img src={iNext} alt="next" />
-        </div>
+            <img src={iNext} alt="next" />
+          </div>
         </span>
       </Link>
       <Link
@@ -123,10 +132,12 @@ export const Display = () => {
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={irating} className="ms-[25px]" />
-          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">Rating</p>
+          <p className="ms-[15px] text-[14px] text-[#454545] font-medium">
+            Rating
+          </p>
           <div className="flex ms-auto me-[15px] w-[24px] h-[24px]">
-          <img src={iNext} alt="next" />
-        </div>
+            <img src={iNext} alt="next" />
+          </div>
         </span>
       </Link>
     </div>

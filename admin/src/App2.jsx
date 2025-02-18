@@ -148,6 +148,7 @@ import { EditCashback } from "./pages/cashback/EditCashback";
 import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
 =======
@@ -160,6 +161,12 @@ import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
 
 
 
+=======
+import { Mesin } from "./pages/display/Mesin/Mesin";
+import { MesinDetail } from "./pages/display/Mesin/MesinDetail";
+import { MesinEdit } from "./pages/display/Mesin/MesinEdit";
+import { MesinTambah } from "./pages/display/Mesin/MesinTambah";
+>>>>>>> 92d21e7e59580ad6973d4506926f0a689740d7c1
 
 >>>>>>> b65672e3dc2902fdf242cf22d73f5c7ebce19a77
 axios.defaults.withCredentials = true;
@@ -410,7 +417,10 @@ function App2() {
               <Route path="/Cashback4/" element={<Cashback4 />} />
               <Route path="/display" element={<Display />} />
               <Route path="/sertifikat" element={<Sertifikat />} />
-              <Route path="/sertifikatdetail/:id" element={<SertifikatDetail />} />
+              <Route
+                path="/sertifikatdetail/:id"
+                element={<SertifikatDetail />}
+              />
               <Route
                 path="/displaySertifikat"
                 element={<DisplaySertifikat />}
@@ -493,8 +503,11 @@ function App2() {
               <Route path="/MesinTambah" element={<MesinTambah />} />
               <Route path="/MesinDetail/:id" element={<MesinDetail />} />
               <Route path="/MesinEdit/:id" element={<MesinEdit />} />
+<<<<<<< HEAD
               
 >>>>>>> b65672e3dc2902fdf242cf22d73f5c7ebce19a77
+=======
+>>>>>>> 92d21e7e59580ad6973d4506926f0a689740d7c1
             </Routes>
           </div>
         </div>
