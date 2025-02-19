@@ -17,6 +17,7 @@ export const DisplaySertifikat = () => {
 
   useEffect(() => {
     setNav("Tambah Sertifikat");
+    setLink("/pos/sertifikat")
   }, []);
 
   const handleImg = (e) => {

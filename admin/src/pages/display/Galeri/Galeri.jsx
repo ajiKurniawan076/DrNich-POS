@@ -49,7 +49,7 @@ export const Galeri = () => {
     // ))
     fetchData();
     setNav("Galeri");
-    setLink("/pos");
+    setLink("/pos/display");
   }, []);
 
   document.title = "Galeri";

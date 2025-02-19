@@ -34,7 +34,8 @@ export const SertifikatDetail = () => {
 
     fetchData();
   }, [id]);
-
+  setNav("Sertifikat")
+  setLink("/pos/sertifikat")
   document.title = "Detail";
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">

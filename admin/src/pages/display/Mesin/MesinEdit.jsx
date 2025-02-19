@@ -21,6 +21,7 @@ export const MesinEdit = () => {
       }
       fachingData()
     setNav("Ubah Mesin");
+    setLink("/pos/mesin")
   }, []);
 
   const handleImg = (e) => {

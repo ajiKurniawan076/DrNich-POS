@@ -18,6 +18,7 @@ export const Rating = () => {
         // ).then((data) => (setdatax(data)
         // ))
         setNav('Rating')
+        setLink("/pos/display")
     }, [])
 
 

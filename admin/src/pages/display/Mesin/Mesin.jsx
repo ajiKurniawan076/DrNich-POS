@@ -13,7 +13,8 @@ import axios from "axios"
           )
         }
         faching()
-        setNav('Mesin')
+    setNav('Mesin')
+    setLink("/pos/display")
     }, [])
   document.title = 'Mesin'  
   return (

@@ -21,6 +21,7 @@ export const LayananDetail = () => {
     // ).then((data) => (setdatax(data)
     // ))
     setNav("Detail");
+    setLink("/pos/layanan")
   }, []);
 
   document.title = "Detail";
@@ -64,7 +65,7 @@ export const LayananDetail = () => {
             Hapus{" "}
           </a>
           <Link
-            to={{ pathname: "/UpdateLayanan" }}
+            to={{ pathname: "/pos/UpdateLayanan" }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "
           >
             Edit

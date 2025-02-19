@@ -18,6 +18,7 @@ export const UpdateSertifikat = () => {
 
   useEffect(() => {
     setNav("Ubah sertifikat");
+    setLink("/pos/sertifikat")
   }, []);
 
   useEffect(() => {
