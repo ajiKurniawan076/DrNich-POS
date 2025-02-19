@@ -6,6 +6,7 @@ import gkt from "../../../../assets/iconDisplay/produk/gkt.svg?url";
 // import gkt from "../../../../assets/iconDisplay/produk/gkt.svg?url";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 
 export const TipeKulitEdit = () => {
@@ -14,13 +15,15 @@ export const TipeKulitEdit = () => {
   const { setNav, setLink } = useContext(navContext);
   const namaKategoriRef = useRef(null);
   const [dataIn,setdataIn] = useState("")
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchingData = async () => {
           await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/gettipeKulitById/${id}`).then((response) => setdatax(response.data))
         }
     fetchingData();
-    setNav("Tambah Tipe Kulit");
+    setNav("Edit Tipe Kulit");
+    setLink('/pos/tipekulit')
   }, [id,setNav]);
 
   const handleSubmit = async (e) => {
@@ -69,6 +72,7 @@ export const TipeKulitEdit = () => {
       onSubmit={handleSubmit}>
       {/* Konten Utama */}
       <div className="flex flex-col gap-4 px-3">
+        <ToastContainer/>
         <label className="text-[#454545] text-start text-[12px]">
           Tipe Kulit
         </label>

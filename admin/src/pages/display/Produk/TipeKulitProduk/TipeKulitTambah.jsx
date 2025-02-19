@@ -7,14 +7,16 @@ import gkt from "../../../../assets/iconDisplay/produk/gkt.svg?url";
 // import gkt from "../../../../assets/iconDisplay/produk/gkt.svg?url";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const TipeKulitTambah = () => {
     const { setNav, setLink } = useContext(navContext);
   const namaKategoriRef = useRef(null);
   const [namax,setnamax] = useState("")
-
+  const navigate = useNavigate()
   useEffect(() => {
     setNav("Tambahkan Tipe Kulit");
+    setLink('/pos/tipekulit')
   }, []);
 
 
@@ -25,8 +27,9 @@ export const TipeKulitTambah = () => {
         return;
       }
   
-      const fdata = new FormData();
-      fdata.append("nama", namaKategoriRef.current.value);
+      const fdata = {
+        name : namaKategoriRef.current.value
+      }
   
       try {
         const response = await axios.post(
@@ -36,7 +39,6 @@ export const TipeKulitTambah = () => {
           fdata,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             withCredentials: true,
@@ -74,6 +76,7 @@ export const TipeKulitTambah = () => {
       onSubmit={handleSubmit}>
       {/* Konten Utama */}
       <div className="flex flex-col gap-4 px-3">
+      <ToastContainer/>
         <label className="text-[#454545] text-start text-[12px]">
           Nama Tipe Kulit
         </label>
