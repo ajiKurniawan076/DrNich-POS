@@ -153,6 +153,7 @@ import {Mesin} from "./pages/display/Mesin/Mesin"
 import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
 import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
 import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
+import { ProtectedRoutes } from "./ProtectedRoutes";
 
 axios.defaults.withCredentials = true;
 
@@ -187,7 +188,7 @@ function App2() {
           <Navbar className="navbar" />
           <div className="main-content">
             <Routes>
-              <Route path="/" element={<HomeAdmin />} />
+              {/* <Route path="/" element={<HomeAdmin />} /> */}
               <Route path="/users" element={<USer />} />
               <Route path="/produks" element={<Products />} />
               <Route path="/laporan" element={<Laporan />} />
@@ -485,6 +486,9 @@ function App2() {
               <Route path="/MesinTambah" element={<MesinTambah />} />
               <Route path="/MesinDetail/:id" element={<MesinDetail />} />
               <Route path="/MesinEdit/:id" element={<MesinEdit />} />
+              <Route element={<ProtectedRoutes/>}>
+                      <Route path="/" element={<HomeAdmin />} />
+                </Route>
             </Routes>
           </div>
         </div>
