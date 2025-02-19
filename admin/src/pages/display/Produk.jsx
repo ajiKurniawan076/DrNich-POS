@@ -45,7 +45,7 @@ export const Produk = () => {
           </div>
         </span>
       </Link>
-      <Link to={{ pathname: "/produktipe" }} className="w-full h-[80px]">
+      <Link to={{ pathname: "/pos/produktipe" }} className="w-full h-[80px]">
         <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={itp} className="ms-[25px]" />
@@ -71,7 +71,7 @@ export const Produk = () => {
           </div>
         </span>
       </Link>
-      <Link to={{ pathname: "/produk1" }} className="w-full h-[80px]">
+      <Link to={{ pathname: "/pos/produk1" }} className="w-full h-[80px]">
         <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={idp} className="ms-[25px]" />

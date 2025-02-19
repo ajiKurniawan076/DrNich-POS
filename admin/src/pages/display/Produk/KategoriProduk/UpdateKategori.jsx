@@ -1,10 +1,7 @@
 import { useRef, useState } from "react";
-import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import { useContext, useEffect } from "react";
 import { navContext } from "../../../../App2";
-
 import gkt from "../../../../assets/iconDisplay/produk/gkt.svg";
-// import gkt from "../../../../assets/iconDisplay/produk/gkt.svg";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -74,7 +71,7 @@ export const UpdateKategori = () => {
     }
 
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${
           import.meta.env.VITE_BASE_URL_BACKEND
         }/api/produk/tambahkategoriProduk`,

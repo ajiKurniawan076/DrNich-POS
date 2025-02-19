@@ -458,9 +458,12 @@ function App2() {
                 path="/UpdateKategoriJenisTreatment/:id"
                 element={<UpdateKategoti />}
               />
-              <Route path="/UpdateTipeProduk" element={<UpdateTipeProduk />} />
               <Route
-                path="/UpdateDaftarProduk"
+                path="/UpdateTipeProduk/:id"
+                element={<UpdateTipeProduk />}
+              />
+              <Route
+                path="/UpdateDaftarProduk/:id"
                 element={<UpdateDaftarProduk />}
               />
               <Route path="/UpdateGaleri" element={<UpdateGaleri />} />
