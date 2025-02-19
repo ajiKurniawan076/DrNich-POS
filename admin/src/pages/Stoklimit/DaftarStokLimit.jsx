@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { navContext } from '../../App2'
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 export const DaftarStokLimit = () => {
@@ -15,10 +16,19 @@ export const DaftarStokLimit = () => {
             await axios
                 .get("https://api.drnich.co.id/api/pos/laporan/laporanlimit")
                 .then((respone) => {
+                    toast.success("Berhasil Masuk", {
+                        autoClose : 1000,
+                    })
                     setData(respone.data)
                     setTampil(respone.data)
                     console.log(respone.data)
                 })
+                .catch((error) => {
+                    console.error(error);
+                    toast.error('Terjadi kesalahan', {
+                        autoClose: 2000,
+                    });
+                });
         }
         fecthData();
     }, [])

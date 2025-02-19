@@ -15,13 +15,22 @@ export const LaporanPersediaan = () => {
 
     useEffect(() => {
         const fecthData = async () => {
-            await axios 
+            await axios
                 .get("https://api.drnich.co.id/api/pos/produk/kategoriproduk")
                 .then((response) => {
+                    toast.success('Berhasil Masuk', {
+                        autoClose: 1000,
+                    })
                     const filter = response.data.filter((item) => item.jenis.jenis == 'produk')
                     setData(filter)
                     setTampil(filter)
                     console.log(filter)
+                })
+                .catch((error) => {
+                    console.error(error)
+                    toast.error('Terjadi Kesalahan', {
+                        autoClose: 2000,
+                    })
                 })
         }
         fecthData()

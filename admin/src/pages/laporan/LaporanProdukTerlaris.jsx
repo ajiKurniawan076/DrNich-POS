@@ -6,6 +6,7 @@ import i2 from "../../assets/iconLaporanPenjualan/i2.svg";
 import i3 from "../../assets/iconLaporanPenjualan/i3.svg";
 import i4 from "../../assets/iconLaporanPenjualan/i4.svg";
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const LaporanProdukTerlaris = () => {
     const { setNav, setLink } = useContext(navContext)
@@ -20,6 +21,9 @@ export const LaporanProdukTerlaris = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get("https://api.drnich.co.id/api/pos/laporan/laporanterlaris");
+                toast.success("Berhasil Masuk", {
+                    autoClose: 1000,
+                })
                 const sortedData = response.data.produklist.sort((a, b) => b.jumlah - a.jumlah);
                 const sortedDatax = response.data.kategorilist.sort((a, b) => b.jumlah - a.jumlah);
                 const short = sortedData.slice(0, 4);
@@ -28,6 +32,9 @@ export const LaporanProdukTerlaris = () => {
                 setDatax(shortx)
             } catch (error) {
                 console.error("Error Fetching data:", error)
+                toast.error("Terjadi Kesalahan", {
+                    autoClose: 2000,
+                })
             }
         }
         fetchData()
