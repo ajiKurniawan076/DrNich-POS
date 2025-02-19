@@ -34,6 +34,7 @@ function Login() {
 
       // Simpan token ke localStorage
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("level", res.data.level);
 
       // Navigasi berdasarkan level admin
       if (level === 1) {

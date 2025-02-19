@@ -149,11 +149,12 @@ import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
 import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
-import {Mesin} from "./pages/display/Mesin/Mesin"
-import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
-import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
-import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
+import { Mesin } from "./pages/display/Mesin/Mesin"
+import { MesinDetail } from "./pages/display/Mesin/MesinDetail"
+import { MesinEdit } from "./pages/display/Mesin/MesinEdit"
+import { MesinTambah } from "./pages/display/Mesin/MesinTambah"
 import { ProtectedRoutes } from "./ProtectedRoutes";
+import { ProtectedLevel } from "./ProtectedLevel";
 
 axios.defaults.withCredentials = true;
 
@@ -189,12 +190,14 @@ function App2() {
           <div className="main-content">
             <Routes>
               {/* <Route path="/" element={<HomeAdmin />} /> */}
-              
-              <Route element={<ProtectedRoutes/>}>
-                <Route path="/" element={<HomeAdmin />} />
+
+              <Route element={<ProtectedRoutes />}>
+                <Route element={<ProtectedLevel level={[1,2,3,4]} />}>
+                  <Route path="/laporan" element={<Laporan />} />
+                  <Route path="/" element={<HomeAdmin />} />
                 <Route path="/users" element={<USer />} />
                 <Route path="/produks" element={<Products />} />
-                <Route path="/laporan" element={<Laporan />} />
+
                 <Route path="/promo" element={<Promo />} />
                 <Route path="/supplier" element={<Supplier />} />
                 <Route path="/addsupplier" element={<Addsupplier />} />
@@ -244,27 +247,27 @@ function App2() {
                 <Route path="/ManajementKurangiStok/:id" element={<ManajementKurangiStok />} />
                 <Route path="/ManajementTambahStok/:id" element={<ManajementTambahStok />} />
                 <Route path="/ManajementKurangiStok2/" element={<ManajementKurangiStok2 />} />
-                <Route path="/ManajementDetailStok/" element={<ManajementDetailStok />}/>
-                <Route path="/ManajementDetailStok/:id" element={<ManajementDetailStok />}/>
-                <Route path="/ManajementLihatLogProduk/" element={<ManajementLihatLogProduk />}/>
+                <Route path="/ManajementDetailStok/" element={<ManajementDetailStok />} />
+                <Route path="/ManajementDetailStok/:id" element={<ManajementDetailStok />} />
+                <Route path="/ManajementLihatLogProduk/" element={<ManajementLihatLogProduk />} />
                 <Route path="/LaporanPenjualan/" element={<LaporanPenjualan />} />
-                <Route path="/LaporanRingkasanPenjualan/" element={<LaporanRingkasanPenjualan />}/>
-                <Route path="/LaporanDataPenjualan/" element={<LaporanDataPenjualan />}/>
-                <Route path="/LaporanPembayaran/" element={<LaporanPembayaran />}/>
-                <Route path="/LaporanPenjualanDetail/" element={<LaporanPenjualanDetail />}/>
-                <Route path="/LaporanMetodePembayaran/" element={<LaporanMetodePembayaran />}/>
-                <Route path="/LaporanPenjualanProduk/" element={<LaporanPenjualanProduk />}/>
-                <Route path="/LaporanProdukTerjual/" element={<LaporanProdukTerjual />}/>
-                <Route path="/LaporanPilihPerbandingan/" element={<LaporanPilihPerbandingan />}/>
-                <Route path="/LaporanPersediaan/" element={<LaporanPersediaan />}/>
-                <Route path="/LaporanPersediaanDetail/:_id" element={<LaporanPersediaanDetail />}/>
+                <Route path="/LaporanRingkasanPenjualan/" element={<LaporanRingkasanPenjualan />} />
+                <Route path="/LaporanDataPenjualan/" element={<LaporanDataPenjualan />} />
+                <Route path="/LaporanPembayaran/" element={<LaporanPembayaran />} />
+                <Route path="/LaporanPenjualanDetail/" element={<LaporanPenjualanDetail />} />
+                <Route path="/LaporanMetodePembayaran/" element={<LaporanMetodePembayaran />} />
+                <Route path="/LaporanPenjualanProduk/" element={<LaporanPenjualanProduk />} />
+                <Route path="/LaporanProdukTerjual/" element={<LaporanProdukTerjual />} />
+                <Route path="/LaporanPilihPerbandingan/" element={<LaporanPilihPerbandingan />} />
+                <Route path="/LaporanPersediaan/" element={<LaporanPersediaan />} />
+                <Route path="/LaporanPersediaanDetail/:_id" element={<LaporanPersediaanDetail />} />
                 <Route path="/LaporanLogProduk/" element={<LaporanLogProduk />} />
-                <Route path="/LaporanLogProduk2/" element={<LaporanLogProduk2 />}/>
-                <Route path="/LaporanLogProduk3/" element={<LaporanLogProduk3 />}/>
-                <Route path="/LaporanLogProduk4/" element={<LaporanLogProduk4 />}/>
-                <Route path="/LaporanDataPembelianStok/" element={<LaporanDataPembelianStok />}/>
-                <Route path="/LaporanProdukTerlaris/" element={<LaporanProdukTerlaris />}/>
-                <Route path="/LaporanDataPembelianStokDetail/" element={<LaporanDataPembelianStokDetail />}/>
+                <Route path="/LaporanLogProduk2/" element={<LaporanLogProduk2 />} />
+                <Route path="/LaporanLogProduk3/" element={<LaporanLogProduk3 />} />
+                <Route path="/LaporanLogProduk4/" element={<LaporanLogProduk4 />} />
+                <Route path="/LaporanDataPembelianStok/" element={<LaporanDataPembelianStok />} />
+                <Route path="/LaporanProdukTerlaris/" element={<LaporanProdukTerlaris />} />
+                <Route path="/LaporanDataPembelianStokDetail/" element={<LaporanDataPembelianStokDetail />} />
                 <Route path="/Kasir/" element={<Kasir />} />
                 <Route path="/Kasir2/" element={<Kasir2 />} />
                 <Route path="/Kasir3/" element={<Kasir3 />} />
@@ -332,7 +335,7 @@ function App2() {
                 <Route path="/UpdateRating" element={<UpdateRating />} />
                 <Route path="/KategoriProdukUpdate/:id" element={<KategoriProdukUpdate />} />
                 <Route path="/DaftarProdukUpdate/:id" element={<DaftarProdukUpdate />} />
-                <Route path="/pembayaranBerhasil/:id" element={<PembayaranBerhasil />}/>
+                <Route path="/pembayaranBerhasil/:id" element={<PembayaranBerhasil />} />
                 <Route path="/EditDiskon/:id" element={<EditDiskon />} />
                 <Route path="/EditCashback/:id" element={<EditCashback />} />
                 <Route path="/transaksihapus" element={<Transaksihapus />} />
@@ -342,6 +345,7 @@ function App2() {
                 <Route path="/MesinTambah" element={<MesinTambah />} />
                 <Route path="/MesinDetail/:id" element={<MesinDetail />} />
                 <Route path="/MesinEdit/:id" element={<MesinEdit />} />
+                </Route>
               </Route>
             </Routes>
           </div>
