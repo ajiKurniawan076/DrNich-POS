@@ -197,7 +197,6 @@ function App2() {
                   <Route path="/" element={<HomeAdmin />} />
                 <Route path="/users" element={<USer />} />
                 <Route path="/produks" element={<Products />} />
-
                 <Route path="/promo" element={<Promo />} />
                 <Route path="/supplier" element={<Supplier />} />
                 <Route path="/addsupplier" element={<Addsupplier />} />
