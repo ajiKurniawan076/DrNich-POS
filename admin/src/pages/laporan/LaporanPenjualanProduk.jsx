@@ -8,6 +8,7 @@ import iFrameGra from "../../assets/iconLaporanPenjualan/iFrameGra.svg";
 import iFrameKet2 from "../../assets/iconLaporanPenjualan/iFrameKet2.svg";
 import DatePicker from 'react-datepicker'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 export const LaporanPenjualanProduk = () => {
@@ -44,7 +45,7 @@ export const LaporanPenjualanProduk = () => {
         const fetchData = async () => {
             await axios
                 .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
-                .then((response) => (setData(response.data),console.log(response.data)))
+                .then((response) => (setData(response.data)) )
         }
         fetchData();
         console.log(tanggal)
@@ -56,7 +57,18 @@ export const LaporanPenjualanProduk = () => {
         const fetch = async () => {
             await axios
                 .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
-                .then((response) => (setData(response.data)))
+                .then((response) => (
+                    setData(response.data),
+                    toast.success("Berhasil Masuk", {
+                        autoClose: 1000,
+                    })
+                ))
+                .catch((error) => {
+                    console.error(error),
+                        toast.error("Terjadi Kesalahan", {
+                        autoClose: 2000,
+                    })
+                })
         }
         fetch()
     }, [startDate, endDate])

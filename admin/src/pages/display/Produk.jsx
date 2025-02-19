@@ -24,7 +24,8 @@ import { Link } from "react-router-dom";
 export const Produk = () => {
   const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
-    setNav("Layanan");
+    setNav("Produk");
+    setLink("/pos/display")
   }, []);
   document.title = "Layanan";
   return (
@@ -33,7 +34,7 @@ export const Produk = () => {
         to={{ pathname: "/pos/kategoriproduk2" }}
         className="w-full h-[80px]"
       >
-        <span className="hover:scale-110 w-full h-[80px] border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className="w-full h-[80px] border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={ilayanan} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
@@ -46,7 +47,7 @@ export const Produk = () => {
         </span>
       </Link>
       <Link to={{ pathname: "/pos/produktipe" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className="w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={itp} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545] font-medium text-[14px]">
@@ -72,7 +73,7 @@ export const Produk = () => {
         </span>
       </Link>
       <Link to={{ pathname: "/pos/produk1" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className="w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={idp} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545] font-medium text-[14px]">
@@ -85,7 +86,7 @@ export const Produk = () => {
         </span>
       </Link>
       <Link to={{}} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className="w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={icp} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545] font-medium text-[14px]">

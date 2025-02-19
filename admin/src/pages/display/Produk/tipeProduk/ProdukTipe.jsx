@@ -26,6 +26,7 @@ export const ProdukTipe = () => {
   useEffect(() => {
     fetchData();
     setNav("Tipe Produk");
+    setLink("/pos/produk")
   }, []);
 
   document.title = "Tipe Produk";

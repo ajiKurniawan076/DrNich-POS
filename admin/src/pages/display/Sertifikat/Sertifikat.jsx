@@ -25,6 +25,7 @@ export const Sertifikat = () => {
     };
     fetchData();
     setNav("Sertifikat");
+    setLink("/pos/display")
   }, []);
 
   document.title = "Sertifikat";

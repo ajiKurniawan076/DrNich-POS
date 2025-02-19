@@ -25,6 +25,8 @@ export const ProdukDetail = () => {
       setdatax(filterData);
     };
     fetchData();
+    setNav('Detail Tipe Produk')
+    setLink('/pos/produktipe')
   }, []);
 
   document.title = "Detail";
