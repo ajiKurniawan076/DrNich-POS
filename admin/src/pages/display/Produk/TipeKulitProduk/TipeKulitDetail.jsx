@@ -22,7 +22,8 @@ const TipeKulitDetail = () => {
           setdatax(filteredData)
         }
     fetchingData();
-    setNav("Detail");
+    setNav("Detail Tipe Kulit");
+    setLink('/pos/tipekulit')
   }, [id]);
 
   document.title = "Detail";
