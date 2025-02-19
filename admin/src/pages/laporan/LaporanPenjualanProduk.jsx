@@ -59,7 +59,7 @@ export const LaporanPenjualanProduk = () => {
                 .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
                 .then((response) => (
                     setData(response.data),
-                    toast.success("Sukses Mengambil Data", {
+                    toast.success("Berhasil Masuk", {
                         autoClose: 1000,
                     })
                 ))
