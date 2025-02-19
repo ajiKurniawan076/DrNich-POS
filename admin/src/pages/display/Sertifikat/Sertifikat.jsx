@@ -13,9 +13,15 @@ export const Sertifikat = () => {
   const [datax, setdatax] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/getAllSertif`)
-        .then((response) => setdatax(response.data));
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/getAllSertif`
+        );
+        setdatax(response.data);
+      } catch (error) {
+        console.log(error.response?.data?.message || "An error occurred");
+        toast.error("Ada masalah. Silahkan coba lagi!");
+      }
     };
     fetchData();
     setNav("Sertifikat");

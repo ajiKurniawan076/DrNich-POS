@@ -69,6 +69,8 @@ export const LaporanLihatStruk = () => {
 
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-screen h-fit pt-8">
+    
+    {/* Area Invoice yang akan dikonversi ke PDF */}
     <div ref={invoiceRef} className={''}>
       <div className="grid place-items-center">
         <img src={iPemSu} alt="Pembayaran Berhasil" className={`${fetched ? 'scale-125' : 'scale-50'} duration-500`} />
@@ -92,7 +94,6 @@ export const LaporanLihatStruk = () => {
         </p>
       </div>
 
-      {/* Area Invoice yang akan dikonversi ke PDF */}
       <div className="mt-8 text-[12px] bg-white p-5 rounded-lg">
         {dataDalam.map((item, i) => (
           <div key={i} className="pb-2">

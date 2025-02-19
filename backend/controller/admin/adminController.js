@@ -67,4 +67,13 @@ const cekLogin = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerAdmin, getAdmins, deleteAdmin, cekLogin };
+const logoutAdmin = asyncHandler(async (req, res) => {
+  res.cookie("jwt", "", {
+    httpOnly: true,
+    expires: new Date(0), // Expire the cookie immediately
+  });
+
+  res.status(200).json({ message: "Admin logged out successfully" });
+});
+
+export { registerAdmin, getAdmins, deleteAdmin, cekLogin, logoutAdmin };

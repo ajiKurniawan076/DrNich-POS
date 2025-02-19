@@ -5,6 +5,7 @@ import { navContext } from "../../../../App2";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const ProdukAddTipe = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -12,19 +13,52 @@ export const ProdukAddTipe = () => {
   const namaTipeRef = useRef(null);
   const [produkx, setProdukx] = useState("");
 
-  //   const namaProduk = namaTipeRef.current.value;
-
   const handleInput = () => {
     const namaProduk = namaTipeRef.current.value;
-    console.log(namaProduk);
+    // console.log(namaProduk);
     setProdukx(namaProduk);
   };
-
   useEffect(() => {
     setNav("Tambah Tipe Produk");
   }, []);
 
-  const handleSubmit = (e) => {};
+  const handleSubmit = async (e) => {
+    if (!namaTipeRef.current.value) {
+      toast.error("semua bidang harus di isi!");
+      return;
+    }
+    const fdata = new FormData();
+    fdata.append("name", namaTipeRef.current.value);
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/tambahproductType`,
+        fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        toast.success("berhasil menambahkan Tipe produk");
+        setTimeout(() => {
+          navigate("/pos/produktipe");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error(
+        error.response?.data?.message ||
+          "gagal menambahkan Tipe Produk, coba lagi!"
+      );
+      toast.error(
+        error.response?.data?.message ||
+          "gagal menambahkan Tipe Produk, coba lagi!"
+      );
+    }
+  };
 
   document.title = "Tambah Tipe Produk";
   const [supstat, setsupstat] = useState(false);

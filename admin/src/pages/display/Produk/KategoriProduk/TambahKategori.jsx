@@ -38,26 +38,55 @@ export const TambahKategori = () => {
   };
   // end handle gambar
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // handle gambar
-    const file = gambarRef.current.files[0];
-    if (!file) {
-      alert("silakan pilih gambar");
+
+    if (!namaKategoriRef.current.value) {
+      toast.error("Semua bidang harus diisi!");
       return;
     }
 
-    alert(file.name);
-    const data = {
-      namaKategori: namaKategoriRef.current.value.trim(),
-      namagambar: gambarx,
-    };
-
-    if (!data.namaKategori) {
-      alert("silakan isi data");
+    const fdata = new FormData();
+    fdata.append("name", namaKategoriRef.current.value);
+    if (gambarRef.current.files.length > 0) {
+      fdata.append("image", gambarRef.current.files[0]);
+    } else {
+      toast.error("Harap pilih gambar sebelum mengunggah!");
       return;
     }
-    console.log(data);
+
+    try {
+      const response = await axios.post(
+        `${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/produk/tambahkategoriProduk`,
+        fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Berhasil menambahkan kategori treatment");
+        setTimeout(() => {
+          navigate("/pos/kategoriproduk2");
+        }, 3000);
+      }
+    } catch (error) {
+      console.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan kategori Produk, coba lagi!"
+      );
+      toast.error(
+        error.response?.data?.message ||
+          "Gagal menambahkan kategori Produk, coba lagi!"
+      );
+    }
   };
 
   document.title = "Tambahkan Kategori";
@@ -67,7 +96,6 @@ export const TambahKategori = () => {
       className="flex flex-col justify-between px-0 py-3 gap-1 bg-white w-full min-h-screen"
       onSubmit={handleSubmit}
     >
-      {/* Konten Utama */}
       <div className="flex flex-col gap-4 px-3">
         <div className="flex flex-col">
           <label className="text-start text-[#454545] text-[12px]">
@@ -85,7 +113,6 @@ export const TambahKategori = () => {
               ) : (
                 <p className="text-[#454545] mb-3">{gambarname}</p>
               )}
-
               <div className="flex justify-star text-[#C2A353] pt-2 mb-2">
                 <input
                   onChange={handleGambar}

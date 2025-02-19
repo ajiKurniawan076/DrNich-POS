@@ -4,22 +4,37 @@ import {
   AiOutlineRightCircle,
   AiOutlineSearch,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { data, Link, useParams } from "react-router-dom";
 import { navContext } from "../../../../App2";
 import { useLocation } from "react-router-dom";
 
 import gkt from "../../../../assets/iconDisplay/produk/gkt.svg";
+import axios from "axios";
 
 export const Detail1 = () => {
   const lokasi = useLocation();
-  const datadummy = lokasi.state;
+
+  const { id } = useParams();
+
   const { setNav, setLink } = useContext(navContext);
-  const [datax, setdatax] = useState([]);
+  const [datax, setdatax] = useState("");
+  const [image, setImage] = useState([]);
   useEffect(() => {
-    // fetch("/marketing.json").then(
-    //     (response) => response.json()
-    // ).then((data) => (setdatax(data)
-    // ))
+    const FetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${
+            import.meta.env.VITE_BASE_URL_BACKEND
+          }/api/produk/getCategoryById/${id}`
+        );
+        setImage(response.data.image);
+        setdatax(response.data.name);
+      } catch (error) {
+        console.log(error.response?.data?.message || "An error occurred");
+        toast.error("Ada masalah. Silahkan coba lagi!");
+      }
+    };
+    FetchData();
     setNav("Detail");
   }, []);
 
@@ -29,11 +44,11 @@ export const Detail1 = () => {
       <div className="flex flex-col justify-between w-full h-full py-3 px-3">
         <div className="flex flex-col text-[12px] w-full border rounded-lg p-3 border-[#C2A353]">
           <div className="w-[115px] h-[115px] border rounded-lg ">
-            <img src={gkt} alt="" />
+            <img src={image} alt="" className="h-full w-full object-cover" />
           </div>
           <div className="text-start  mt-1">
             <p className="text-[#BDBDBD]">Nama Kategori</p>
-            <p className="text-[#454545]">{datadummy.nama}</p>
+            <p className="text-[#454545]">{datax}</p>
           </div>
         </div>
         <div className="flex gap-1">
@@ -44,21 +59,13 @@ export const Detail1 = () => {
             Hapus{" "}
           </a>
           <Link
-            to={{ pathname: "/UpdateKategori" }}
+            to={{ pathname: `/pos/UpdateKategoriJenisProduct/${id}` }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "
           >
             Edit
           </Link>
         </div>
       </div>
-      <button
-        className="w-10 h-10 bg-black/300 text-white"
-        onClick={() => {
-          setdatax([]);
-        }}
-      >
-        RESET
-      </button>
     </div>
   );
 };
