@@ -15,6 +15,7 @@ export const TipeKulitTambah = () => {
 
   useEffect(() => {
     setNav("Tambahkan Tipe Kulit");
+    setLink("/pos/tipekulit")
   }, []);
 
 

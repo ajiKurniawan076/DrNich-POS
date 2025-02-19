@@ -32,7 +32,7 @@ export const UpdateKategori = () => {
       }
     };
     FetchData();
-    setLink('/pos/produk')
+    setLink("/pos/kategoriproduk2")
     setNav("Ubah Kategori Produk");
   }, []);
 

@@ -19,6 +19,7 @@ export const TambahKategori = () => {
 
   useEffect(() => {
     setNav("Tambahkan Kategori");
+    setLink("/pos/kategoriproduk2")
   }, []);
 
   //handle gambar

@@ -20,6 +20,8 @@ export const RetingAdd = () => {
 
     }
 
+    setNav("Tambah Rating")
+    setLink("/pos/rating")
     document.title = 'Tambah Reting'
     const [supstat, setsupstat] = useState(false)
     return (

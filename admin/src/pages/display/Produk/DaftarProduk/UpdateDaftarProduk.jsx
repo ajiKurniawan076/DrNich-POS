@@ -106,6 +106,7 @@ export const UpdateDaftarProduk = () => {
     fetchData();
 
     setNav("Ubah Daftar Produk");
+    setLink("/pos/produk1")
   }, []);
 
   // handle select

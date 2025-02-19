@@ -41,6 +41,7 @@ export const Detail2 = () => {
   useEffect(() => {
     fetchData();
     setNav("Detail");
+    setLink("/pos/produk1")
   }, []);
 
   document.title = "Detail";

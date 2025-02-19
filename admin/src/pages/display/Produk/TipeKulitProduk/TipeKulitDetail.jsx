@@ -23,6 +23,7 @@ const TipeKulitDetail = () => {
         }
     fetchingData();
     setNav("Detail");
+    setLink("/pos/tipekulit")
   }, [id]);
 
   document.title = "Detail";

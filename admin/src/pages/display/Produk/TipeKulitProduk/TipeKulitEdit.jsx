@@ -23,6 +23,7 @@ export const TipeKulitEdit = () => {
         }
     fetchingData();
     setNav("Tambah Tipe Kulit");
+    setLink("/pos/tipekulit")
   }, [id,setNav]);
 
   const handleSubmit = async (e) => {

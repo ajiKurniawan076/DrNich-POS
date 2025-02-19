@@ -36,6 +36,7 @@ export const Detail1 = () => {
     };
     FetchData();
     setNav("Detail");
+    setLink("/pos/kategoriproduk2")
   }, []);
 
   document.title = "Detail";

@@ -16,6 +16,8 @@ export const UpdateRating = () => {
 
   const handleSubmit = (e) => {};
 
+  setNav("Edit Rating")
+  setLink("/pos/rating")
   document.title = "Ubah Rating";
   const [supstat, setsupstat] = useState(false);
   return (
