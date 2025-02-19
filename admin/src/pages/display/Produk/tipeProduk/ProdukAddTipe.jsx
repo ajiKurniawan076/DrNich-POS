@@ -23,20 +23,20 @@ export const ProdukAddTipe = () => {
   }, []);
 
   const handleSubmit = async (e) => {
+    e.preventDefault()
     if (!namaTipeRef.current.value) {
       toast.error("semua bidang harus di isi!");
       return;
     }
-    const fdata = new FormData();
-    fdata.append("name", namaTipeRef.current.value);
-
+    const fdata = {
+      name :  namaTipeRef.current.value
+    }
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/tambahproductType`,
         fdata,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           withCredentials: true,

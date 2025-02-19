@@ -5,6 +5,7 @@ import { navContext } from "../../../../App2";
 
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const UpdateTipeProduk = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -36,8 +37,10 @@ export const UpdateTipeProduk = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const fdata = new FormData();
-    fdata.append("", namaTipeRef.current.value);
+    const fdata = {
+      name:  namaTipeRef.current.value
+    }
+    
 
     try {
       const response = await axios.put(
@@ -47,7 +50,6 @@ export const UpdateTipeProduk = () => {
         fdata,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           withCredentials: true,
@@ -56,7 +58,7 @@ export const UpdateTipeProduk = () => {
       if (response.status === 200) {
         toast.success("Berhasil Mengubah Tipe produk");
         setTimeout(() => {
-          navigate(`/pos/kategorilayanan/produkDetail/${id}`);
+          navigate(`/pos/produkdetail1/${id}`);
         }, 3000);
       }
     } catch (error) {
@@ -79,6 +81,7 @@ export const UpdateTipeProduk = () => {
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-3">
+        <ToastContainer/>
         <label className="text-[#454545] text-start text-[12px]">
           Nama Tipe Produk
         </label>
