@@ -76,7 +76,15 @@ export const LaporanRingkasanPenjualan = () => {
             await axios
                 .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
                 .then((response) => (
-                    setData(response.data), toast.success("Sukses Mengambil Data")))
+                    setData(response.data), toast.success("Sukses Mengambil Data", {
+                        autoClose:1000,
+                    })))
+                .catch((error) => {
+                    console.error(error)
+                    toast.error("Terjadi Kesalahan", {
+                        autoClose: 2000,
+                    })
+                })
         }
         fetch()
         console.log(tanggal)
