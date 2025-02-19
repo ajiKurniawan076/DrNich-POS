@@ -33,6 +33,8 @@ export const UpdateTipeProduk = () => {
       setDatax(filterData);
     };
     fetchData();
+    setNav('Edit Tipe Produk')
+    setLink('/pos/produktipe')
   }, []);
 
   const handleSubmit = async (e) => {

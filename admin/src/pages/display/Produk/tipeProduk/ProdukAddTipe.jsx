@@ -20,6 +20,7 @@ export const ProdukAddTipe = () => {
   };
   useEffect(() => {
     setNav("Tambah Tipe Produk");
+    setLink('/pos/produktipe')
   }, []);
 
   const handleSubmit = async (e) => {
