@@ -30,6 +30,7 @@ export const Produk1 = () => {
     fetchData();
 
     setNav("Produk");
+    setLink("/pos/produk")
   }, []);
 
   document.title = "Produk";

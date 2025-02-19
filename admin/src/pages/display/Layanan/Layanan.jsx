@@ -18,11 +18,12 @@ export const Layanan = () => {
         //     (response) => response.json()
         // ).then((data) => (setdatax(data)
         // ))
-        setNav('Layanan')
+    setNav('Layanan')
+    setLink("/pos/display")
+    document.title = 'Layanan'
     }, [])
 
 
-    document.title = 'Layanan'
     return (
 
         <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
@@ -38,7 +39,7 @@ export const Layanan = () => {
                         {datax.map((data) => (
                             <Link
                                 to={{
-                                    pathname: `/layanandetail/${data.id}`
+                                    pathname: `/pos/layanandetail/${data.id}`
                                 }}
                                 state={data}
                                 className="w-full border flex justify-between items-center rounded-xl px-3 py-3"
@@ -55,7 +56,7 @@ export const Layanan = () => {
 
                 {/* Tombol Tambah Layanan */}
                 <Link
-                    to={{ pathname: "/layananadd" }}
+                    to={{ pathname: "/pos/layananadd" }}
                     className="flex justify-center items-center cursor-pointer gap-2 h-[44px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px]">
                     <AiFillPlusCircle size={20} /> Tambah Layanan
                 </Link>

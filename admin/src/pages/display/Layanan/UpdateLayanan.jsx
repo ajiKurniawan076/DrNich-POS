@@ -31,6 +31,7 @@ export const UpdateLayanan = () => {
     ];
     setdatax(dataDummy);
     setNav("Ubah Layanan");
+    setLink("/pos/layanan")
   }, []);
 
   const handleFile = (e) => {
@@ -76,7 +77,7 @@ export const UpdateLayanan = () => {
       className="flex flex-col px-0 p-3 gap-1 bg-white w-full h-full"
       onSubmit={handleSubmit}
     >
-      <div className="flex flex-col gap-1 px-3">
+      <div className="flex flex-col gap-1 px-3 min-h-full h-fit">
         <div className="flex flex-col">
           <label className="text-start text-[454545] text-[12px]">
             Upload Foto

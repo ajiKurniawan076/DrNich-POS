@@ -13,6 +13,7 @@ const TipeKulit = () => {
         fachingData()
 
         setNav('Tipe Kulit')
+        setLink("/pos/produk")
     }, [])
     console.log(datax)
 

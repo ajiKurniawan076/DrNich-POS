@@ -22,6 +22,7 @@ export const MesinDetail = () => {
       }
       fachingData()
       setNav("Detail");
+      setLink("/pos/mesin")
     }, []);
   
     document.title = "Detail";

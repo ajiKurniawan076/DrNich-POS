@@ -23,6 +23,7 @@ export const LayananKategori = () => {
   const { setNav, setLink } = useContext(navContext);
   useEffect(() => {
     setNav("Layanan");
+    setLink("/pos/display")
   }, []);
   document.title = "Layanan";
   return (
@@ -30,7 +31,7 @@ export const LayananKategori = () => {
       <Link
         to={{ pathname: "/pos/kategorilayanan" }}
         className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-[80px] border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className="w-full h-[80px] border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={ilayanan} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
@@ -43,7 +44,7 @@ export const LayananKategori = () => {
         </span>
       </Link>
       <Link to={{ pathname: "/pos/layanan" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className="w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={ikategori} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545] font-medium text-[14px]">
