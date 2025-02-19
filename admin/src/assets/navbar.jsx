@@ -6,6 +6,8 @@ import iLogout from "../assets/iLogout.svg"
 import iBack from "../assets/iBack.svg"
 import iSortir from "../assets/iSortir.svg"
 import iClose from "../assets/iClose.svg"
+import axios from "axios"
+import { toast, ToastContainer } from "react-toastify"
 export const Navbar = () => {
     const { nav, sort, asc, setasc, showsort, setshowsort, link } = useContext(navContext)
     const back = useNavigate()  
@@ -26,10 +28,25 @@ export const Navbar = () => {
         e.preventDefault()
         setasc("desc")
     }
+
+    const handleLogout = async(e) => {
+        e.preventDefault()
+        try {
+            await axios.post(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/pos/logout`);
+            localStorage.removeItem("token"); // Remove token from storage
+            toast.success('Berhasil Logout')
+            setTimeout(()=>{
+                window.location.href = "/";  // Redirect to login page
+            },1000)
+            
+          } catch (error) {
+            console.error("Logout failed:", error);
+          }
+    }
     return (
         
         <div className={`fixed flex z-30 start-50 top-0 max-w-[500px] w-[100%]  ${nav=='home'?'text-white md:w-[80%] md:max-w-[700px] lg:w-[60%]  lg:max-w-[900px] justify-between':'text-[#454545] justify-center md:w-[100%] md:max-w-[700px] lg:w-[100%]  lg:max-w-[900px] relative bg-white shadow-md'} items-center h-[75px] `}>
-            
+            <ToastContainer/>
             <div className='mx-2 items-center gap-4 cursor-pointer'>
                 {nav=='home'?
                 <h4 className='pos-title'>Point Of Sale</h4>
@@ -38,7 +55,7 @@ export const Navbar = () => {
                 }
             </div>
             <div className={` items-center gap-4 cursor-pointer ${nav!='home'?'absolute start-5':''}`}>
-               {nav=='home'? <img src={iLogout} className="mt-2 me-5"/>:<button onClick={()=>{back(link)}}><img src={iBack} className="mt-2"/></button>}
+               {nav=='home'? <button onClick={handleLogout}><img src={iLogout} className="mt-2 me-5"/></button>:<button onClick={()=>{back(link)}}><img src={iBack} className="mt-2"/></button>}
             </div>
             <div className={`absolute items-center gap-4 cursor-pointer ${sort?'end-9':'hidden'}`}>
                {nav=='home'?<></>:<button onClick={()=>{setshowsort(true)}}><img src={iSortir} className="mt-2"/></button>}
