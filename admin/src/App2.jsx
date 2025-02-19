@@ -147,7 +147,6 @@ import { EditDiskon } from "./pages/Promo/EditDiskon";
 import { EditCashback } from "./pages/cashback/EditCashback";
 import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
-<<<<<<< HEAD
 import {Mesin} from "./pages/display/Mesin/Mesin"
 import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
 import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
@@ -157,20 +156,10 @@ import TipeKulitDetai from "./pages/display/Produk/TipeKulitProduk/TipeKulitDeta
 import { TipeKulitTambah } from "./pages/display/Produk/TipeKulitProduk/TipeKulitTambah";
 import { TipeKulitEdit } from "./pages/display/Produk/TipeKulitProduk/TipeKulitEdit";
 
-
-
-
-
-=======
 import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
-import { Mesin } from "./pages/display/Mesin/Mesin"
-import { MesinDetail } from "./pages/display/Mesin/MesinDetail"
-import { MesinEdit } from "./pages/display/Mesin/MesinEdit"
-import { MesinTambah } from "./pages/display/Mesin/MesinTambah"
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { ProtectedLevel } from "./ProtectedLevel";
->>>>>>> 6f584843b7e4181423938c8f92d55725ad4aac55
 
 axios.defaults.withCredentials = true;
 
@@ -205,7 +194,6 @@ function App2() {
           <Navbar className="navbar" />
           <div className="main-content">
             <Routes>
-<<<<<<< HEAD
               <Route path="/" element={<HomeAdmin />} />
               <Route path="/users" element={<USer />} />
               <Route path="/produks" element={<Products />} />
@@ -503,7 +491,6 @@ function App2() {
               <Route path="/TipeKulitDetail/:id" element={<TipeKulitDetai/>} />
               <Route path="/TipeKulitTambah" element={<TipeKulitTambah/>} />
               <Route path="/TipeKulitEdit/:id" element={<TipeKulitEdit/>} />
-=======
               {/* <Route path="/" element={<HomeAdmin />} /> */}
 
               <Route element={<ProtectedRoutes />}>
@@ -662,7 +649,6 @@ function App2() {
                 <Route path="/MesinEdit/:id" element={<MesinEdit />} />
                 </Route>
               </Route>
->>>>>>> 6f584843b7e4181423938c8f92d55725ad4aac55
             </Routes>
           </div>
         </div>
