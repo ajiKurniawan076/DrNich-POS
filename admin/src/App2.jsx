@@ -151,6 +151,10 @@ import {Mesin} from "./pages/display/Mesin/Mesin"
 import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
 import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
 import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
+import TipeKulit from "./pages/display/Produk/TipeKulitProduk/TipeKulit"
+import TipeKulitDetai from "./pages/display/Produk/TipeKulitProduk/TipeKulitDetail"
+import { TipeKulitTambah } from "./pages/display/Produk/TipeKulitProduk/TipeKulitTambah";
+import { TipeKulitEdit } from "./pages/display/Produk/TipeKulitProduk/TipeKulitEdit";
 
 
 
@@ -483,7 +487,10 @@ function App2() {
               <Route path="/MesinTambah" element={<MesinTambah />} />
               <Route path="/MesinDetail/:id" element={<MesinDetail />} />
               <Route path="/MesinEdit/:id" element={<MesinEdit />} />
-              
+              <Route path="/TipeKulit" element={<TipeKulit/>} />
+              <Route path="/TipeKulitDetail/:id" element={<TipeKulitDetai/>} />
+              <Route path="/TipeKulitTambah" element={<TipeKulitTambah/>} />
+              <Route path="/TipeKulitEdit/:id" element={<TipeKulitEdit/>} />
             </Routes>
           </div>
         </div>
