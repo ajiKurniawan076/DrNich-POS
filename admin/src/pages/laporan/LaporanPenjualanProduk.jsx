@@ -9,6 +9,16 @@ import iFrameKet2 from "../../assets/iconLaporanPenjualan/iFrameKet2.svg";
 import DatePicker from 'react-datepicker'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import {
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Legend,
+    CartesianGrid,
+} from "recharts";
 
 
 export const LaporanPenjualanProduk = () => {
@@ -19,6 +29,11 @@ export const LaporanPenjualanProduk = () => {
     const [startDate, setStartDate] = useState(new Date("2025-01-01T00:00:00Z"));
     const [endDate, setEndDate] = useState(new Date().toISOString().split('.')[0] + 'Z');
     const [data, setData] = useState();
+    const [chart, setChart] = useState([])
+    const [tampil, setTampil] = useState([])
+    const [dataPenjualan, setDataPenjualan] = useState([])
+    const [produkList, setProdukList] = useState([])
+    const [chartTampil, setChartTampil] = useState([])
         
     const datePickerRef = useRef(null); // Create a ref for the DatePicker
             
@@ -39,6 +54,7 @@ export const LaporanPenjualanProduk = () => {
                 setButton2(false)
             }
     };
+
 
     useEffect(() => {
         const tanggal = { dari : "2025-01-01T00:00:00Z", sampai : new Date().toISOString().split('.')[0] + 'Z'}
@@ -73,11 +89,91 @@ export const LaporanPenjualanProduk = () => {
         fetch()
     }, [startDate, endDate])
 
+
+    useEffect(() => {
+        const tanggal = {
+            endOfWeek : (new Date().toISOString().split('.')[0] + 'Z')
+        }
+        const fetchChart = async () => {
+            try {
+                const response = await axios.post("https://api.drnich.co.id/api/pos/laporan/laporangrafikproduk", tanggal)
+                console.log(response.data)
+                setChart(response.data.penjualan)
+                setProdukList(response.data.produklist)
+            } catch (error) {
+                console.log("Error Saat Fetching Chart data:", error)
+            }
+        }
+        fetchChart()
+    }, [])
+
+    
+    
+    useEffect(() => {
+        if (produkList.length > 2) {
+            const visibleChart = produkList.slice(0, 3)
+            setTampil(visibleChart)
+        } 
+    }, [produkList])
+    
+    useEffect(() => {
+        if (tampil.length > 0) {
+            chart.map((item, x) => {
+                setChartTampil((prev) => [...prev, {name : item.name}])
+                item.penjualan.map((datax,i) => {
+                    if (i == 0) {
+                        if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
+                        const newIsi = {
+                            penjualan1 : datax.jumlah
+                            }
+                            setChartTampil((prev) => [...prev, newIsi])
+                    }
+                    }
+                    if (i == 1) {
+                        if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
+                        const newIsi = {
+                            penjualan2 : datax.jumlah
+                            }
+                            setChartTampil((prev) => [...prev, newIsi])
+                    }
+                    }
+                    if (i == 2) {
+                        if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
+                        const newIsi = {
+                            penjualan3 : datax.jumlah
+                            }
+                            setChartTampil((prev) => [...prev, newIsi])
+                    }
+                    }
+                    
+                })
+            })
+        }
+    }, [tampil])
+    
+    useEffect(()=>{
+        console.log(chartTampil)
+    },[chartTampil])
+
+    // useEffect(() => {
+    //     const penjualanProduk = async () => {
+    //         try {
+    //             const response = await axios.post("")
+    //             console.log(response.data)
+    //             setDataPenjualan(response.data)
+    //         } catch (error) {
+    //             console.log("Error Saat Fetching Chart data:", error)
+    //         }
+    //     }
+    //     penjualanProduk()
+    // },[])
+
 setLink('/pos/laporan')
 setNav('Laporan Produk')   
 document.title = 'Laporan Produk'
 return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
+        <button onClick={()=>console.log(chartTampil)}>asd</button>
         <div className='flex flex-col h-full'>
             <p>Masa Berlaku</p>
                 <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
@@ -179,14 +275,74 @@ return (
             </div>
 
             <div className='grid place-items-center'>
-                <img src={iFrameGra} alt="Grafik" />
-                <img src={iFrameKet2} alt="Ket Grafik" />
+                <div className="text-[12px] font-semibold bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
+                    <p>Grafik Penjualan Seminggu Terakhir</p>
+                </div>
+                <div style={{ width: '100%', height: 400 }}>
+                    <ResponsiveContainer width="100%" height={400}>
+                        <BarChart
+                            data={chart}
+                            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                            barCategoryGap="30%"   // mengatur jarak antar kategori
+                            barGap={-5}          // membuat overlap antar bar dalam satu kategori
+                        >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
+                            <YAxis tickFormatter={(val) => {
+                                if (val >= 1000000) return `${(val/1000000).toLocaleString("id-ID")}jt`
+                                return val.toLocaleString('id-ID')
+                            }} />
+                            <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(value)} />
+                            <Legend />
+                            <Bar
+                                dataKey="penjualan"
+                                fill="url(#colorGradient)"
+                                radius={[5, 5, 0, 0]}
+                            />
+                            <Bar
+                                dataKey="Penjualan2"
+                                fill="url(#colorGradient2)"
+                                radius={[5, 5, 0, 0]}
+                            />
+                            <Bar
+                                dataKey="Penjualan3"
+                                fill="url(#colorGradient3)"
+                                radius={[5, 5, 0, 0]}
+                            />
+                            <defs>
+                                <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#FFC120" stopOpacity={0.9}/>
+                                    <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7}/>
+                                </linearGradient>
+                                <linearGradient id="colorGradient2" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#280594" stopOpacity={0.9}/>
+                                    <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7}/>
+                                </linearGradient>
+                                <linearGradient id="colorGradient3" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stopColor="#FF708C" stopOpacity={0.9}/>
+                                    <stop offset="100%" stopColor="#A7B5FF" stopOpacity={0.7}/>
+                                </linearGradient>
+                            </defs>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
 
             <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
                 <p className="">Data Penjualan Produk</p>
             </div>
-
+            {/* {dataPenjualan.map((item, i) => {
+                <div key={i} className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
+                    <div className='grid text-start gap-[5px]'>
+                        <p>{item.namaProduk}</p>
+                        <p className='text-[14px] font-semibold'>Rp {item.harga.toLocaleString("id-ID")}</p>
+                    </div>
+                    <p>{item.jumlah} Transaksi</p>
+                </div>
+            })} */}
             <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
                 <div className='grid text-start gap-[5px]'>
                     <p>Facial Glow Acne</p>

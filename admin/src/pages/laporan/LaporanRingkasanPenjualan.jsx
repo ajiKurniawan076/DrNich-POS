@@ -16,14 +16,14 @@ import { startOfWeek, toDate } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  CartesianGrid,
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Legend,
+    CartesianGrid,
 } from "recharts";
 
 export const LaporanRingkasanPenjualan = () => {
@@ -36,103 +36,94 @@ export const LaporanRingkasanPenjualan = () => {
     const [data, setData] = useState();
     const navigate = useNavigate();
     const [chartData, setChartData] = useState([])
-    const [ember, setEmber] = useState([])
+    const [laporanPromo, setLaporanPromo] = useState([])
+    const [laporanPelanggan, setLaporanPelanggan] = useState([])
 
-  const handleNavigate = (e) => {
-    e.preventDefault();
-    const tanggal = {
-      dari: startDate?.toISOString().split(".")[0] + "Z",
-      sampai: endDate,
+
+    const handleNavigate = (e) => {
+        e.preventDefault();
+        const tanggal = {
+        dari: startDate?.toISOString().split(".")[0] + "Z",
+        sampai: endDate,
+        };
+        navigate("/pos/laporanDataPenjualan", { state: { tanggal: tanggal } });
+        console.log(data.transaksi);
     };
-    navigate("/pos/laporanDataPenjualan", { state: { tanggal: tanggal } });
-    console.log(data.transaksi);
-  };
-  const handleNavigatePs = (e) => {
-    e.preventDefault();
-    const tanggal = {
-      dari: startDate?.toISOString().split(".")[0] + "Z",
-      sampai: endDate,
+    const handleNavigatePs = (e) => {
+        e.preventDefault();
+        const tanggal = {
+        dari: startDate?.toISOString().split(".")[0] + "Z",
+        sampai: endDate,
+        };
+        navigate("/pos/LaporanDataPembelianStok", { state: { tanggal: tanggal } });
     };
-    navigate("/pos/LaporanDataPembelianStok", { state: { tanggal: tanggal } });
-  };
 
-  const datePickerRef = useRef(null); // Create a ref for the DatePicker
+    const datePickerRef = useRef(null); // Create a ref for the DatePicker
 
-    const handleButtonClick = (e) => {
-        e.preventDefault()
-        if (datePickerRef.current) {
-            datePickerRef.current.setFocus(); // Programmatically focus and open DatePicker
-            setButton(false)
+        const handleButtonClick = (e) => {
+            e.preventDefault()
+            if (datePickerRef.current) {
+                datePickerRef.current.setFocus(); // Programmatically focus and open DatePicker
+                setButton(false)
+            }
+        };
+
+        const datePickerRef2 = useRef(null); // Create a ref for the DatePicker
+
+    const handleButtonClick2 = (e) => {
+        e.preventDefault();
+        if (datePickerRef2.current) {
+        datePickerRef2.current.setFocus(); // Programmatically focus and open DatePicker
+        setButton2(false);
         }
     };
 
-    const datePickerRef2 = useRef(null); // Create a ref for the DatePicker
+    useEffect(() => {
+        const tanggal = {
+        dari: "2025-01-01T00:00:00Z",
+        sampai: new Date().toISOString().split(".")[0] + "Z",
+        };
+        const fetchData = async () => {
+        await axios
+            .post(
+            "https://api.drnich.co.id/api/pos/laporan/laporanpenjualan",
+            tanggal
+            )
+            .then((response) => setData(response.data));
+        };
+        fetchData();
+    }, []);
 
-  const handleButtonClick2 = (e) => {
-    e.preventDefault();
-    if (datePickerRef2.current) {
-      datePickerRef2.current.setFocus(); // Programmatically focus and open DatePicker
-      setButton2(false);
-    }
-  };
-
-  useEffect(() => {
-    const tanggal = {
-      dari: "2025-01-01T00:00:00Z",
-      sampai: new Date().toISOString().split(".")[0] + "Z",
-    };
-    const fetchData = async () => {
-      await axios
-        .post(
-          "https://api.drnich.co.id/api/pos/laporan/laporanpenjualan",
-          tanggal
-        )
-        .then((response) => setData(response.data));
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const tanggal = {
-      dari: startDate?.toISOString().split(".")[0] + "Z",
-      sampai: endDate,
-    };
-    const fetch = async () => {
-      await axios
-        .post(
-          "https://api.drnich.co.id/api/pos/laporan/laporanpenjualan",
-          tanggal
-        )
-        .then(
-          (response) => (
-            setData(response.data),
-            toast.success("Sukses Mengambil Data", {
-              autoClose: 1000,
-            })
-          )
-        )
-        .catch((error) => {
-          console.error(error);
-          toast.error("Terjadi Kesalahan", {
-            autoClose: 2000,
-          });
-        });
-    };
-    fetch();
-    console.log(tanggal);
-  }, [startDate, endDate]);
-
-  // useEffect(() => {
-  //     const fetchChart = async () => {
-  //         try {
-  //             const response = await axios.get("https://api.drnich.co.id/api/pos/laporan/laporangrafik")
-  //             setChartData(response.data)
-  //         } catch (error) {
-  //             console.log("Error Saat Fetching Chart data:", error)
-  //         }
-  //     }
-  //     fetchChart()
-  // },[])
+    useEffect(() => {
+        const tanggal = {
+        dari: startDate?.toISOString().split(".")[0] + "Z",
+        sampai: endDate,
+        };
+        const fetch = async () => {
+        await axios
+            .post(
+            "https://api.drnich.co.id/api/pos/laporan/laporanpenjualan",
+            tanggal
+            )
+            .then(
+            (response) => (
+                setData(response.data),
+                toast.success("Sukses Mengambil Data", {
+                autoClose: 1000,
+                })
+            )
+            )
+            .catch((error) => {
+            console.error(error);
+            toast.error("Terjadi Kesalahan", {
+                autoClose: 2000,
+            });
+            });
+        };
+        fetch();
+        console.log(tanggal);
+    }, [startDate, endDate]);
+    
     useEffect(() => {
         const tanggal = {
             endOfWeek : (new Date().toISOString().split('.')[0] + 'Z')
@@ -152,147 +143,176 @@ export const LaporanRingkasanPenjualan = () => {
             }
         }
         fetchChart()
-    },[])
+    }, [])
 
-  setLink("/pos/laporan");
-  setNav("Ringkasan Penjualan");
-  document.title = "Ringkasan Penjualan";
-  return (
-    <div className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10">
-      {/* <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
-            <img src={iCari} alt="Cari" />
-            <input
-                // onChange={filterData}
-                ref={cari}
-                type="text"
-                className="text-sm w-full h-[30px] focus:outline-none"
-                placeholder="Cari..."
-            ></input>
-        </form> */}
-      <ToastContainer />
-      <div className="flex flex-col">
-        <div className="flex flex-col h-full">
-          <p>Masa Berlaku</p>
-          <div className="flex flex-col gap-2 justify-between w-full mt-[5px]">
-            <p>Dari :</p>
-            <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[5px] mt-[5px]">
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                dateFormat="yyyy-MM-dd"
-                ref={datePickerRef} // Attach the ref
-                className="w-full outline-0 text-center" // Completely hide the DatePicker input
-                popperClassName="custom-datepicker-popper"
-              />
-              {/* Button to trigger DatePicker */}
-              <div
-                className={`absolute h-full px-4 top-2 start-0 w-full ${
-                  button ? "" : "opacity-0"
-                }`}
-              >
-                <button
-                  onClick={handleButtonClick}
-                  className="flex text-[#BDBDBD] w-full items-center justify-between space-x-2"
-                >
-                  Tanggal
-                  <img src={iTgl} alt="Calendar Icon" className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-            <p>Sampai :</p>
-            <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[10px] mt-[5px]">
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                dateFormat="yyyy-MM-dd"
-                ref={datePickerRef2} // Attach the ref
-                className="w-full outline-0 text-center" // Completely hide the DatePicker input
-                popperClassName="custom-datepicker-popper"
-              />
-              {/* Button to trigger DatePicker */}
-              <div
-                className={`absolute h-full px-4 top-2 start-0 w-full ${
-                  button2 ? "" : "opacity-0"
-                }`}
-              >
-                <button
-                  onClick={handleButtonClick2}
-                  className="flex text-[#BDBDBD] w-full items-center justify-between space-x-2"
-                >
-                  Tanggal
-                  <img src={iTgl} alt="Calendar Icon" className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+    {/* Fetching Laporan Promo */}
+    // useEffect(() => {
+    //     const fetchPromo = async () => {
+    //         try {
+    //             const response = await axios.post("")
+    //             console.log(response.data)
+    //             setLaporanPromo(response.data)
+    //         } catch {
+                
+    //         }
+    //     }
+    //     fetchPromo()
+    // },[])
 
-        <div className="flex justify-between gap-[10px] text-[12px] w-full">
-          <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full">
-            <div className="flex items-center text-center gap-[5px]">
-              <p>Total Produk</p>
-              <img src={iSeruTrans} alt="iSeru" />
+
+    {/* Fetching Laporan Pelanggan */}
+    // useEffect(() => {
+    //     const fetchPromo = async () => {
+    //         try {
+    //             const response = await axios.post("")
+    //             console.log(response.data)
+    //             setLaporanPelanggan(response.data)
+    //         } catch {
+                
+    //         }
+    //     }
+    //     fetchPromo()
+    // },[])
+
+    setLink("/pos/laporan");
+    setNav("Ringkasan Penjualan");
+    document.title = "Ringkasan Penjualan";
+    return (
+        <div className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10">
+        {/* <form className="my-[20px] flex gap-2 border border-[#BDBDBD] rounded-xl items-center p-3">
+                <img src={iCari} alt="Cari" />
+                <input
+                    // onChange={filterData}
+                    ref={cari}
+                    type="text"
+                    className="text-sm w-full h-[30px] focus:outline-none"
+                    placeholder="Cari..."
+                ></input>
+            </form> */}
+        <ToastContainer />
+        <div className="flex flex-col">
+            <div className="flex flex-col h-full">
+            <p>Masa Berlaku</p>
+            <div className="flex flex-col gap-2 justify-between w-full mt-[5px]">
+                <p>Dari :</p>
+                <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[5px] mt-[5px]">
+                <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    dateFormat="yyyy-MM-dd"
+                    ref={datePickerRef} // Attach the ref
+                    className="w-full outline-0 text-center" // Completely hide the DatePicker input
+                    popperClassName="custom-datepicker-popper"
+                />
+                {/* Button to trigger DatePicker */}
+                <div
+                    className={`absolute h-full px-4 top-2 start-0 w-full ${
+                    button ? "" : "opacity-0"
+                    }`}
+                >
+                    <button
+                    onClick={handleButtonClick}
+                    className="flex text-[#BDBDBD] w-full items-center justify-between space-x-2"
+                    >
+                    Tanggal
+                    <img src={iTgl} alt="Calendar Icon" className="w-6 h-6" />
+                    </button>
+                </div>
+                </div>
+                <p>Sampai :</p>
+                <div className="relative flex justify-center items-center border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[10px] mt-[5px]">
+                <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    dateFormat="yyyy-MM-dd"
+                    ref={datePickerRef2} // Attach the ref
+                    className="w-full outline-0 text-center" // Completely hide the DatePicker input
+                    popperClassName="custom-datepicker-popper"
+                />
+                {/* Button to trigger DatePicker */}
+                <div
+                    className={`absolute h-full px-4 top-2 start-0 w-full ${
+                    button2 ? "" : "opacity-0"
+                    }`}
+                >
+                    <button
+                    onClick={handleButtonClick2}
+                    className="flex text-[#BDBDBD] w-full items-center justify-between space-x-2"
+                    >
+                    Tanggal
+                    <img src={iTgl} alt="Calendar Icon" className="w-6 h-6" />
+                    </button>
+                </div>
+                </div>
             </div>
-            <div className="flex items-center text-center">
-              <p className="font-semibold text-[14px]">
-                Rp. {data?.totalPendapatan?.toLocaleString("id-ID")}
-              </p>
             </div>
-          </div>
-          <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full">
-            <div className="flex items-center text-center gap-[5px]">
-              <p>HPP</p>
-              <img src={iSeruTrans} alt="iSeru" />
+
+            <div className="flex justify-between gap-[10px] text-[12px] w-full">
+            <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full">
+                <div className="flex items-center text-center gap-[5px]">
+                <p>Total Produk</p>
+                <img src={iSeruTrans} alt="iSeru" />
+                </div>
+                <div className="flex items-center text-center">
+                <p className="font-semibold text-[14px]">
+                    Rp. {data?.totalPendapatan?.toLocaleString("id-ID")}
+                </p>
+                </div>
             </div>
-            <div className="flex items-center text-center">
-              <p className="font-semibold text-[14px]">Rp.</p>
+            <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full">
+                <div className="flex items-center text-center gap-[5px]">
+                <p>HPP</p>
+                <img src={iSeruTrans} alt="iSeru" />
+                </div>
+                <div className="flex items-center text-center">
+                <p className="font-semibold text-[14px]">Rp.</p>
+                </div>
             </div>
-          </div>
-        </div>
-        <div className="flex justify-between gap-[10px] my-[10px] text-[12px] w-full">
-          <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full">
-            <div className="flex items-center text-center gap-[5px]">
-              <p>Total Laba Kotor</p>
-              <img src={iSeruTrans} alt="iSeru" />
             </div>
-            <div className="flex items-center text-center">
-              <p className="font-semibold text-[14px]">Rp.</p>
+            <div className="flex justify-between gap-[10px] my-[10px] text-[12px] w-full">
+            <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full">
+                <div className="flex items-center text-center gap-[5px]">
+                <p>Total Laba Kotor</p>
+                <img src={iSeruTrans} alt="iSeru" />
+                </div>
+                <div className="flex items-center text-center">
+                <p className="font-semibold text-[14px]">Rp.</p>
+                </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full">
-            <div className="flex items-center text-center gap-[5px]">
-              <p>Total Transaksi</p>
-              <img src={iSeruTrans} alt="iSeru" />
+            <div className="flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full">
+                <div className="flex items-center text-center gap-[5px]">
+                <p>Total Transaksi</p>
+                <img src={iSeruTrans} alt="iSeru" />
+                </div>
+                <div className="flex items-center text-center">
+                <p className="font-semibold text-[14px]">
+                    {data?.totalTransaksi}
+                </p>
+                </div>
             </div>
-            <div className="flex items-center text-center">
-              <p className="font-semibold text-[14px]">
-                {data?.totalTransaksi}
-              </p>
             </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-[10px]">
-          <button
-            onClick={handleNavigate}
-            className="flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]"
-          >
-            <p>Data Penjualan</p>
-            <img src={iPan} alt="Panah" />
-          </button>
-          <button
-            onClick={handleNavigatePs}
-            className="flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]"
-          >
-            <p>Data Pembelian Stok</p>
-            <img src={iPan} alt="Panah" />
-          </button>
-          <a
-            href="LaporanMetodePembayaran"
-            className="flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]"
-          >
-            <p>Laporan Metode Pembayaran</p>
-            <img src={iPan} alt="Panah" />
-          </a>
+            <div className="flex flex-col gap-[10px]">
+            <button
+                onClick={handleNavigate}
+                className="flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]"
+            >
+                <p>Data Penjualan</p>
+                <img src={iPan} alt="Panah" />
+            </button>
+            <button
+                onClick={handleNavigatePs}
+                className="flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]"
+            >
+                <p>Data Pembelian Stok</p>
+                <img src={iPan} alt="Panah" />
+            </button>
+            <a
+                href="LaporanMetodePembayaran"
+                className="flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]"
+            >
+                <p>Laporan Metode Pembayaran</p>
+                <img src={iPan} alt="Panah" />
+            </a>
         </div>
 
                 {/* Grafik Penjualan menggunakan Recharts */}
@@ -302,20 +322,20 @@ export const LaporanRingkasanPenjualan = () => {
                 <div style={{ width: '100%', height: 400 }}>
                 <ResponsiveContainer width="100%" height={400}>
                     <BarChart
-                    data={chartData}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                    >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
-                    <YAxis tickFormatter={(val) => {
-                        if (val >= 1000000) return `${(val/1000000).toLocaleString("id-ID")}jt`
-                        return val.toLocaleString('id-ID')
-                    }} />
-                    <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR'
-                    }).format(value)} />
-                    <Legend />
+                            data={chartData}
+                            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                        >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
+                        <YAxis tickFormatter={(val) => {
+                            if (val >= 1000000) return `${(val/1000000).toLocaleString("id-ID")}jt`
+                            return val.toLocaleString('id-ID')
+                        }} />
+                        <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(value)} />
+                        <Legend />
                             <Bar
                                 dataKey="Penjualan"
                                 fill="url(#colorGradient)"
@@ -341,6 +361,17 @@ export const LaporanRingkasanPenjualan = () => {
                         <p>Diskon</p>
                         <img src={iPanahB} alt="PanahBawah" />
                     </div>
+                    {/* {laporanPromo.map((item, i) => {
+                        <div className='flex justify-between text-center items-center border border-[#BDBDBD] rounded-xl p-[15px]'>
+                            <div className='grid text-start gap-2'>
+                                <p>{item.namapromo}</p>
+                                <p>Rp {item.hargaPromo.toLocaleString("id-ID")}</p>
+                            </div>
+                            <div className='text-[#C2A353]'>
+                                <p>{item.jumlah} Transaksi</p>
+                            </div>
+                        </div>
+                    })} */}
                     <div className='flex justify-between text-center items-center border border-[#BDBDBD] rounded-xl p-[15px]'>
                         <div className='grid text-start gap-2'>
                             <p>Mega Launching</p>
@@ -377,7 +408,22 @@ export const LaporanRingkasanPenjualan = () => {
                     </div>
                 </div>
                 <div className='flex flex-col gap-[10px] mt-[30px] h-full'>
-                    <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
+                {/* {laporanPelanggan.map((item, i) => {
+                        
+                            <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
+                                <div className='flex items-center text-center gap-[10px]'>
+                                    <img src={i1} alt="" />
+                                    <p>{item.nama}</p>
+                                </div>
+                                <div className='text-[#C2A353]'>
+                                    <p>Rp {item.harga.toLocaleString("id-ID")}</p>
+                                </div>
+                            </div>
+                        </div>
+                    })} */}
+                </div>
+                <div className='flex flex-col gap-[10px] mt-[30px] h-full'>
+                    {/* <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
                         <div className='flex items-center text-center gap-[10px]'>
                             <img src={i1} alt="" />
                             <p>Hana</p>
@@ -403,7 +449,7 @@ export const LaporanRingkasanPenjualan = () => {
                         <div className='text-[#C2A353]'>
                             <p>Rp 50.000.000</p>
                         </div>
-                    </div>
+                    </div> */}
                     <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px] mb-8'>
                         <div className='flex items-center text-center gap-[10px]'>
                             <img src={i4} alt="" />
