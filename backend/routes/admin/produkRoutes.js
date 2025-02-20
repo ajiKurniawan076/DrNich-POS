@@ -29,7 +29,7 @@ import {
   gettipeKulit,
   updatetipeKulit,
   deletetipeKulit,
-  // getTipeKulitById,
+  gettipeKulitById,
 } from "../../controller/admin/tipeKulitController.js";
 import { protect } from "../../middleware/authMiddleware.js";
 import { upload } from "../../middleware/uploadMiddleware.js";
@@ -92,6 +92,6 @@ router.post("/createtipeKulit", protect([1, 4]), newtipeKulit);
 router.get("/getAlltipeKulit", gettipeKulit);
 router.put("/edittipeKulit/:id", protect([1, 4]), updatetipeKulit);
 router.delete("/deletetipeKulit/:id", protect([1, 4]), deletetipeKulit);
-// router.get("/getTipeKulitById/:id", getTipeKulitById);
+router.get("/gettipeKulitById/:id", gettipeKulitById);
 
 export default router;

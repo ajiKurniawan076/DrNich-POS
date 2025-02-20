@@ -28,6 +28,7 @@ export const KategoriProduk2 = () => {
     };
     FetchData();
     setNav("Kategori Produk");
+    setLink("/pos/produk")
   }, []);
 
   document.title = "Kategori Produk";

@@ -29,6 +29,7 @@ export const Produk1 = () => {
   useEffect(() => {
     fetchData();
     setNav("Produk");
+    setLink("/pos/produk")
   }, []);
 
   document.title = "Produk";

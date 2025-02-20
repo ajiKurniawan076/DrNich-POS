@@ -14,6 +14,7 @@ export const MesinTambah = () => {
 
   useEffect(() => {
     setNav("Tambah Mesin");
+    setLink("/pos/mesin")
   }, []);
 
   const handleImg = (e) => {

@@ -34,6 +34,7 @@ export const ProdukTipe = () => {
     // };
     // fetchDatax();
     setNav("Tipe Produk");
+    setLink("/pos/produk")
   }, []);
 
   document.title = "Tipe Produk";

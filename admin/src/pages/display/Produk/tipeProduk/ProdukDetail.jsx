@@ -40,6 +40,8 @@ export const ProdukDetail = () => {
       setdatax(response.data);
     };
     fetchData();
+    setNav('Detail Tipe Produk')
+    setLink('/pos/produktipe')
   }, []);
 
   document.title = "Detail";

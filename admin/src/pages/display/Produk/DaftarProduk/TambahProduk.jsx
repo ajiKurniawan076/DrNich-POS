@@ -137,6 +137,7 @@ export const TambahProduk = () => {
     fetchTipeKulit();
     fetchTipeProduk();
     setNav("Tambah Produk");
+    setLink("/pos/produk1")
   }, []);
 
   document.title = "Tambah Produk";

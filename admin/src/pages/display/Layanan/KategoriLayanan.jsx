@@ -33,6 +33,7 @@ export const KategoriLayanan = () => {
     //     (response) => response.json()
     // ).then((data) => (setdatax(data)
     // ))
+    setLink("/pos/layananKategori")
     setNav("Layanan Kategori");
   }, []);
 

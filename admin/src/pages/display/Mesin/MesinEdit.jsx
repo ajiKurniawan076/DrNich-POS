@@ -21,6 +21,7 @@ export const MesinEdit = () => {
       }
       fachingData()
     setNav("Ubah Mesin");
+    setLink("/pos/mesin")
   }, []);
 
   const handleImg = (e) => {
@@ -53,7 +54,7 @@ export const MesinEdit = () => {
       const response = await axios.put(
         `${
           import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/foto//editSertif/:id`,
+        }/api/foto/editSertif/:id`,
         fdata,
         {
           headers: {
