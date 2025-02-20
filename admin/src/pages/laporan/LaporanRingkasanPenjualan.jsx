@@ -36,6 +36,7 @@ export const LaporanRingkasanPenjualan = () => {
     const [data, setData] = useState();
     const navigate = useNavigate();
     const [chartData, setChartData] = useState([])
+    const [ember, setEmber] = useState([])
 
   const handleNavigate = (e) => {
     e.preventDefault();
@@ -139,8 +140,13 @@ export const LaporanRingkasanPenjualan = () => {
         const fetchChart = async () => {
             try {
                 const response = await axios.post("https://api.drnich.co.id/api/pos/laporan/laporangrafik", tanggal)
-                setChartData(response.data.transactions)
                 console.log(response.data.transactions)
+                response.data.transactions.map((item) => {
+                    setChartData(prev => [...prev, {
+                        name: item.name,
+                        Penjualan: item.penjualan
+                    }])
+                })
             } catch (error) {
                 console.log("Error Saat Fetching Chart data:", error)
             }
@@ -300,7 +306,7 @@ export const LaporanRingkasanPenjualan = () => {
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                     >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" tick={{ fontSize: 12 }} angle={-40} textAnchor="end" />
+                    <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
                     <YAxis tickFormatter={(val) => {
                         if (val >= 1000000) return `${(val/1000000).toLocaleString("id-ID")}jt`
                         return val.toLocaleString('id-ID')
@@ -311,7 +317,7 @@ export const LaporanRingkasanPenjualan = () => {
                     }).format(value)} />
                     <Legend />
                             <Bar
-                                dataKey="penjualan"
+                                dataKey="Penjualan"
                                 fill="url(#colorGradient)"
                                 radius={[5, 5, 0, 0]}
                             >
