@@ -19,9 +19,7 @@ export const TipeKulitEdit = () => {
 
   useEffect(() => {
     const fetchingData = async () => {
-          const response = await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getAlltipeKulit`)
-          const filteredData = response.data.find(item => item._id === id)
-          setdatax(filteredData)
+          await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/gettipeKulitById/${id}`).then((response) => setdatax(response.data))
         }
     fetchingData();
     setNav("Edit Tipe Kulit");

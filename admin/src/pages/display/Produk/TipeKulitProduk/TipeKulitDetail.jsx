@@ -17,9 +17,11 @@ const TipeKulitDetail = () => {
 
   useEffect(() => {
     const fetchingData = async () => {
-          const response = await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getAlltipeKulit`)
-          const filteredData = response.data.find(item => item._id === id)
-          setdatax(filteredData)
+          await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/gettipeKulitById/${id}`).then((response) => setdatax(response.data))
+          //filter masnual by id
+          // const response = await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getAlltipeKulit`)
+          // const filteredData = response.data.find(item => item._id === id)
+          // setdatax(filteredData)
         }
     fetchingData();
     setNav("Detail Tipe Kulit");

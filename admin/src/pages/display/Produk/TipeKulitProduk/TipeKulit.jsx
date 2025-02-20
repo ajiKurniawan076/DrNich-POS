@@ -11,7 +11,6 @@ const TipeKulit = () => {
             await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getAlltipeKulit`).then((response) => setdatax(response.data))
         }
         fachingData()
-
         setNav('Tipe Kulit')
         setLink("/pos/produk")
     }, [])
