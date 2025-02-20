@@ -8,6 +8,7 @@ import {
   deleteMesin,
   editMesin,
   getMesin,
+  getMesinbyID,
   getSertifbyID,
 } from "../../controller/admin/fotoController.js";
 import { upload } from "../../middleware/uploadMiddleware.js";
@@ -24,5 +25,6 @@ router.post("/createMesin", upload.single("foto"), newMesin);
 router.get("/getAllMesin", getMesin);
 router.put("/editMesin/:id", upload.single("foto"), editMesin);
 router.delete("/deleteMesin/:id", deleteMesin);
+router.get("/getMesinbyId/:id", getMesinbyID);
 
 export default router;

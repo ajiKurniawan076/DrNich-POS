@@ -60,6 +60,15 @@ const getSertifbyID = asyncHandler(async (req, res) => {
     res.status(400).json({ message: "Gagal mengambil data" + error.message });
   }
 });
+const getMesinbyID = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const sertif = await Mesin.findById(id);
+    res.send(sertif);
+  } catch (error) {
+    res.status(400).json({ message: "Gagal mengambil data" + error.message });
+  }
+});
 
 const newMesin = asyncHandler(async (req, res) => {
   const newMesin = {
@@ -121,4 +130,5 @@ export {
   editMesin,
   getMesin,
   getSertifbyID,
+  getMesinbyID
 };
