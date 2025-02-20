@@ -275,6 +275,56 @@ catch(error){
 
 });
 
+const laporanGrafik = async (req, res) => {
+  try {
+      const { startOfWeek } = req.body; // Only provide startOfWeek
+
+      if (!startOfWeek) {
+          return res.status(400).json({ success: false, message: "startOfWeek is required" });
+      }
+
+      const weekDays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+
+      // Detect the start day from startOfWeek
+      const startDate = new Date(startOfWeek);
+      const detectedDayIndex = startDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+      const detectedStartDay = detectedDayIndex === 0 ? "Minggu" : weekDays[detectedDayIndex - 1];
+
+      // Generate the ordered days of the week based on the detected start day
+      const startIndex = weekDays.indexOf(detectedStartDay);
+      const orderedWeekDays = [...weekDays.slice(startIndex), ...weekDays.slice(0, startIndex)];
+
+      // Compute the end of the week
+      const endOfWeek = new Date(startDate);
+      endOfWeek.setDate(startDate.getDate() + 6); // 6 days ahead to complete the week
+      endOfWeek.setHours(23, 59, 59, 999);
+
+      // Fetch transactions within the given range
+      const transactions = await TransaksiModels.find({
+          createdAt: { $gte: startDate, $lte: endOfWeek }
+      });
+
+      // Initialize the week structure
+      const transactionsByDay = {};
+      orderedWeekDays.forEach(day => transactionsByDay[day] = []);
+
+      // Group transactions by day
+      transactions.forEach(transaction => {
+          const transactionDate = new Date(transaction.createdAt);
+          const transactionDayIndex = transactionDate.getDay();
+          
+          // Adjust day name to match the custom order
+          const adjustedDayName = transactionDayIndex === 0 ? "Minggu" : weekDays[transactionDayIndex - 1];
+          transactionsByDay[adjustedDayName].push(transaction);
+      });
+
+      res.json({ success: true, transactions: transactionsByDay });
+  } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
 export {
  laporanPenjualan,
  laporanBelanja,
