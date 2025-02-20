@@ -4,43 +4,59 @@ import {
   AiOutlineRightCircle,
   AiOutlineSearch,
 } from "react-icons/ai";
-import { data, Link } from "react-router-dom";
+import { data, Link, useParams } from "react-router-dom";
 import { navContext } from "../../../App2";
 import { useLocation } from "react-router-dom";
 
 import gkategori from "../../../assets/iconDisplay/Layanan/gkategori.svg";
+import axios from "axios";
 // import { BiLockAlt } from "react-icons/bi"
 
 export const RatingDetail = () => {
   const lokasi = useLocation();
   const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
+  const [gambar, setGambar] = useState("");
   const datadummy = lokasi.state;
+  const { id } = useParams();
+  console.log(id);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        // `http://localhost:8000/api/ulasan/getUlasanById/${id}`
+        `${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/ulasan/getUlasanById/${id}`
+      );
+      setdatax(response.data);
+      setGambar(response.data.foto);
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    // fetch("/marketing.json").then(
-    //     (response) => response.json()
-    // ).then((data) => (setdatax(data)
-    // ))
-    // setNav('Detail')
+    fetchData();
   }, []);
 
-  setNav("Detail Rating")
-  setLink("/pos/rating")
   document.title = "Detail";
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
       <div className="flex flex-col justify-between w-full h-full py-3 px-3">
         <div className="flex flex-col gap-2 text-[12px] w-full border rounded-lg p-3 border-[#C2A353]">
           <div className="w-[115px] h-[115px] border rounded-lg ">
-            <img src={gkategori} alt="" className="" />
+            <img src={gambar} alt="" className="" />
           </div>
           <div className="text-start  mt-1">
             <p className="text-[#BDBDBD]">Nama Pelanggan</p>
-            <p className="text-[#454545]">{datadummy.nama}</p>
+            <p className="text-[#454545]">{datax.nama}</p>
+          </div>
+          <div className="text-start  mt-1">
+            <p className="text-[#BDBDBD]">Rating</p>
+            <p className="text-[#454545]">{datax.rating}</p>
           </div>
           <div className=" text-start ">
             <p className="text-[#BDBDBD]">Deskripsi</p>
-            <p className="text-[#454545]">{datadummy.deskripsi}</p>
+            <p className="text-[#454545]">{datax.ulasan}</p>
           </div>
         </div>
         <div className="flex gap-1">
@@ -51,7 +67,7 @@ export const RatingDetail = () => {
             Hapus{" "}
           </a>
           <Link
-            to={{ pathname: "/UpdateRating" }}
+            to={{ pathname: `/pos/UpdateRating/${id}` }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "
           >
             Edit

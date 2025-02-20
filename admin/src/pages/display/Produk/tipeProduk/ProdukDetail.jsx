@@ -16,13 +16,28 @@ export const ProdukDetail = () => {
   const { id } = useParams();
   const { setNav, setLink } = useContext(navContext);
   const [datax, setdatax] = useState([]);
+
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:8000/api/produk/getProdukTipeById/${id}`
+  //     );
+  //     console.log(response.data);
+  //     setdatax(response.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   useEffect(() => {
+    // fetchData();
     const fetchData = async () => {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/produk/getAllproductType`
+        `${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/produk/getProdukTipeById/${id}`
       );
-      const filterData = response.data.find((item) => item._id === id);
-      setdatax(filterData);
+      setdatax(response.data);
     };
     fetchData();
     setNav('Detail Tipe Produk')

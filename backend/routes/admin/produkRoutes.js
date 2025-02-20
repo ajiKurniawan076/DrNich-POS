@@ -20,6 +20,7 @@ import {
   getProductType,
   editProductType,
   deleteProductType,
+  getProdukTipeById,
   getCategoryById,
 } from "../../controller/admin/jenisKategoriProdukController.js";
 
@@ -46,12 +47,7 @@ router.put(
 router.delete("/deleteImage/:id", protect([1, 4]), deleteImage);
 
 //PRODUCT
-router.post(
-  "/tambahproduk",
-  upload.single("foto"),
-  protect([1, 4]),
-  newproduk
-);
+router.post("/tambahproduk", upload.single("foto"), protect([1, 4]), newproduk);
 router.get("/getAllProduk", getproduk);
 router.put(
   "/updateproduk/:id",
@@ -89,6 +85,7 @@ router.post("/tambahproductType", protect([1, 4]), newProductType);
 router.get("/getAllproductType", getProductType);
 router.put("/editproductType/:id", protect([1, 4]), editProductType);
 router.delete("/deleteproductType/:id", protect([1, 4]), deleteProductType);
+router.get("/getProdukTipeById/:id", getProdukTipeById);
 
 //TIPE KULIT
 router.post("/createtipeKulit", protect([1, 4]), newtipeKulit);

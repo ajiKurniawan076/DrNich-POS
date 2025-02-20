@@ -66,4 +66,10 @@ const gettipeKulitById = asyncHandler(async (req, res) => {
   }
 });
 
-export { newtipeKulit, gettipeKulit, updatetipeKulit, deletetipeKulit, gettipeKulitById };
+export {
+  newtipeKulit,
+  gettipeKulit,
+  updatetipeKulit,
+  deletetipeKulit,
+  gettipeKulitById,
+};
