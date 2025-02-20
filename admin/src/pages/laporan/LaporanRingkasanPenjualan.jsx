@@ -15,6 +15,7 @@ import axios from 'axios';
 import { toDate } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
 
 
 
@@ -27,6 +28,15 @@ export const LaporanRingkasanPenjualan = () => {
     const [endDate, setEndDate] = useState(new Date().toISOString().split('.')[0] + 'Z');
     const [data, setData] = useState();
     const navigate = useNavigate();
+    const [chartData, setChartData] = ([
+        { name: "Senin", penjualan: 0 },
+        { name: "Selasa", penjualan: 0 },
+        { name: "Rabu", penjualan: 0 },
+        { name: "Kamis", penjualan: 0 },
+        { name: "Jumat", penjualan: 0 },
+        { name: "Sabtu", penjualan: 0 },
+        { name: "Minggu", penjualan: 0 },
+    ])
 
     const handleNavigate = (e) => {
         e.preventDefault()
@@ -89,6 +99,18 @@ export const LaporanRingkasanPenjualan = () => {
         fetch()
         console.log(tanggal)
     }, [startDate, endDate])
+
+    // useEffect(() => {
+    //     const fetchChart = async () => {
+    //         try {
+    //             const response = await axios.get("https://api.drnich.co.id/api/pos/laporan/laporangrafik")
+    //             setChartData(response.data)
+    //         } catch (error) {
+    //             console.log("Error Saat Fetching Chart data:", error)
+    //         }
+    //     }
+    //     fetchChart()
+    // },[])
 
 
     setLink('/pos/laporan')
@@ -216,12 +238,55 @@ export const LaporanRingkasanPenjualan = () => {
                         <img src={iPan} alt="Panah" />
                     </a>
                 </div>
+
+
+                {/* <div>
+                    <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
+                        <p className="">Grafik Penjualan</p>
+                    </div>
+                    <div>
+                        <img src={iGrafik2} alt="" className='h-fit w-fit' />
+                    </div>
+                </div> */}
+
+                {/* Grafik Penjualan menggunakan Recharts */}
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
-                    <p className="">Grafik Penjualan</p>
+                    <p>Grafik Penjualan</p>
                 </div>
-                <div>
-                    <img src={iGrafik2} alt="" className='h-fit w-fit' />
+                <div style={{ width: '100%', height: 300 }}>
+                <ResponsiveContainer width="100%" height={300}>
+                    <BarChart
+                    data={chartData}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                    >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis tickFormatter={(val) => {
+                        if (val >= 1000000) return `${val/1000000}jt`
+                        return val
+                    }} />
+                    <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(value)} />
+                    <Legend />
+                    <Bar
+                        dataKey="penjualan"
+                        fill="url(#colorGradient)"
+                        radius={[5, 5, 0, 0]}
+                    >
+                        <defs>
+                        <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#FFC107" stopOpacity={0.9}/>
+                            <stop offset="100%" stopColor="#FF8A00" stopOpacity={0.7}/>
+                        </linearGradient>
+                        </defs>
+                    </Bar>
+                    </BarChart>
+                </ResponsiveContainer>
                 </div>
+
+                
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
                     <p className="">Laporan Promo</p>
                 </div>
