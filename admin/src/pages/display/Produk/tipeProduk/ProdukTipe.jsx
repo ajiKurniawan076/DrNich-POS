@@ -25,6 +25,14 @@ export const ProdukTipe = () => {
   };
   useEffect(() => {
     fetchData();
+
+    // uji localHost
+    // const fetchDatax = async () => {
+    //   await axios
+    //     .get("http://localhost:8000/api/produk/getAllproductType")
+    //     .then((response) => setdatax(response.data));
+    // };
+    // fetchDatax();
     setNav("Tipe Produk");
   }, []);
 

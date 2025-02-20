@@ -28,7 +28,6 @@ export const Produk1 = () => {
   //   console.log(datax);
   useEffect(() => {
     fetchData();
-
     setNav("Produk");
   }, []);
 

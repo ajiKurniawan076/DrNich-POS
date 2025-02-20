@@ -78,8 +78,8 @@ const getCategoryById = asyncHandler(async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-// PRODUCT TYPE HANDLER
 
+// PRODUCT TYPE HANDLER
 const newProductType = asyncHandler(async (req, res) => {
   const newProductType = {
     name: req.body.name,
@@ -141,6 +141,20 @@ const deleteProductType = asyncHandler(async (req, res) => {
   }
 });
 
+const getProdukTipeById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const tipeProduk = await productType.findById(id);
+    if (!tipeProduk) {
+      res.status(400).json({ message: "tidak ada data tipe produk" });
+      return;
+    }
+    res.send(tipeProduk);
+  } catch (error) {
+    res.status(400).json({ message: "terjadi Kesalahan" + error.message });
+  }
+});
+
 export {
   newCategoryProduct,
   getCategoryProduct,
@@ -150,5 +164,6 @@ export {
   getProductType,
   editProductType,
   deleteProductType,
+  getProdukTipeById,
   getCategoryById,
 };

@@ -18,7 +18,7 @@ router.post("/createSertif", upload.single("foto"), newSertif);
 router.get("/getAllSertif", getSertif);
 router.put("/editSertif/:id", upload.single("foto"), editSertif);
 router.delete("/deleteSertif/:id", deleteSertif);
-router.get("/getSertifbyId/:id");
+router.get("/getSertifbyId/:id", getSertifbyID);
 
 router.post("/createMesin", upload.single("foto"), newMesin);
 router.get("/getAllMesin", getMesin);

@@ -4,6 +4,7 @@ import {
   getulasan,
   updateulasan,
   deleteulasan,
+  getUlasanById,
 } from "../../controller/admin/ulasanController.js";
 import { upload } from "../../middleware/uploadMiddleware.js";
 
@@ -12,5 +13,6 @@ router.post("/tambahulasan", upload.single("image"), newulasan);
 router.get("/getAllulasan", getulasan);
 router.put("/updateulasan/:id", upload.single("image"), updateulasan);
 router.delete("/deleteulasan/:id", deleteulasan);
+router.get("/getUlasanById/:id", getUlasanById);
 
 export default router;

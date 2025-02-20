@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import ulasanModels from "../../models/ulasan/ulasanModels.js";
+import tipeKulit from "../../models/produk/tipeKulit.js";
 
 const newulasan = asyncHandler(async (req, res) => {
   const newulasan = {
@@ -7,7 +8,6 @@ const newulasan = asyncHandler(async (req, res) => {
     foto: req.body.foto,
     ulasan: req.body.ulasan,
     rating: req.body.rating,
-    
   };
   try {
     const isExist = await ulasanModels.findOne({ nama: newulasan.nama });
@@ -36,7 +36,8 @@ const updateulasan = asyncHandler(async (req, res) => {
     nama: req.body.nama,
     foto: req.body.foto,
     ulasan: req.body.ulasan,
-    rating: req.body.rating,to,
+    rating: req.body.rating,
+    to,
   };
   try {
     const ulasan = await ulasanModels.findByIdAndUpdate(
@@ -60,4 +61,17 @@ const deleteulasan = asyncHandler(async (req, res) => {
   }
 });
 
-export { newulasan, getulasan, updateulasan, deleteulasan };
+const getUlasanById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const ulasan = await ulasanModels.findById(id);
+    if (!ulasan) {
+      res.status(404).json({ message: "data tidak ditemukan" });
+      return;
+    }
+    res.send(ulasan);
+  } catch (error) {
+    res.status(400).json({ message: "terjadi Kesalahan" + error.message });
+  }
+});
+export { newulasan, getulasan, updateulasan, deleteulasan, getUlasanById };

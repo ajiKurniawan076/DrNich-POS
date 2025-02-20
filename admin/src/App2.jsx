@@ -149,10 +149,10 @@ import { Transaksihapus } from "./pages/laporan/transaksihapus";
 import axios from "axios";
 import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
-import {Mesin} from "./pages/display/Mesin/Mesin"
-import {MesinDetail} from "./pages/display/Mesin/MesinDetail"
-import {MesinEdit} from "./pages/display/Mesin/MesinEdit"
-import {MesinTambah} from "./pages/display/Mesin/MesinTambah"
+import { Mesin } from "./pages/display/Mesin/Mesin";
+import { MesinDetail } from "./pages/display/Mesin/MesinDetail";
+import { MesinEdit } from "./pages/display/Mesin/MesinEdit";
+import { MesinTambah } from "./pages/display/Mesin/MesinTambah";
 
 axios.defaults.withCredentials = true;
 
@@ -466,7 +466,7 @@ function App2() {
                 element={<UpdateDaftarProduk />}
               />
               <Route path="/UpdateGaleri" element={<UpdateGaleri />} />
-              <Route path="/UpdateRating" element={<UpdateRating />} />
+              <Route path="/UpdateRating/:id" element={<UpdateRating />} />
               <Route
                 path="/KategoriProdukUpdate/:id"
                 element={<KategoriProdukUpdate />}
@@ -482,8 +482,14 @@ function App2() {
               <Route path="/EditDiskon/:id" element={<EditDiskon />} />
               <Route path="/EditCashback/:id" element={<EditCashback />} />
               <Route path="/transaksihapus" element={<Transaksihapus />} />
-              <Route path="/LaporanLihatStruk/:id" element={<LaporanLihatStruk />} />
-              <Route path="/StrukPembelianStok/:id" element={<StrukPembelianStok />} />
+              <Route
+                path="/LaporanLihatStruk/:id"
+                element={<LaporanLihatStruk />}
+              />
+              <Route
+                path="/StrukPembelianStok/:id"
+                element={<StrukPembelianStok />}
+              />
               <Route path="/Mesin" element={<Mesin />} />
               <Route path="/MesinTambah" element={<MesinTambah />} />
               <Route path="/MesinDetail/:id" element={<MesinDetail />} />

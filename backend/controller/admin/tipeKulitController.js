@@ -53,4 +53,24 @@ const deletetipeKulit = asyncHandler(async (req, res) => {
   }
 });
 
-export { newtipeKulit, gettipeKulit, updatetipeKulit, deletetipeKulit };
+// const getTipeKulitById = asyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const tipekulit = await tipeKulitModels.findById(id);
+//     if (!tipekulit) {
+//       res.status(404).json({ message: "data tidak ditemukan " });
+//       return;
+//     }
+//     res.send(tipekulit);
+//   } catch (error) {
+//     res.status(400).json({ message: "terjadi Kesalahan" + error.message });
+//   }
+// });
+
+export {
+  newtipeKulit,
+  gettipeKulit,
+  updatetipeKulit,
+  deletetipeKulit,
+  // getTipeKulitById,
+};
