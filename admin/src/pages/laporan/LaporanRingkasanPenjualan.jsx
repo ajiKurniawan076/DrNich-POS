@@ -28,15 +28,7 @@ export const LaporanRingkasanPenjualan = () => {
     const [endDate, setEndDate] = useState(new Date().toISOString().split('.')[0] + 'Z');
     const [data, setData] = useState();
     const navigate = useNavigate();
-    const [chartData, setChartData] = useState([
-        { name: "Senin", penjualan: 70000 },
-        { name: "Selasa", penjualan: 63000 },
-        { name: "Rabu", penjualan: 45000 },
-        { name: "Kamis", penjualan: 55000 },
-        { name: "Jumat", penjualan: 60000 },
-        { name: "Sabtu", penjualan: 30000 },
-        { name: "Minggu", penjualan: 90000 },
-    ])
+    const [chartData, setChartData] = useState([])
 
     const handleNavigate = (e) => {
         e.preventDefault()

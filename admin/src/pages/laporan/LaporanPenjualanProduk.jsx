@@ -165,8 +165,8 @@ export const LaporanPenjualanProduk = () => {
           {payload.map((entry, index) => (
           <>
             <svg width={20} height={20} className='rounded-md'>
-                  <rect x={0} y={0} width={20} height={20} fill={entry.color} />
-                </svg>
+              <rect x={0} y={0} width={20} height={20} fill={entry.color} />
+            </svg>
             <select
               onChange={gantiTampil}
               className='w-fit flex text-center font-bold'
@@ -206,10 +206,6 @@ export const LaporanPenjualanProduk = () => {
     // );
   };
 
-  useEffect(() => {
-    console.log("chartTampil:", chartTampil);
-  }, [chartTampil]);
-
   // Set judul halaman dan link navigasi
   setLink('/pos/laporan');
   setNav('Laporan Produk');
@@ -217,7 +213,7 @@ export const LaporanPenjualanProduk = () => {
 
   return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-      <button onClick={() => console.log(chart)}>Debug ProdukList</button>
+      <button onClick={() => console.log(tampil)}>Debug ProdukList</button>
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
         <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
@@ -269,7 +265,6 @@ export const LaporanPenjualanProduk = () => {
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[13px] px-[20px]"
           id="Gender"
           defaultValue=""
-          disabled
         >
           <option value="" className="text-gray-300" disabled>
             Minggu ini
