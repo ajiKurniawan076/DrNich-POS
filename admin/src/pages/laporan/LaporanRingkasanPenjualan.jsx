@@ -29,6 +29,7 @@ export const LaporanRingkasanPenjualan = () => {
     const [data, setData] = useState();
     const navigate = useNavigate();
     const [chartData, setChartData] = useState([])
+    const [topCustomers, setTopCustomers] = useState([])
 
     const handleNavigate = (e) => {
         e.preventDefault()
@@ -79,7 +80,7 @@ export const LaporanRingkasanPenjualan = () => {
                 .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
                 .then((response) => (
                     setData(response.data), toast.success("Sukses Mengambil Data", {
-                        autoClose:1000,
+                        autoClose: 1000,
                     })))
                 .catch((error) => {
                     console.error(error)
@@ -106,6 +107,24 @@ export const LaporanRingkasanPenjualan = () => {
         }
         fetchChart()
     },[])
+
+    useEffect(() => {
+        const tanggal = { dari: "2025-01-01T00:00:00Z", sampai: new Date().toISOString().split('.')[0] + 'Z' }
+        const fetchData = async () => {
+            await axios
+                .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
+                .then((response) => {
+                    setData(response.data);
+                    const sortedCustomers = [...response.data.pelanggan].sort((a, b) => b.totalPembelian - a.totalPembelian);
+                    const sort = sortedCustomers.slice(0, 4)
+                    setTopCustomers(sort);
+                    console.log(sort)
+                })
+        }
+        fetchData();
+    }, [])
+
+
 
 
     setLink('/pos/laporan')
@@ -234,16 +253,6 @@ export const LaporanRingkasanPenjualan = () => {
                     </a>
                 </div>
 
-
-                {/* <div>
-                    <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
-                        <p className="">Grafik Penjualan</p>
-                    </div>
-                    <div>
-                        <img src={iGrafik2} alt="" className='h-fit w-fit' />
-                    </div>
-                </div> */}
-
                 {/* Grafik Penjualan menggunakan Recharts */}
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
                     <p>Grafik Penjualan</p>
@@ -284,7 +293,7 @@ export const LaporanRingkasanPenjualan = () => {
                 </ResponsiveContainer>
                 </div>
 
-                
+
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
                     <p className="">Laporan Promo</p>
                 </div>
@@ -312,62 +321,6 @@ export const LaporanRingkasanPenjualan = () => {
                         </div>
                     </div>
                 </div>
-
-
-                {/* <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start w-full">
-            <p className="">Produk Terlaris</p>
-        </div>
-        <div className='grid mt-3'>
-            <div className='flex h-full gap-3'>
-                <div className='flex items-center text-center gap-8 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-fit h-[130%]'>
-                    <p>Banyak Produk terjual</p>        
-                    <img src={iPanahB} alt="iPanahB" className='w-[20px] h-[20px]' />
-                </div>
-                <div className='flex items-center text-center gap-16 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-fit h-[130%]'>
-                    <p>Jasa</p>        
-                    <img src={iPanahB} alt="iPanahB" className='w-[20px] h-[20px]' />
-                </div>
-            </div>
-        </div>
-        <div className='grid'>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl mt-7 mb-1 text-[12px]'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i1} alt="" />
-                    <p>Facial Glow Acne</p>
-                </div>
-                <div className='text-[#C2A353]'>
-                    <p>5000 terjual</p>
-                </div>
-            </div>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px]'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i2} alt="" />
-                    <p>Facial Gold</p>
-                </div>
-                <div className='text-[#C2A353]'>
-                    <p>5000 terjual</p>
-                </div>
-            </div>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px]'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i3} alt="" />
-                    <p>Laser</p>
-                </div>
-                <div className='text-[#C2A353]'>
-                    <p>5000 terjual</p>
-                </div>
-            </div>
-            <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px]'>
-                <div className='flex items-center text-center gap-3'>
-                    <img src={i4} alt="" />
-                    <p>Facial Glow Acne</p>
-                </div>
-                <div className='text-[#C2A353]'>
-                    <p>5000 terjual</p>
-                </div>
-            </div>
-        </div> */}
-
 
                 {/* <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start w-full mt-2">
             <p className="">Kategori Teratas</p>
@@ -438,43 +391,23 @@ export const LaporanRingkasanPenjualan = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col gap-[10px] mt-[30px] h-full'>
-                    <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
-                        <div className='flex items-center text-center gap-[10px]'>
-                            <img src={i1} alt="" />
-                            <p>Hana</p>
-                        </div>
-                        <div className='text-[#C2A353]'>
-                            <p>Rp 200.000.000</p>
-                        </div>
-                    </div>
-                    <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
-                        <div className='flex items-center text-center gap-[10px]'>
-                            <img src={i2} alt="" />
-                            <p>Agus</p>
-                        </div>
-                        <div className='text-[#C2A353]'>
-                            <p>Rp 120.000.000</p>
-                        </div>
-                    </div>
-                    <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
-                        <div className='flex items-center text-center gap-[10px]'>
-                            <img src={i3} alt="" />
-                            <p>Caca</p>
-                        </div>
-                        <div className='text-[#C2A353]'>
-                            <p>Rp 50.000.000</p>
-                        </div>
-                    </div>
-                    <div className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px] mb-8'>
-                        <div className='flex items-center text-center gap-[10px]'>
-                            <img src={i4} alt="" />
-                            <p>Diana</p>
-                        </div>
-                        <div className='text-[#C2A353]'>
-                            <p>Rp. 10.000.000</p>
-                        </div>
-                        <button onClick={() => console.log(data)}>cek</button>
+                <div className='flex flex-col gap-[10px] h-full'>
+                    <div className='flex flex-col gap-[10px] mt-[30px] h-full'>
+                        {topCustomers.map((customer, index) => (
+                            <div key={index} className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
+                                <div className='flex items-center text-center gap-[10px]'>
+                                    {index < 4 ? (
+                                        <img src={index === 0 ? i1 : index === 1 ? i2 : index === 2 ? i3 : i4} alt="" />
+                                    ) : (
+                                        <span className='font-bold ml-2'>{index + 1}</span>
+                                    )}
+                                    <p>{customer.namaPelanggan}</p>
+                                </div>
+                                <div className='text-[#C2A353]'>
+                                    <p>Rp {customer.totalPembelian.toLocaleString('id-ID')}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
