@@ -93,12 +93,14 @@ export const LaporanPenjualanProduk = () => {
     useEffect(() => {
         const tanggal = {
             endOfWeek : (new Date().toISOString().split('.')[0] + 'Z')
+            // endOfWeek : '2025-02-08'
         }
         const fetchChart = async () => {
             try {
                 const response = await axios.post("https://api.drnich.co.id/api/pos/laporan/laporangrafikproduk", tanggal)
                 console.log(response.data)
                 setChart(response.data.penjualan)
+                response.data.penjualan.map(item => setChartTampil(prev => [...prev, {name:item.name, terisi:0}]))
                 setProdukList(response.data.produklist)
             } catch (error) {
                 console.log("Error Saat Fetching Chart data:", error)
@@ -118,38 +120,32 @@ export const LaporanPenjualanProduk = () => {
     
     useEffect(() => {
         if (tampil.length > 0) {
-            chart.map((item, x) => {
-                setChartTampil((prev) => [...prev, {name : item.name}])
-                item.penjualan.map((datax,i) => {
-                    if (i == 0) {
-                        if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
-                        const newIsi = {
-                            penjualan1 : datax.jumlah
+            tampil.forEach(tp => {
+                chart.forEach(item => {
+                    item.penjualan.forEach(datax => {
+                        if (tp.namaProduk === datax.namaProduk) {
+                            setChartTampil(prev =>
+                                prev.map(y => {
+                                    if (y.name === item.name) {
+                                        let updatedTerisi = y.terisi + 1;
+                                        
+                                        if (y.terisi === 0) {
+                                            return { ...y, penjualan1: datax.jumlah, terisi: updatedTerisi };
+                                        } else if (y.terisi === 1) {
+                                            return { ...y, penjualan2: datax.jumlah, terisi: updatedTerisi };
+                                        } else if (y.terisi === 2) {
+                                            return { ...y, penjualan3: datax.jumlah, terisi: updatedTerisi };
+                                        }
+                                    }
+                                    return y;
+                                })
+                            );
                         }
-                        setChartTampil((prev) => [...prev, newIsi])
-                        }
-                    }
-                    if (i == 1) {
-                        if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
-                        const newIsi = {
-                            penjualan2 : datax.jumlah
-                            }
-                            setChartTampil((prev) => [...prev, newIsi])
-                    }
-                    }
-                    if (i == 2) {
-                        if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
-                        const newIsi = {
-                            penjualan3 : datax.jumlah
-                            }
-                            setChartTampil((prev) => [...prev, newIsi])
-                    }
-                    }
-                    
-                })
-            })
+                    });
+                });
+            });
         }
-    }, [tampil])
+    }, [tampil]);
     
     useEffect(()=>{
         console.log(chartTampil)
@@ -173,7 +169,7 @@ setNav('Laporan Produk')
 document.title = 'Laporan Produk'
 return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-        <button onClick={()=>console.log(chartTampil)}>asd</button>
+        <button onClick={()=>console.log(produkList)}>asd</button>
         <div className='flex flex-col h-full'>
             <p>Masa Berlaku</p>
                 <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
@@ -281,50 +277,46 @@ return (
                 <div style={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer width="100%" height={400}>
                         <BarChart
-                            data={chart}
+                            data={chartTampil}
                             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                            barCategoryGap="30%"   // mengatur jarak antar kategori
-                            barGap={-5}          // membuat overlap antar bar dalam satu kategori
+                            barCategoryGap="30%"
+                            barGap={-5}
                         >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
                             <YAxis tickFormatter={(val) => {
-                                if (val >= 1000000) return `${(val/1000000).toLocaleString("id-ID")}jt`
-                                return val.toLocaleString('id-ID')
+                                if (val >= 1000000) return `${(val/1000000).toLocaleString("id-ID")}jt`;
+                                return val.toLocaleString('id-ID');
                             }} />
-                            <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR'
-                            }).format(value)} />
-                            <Legend />
+                            <Tooltip />
+                            <Legend formatter={(value) => {
+                                const index = parseInt(value.replace("penjualan", ""), 10) - 1;
+                                return tampil[index]?.namaProduk || value;
+                            }} />
+
+                            {tampil.map((produk, i) => (
                             <Bar
-                                dataKey="penjualan"
-                                fill="url(#colorGradient)"
+                                key={i}
+                                dataKey={`penjualan${i + 1}`}
+                                name={produk.namaProduk}
+                                fill={`url(#colorGradient${i === 0 ? '' : i + 1})`}
                                 radius={[5, 5, 0, 0]}
                             />
-                            <Bar
-                                dataKey="Penjualan2"
-                                fill="url(#colorGradient2)"
-                                radius={[5, 5, 0, 0]}
-                            />
-                            <Bar
-                                dataKey="Penjualan3"
-                                fill="url(#colorGradient3)"
-                                radius={[5, 5, 0, 0]}
-                            />
+                            ))}
+
                             <defs>
-                                <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor="#FFC120" stopOpacity={0.9}/>
-                                    <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7}/>
-                                </linearGradient>
-                                <linearGradient id="colorGradient2" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor="#280594" stopOpacity={0.9}/>
-                                    <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7}/>
-                                </linearGradient>
-                                <linearGradient id="colorGradient3" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor="#FF708C" stopOpacity={0.9}/>
-                                    <stop offset="100%" stopColor="#A7B5FF" stopOpacity={0.7}/>
-                                </linearGradient>
+                            <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#FFC120" stopOpacity={0.9} />
+                                <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7} />
+                            </linearGradient>
+                            <linearGradient id="colorGradient2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#280594" stopOpacity={0.9} />
+                                <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7} />
+                            </linearGradient>
+                            <linearGradient id="colorGradient3" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#FF708C" stopOpacity={0.9} />
+                                <stop offset="100%" stopColor="#A7B5FF" stopOpacity={0.7} />
+                            </linearGradient>
                             </defs>
                         </BarChart>
                     </ResponsiveContainer>

@@ -254,7 +254,77 @@ const laporanGrafik = async (req, res) => {
   }
 };
 
+const laporanGrafikProduk = async (req, res) => {
+  try {
+      const { endOfWeek } = req.body; // Only provide endOfWeek
 
+      if (!endOfWeek) {
+          return res.status(400).json({ success: false, message: "endOfWeek is required" });
+      }
+
+      const weekDays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+
+      // Convert endOfWeek to Date object
+      const endDate = new Date(endOfWeek);
+      endDate.setHours(23, 59, 59, 999); // Ensure it's the end of the day
+
+      // Compute startOfWeek by subtracting 6 days
+      const startDate = new Date(endDate);
+      startDate.setDate(endDate.getDate() - 6);
+      startDate.setHours(0, 0, 0, 0); // Ensure it's the start of the day
+
+      // Detect the start day from startDate
+      const detectedDayIndex = startDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+      const detectedStartDay = detectedDayIndex === 0 ? "Minggu" : weekDays[detectedDayIndex - 1];
+
+      // Generate the ordered days of the week based on the detected start day
+      const startIndex = weekDays.indexOf(detectedStartDay);
+      const orderedWeekDays = [...weekDays.slice(startIndex), ...weekDays.slice(0, startIndex)];
+
+      // Fetch transactions within the given range
+      const transactions = await TransaksiModels.find({
+          createdAt: { $gte: startDate, $lte: endDate }
+      });
+
+      // Initialize the week structure as an ARRAY
+      const transactionsByDay = orderedWeekDays.map(day => ({ name: day, penjualan:[]}));
+      // Group transactions by day
+      transactions.forEach(transaction => {
+          const transactionDate = new Date(transaction.createdAt);
+          const transactionDayIndex = transactionDate.getDay();
+          
+          // Adjust day name to match the custom order
+          const adjustedDayName = transactionDayIndex === 0 ? "Minggu" : weekDays[transactionDayIndex - 1];
+
+          // Find the correct day in the array and update "penjualan"
+          const dayData = transactionsByDay.find(day => day.name === adjustedDayName);
+          if (dayData) {
+              //DISINI
+              const det = transaction.transaksiDetail;
+    for(const citem of det){
+      
+      if(dayData.penjualan.some(item => item.namaProduk == citem.produk.namaProduk)){
+       dayData.penjualan = dayData.penjualan.map(item=>item.namaProduk == citem.produk.namaProduk ? {...item, jumlah: item.jumlah+citem.jumlah, pendapatan: item.pendapatan + (citem.jumlah*citem.produk.hargaJual)}: item) 
+      }
+      else{
+        const isi = {
+          namaProduk : citem.produk.namaProduk,
+          jumlah : citem.jumlah,
+          pendapatan : (citem.jumlah*citem.produk.hargaJual)
+        }
+        dayData.penjualan.push(isi)
+      }
+    }
+
+          }
+          
+      });
+
+      res.json({ success: true, penjualan: transactionsByDay });
+  } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 
 
@@ -265,5 +335,6 @@ export {
  laporanPersediaan,
  laporanLimit,
  laporanTerlaris,
- laporanGrafik
+ laporanGrafik,
+ laporanGrafikProduk
 };
