@@ -100,17 +100,20 @@ export const LaporanRingkasanPenjualan = () => {
         console.log(tanggal)
     }, [startDate, endDate])
 
-    // useEffect(() => {
-    //     const fetchChart = async () => {
-    //         try {
-    //             const response = await axios.get("https://api.drnich.co.id/api/pos/laporan/laporangrafik")
-    //             setChartData(response.data)
-    //         } catch (error) {
-    //             console.log("Error Saat Fetching Chart data:", error)
-    //         }
-    //     }
-    //     fetchChart()
-    // },[])
+    useEffect(() => {
+        const fetchChart = async () => {
+            try {
+                const tanggal = {
+                    endOfWeek : new Date().toISOString().split('.')[0] + 'Z'
+                }
+                const response = await axios.post("https://api.drnich.co.id/api/pos/laporan/laporangrafik", tanggal)
+                setChartData(response.data.transactions)
+            } catch (error) {
+                console.log("Error Saat Fetching Chart data:", error)
+            }
+        }
+        fetchChart()
+    },[])
 
 
     setLink('/pos/laporan')
@@ -263,7 +266,7 @@ export const LaporanRingkasanPenjualan = () => {
                     <XAxis dataKey="name" />
                     <YAxis tickFormatter={(val) => {
                         if (val >= 1000000) return `${val/1000000}jt`
-                        return val
+                        return val.toLocaleString('id-ID')
                     }} />
                     <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
                         style: 'currency',
@@ -272,6 +275,7 @@ export const LaporanRingkasanPenjualan = () => {
                     <Legend />
                     <Bar
                         dataKey="penjualan"
+                        name="Penjualan"
                         fill="url(#colorGradient)"
                         radius={[5, 5, 0, 0]}
                     >
