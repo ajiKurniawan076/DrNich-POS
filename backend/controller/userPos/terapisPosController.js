@@ -27,7 +27,7 @@ const newterapis = asyncHandler(async (req, res) => {
 const getterapis = asyncHandler(async (req, res) => {
   try {
     const terapis = await terapisPosModels
-      .find()
+      .find().sort({ createdAt: -1 })
 
     res.send(terapis);
   } catch (error) {

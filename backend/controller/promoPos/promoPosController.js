@@ -50,7 +50,7 @@ const getPromo = asyncHandler(async (req, res) => {
         path: 'produk',
         model: 'produkPos',
       },
-    });
+    }).sort({ createdAt: -1 });
     res.send(promo);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -67,7 +67,7 @@ const getPromoAktif = asyncHandler(async (req, res) => {
           path: 'produk',
           model: 'produkPos',
         },
-      });
+      }).sort({ createdAt: -1 });
 
     res.send(promo);
   } catch (error) {

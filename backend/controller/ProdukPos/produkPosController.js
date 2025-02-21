@@ -28,7 +28,7 @@ const newproduk = asyncHandler(async (req, res) => {
 const getproduk = asyncHandler(async (req, res) => {
   try {
     const produk = await produkModels
-      .find().populate("kategori","kategori").populate("jenis", "jenis").populate("supplier");
+      .find().populate("kategori","kategori").populate("jenis", "jenis").populate("supplier").sort({ createdAt: -1 });
 
     res.send(produk);
   } catch (error) {
