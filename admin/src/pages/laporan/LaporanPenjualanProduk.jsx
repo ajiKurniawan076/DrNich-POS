@@ -160,10 +160,12 @@ export const LaporanPenjualanProduk = () => {
     // ;
 
     return (
+      <div className='w-full flex justify-center items-center my-1 '> 
         <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
         {payload.map((entry, index) => (
           <select
-          onChange={gantiTampil}
+            onChange={gantiTampil}
+            className='w-[100px] flex text-center font-bold'
             key={`legend-${index}`}
             ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
             style={{
@@ -178,7 +180,8 @@ export const LaporanPenjualanProduk = () => {
             ))}
           </select>
         ))}
-      </ul>
+        </ul>
+      </div>
     );
     // return (
     //   <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
@@ -209,7 +212,7 @@ export const LaporanPenjualanProduk = () => {
 
   return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-      <button onClick={() => console.log(pilihProdukRef.current[0].value)}>Debug ProdukList</button>
+      <button onClick={() => console.log(chart)}>Debug ProdukList</button>
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
         <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
@@ -314,8 +317,8 @@ export const LaporanPenjualanProduk = () => {
                 <BarChart
                   data={chartTampil}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                  barCategoryGap="30%"
-                  barGap={-5}
+                  barCategoryGap="20%"
+                  barGap={-7}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
@@ -330,21 +333,21 @@ export const LaporanPenjualanProduk = () => {
                       key={i}
                       dataKey={`penjualan${i + 1}`}
                       name={produk.namaProduk}
-                      fill={`url(#colorGradient${i === 0 ? '' : i + 1})`}
+                      fill={`url(#colorGradient${i})`}
                       radius={[5, 5, 0, 0]}
                       hide={!visibleBars[i]}
                     />
                   ))}
                   <defs>
-                    <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorGradient0" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#FFC120" stopOpacity={0.9} />
                       <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7} />
                     </linearGradient>
-                    <linearGradient id="colorGradient2" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorGradient1" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#280594" stopOpacity={0.9} />
                       <stop offset="100%" stopColor="#F8A39B" stopOpacity={0.7} />
                     </linearGradient>
-                    <linearGradient id="colorGradient3" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="colorGradient2" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="#FF708C" stopOpacity={0.9} />
                       <stop offset="100%" stopColor="#A7B5FF" stopOpacity={0.7} />
                     </linearGradient>

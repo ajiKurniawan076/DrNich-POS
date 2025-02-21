@@ -477,6 +477,7 @@ export const LaporanRingkasanPenjualan = () => {
                         <div className='text-[#C2A353]'>
                             <p>Rp. 10.000.000</p>
                         </div>
+                        <button onClick={() => console.log(data)}>cek</button>
                     </div>
                 </div>
             </div>
