@@ -101,7 +101,6 @@ export const LaporanRingkasanPenjualan = () => {
         console.log(tanggal)
     }, [startDate, endDate])
 
-<<<<<<< HEAD
     // useEffect(() => {
     //     const fetchChart = async () => {
     //         try {
@@ -128,22 +127,6 @@ export const LaporanRingkasanPenjualan = () => {
     }, [])
 
 
-=======
-    useEffect(() => {
-        const fetchChart = async () => {
-            try {
-                const tanggal = {
-                    endOfWeek : new Date().toISOString().split('.')[0] + 'Z'
-                }
-                const response = await axios.post("https://api.drnich.co.id/api/pos/laporan/laporangrafik", tanggal)
-                setChartData(response.data.transactions)
-            } catch (error) {
-                console.log("Error Saat Fetching Chart data:", error)
-            }
-        }
-        fetchChart()
-    },[])
->>>>>>> b73629ced1a7da0d266ac0d9c9478dec95052082
 
 
     setLink('/pos/laporan')
@@ -287,7 +270,6 @@ export const LaporanRingkasanPenjualan = () => {
                     <p>Grafik Penjualan</p>
                 </div>
                 <div style={{ width: '100%', height: 300 }}>
-<<<<<<< HEAD
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart
                             data={chartData}
@@ -319,40 +301,6 @@ export const LaporanRingkasanPenjualan = () => {
                             </defs>
                         </BarChart>
                     </ResponsiveContainer>
-=======
-                <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
-                    data={chartData}
-                    margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                    >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis tickFormatter={(val) => {
-                        if (val >= 1000000) return `${val/1000000}jt`
-                        return val.toLocaleString('id-ID')
-                    }} />
-                    <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR'
-                    }).format(value)} />
-                    <Legend />
-                    <Bar
-                        dataKey="penjualan"
-                        name="Penjualan"
-                        fill="url(#colorGradient)"
-                        radius={[5, 5, 0, 0]}
-                    >
-                        
-                    </Bar>
-                    <defs>
-                        <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#FFC107" stopOpacity={0.9}/>
-                            <stop offset="100%" stopColor="#FF8A00" stopOpacity={0.7}/>
-                        </linearGradient>
-                        </defs>
-                    </BarChart>
-                </ResponsiveContainer>
->>>>>>> b73629ced1a7da0d266ac0d9c9478dec95052082
                 </div>
 
 
