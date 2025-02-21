@@ -27,6 +27,7 @@ export const LaporanPenjualanProduk = () => {
   const [button2, setButton2] = useState(true);
   const [startDate, setStartDate] = useState(new Date("2025-01-01T00:00:00Z"));
   const [endDate, setEndDate] = useState(new Date().toISOString().split('.')[0] + 'Z');
+  const [dataProduk, setDataProduk] = useState([])
 
   // State data API
   const [data, setData] = useState(null);
@@ -34,7 +35,7 @@ export const LaporanPenjualanProduk = () => {
   const [produkList, setProdukList] = useState([]); // seluruh produk dari API
   const [tampil, setTampil] = useState([]);        // produk yang akan ditampilkan (misalnya, 3 produk)
   const [chartTampil, setChartTampil] = useState([]); // data gabungan untuk chart
-    const pilihProdukRef = useRef([])
+  const pilihProdukRef = useRef([])
   // State untuk visibilitas bar (legend interaktif)
   const [visibleBars, setVisibleBars] = useState([]);
 
@@ -84,7 +85,8 @@ export const LaporanPenjualanProduk = () => {
 
   // Fetch data grafik penjualan produk
   useEffect(() => {
-    const tanggal = { endOfWeek: new Date().toISOString().split('.')[0] + 'Z' };
+    // const tanggal = { endOfWeek: new Date().toISOString().split('.')[0] + 'Z' };
+    const tanggal = {endOfWeek : '2025-02-09'};
     axios
       .post("https://api.drnich.co.id/api/pos/laporan/laporangrafikproduk", tanggal)
       .then(response => {
@@ -124,11 +126,11 @@ export const LaporanPenjualanProduk = () => {
         const indexProduk = tampil.findIndex(tp => tp.namaProduk === datax.namaProduk);
         if (indexProduk !== -1) {
           if (indexProduk === 0) {
-            newItem = { ...newItem, penjualan1: datax.jumlah, terisi: 1 };
+            newItem = { ...newItem, penjualan1: datax.jumlah, pendapatan1: datax.pendapatan, terisi: 1 };
           } else if (indexProduk === 1) {
-            newItem = { ...newItem, penjualan2: datax.jumlah, terisi: 2 };
+            newItem = { ...newItem, penjualan2: datax.jumlah, pendapatan2: datax.pendapatan, terisi: 2 };
           } else if (indexProduk === 2) {
-            newItem = { ...newItem, penjualan3: datax.jumlah, terisi: 3 };
+            newItem = { ...newItem, penjualan3: datax.jumlah, pendapatan3: datax.pendapatan, terisi: 3 };
           }
         }
       });
@@ -140,9 +142,9 @@ export const LaporanPenjualanProduk = () => {
 
   const gantiTampil = () => {
     const data = [
-        {namaProduk : pilihProdukRef.current[0].value},
-        {namaProduk : pilihProdukRef.current[1].value},
-        {namaProduk : pilihProdukRef.current[2].value},
+      { namaProduk: pilihProdukRef.current[0].value },
+      { namaProduk: pilihProdukRef.current[1].value },
+      { namaProduk: pilihProdukRef.current[2].value },
     ]
     setTampil(data)
   }
@@ -160,31 +162,31 @@ export const LaporanPenjualanProduk = () => {
     // ;
 
     return (
-      <div className='w-full flex justify-center items-center my-1 '> 
+      <div className='w-full flex justify-center items-center my-1 '>
         <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
           {payload.map((entry, index) => (
-          <>
-            <svg width={20} height={20} className='rounded-md'>
-                  <rect x={0} y={0} width={20} height={20} fill={entry.color} />
-                </svg>
-            <select
-              onChange={gantiTampil}
-              className='w-fit flex text-center font-bold'
-              key={`legend-${index}`}
-              ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
-              style={{
-                marginRight: 10,
-                color: visibleBars[index] ? entry.color : '#ccc',
-                appearance: 'none',
-              }}
-            >
-              <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
-              {produkList.map((item, i) => (
-                <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
-              ))}
-            </select>
-          </>
-        ))}
+            <>
+              <svg width={20} height={20} className='rounded-md'>
+                <rect x={0} y={0} width={20} height={20} fill={entry.color} />
+              </svg>
+              <select
+                onChange={gantiTampil}
+                className='w-fit flex text-center font-bold'
+                key={`legend-${index}`}
+                ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
+                style={{
+                  marginRight: 10,
+                  color: visibleBars[index] ? entry.color : '#ccc',
+                  appearance: 'none',
+                }}
+              >
+                <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
+                {produkList.map((item, i) => (
+                  <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
+                ))}
+              </select>
+            </>
+          ))}
         </ul>
       </div>
     );
@@ -207,8 +209,39 @@ export const LaporanPenjualanProduk = () => {
   };
 
   useEffect(() => {
-    console.log("chartTampil:", chartTampil);
-  }, [chartTampil]);
+    let isi = [
+      { namaProduk: tampil[0]?.namaProduk || "", penjualan: 0 },
+      { namaProduk: tampil[1]?.namaProduk || "", penjualan: 0 },
+      { namaProduk: tampil[2]?.namaProduk || "", penjualan: 0 },
+    ];
+
+    tampil.forEach((item, i) => { 
+      chartTampil.forEach((itemx) => { 
+        isi = isi.map((itemz) => {
+          if (itemz.namaProduk === item.namaProduk) {
+            return {
+              ...itemz,
+              penjualan:
+                (itemz.penjualan || 0) + 
+                (i === 0 ? (itemx.penjualan1 || 0) :
+                 i === 1 ? (itemx.penjualan2 || 0) :
+                 i === 2 ? (itemx.penjualan3 || 0) : 0),
+              pendapatan:
+              (itemz.pendapatan || 0) + 
+                (i === 0 ? (itemx.pendapatan1 || 0) :
+                 i === 1 ? (itemx.pendapatan2 || 0) :
+                 i === 2 ? (itemx.pendapatan3 || 0) : 0)
+
+          };
+          }
+          return itemz;
+        });
+      });
+    });
+
+    setDataProduk(isi);
+}, [chartTampil, tampil]);
+
 
   // Set judul halaman dan link navigasi
   setLink('/pos/laporan');
@@ -217,7 +250,7 @@ export const LaporanPenjualanProduk = () => {
 
   return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-      <button onClick={() => console.log(chart)}>Debug ProdukList</button>
+      <button onClick={() => console.log(dataProduk)}>Debug ProdukList</button>
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
         <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
