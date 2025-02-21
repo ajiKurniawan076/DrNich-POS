@@ -123,19 +123,20 @@ export const LaporanPenjualanProduk = () => {
         // Cari apakah produk ini termasuk dalam array tampil
         const indexProduk = tampil.findIndex(tp => tp.namaProduk === datax.namaProduk);
         if (indexProduk !== -1) {
-          if (newItem.terisi === 0) {
+          if (indexProduk === 0) {
             newItem = { ...newItem, penjualan1: datax.jumlah, terisi: 1 };
-          } else if (newItem.terisi === 1) {
+          } else if (indexProduk === 1) {
             newItem = { ...newItem, penjualan2: datax.jumlah, terisi: 2 };
-          } else if (newItem.terisi === 2) {
+          } else if (indexProduk === 2) {
             newItem = { ...newItem, penjualan3: datax.jumlah, terisi: 3 };
           }
         }
       });
       return newItem;
     });
+    console.log('update chart')
     setChartTampil(updatedChart);
-  }, [tampil, chart]);
+  }, [tampil]);
 
   const gantiTampil = () => {
     const data = [
