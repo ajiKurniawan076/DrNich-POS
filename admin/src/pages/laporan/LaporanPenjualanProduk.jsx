@@ -292,7 +292,9 @@ return (
                             <Legend formatter={(value) => {
                                 const index = parseInt(value.replace("penjualan", ""), 10) - 1;
                                 return tampil[index]?.namaProduk || value;
-                            }} />
+                            }} 
+                                onClick={(e)=>{console.log(e.value)}}
+                            />
 
                             {tampil.map((produk, i) => (
                             <Bar

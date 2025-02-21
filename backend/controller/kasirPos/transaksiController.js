@@ -83,7 +83,7 @@ const getTransaksiDraft = asyncHandler(async (req, res) => {
           path : 'produk',
           model : 'produkPos'
         }
-      });
+      }).sort({createdAt : -1});
 
     res.send(transaksi);
   } catch (error) {
