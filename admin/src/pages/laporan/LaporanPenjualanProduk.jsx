@@ -125,9 +125,9 @@ export const LaporanPenjualanProduk = () => {
                         if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
                         const newIsi = {
                             penjualan1 : datax.jumlah
-                            }
-                            setChartTampil((prev) => [...prev, newIsi])
-                    }
+                        }
+                        setChartTampil((prev) => [...prev, newIsi])
+                        }
                     }
                     if (i == 1) {
                         if ( tampil.some(ada => ada.namaProduk == datax.namaProduk )) {
