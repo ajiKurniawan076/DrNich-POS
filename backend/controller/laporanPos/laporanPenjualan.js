@@ -23,20 +23,25 @@ const laporanPenjualan = asyncHandler(async(req,res)=>{
     });
 
     let total = 0;
-    for (const item of transaksi){
-        total += item.totalAkhir
-        
-        if (dataPelanggan.some(data => data.namaPelanggan == item.pelanggan.namaPelanggan)){
-          dataPelanggan = dataPelanggan.map(isi => isi.namaPelanggan == item.pelanggan.namaPelanggan ? {...isi, totalPembelian : isi.totalPembelian+item.totalAkhir} : isi)
-          
-        }else {
-          const isiDataPelanggan = {
-            namaPelanggan : item.pelanggan.namaPelanggan,
-            totalPembelian : item.totalAkhir
+    for (const item of transaksi) {
+      total += item.totalAkhir;
+  
+      if (item.pelanggan && item.pelanggan.namaPelanggan) {  // Check if pelanggan exists
+          if (dataPelanggan.some(data => data.namaPelanggan == item.pelanggan.namaPelanggan)) {
+              dataPelanggan = dataPelanggan.map(isi => 
+                  isi.namaPelanggan == item.pelanggan.namaPelanggan 
+                      ? { ...isi, totalPembelian: isi.totalPembelian + item.totalAkhir } 
+                      : isi
+              );
+          } else {
+              const isiDataPelanggan = {
+                  namaPelanggan: item.pelanggan.namaPelanggan,
+                  totalPembelian: item.totalAkhir
+              };
+              dataPelanggan.push(isiDataPelanggan);
           }
-          dataPelanggan.push(isiDataPelanggan)
-        }
-    }
+      }
+  }
     const totalTransaksi = transaksi.length;
 
     

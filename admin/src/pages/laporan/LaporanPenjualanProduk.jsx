@@ -123,17 +123,18 @@ export const LaporanPenjualanProduk = () => {
         // Cari apakah produk ini termasuk dalam array tampil
         const indexProduk = tampil.findIndex(tp => tp.namaProduk === datax.namaProduk);
         if (indexProduk !== -1) {
-          if (newItem.terisi === 0) {
+          if (indexProduk === 0) {
             newItem = { ...newItem, penjualan1: datax.jumlah, terisi: 1 };
-          } else if (newItem.terisi === 1) {
+          } else if (indexProduk === 1) {
             newItem = { ...newItem, penjualan2: datax.jumlah, terisi: 2 };
-          } else if (newItem.terisi === 2) {
+          } else if (indexProduk === 2) {
             newItem = { ...newItem, penjualan3: datax.jumlah, terisi: 3 };
           }
         }
       });
       return newItem;
     });
+    console.log('update chart')
     setChartTampil(updatedChart);
   }, [tampil]);
 
@@ -161,23 +162,28 @@ export const LaporanPenjualanProduk = () => {
     return (
       <div className='w-full flex justify-center items-center my-1 '> 
         <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
-        {payload.map((entry, index) => (
-          <select
-            onChange={gantiTampil}
-            className='w-[100px] flex text-center font-bold'
-            key={`legend-${index}`}
-            ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
-            style={{
-              marginRight: 10,
-              color: visibleBars[index] ? entry.color : '#ccc',
-              appearance: 'none',
-            }}
-          >
-            <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
-            {produkList.map((item, i) => (
-              <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
-            ))}
-          </select>
+          {payload.map((entry, index) => (
+          <>
+            <svg width={20} height={20} className='rounded-md'>
+                  <rect x={0} y={0} width={20} height={20} fill={entry.color} />
+                </svg>
+            <select
+              onChange={gantiTampil}
+              className='w-fit flex text-center font-bold'
+              key={`legend-${index}`}
+              ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
+              style={{
+                marginRight: 10,
+                color: visibleBars[index] ? entry.color : '#ccc',
+                appearance: 'none',
+              }}
+            >
+              <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
+              {produkList.map((item, i) => (
+                <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
+              ))}
+            </select>
+          </>
         ))}
         </ul>
       </div>
@@ -317,7 +323,7 @@ export const LaporanPenjualanProduk = () => {
                   data={chartTampil}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                   barCategoryGap="20%"
-                  barGap={-7}
+                  barGap={-5}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
