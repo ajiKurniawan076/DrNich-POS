@@ -165,28 +165,28 @@ export const LaporanPenjualanProduk = () => {
       <div className='w-full flex justify-center items-center my-1 '>
         <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
           {payload.map((entry, index) => (
-            <>
-              <svg width={20} height={20} className='rounded-md'>
-                <rect x={0} y={0} width={20} height={20} fill={entry.color} />
-              </svg>
-              <select
-                onChange={gantiTampil}
-                className='w-fit flex text-center font-bold'
-                key={`legend-${index}`}
-                ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
-                style={{
-                  marginRight: 10,
-                  color: visibleBars[index] ? entry.color : '#ccc',
-                  appearance: 'none',
-                }}
-              >
-                <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
-                {produkList.map((item, i) => (
-                  <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
-                ))}
-              </select>
-            </>
-          ))}
+          <>
+            <svg width={20} height={20} className='rounded-md'>
+              <rect x={0} y={0} width={20} height={20} fill={entry.color} />
+            </svg>
+            <select
+              onChange={gantiTampil}
+              className='w-fit flex text-center font-bold'
+              key={`legend-${index}`}
+              ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
+              style={{
+                marginRight: 10,
+                color: visibleBars[index] ? entry.color : '#ccc',
+                appearance: 'none',
+              }}
+            >
+              <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
+              {produkList.map((item, i) => (
+                <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
+              ))}
+            </select>
+          </>
+        ))}
         </ul>
       </div>
     );
@@ -250,7 +250,7 @@ export const LaporanPenjualanProduk = () => {
 
   return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-      <button onClick={() => console.log(dataProduk)}>Debug ProdukList</button>
+      <button onClick={() => console.log(tampil)}>Debug ProdukList</button>
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
         <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
@@ -302,7 +302,6 @@ export const LaporanPenjualanProduk = () => {
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[13px] px-[20px]"
           id="Gender"
           defaultValue=""
-          disabled
         >
           <option value="" className="text-gray-300" disabled>
             Minggu ini
