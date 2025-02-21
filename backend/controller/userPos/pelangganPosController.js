@@ -25,7 +25,7 @@ const newpelanggan = asyncHandler(async (req, res) => {
 const getpelanggan = asyncHandler(async (req, res) => {
   try {
     const pelanggan = await pelangganPosModels
-      .find()
+      .find().sort({ createdAt: -1 })
 
     res.send(pelanggan);
   } catch (error) {

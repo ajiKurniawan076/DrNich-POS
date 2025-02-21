@@ -49,13 +49,25 @@ const laporanPenjualanProduk = asyncHandler(async(req,res)=>{
     }
   });
   let totalProduk = 0;
+  let produklist = [];
   for (const item of penjualan){
     for (const items of item.transaksiDetail){
       totalProduk += items.jumlah;
+      if(produklist.some(item => item.namaProduk == items.produk.namaProduk)){
+        produklist = produklist.map(item=>item.namaProduk == items.produk.namaProduk ? {...item, jumlah: item.jumlah+items.jumlah, pendapatan: item.pendapatan + (items.jumlah*items.produk.hargaJual)}: item) 
+       }
+       else{
+         const isi = {
+           namaProduk : items.produk.namaProduk,
+           jumlah : items.jumlah,
+           pendapatan : (items.jumlah*items.produk.hargaJual)
+         }
+         produklist.push(isi)
+       }
     }
   }
   
-  res.status(200).json({totalProduk: totalProduk})
+  res.status(200).json({totalProduk: totalProduk, penjualanProduk: produklist})
 }
 catch(error){
   res.status(400).json({ message: error.message });
@@ -256,7 +268,7 @@ const laporanGrafik = async (req, res) => {
 
 const laporanGrafikProduk = async (req, res) => {
   try {
-      const { endOfWeek } = req.body; // Only provide endOfWeek
+      const { endOfWeek } = req.body;
 
       if (!endOfWeek) {
           return res.status(400).json({ success: false, message: "endOfWeek is required" });
@@ -264,67 +276,84 @@ const laporanGrafikProduk = async (req, res) => {
 
       const weekDays = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
 
-      // Convert endOfWeek to Date object
+      // Konversi endOfWeek ke Date object
       const endDate = new Date(endOfWeek);
-      endDate.setHours(23, 59, 59, 999); // Ensure it's the end of the day
+      endDate.setHours(23, 59, 59, 999);
 
-      // Compute startOfWeek by subtracting 6 days
+      // Hitung startOfWeek (6 hari sebelumnya)
       const startDate = new Date(endDate);
       startDate.setDate(endDate.getDate() - 6);
-      startDate.setHours(0, 0, 0, 0); // Ensure it's the start of the day
+      startDate.setHours(0, 0, 0, 0);
 
-      // Detect the start day from startDate
-      const detectedDayIndex = startDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+      // Tentukan indeks hari mulai
+      const detectedDayIndex = startDate.getDay();
       const detectedStartDay = detectedDayIndex === 0 ? "Minggu" : weekDays[detectedDayIndex - 1];
 
-      // Generate the ordered days of the week based on the detected start day
+      // Susun ulang hari dalam urutan yang sesuai
       const startIndex = weekDays.indexOf(detectedStartDay);
       const orderedWeekDays = [...weekDays.slice(startIndex), ...weekDays.slice(0, startIndex)];
 
-      // Fetch transactions within the given range
+      // Ambil transaksi dalam rentang tanggal yang diberikan
       const transactions = await TransaksiModels.find({
           createdAt: { $gte: startDate, $lte: endDate }
+      }).populate({
+        path : 'transaksiDetail', 
+        populate : {
+          path:'produk',
+          model:'produkPos'
+        }
       });
 
-      // Initialize the week structure as an ARRAY
-      const transactionsByDay = orderedWeekDays.map(day => ({ name: day, penjualan:[]}));
-      // Group transactions by day
+      // Struktur data menggunakan Map untuk akses cepat
+      const transactionsByDay = new Map();
+      orderedWeekDays.forEach(day => transactionsByDay.set(day, { name: day, penjualan: [] }));
+      let produklist = []
+      // Kelompokkan transaksi berdasarkan hari
       transactions.forEach(transaction => {
           const transactionDate = new Date(transaction.createdAt);
           const transactionDayIndex = transactionDate.getDay();
-          
-          // Adjust day name to match the custom order
           const adjustedDayName = transactionDayIndex === 0 ? "Minggu" : weekDays[transactionDayIndex - 1];
 
-          // Find the correct day in the array and update "penjualan"
-          const dayData = transactionsByDay.find(day => day.name === adjustedDayName);
-          if (dayData) {
-              //DISINI
-              const det = transaction.transaksiDetail;
-    for(const citem of det){
-      
-      if(dayData.penjualan.some(item => item.namaProduk == citem.produk.namaProduk)){
-       dayData.penjualan = dayData.penjualan.map(item=>item.namaProduk == citem.produk.namaProduk ? {...item, jumlah: item.jumlah+citem.jumlah, pendapatan: item.pendapatan + (citem.jumlah*citem.produk.hargaJual)}: item) 
-      }
-      else{
-        const isi = {
-          namaProduk : citem.produk.namaProduk,
-          jumlah : citem.jumlah,
-          pendapatan : (citem.jumlah*citem.produk.hargaJual)
-        }
-        dayData.penjualan.push(isi)
-      }
-    }
+          // Ambil referensi objek hari
+          const dayData = transactionsByDay.get(adjustedDayName);
+          if (!dayData) return;
 
+          const det = transaction.transaksiDetail;
+          for (const citem of det) {
+              const existingProduct = dayData.penjualan.find(item => item.namaProduk === citem.produk.namaProduk);
+
+              if (existingProduct) {
+                  existingProduct.jumlah += citem.jumlah;
+                  existingProduct.pendapatan += citem.jumlah * citem.produk.hargaJual;
+                  const existproduklist = produklist.find(item => item.namaProduk == citem.produk.namaProduk);
+                  if(!existproduklist){
+                    produklist.push({
+                      namaProduk : citem.produk.namaProduk
+                    })}
+                
+              } else {
+                  dayData.penjualan.push({
+                      namaProduk: citem.produk.namaProduk,
+                      jumlah: citem.jumlah,
+                      pendapatan: citem.jumlah * citem.produk.hargaJual
+                  });
+                  const existproduklist = produklist.find(item => item.namaProduk == citem.produk.namaProduk);
+                  if(!existproduklist){
+                    produklist.push({
+                      namaProduk : citem.produk.namaProduk
+                    })}
+              }
           }
-          
       });
 
-      res.json({ success: true, penjualan: transactionsByDay });
+      // Konversi Map kembali ke array
+      res.json({ success: true, penjualan: Array.from(transactionsByDay.values()), produklist: produklist });
   } catch (error) {
       res.status(500).json({ success: false, message: error.message });
   }
 };
+
+
 
 
 
