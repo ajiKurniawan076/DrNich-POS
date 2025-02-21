@@ -29,7 +29,7 @@ const newsupplier = asyncHandler(async (req, res) => {
 const getsupplier = asyncHandler(async (req, res) => {
   try {
     const supplier = await supplierPosModels
-      .find()
+      .find().sort({ createdAt: -1 })
 
     res.send(supplier);
   } catch (error) {

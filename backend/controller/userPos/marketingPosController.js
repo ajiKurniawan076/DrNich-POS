@@ -28,7 +28,7 @@
   const getmarketing = asyncHandler(async (req, res) => {
     try {
       const marketing = await marketingPosModels
-        .find()
+        .find().sort({ createdAt: -1 })
 
       res.send(marketing);
     } catch (error) {
