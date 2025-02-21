@@ -34,7 +34,7 @@ export const LaporanPenjualanProduk = () => {
   const [produkList, setProdukList] = useState([]); // seluruh produk dari API
   const [tampil, setTampil] = useState([]);        // produk yang akan ditampilkan (misalnya, 3 produk)
   const [chartTampil, setChartTampil] = useState([]); // data gabungan untuk chart
-
+    const pilihProdukRef = useRef([])
   // State untuk visibilitas bar (legend interaktif)
   const [visibleBars, setVisibleBars] = useState([]);
 
@@ -137,33 +137,64 @@ export const LaporanPenjualanProduk = () => {
     setChartTampil(updatedChart);
   }, [tampil, chart]);
 
+  const gantiTampil = () => {
+    const data = [
+        {namaProduk : pilihProdukRef.current[0].value},
+        {namaProduk : pilihProdukRef.current[1].value},
+        {namaProduk : pilihProdukRef.current[2].value},
+    ]
+    setTampil(data)
+  }
   // Custom Legend dengan interaksi klik
   const CustomLegend = (props) => {
     const { payload } = props;
-    const handleLegendClick = (index) => {
-      setVisibleBars(prev => {
-        const newVisible = [...prev];
-        newVisible[index] = !newVisible[index];
-        return newVisible;
-      });
-    };
+    // const handleLegendClick = (index,e) => {
+    //     e.preventDefault()
+    //     setVisibleBars(prev => {
+    //     const newVisible = [...prev];
+    //     newVisible[index] = !newVisible[index];
+    //     return newVisible;
+    //   });
+    // }
+    // ;
 
     return (
-      <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
+        <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
         {payload.map((entry, index) => (
-          <li
+          <select
+          onChange={gantiTampil}
             key={`legend-${index}`}
-            onClick={() => handleLegendClick(index)}
+            ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
             style={{
               marginRight: 10,
               color: visibleBars[index] ? entry.color : '#ccc',
+              appearance: 'none',
             }}
           >
-            {tampil[index] ? tampil[index].namaProduk : entry.value}
-          </li>
+            <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
+            {produkList.map((item, i) => (
+              <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
+            ))}
+          </select>
         ))}
       </ul>
     );
+    // return (
+    //   <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
+    //     {payload.map((entry, index) => (
+    //       <li
+    //         key={`legend-${index}`}
+    //         onClick={(e) => handleLegendClick(index,e)}
+    //         style={{
+    //           marginRight: 10,
+    //           color: visibleBars[index] ? entry.color : '#ccc',
+    //         }}
+    //       >
+    //         {tampil[index] ? tampil[index].namaProduk : entry.value}
+    //       </li>
+    //     ))}
+    //   </ul>
+    // );
   };
 
   useEffect(() => {
@@ -177,7 +208,7 @@ export const LaporanPenjualanProduk = () => {
 
   return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-      <button onClick={() => console.log(produkList)}>Debug ProdukList</button>
+      <button onClick={() => console.log(pilihProdukRef.current[0].value)}>Debug ProdukList</button>
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
         <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
