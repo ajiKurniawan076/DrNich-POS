@@ -11,6 +11,7 @@ const laporanPenjualan = asyncHandler(async(req,res)=>{
     const {dari, sampai} = req.body;
     const from = new Date(dari)
     const to = new Date(sampai)
+    let dataPelanggan = []
     const transaksi = await TransaksiModels.find({createdAt : {$gte : from, $lte : to}}).populate("promo")
     .populate("pelanggan")
     .populate({
@@ -24,10 +25,22 @@ const laporanPenjualan = asyncHandler(async(req,res)=>{
     let total = 0;
     for (const item of transaksi){
         total += item.totalAkhir
+        
+        if (dataPelanggan.some(data => data.namaPelanggan == item.pelanggan.namaPelanggan)){
+          dataPelanggan = dataPelanggan.map(isi => isi.namaPelanggan == item.pelanggan.namaPelanggan ? {...isi, totalPembelian : isi.totalPembelian+item.totalAkhir} : isi)
+          
+        }else {
+          const isiDataPelanggan = {
+            namaPelanggan : item.pelanggan.namaPelanggan,
+            totalPembelian : item.totalAkhir
+          }
+          dataPelanggan.push(isiDataPelanggan)
+        }
     }
     const totalTransaksi = transaksi.length;
+
     
-    res.status(200).json({transaksi: transaksi, totalPendapatan : total, totalTransaksi: totalTransaksi})
+    res.status(200).json({transaksi: transaksi, totalPendapatan : total, totalTransaksi: totalTransaksi, pelanggan: dataPelanggan})
 }
 catch(error){
     res.status(400).json({ message: error.message });
