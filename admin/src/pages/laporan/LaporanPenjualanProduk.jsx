@@ -85,8 +85,8 @@ export const LaporanPenjualanProduk = () => {
 
   // Fetch data grafik penjualan produk
   useEffect(() => {
-    // const tanggal = { endOfWeek: new Date().toISOString().split('.')[0] + 'Z' };
-    const tanggal = {endOfWeek : '2025-02-09'};
+    const tanggal = { endOfWeek: new Date().toISOString().split('.')[0] + 'Z' };
+    // const tanggal = {endOfWeek : '2025-02-09'};
     axios
       .post("https://api.drnich.co.id/api/pos/laporan/laporangrafikproduk", tanggal)
       .then(response => {
@@ -231,14 +231,12 @@ export const LaporanPenjualanProduk = () => {
                 (i === 0 ? (itemx.pendapatan1 || 0) :
                  i === 1 ? (itemx.pendapatan2 || 0) :
                  i === 2 ? (itemx.pendapatan3 || 0) : 0)
-
           };
           }
           return itemz;
         });
       });
     });
-
     setDataProduk(isi);
 }, [chartTampil, tampil]);
 
@@ -250,7 +248,7 @@ export const LaporanPenjualanProduk = () => {
 
   return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
-      <button onClick={() => console.log(tampil)}>Debug ProdukList</button>
+      <button onClick={() => console.log(dataProduk)}>Debug ProdukList</button>
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
         <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
@@ -306,13 +304,8 @@ export const LaporanPenjualanProduk = () => {
           <option value="" className="text-gray-300" disabled>
             Minggu ini
           </option>
-          <option value="hariini">Hari ini</option>
-          <option value="kemarin">Kemarin</option>
           <option value="bulanini">Bulan Ini</option>
-          <option value="minggulalu">Minggu Lalu</option>
-          <option value="bulanlalu">Bulan Lalu</option>
           <option value="tahunini">Tahun Ini</option>
-          <option value="tahunlalu">Tahun Lalu</option>
         </select>
       </div>
       <div>
@@ -398,34 +391,15 @@ export const LaporanPenjualanProduk = () => {
           <p>Data Penjualan Produk</p>
         </div>
         {/* Data Penjualan Contoh */}
-        <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
-          <div className='grid text-start gap-[5px]'>
-            <p>Facial Glow Acne</p>
-            <p className='text-[14px] font-semibold'>Rp 7.200.000</p>
+        {dataProduk.map((produx, i) => (
+          <div key={i} className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
+            <div className='grid text-start gap-[5px]'>
+              <p>{produx.namaProduk}</p>
+              <p className='text-[14px] font-semibold'>Rp {produx?.pendapatan?.toLocaleString('id-ID')}</p>
+            </div>
+            <p>{produx.penjualan} Transaksi</p>
           </div>
-          <p>296 Transaksi</p>
-        </div>
-        <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
-          <div className='grid text-start'>
-            <p>Facial Gold</p>
-            <p className='text-[14px] font-semibold'>Rp 5.437.000</p>
-          </div>
-          <p>194 Transaksi</p>
-        </div>
-        <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
-          <div className='grid text-start'>
-            <p>Sunscreen SPF 30+ 100ml</p>
-            <p className='text-[14px] font-semibold'>Rp 1.200.000</p>
-          </div>
-          <p>13 Transaksi</p>
-        </div>
-        <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
-          <div className='grid text-start'>
-            <p>Serum Niacnamide</p>
-            <p className='text-[14px] font-semibold'>Rp 1.200.000</p>
-          </div>
-          <p>10 Transaksi</p>
-        </div>
+        ))}
       </div>
     </div>
   );

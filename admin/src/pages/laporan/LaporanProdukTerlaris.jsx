@@ -34,6 +34,8 @@ export const LaporanProdukTerlaris = () => {
         const shortx = sortedDatax.slice(0, 4);
         setData(short)
         setDatax(shortx)
+        // console.log(short)
+        console.log(shortx)
       } catch (error) {
         console.error("Error Fetching data:", error)
         toast.error("Terjadi Kesalahan", {
