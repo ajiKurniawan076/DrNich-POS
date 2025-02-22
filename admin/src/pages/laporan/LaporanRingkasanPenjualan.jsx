@@ -120,6 +120,9 @@ export const LaporanRingkasanPenjualan = () => {
                     setTopCustomers(sort);
                     console.log(sort)
                 })
+                .catch(function(error) {
+                    console.log('error saat fetching', error);
+                });
         }
         fetchData();
     }, [])
@@ -192,8 +195,20 @@ export const LaporanRingkasanPenjualan = () => {
                         </div>
                     </div>
                 </div>
-
-
+                <div className="flex flex-col my-[10px]">
+                    <select
+                    name="options"
+                    className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[13px] px-[20px]"
+                    id="Gender"
+                    defaultValue=""
+                    >
+                    <option value="" className="text-gray-300" disabled>
+                        Minggu ini
+                    </option>
+                    <option value="bulanini">Bulan Ini</option>
+                    <option value="tahunini">Tahun Ini</option>
+                    </select>
+                </div>
                 <div className='flex justify-between gap-[10px] text-[12px] w-full'>
                     <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full'>
                         <div className='flex items-center text-center gap-[5px]'>
