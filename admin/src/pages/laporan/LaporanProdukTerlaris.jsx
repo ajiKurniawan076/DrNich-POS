@@ -36,11 +36,12 @@ export const LaporanProdukTerlaris = () => {
         const sortedDatax = response.data.kategorilist.sort((a, b) => b.pendapatan - a.pendapatan);
         const short = sortedData.slice(0, 4);
         const shortx = sortedDatax.slice(0, 4);
-        setData(short)
+        setData(response.data.produklist)
         setTampilProduk(short)
-        setDatax(shortx)
+        setDatax(response.data.kategorilist)
         setTampilKategori(shortx)
-        console.log(response.data.transaksi)
+        console.log(response.data.produklist)
+        console.log(response.data.kategorilist)
       } catch (error) {
         console.error("Error Fetching data:", error)
         toast.error("Terjadi Kesalahan", {
