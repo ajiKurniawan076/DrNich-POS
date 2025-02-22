@@ -36,9 +36,9 @@ export const LaporanProdukTerlaris = () => {
         const sortedDatax = response.data.kategorilist.sort((a, b) => b.pendapatan - a.pendapatan);
         const short = sortedData.slice(0, 4);
         const shortx = sortedDatax.slice(0, 4);
-        setData(short)
+        setData(response.data.produklist)
         setTampilProduk(short)
-        setDatax(shortx)
+        setDatax(response.data.kategorilist)
         setTampilKategori(shortx)
         console.log(response.data.transaksi)
       } catch (error) {
@@ -69,11 +69,11 @@ export const LaporanProdukTerlaris = () => {
     setTampil(tampilRef.current.value)
     if(tampilRef.current.value == 'pendapatan'){
       const filter = data.sort((a,b) => b.pendapatan - a.pendapatan)
-      setTampilProduk(filter)
+      setTampilProduk(filter.slice(0,4))
     }
     else if(tampilRef.current.value == 'jumlah'){
       const filter = data.sort((a,b) => b.jumlah - a.jumlah)
-      setTampilProduk(filter)
+      setTampilProduk(filter.slice(0,4))
     }
   }
 
@@ -96,11 +96,11 @@ export const LaporanProdukTerlaris = () => {
     setTampilx(tampilRefx.current.value)
     if(tampilRefx.current.value == 'pendapatan'){
       const filter = datax.sort((a,b) => b.pendapatan - a.pendapatan)
-      setTampilKategori(filter)
+      setTampilKategori(filter.slice(0,4))
     }
     else if(tampilRefx.current.value == 'jumlah'){
       const filter = datax.sort((a,b) => b.jumlah - a.jumlah)
-      setTampilKategori(filter)
+      setTampilKategori(filter.slice(0,4))
     }
   }
     
