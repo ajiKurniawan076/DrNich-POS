@@ -202,6 +202,7 @@ export const LaporanRingkasanPenjualan = () => {
                     </div>
                 </div>
                 
+                <div>
                 <div className='flex justify-between gap-[10px] text-[12px] w-full'>
                     <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full'>
                         <div className='flex items-center text-center gap-[5px]'>
@@ -283,8 +284,11 @@ export const LaporanRingkasanPenjualan = () => {
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start mb-[17px] w-full">
                     <p>Grafik Penjualan</p>
                 </div>
-                <div style={{ width: '100%', height: 300 }}>
-                <ResponsiveContainer width="100%" height={300}>
+                {
+                    chartData.length>0 && 
+                    <div style={{ width: '100%', height: 400, overflowX: 'auto' }}> {/* Scrollable container */}
+                            <div className='relative' style={{ width: 'max-content', minWidth: '100%' }}> {/* Ensures BarChart does not shrink */}
+                              <ResponsiveContainer width={chartData.length * 80} height={400}>
                     <BarChart
                         data={chartData}
                         margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -300,7 +304,6 @@ export const LaporanRingkasanPenjualan = () => {
                         style: 'currency',
                         currency: 'IDR'
                     }).format(value)} />
-                    <Legend />
                     <Bar
                         dataKey="penjualan"
                         name="Penjualan"
@@ -317,6 +320,16 @@ export const LaporanRingkasanPenjualan = () => {
                         </defs>
                     </BarChart>
                 </ResponsiveContainer>
+                </div>
+                </div>
+                }
+                <div>
+                    <ul className='flex gap-2 w-full justify-center'>
+                    <svg width={20} height={20} className='rounded-md'>
+              <rect x={0} y={0} width={20} height={20} fill={`url(#colorGradient)`} />
+            </svg>
+                        <li>Penjualan</li>
+                    </ul>
                 </div>
 
 
@@ -417,8 +430,8 @@ export const LaporanRingkasanPenjualan = () => {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col gap-[10px] h-full'>
-                    <div className='flex flex-col gap-[10px] mt-[30px] h-full'>
+                <div className='flex flex-col gap-[10px] h-fit'>
+                    <div className='flex flex-col gap-[10px] mt-[30px] h-fit'>
                         {topCustomers.map((customer, index) => (
                             <div key={index} className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
                                 <div className='flex items-center text-center gap-[10px]'>
@@ -436,6 +449,7 @@ export const LaporanRingkasanPenjualan = () => {
                         ))}
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     )
