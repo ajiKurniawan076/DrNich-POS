@@ -61,7 +61,16 @@ export const KategoriProdukDetail = () => {
           </div>
           <div className="flex justify-between text-[12px] mx-2 py-1 text-[#BDBDBD]">
             <p>Terakhir Diperbaharui</p>
-            <p>Tanggal Disini</p>
+            <p>
+              {new Date(datax.updatedAt).toLocaleString("id-ID", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })}
+            </p>
           </div>
           <div className="mx-1 flex flex-col gap-3 h-full justify-between">
             <a

@@ -17,7 +17,7 @@ export const DetailProduk = () => {
         .get("https://api.drnich.co.id/api/pos/produk/produk/" + id)
         .then((response) => {
           setproduct(response.data);
-          console.log(response);
+          console.log(response.data);
         });
     };
     fetchData();
@@ -43,16 +43,14 @@ export const DetailProduk = () => {
         <></>
       ) : (
         <>
-          <a href="#" className="w-full mb-2 px-1 flex h-[80px]">
-            <span className="w-full h-full border rounded-xl px-0 py-[20px] border-[#C2A353] flex items-center font-semibold text-[14px]">
-              <p className="ms-[15px]">{product.jenis.jenis}</p>
-              <div className="flex ms-auto me-[15px] w-[18px] h-[18px]">
-                <img src={iNext} alt="" />
-              </div>
-            </span>
-          </a>
           <div className="flex flex-col p-[20px] rounded-xl border border-[#C2A353] mx-1">
             <label className="text-start font-light">
+              Jenis Produk
+            </label>
+            <p className="text-start font-semibold h-[20px]">
+              {product.jenis.jenis}
+            </p>
+            <label className="text-start font-light mt-[10px]">
               Kategori Produk
             </label>
             <p className="text-start font-semibold h-[20px]">
@@ -62,8 +60,6 @@ export const DetailProduk = () => {
             <p className="text-start font-semibold h-[20px]">
               {product.namaProduk}
             </p>
-            <label className="text-start font-light mt-[10px]">SKU</label>
-            <p className="text-start font-semibold h-[20px]"></p>
             <label className="text-start font-light mt-[10px]">Harga Beli</label>
             <p className="text-start font-semibold h-[20px]">
             Rp. {product.hargaBeli.toLocaleString('id-ID')}
@@ -86,40 +82,32 @@ export const DetailProduk = () => {
             <p className="text-start font-semibold h-[20px]">
               Rp. {(product.hargaJual - product.hargaBeli).toLocaleString('id-ID')}
             </p>
-            <label className="text-start font-light mt-[10px]">
-              Stok
-            </label>
-            <p className="text-start font-semibold h-[20px]">
-              {product.stok}
-            </p>
-            <label className="text-start font-light mt-[10px]">
-              Stok Minimum
-            </label>
-            <p className="text-start font-semibold h-[20px]">
-              {product.minStok}
-            </p>
           </div>
         </>
       )}
-
+      <div className="flex justify-between mx-1 my-1 text-[12px] text-[#BDBDBD]">
+        <p>Terakhir Diperbaharui</p>
+        <p>
+          {new Date(product.updatedAt).toLocaleString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </p>
+      </div>
       <div className="mx-1 flex flex-col gap-3">
-        <a href="#" className=" w-full h-[50px] mt-2">
-          <span className="hover:scale-110 w-full  h-full border rounded-xl text-yellow-700/70 border-yellow-700 flex items-center font-bold px-5">
-            Lihat Daftar Produk
+        <a href={`/pos/laporanlogproduk/${product._id}`} className=" w-full h-[50px]">
+          <span className="w-full  h-full border rounded-xl text-yellow-700/70 border-yellow-700 flex items-center font-bold px-5">
+            Lihat Log Produk
               <div className="flex ms-auto w-[18px] h-[18px]">
                 <img src={iNext} alt="" />
               </div>
           </span>
         </a>
-        <a href="../riwayatsupplier" className=" w-full h-[50px]">
-          <span className="hover:scale-110 w-full  h-full border rounded-xl text-yellow-700/70 border-yellow-700 flex items-center font-bold px-5">
-            Lihat Riwayat Terakhir
-              <div className="flex ms-auto w-[18px] h-[18px]">
-                <img src={iNext} alt="" />
-              </div>
-          </span>
-        </a>
-        <div className="flex gap-5 w-full justify-between text-[14px]">
+        <div className="flex gap-5 w-full justify-between text-[14px] mt-auto">
           <button className="flex justify-center items-center border-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] bg-white text-[#C2A353] hover:scale-105">
             Hapus
           </button>

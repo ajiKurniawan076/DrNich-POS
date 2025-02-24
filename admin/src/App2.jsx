@@ -383,7 +383,7 @@ function App2() {
                     element={<LaporanPersediaanDetail />}
                   />
                   <Route
-                    path="/LaporanLogProduk/"
+                    path="/LaporanLogProduk/:id"
                     element={<LaporanLogProduk />}
                   />
                   <Route
@@ -447,7 +447,7 @@ function App2() {
                     element={<DaftarStokLimit />}
                   />
                   <Route
-                    path="/DetailDaftarStokLimit/"
+                    path="/DetailDaftarStokLimit/:id"
                     element={<DetailDaftarStokLimit />}
                   />
                   <Route path="/TambahDiskon/" element={<TambahDiskon />} />

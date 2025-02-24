@@ -32,7 +32,7 @@ export const PembayaranBerhasil = () => {
     };
 
     fetchData();
-    setNav("Pembayaran ");
+    setNav("Pembayaran");
     setLink("/pos/kasir");
     setTimeout(() => {
       setFetched(true);
