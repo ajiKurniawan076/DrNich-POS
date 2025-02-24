@@ -152,9 +152,9 @@ export const LaporanRingkasanPenjualan = () => {
                 placeholder="Cari..."
             ></input>
         </form> */}
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <div className='flex flex-col'>
-                <div className='flex flex-col h-full'>
+                <div className='flex flex-col h-fit'>
                     <p>Masa Berlaku</p>
                     <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
                         <p>Dari :</p>
@@ -283,43 +283,53 @@ export const LaporanRingkasanPenjualan = () => {
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start mb-[17px] w-full">
                     <p>Grafik Penjualan</p>
                 </div>
-                <div style={{ width: '100%', height: 300 }}>
-                <ResponsiveContainer width="100%" height={300}>
-                    <BarChart
-                        data={chartData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-                        barCategoryGap="30%"
-                    >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
-                    <YAxis tickFormatter={(val) => {
-                        if (val >= 1000000) return `${val/1000000}jt`
-                        return val.toLocaleString('id-ID')
-                    }} />
-                    <Tooltip formatter={(value) => new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR'
-                    }).format(value)} />
-                    <Legend />
-                    <Bar
-                        dataKey="penjualan"
-                        name="Penjualan"
-                        fill="url(#colorGradient)"
-                        radius={[5, 5, 0, 0]}
-                    >
-                        
-                    </Bar>
-                    <defs>
-                        <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#FFC107" stopOpacity={0.9}/>
-                            <stop offset="100%" stopColor="#FF8A00" stopOpacity={0.7}/>
-                        </linearGradient>
-                        </defs>
-                    </BarChart>
-                </ResponsiveContainer>
-                </div>
+                <div style={{ width: '100%', height: 400, overflowX: 'auto' }}>
+  <div className='relative' style={{ width: 'max-content', minWidth: '100%' }}>
+    <ResponsiveContainer width={chartData.length * 80 || '100%'} height={400}>
+      <BarChart
+        data={chartData}
+        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+        barCategoryGap="30%"
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="name"
+          tick={{ fontSize: 12, dy: 2 }}
+          textAnchor="middle"
+        />
+        <YAxis
+          tickFormatter={(val) => {
+            if (val >= 1000000) return `${val / 1000000}jt`;
+            return val.toLocaleString('id-ID');
+          }}
+        />
+        <Tooltip
+          formatter={(value) =>
+            new Intl.NumberFormat('id-ID', {
+              style: 'currency',
+              currency: 'IDR'
+            }).format(value)
+          }
+        />
+        <Legend />
+        <Bar
+          dataKey="penjualan"
+          name="Penjualan"
+          fill="url(#colorGradient)"
+          radius={[5, 5, 0, 0]}
+        />
+        <defs>
+          <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#FFC107" stopOpacity={0.9} />
+            <stop offset="100%" stopColor="#FF8A00" stopOpacity={0.7} />
+          </linearGradient>
+        </defs>
+      </BarChart>
+    </ResponsiveContainer>
+  </div>
+</div>
 
-
+                
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
                     <p className="">Laporan Promo</p>
                 </div>
