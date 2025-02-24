@@ -30,6 +30,7 @@ export const LaporanRingkasanPenjualan = () => {
     const navigate = useNavigate();
     const [chartData, setChartData] = useState([])
     const [topCustomers, setTopCustomers] = useState([])
+    const [atur, setAtur] = useState("mingguan")
 
     const handleNavigate = (e) => {
         e.preventDefault()
@@ -97,16 +98,17 @@ export const LaporanRingkasanPenjualan = () => {
         const fetchChart = async () => {
             try {
                 const tanggal = {
-                    endOfWeek : new Date().toISOString().split('.')[0] + 'Z'
+                    tanggal : new Date().toISOString().split('.')[0] + 'Z', menu : atur
                 }
                 const response = await axios.post("https://api.drnich.co.id/api/pos/laporan/laporangrafik", tanggal)
                 setChartData(response.data.transactions)
+                console.log(response.data.transactions)
             } catch (error) {
                 console.log("Error Saat Fetching Chart data:", error)
             }
         }
         fetchChart()
-    },[])
+    }, [atur])
 
     useEffect(() => {
         const tanggal = { dari: "2025-01-01T00:00:00Z", sampai: new Date().toISOString().split('.')[0] + 'Z' }
@@ -127,7 +129,11 @@ export const LaporanRingkasanPenjualan = () => {
         fetchData();
     }, [])
 
-
+    const Minggu = useRef(null);
+    const MBT = () => {
+        setAtur(Minggu.current.value)
+        // console.log("Minggu :", Minggu.current.value)
+    }
 
 
     setLink('/pos/laporan')
@@ -195,20 +201,7 @@ export const LaporanRingkasanPenjualan = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col my-[10px]">
-                    <select
-                    name="options"
-                    className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[13px] px-[20px]"
-                    id="Gender"
-                    defaultValue=""
-                    >
-                    <option value="" className="text-gray-300" disabled>
-                        Minggu ini
-                    </option>
-                    <option value="bulanini">Bulan Ini</option>
-                    <option value="tahunini">Tahun Ini</option>
-                    </select>
-                </div>
+                
                 <div className='flex justify-between gap-[10px] text-[12px] w-full'>
                     <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full'>
                         <div className='flex items-center text-center gap-[5px]'>
@@ -268,8 +261,26 @@ export const LaporanRingkasanPenjualan = () => {
                     </a>
                 </div>
 
+                {/* Mengatur GRafik */}
+                <div className="flex flex-col my-[10px]">
+                    <select
+                    name="options"
+                    className="border border-[#C2A353] rounded-xl w-[50%] h-[45px] py-[13px] px-[20px]"
+                    id="Gender"
+                    defaultValue=""
+                    ref={Minggu}
+                    onChange={MBT}    
+                    >
+                    <option value="mingguan">
+                        Minggu ini
+                    </option>
+                    <option value="bulanan">Bulan Ini</option>
+                    <option value="tahunan">Tahun Ini</option>
+                    </select>
+                </div>
+
                 {/* Grafik Penjualan menggunakan Recharts */}
-                <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
+                <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start mb-[17px] w-full">
                     <p>Grafik Penjualan</p>
                 </div>
                 <div style={{ width: '100%', height: 300 }}>
@@ -280,7 +291,7 @@ export const LaporanRingkasanPenjualan = () => {
                         barCategoryGap="30%"
                     >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2 }} textAnchor="middle" />
                     <YAxis tickFormatter={(val) => {
                         if (val >= 1000000) return `${val/1000000}jt`
                         return val.toLocaleString('id-ID')
