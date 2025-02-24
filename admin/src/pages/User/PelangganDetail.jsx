@@ -85,7 +85,17 @@ export const PelangganDetail = () => {
       </div>
       <div className="flex justify-between text-start  font-medium bg-[#F6F6F6] text-[#BDBDBD] my-3 py-2">
         <span className="ms-2">Terakhir Diperbaharui</span>
-        <span className="text-end me-2">1 Nov 2024</span>
+        <span className="text-end me-2">{new Date(datax?.updatedAt).toLocaleDateString('id-ID',
+          {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            timeZoneName: "short",
+          }
+        )}</span>
       </div>
       <div className="w-full h-[50px] px-5">
         <a href="#" className=" w-full h-[50px]">

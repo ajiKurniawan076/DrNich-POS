@@ -11,8 +11,9 @@
       nomorRekening: req.body.nomorRekening,
       bank: req.body.bank,
       keteranganRek: req.body.keteranganRek,
-    image : req.file ? req.file.path : 'No Image'
     };
+    let image = req.file ? req.file.path : null;
+    if(image){newData.image = image}
     try {
       const isExist = await marketingPosModels.findOne({ nomorTelepon: newmarketing.nomorTelepon });
       if (isExist) {
@@ -28,7 +29,7 @@
   const getmarketing = asyncHandler(async (req, res) => {
     try {
       const marketing = await marketingPosModels
-        .find()
+        .find().sort({ createdAt: -1 })
 
       res.send(marketing);
     } catch (error) {

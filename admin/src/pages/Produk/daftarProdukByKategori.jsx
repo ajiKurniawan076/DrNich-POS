@@ -30,18 +30,17 @@ export const DaftarProdukByKategori = () => {
       data.kategori?.kategori?.toLowerCase().includes(cari.toLowerCase())
   );
   return (
-    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
-      <form className="mt-5 flex gap-2 h-[42px] mx-3 border border-black rounded-xl items-center px-2">
+    <div className="flex flex-col px-7 py-3 gap-1 bg-white w-full h-full">
+      <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
         <AiOutlineSearch size={20} />
         <input
           onChange={(e) => setCari(e.target.value)}
-          value={cari}
           type="text"
           className="text-sm w-full h-[30px] focus:outline-none"
           placeholder="Cari..."
-        ></input>
+        />
       </form>
-      <div className="flex flex-col justify-between w-full h-full py-3 px-3">
+      <div className="flex flex-col justify-between w-full h-full pb-3 px-3">
         {filterData.length === 0 ? (
           <div className="flex flex-col w-full h-full items-center justify-center text-black/40">
             Belum Ada Data!
@@ -71,29 +70,21 @@ export const DaftarProdukByKategori = () => {
             ))}
           </div>
         )}
-        <div className="flex w-full">
+        <div className="flex w-full gap-2">
           <a
-            href="adddaftarproduk"
-            className="w-[30%] flex justify-center items-center gap-2 h-[30px] text-[#C2A353] border border-[#C2A353] bg-white font-bold rounded-lg hover:scale-105"
+            href="/pos/adddaftarproduk"
+            className="w-[30%] flex justify-center items-center gap-2  text-[#C2A353] border border-[#C2A353] bg-white font-bold rounded-xl p-4"
           >
             <img src={iBar} /> Scan
           </a>
           <a
-            href="adddaftarproduk"
-            className="w-[70%] flex justify-center items-center gap-2 h-[30px] bg-gradient-to-l from-[#C2A353] to-[#EAC564] text-white font-bold rounded-lg hover:scale-105"
+            href="/pos/adddaftarproduk"
+            className="w-[70%] flex justify-center items-center gap-2 bg-gradient-to-l from-[#C2A353] to-[#EAC564] text-white font-bold rounded-xl p-4"
           >
             <AiFillPlusCircle size={20} /> Tambah Manual
           </a>
         </div>
       </div>
-      <button
-        className="w-10 h-10 bg-black/300 text-white"
-        onClick={() => {
-          setKategori([]);
-        }}
-      >
-        RESET
-      </button>
     </div>
   );
 };

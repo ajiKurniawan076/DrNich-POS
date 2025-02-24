@@ -28,6 +28,7 @@ export const PembelianStok = (props) => {
   const [supplier, setSupplier] = useState({})
   const [jumlahPembelian, setJumlahPembelian] = useState([]);
   const [produkTerpilih, setProdukTerpilih] = useState([]);
+  const [produkKategoriTampil, setProdukKategoriTampil] = useState([])
 
   const handleTambah = (e) => {
     e.preventDefault();
@@ -61,7 +62,7 @@ export const PembelianStok = (props) => {
   };
 
   const pilih = (data) => {
-    setProdukKategori(data);
+    setProdukKategoriTampil(data);
   };
   const gantiKategori = () => {
     setKategoriTerpilih(kategoriRef.current.value);
@@ -71,7 +72,7 @@ export const PembelianStok = (props) => {
     const filterr = produkKategori.filter(
       (item) => item.kategori._id == kategoriTerpilih
     );
-    setProdukKategori(filterr);
+    setProdukKategoriTampil(filterr);
   }, [kategoriTerpilih]);
 
   document.title = "Pembelian Stok";
@@ -203,7 +204,7 @@ export const PembelianStok = (props) => {
         </div>
       </div>
       <datalist id="pilihProduk" className="bg-[#BDBDBD]">
-        {produkKategori.map((item, i) => (
+        {produkKategoriTampil.map((item, i) => (
           <option key={i} value={item.namaProduk} />
         ))}
       </datalist>

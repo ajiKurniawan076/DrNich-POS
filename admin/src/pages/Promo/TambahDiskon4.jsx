@@ -5,7 +5,7 @@ import iTamPu from "../../assets/iconkasir/iTamPu.svg";
 import axios from 'axios';
 
 export const TambahDiskon4 = () => {
-    const { setNav, setLink } = useContext(navContext)
+    const { setNav, setSort, asc, setLink } = useContext(navContext)
     const [data, setData] = useState([])
     const cariRef = useRef(null)
       const [tampil, setTampil] = useState([])
@@ -30,8 +30,23 @@ export const TambahDiskon4 = () => {
         fetchData();
         setLink('/pos/promo')
         setNav('Diskon')   
+        setSort(true)
         document.title = 'Diskon'
     },[])
+
+    useEffect(()=>{
+
+        if(asc=='asc'){
+          const sorting = [...tampil].sort((a,b)=> a.namaPromo.localeCompare(b.namaPromo))
+          console.log(sorting)
+          setTampil(sorting)
+        }
+        else if(asc=='desc'){
+          const sorting = [...tampil].sort((a,b)=> b.namaPromo.localeCompare(a.namaPromo))
+          console.log(sorting)
+          setTampil(sorting)
+        }
+      },[asc])
 
 
 return (
@@ -49,7 +64,7 @@ return (
                 <a href={`/pos/diskondetail/${item._id}`} key={i} className='grid place-items-start w-full border border-[#BDBDBD] rounded-xl px-[20px] py-[15px]'>
                     <p className='font-semibold'>{item.namaPromo}</p>
                     <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
-                        <p>{item.potongan}</p>
+                        {item.jenisPotongan =='persen' ? <p>{item.potongan} %</p>:<p>Rp. {item.potongan}</p>}
                         <p className='text-[#EAC564]'>{item.keterangan}</p>
                     </div>
                 </a>

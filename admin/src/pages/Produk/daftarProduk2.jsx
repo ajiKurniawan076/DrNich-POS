@@ -8,8 +8,10 @@ import axios from "axios";
 export const DaftarProduk2 = () => {
   const [products, setproducts] = useState([]);
   const { Kategori } = useParams();
-  const { setNav, setSort, setLink } = useContext(navContext);
+  const { setNav, setSort, setLink, asc } = useContext(navContext);
   const [cari, setCari] = useState("");
+  const [filterDatax, setFilterDatax] = useState([])
+
   useEffect(() => {
     const fetchData = async () => {
       await axios
@@ -29,6 +31,22 @@ export const DaftarProduk2 = () => {
       data.namaProduk?.toLowerCase().includes(cari.toLowerCase()) ||
       data.kategori?.kategori?.toLowerCase().includes(cari.toLowerCase())
   );
+
+  // Filter data berdasarkan pencarian
+  useEffect(() => {
+    const filtered = filterData
+    
+    // Sorting setelah filter
+    if (asc === "asc") {
+      setFilterDatax([...filtered].sort((a, b) => a.namaProduk.localeCompare(b.namaProduk)));
+    } else if (asc === "desc") {
+      setFilterDatax([...filtered].sort((a, b) => b.namaProduk.localeCompare(a.namaProduk)));
+    } else {
+      setFilterDatax(filtered);
+    }
+    console.log(filtered)
+  }, [cari, products, asc]);
+
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
       <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
@@ -42,13 +60,13 @@ export const DaftarProduk2 = () => {
         ></input>
       </form>
       <div className="flex flex-col justify-between w-full h-full py-3 px-3 text-[12px] overflow-auto">
-        {filterData.length === 0 ? (
+        {filterDatax.length === 0 ? (
           <div className="flex flex-col w-full h-full items-center justify-center text-[#454545]">
             Belum Ada Data!
           </div>
         ) : (
           <div className="flex flex-col gap-3 w-full h-full items-center justify-start">
-            {filterData.map((pro, i) => (
+            {filterDatax.map((pro, i) => (
               <Link
                 to={{
                   pathname: `/pos/productdetail/${pro._id}`,
@@ -73,13 +91,14 @@ export const DaftarProduk2 = () => {
         )}
         <div className="flex gap-5 w-full h-full justify-between items-end text-[14px] mt-6">
           <a
-            href="adddaftarproduk"
+            // href="/pos/adddaftarproduk"
+            href=""
             className="flex justify-center items-center border-[#C2A353] text-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] hover:scale-105 gap-1"
           >
             <img src={iBar} /> Scan
           </a>
           <a
-            href="adddaftarproduk"
+            href="/pos/adddaftarproduk"
             className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px] hover:scale-105 gap-1"
           >
             <AiFillPlusCircle size={20} /> Tambah Manual

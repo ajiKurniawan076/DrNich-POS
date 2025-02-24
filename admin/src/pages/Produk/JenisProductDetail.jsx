@@ -43,11 +43,20 @@ export const JenisProductDetail = () => {
       </div>
       <div className="flex justify-between mx-1 my-1 text-[12px] text-[#BDBDBD]">
         <p>Terakhir Diperbaharui</p>
-        <p>{datax.updatedAt}</p>
+        <p>
+          {new Date(datax.updatedAt).toLocaleString("id-ID", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </p>
       </div>
       <div className="mx-1 flex flex-col gap-3 h-full justify-between">
         <a
-          href={`/pos/produkbyjenis/${datax.jenis}`}
+          href={`/pos/produkbyjenis/${datax._id}`}
           className=" w-full h-[50px] border-b-2"
         >
           <span className="w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-normal px-5">

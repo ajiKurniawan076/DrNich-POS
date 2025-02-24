@@ -65,6 +65,7 @@ export const TerapisUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const fdata = new FormData();
     fdata.append("namaTerapis", namaTerapisRef.current.value);
     fdata.append("nomorTelepon", nomorTeleponRef.current.value);

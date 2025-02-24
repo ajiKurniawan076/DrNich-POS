@@ -59,7 +59,7 @@ export const Editsupplier = () => {
         console.log(data);
         try {
             const response = await axios.put(
-            `https://api.drnich.co.id/api/pos/user/updatesupplier${id}`,
+            `https://api.drnich.co.id/api/pos/user/updatesupplier/${id}`,
             data
         );
 

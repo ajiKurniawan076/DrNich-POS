@@ -15,6 +15,7 @@ import axios from "axios";
 import { PembelianStok } from "../Produk/PembelianStok";
 import { modalStokContext } from "./ManajementDetailStok";
 import { toast, ToastContainer } from "react-toastify";
+import { modalStokContext2 } from "../Stoklimit/DetailDaftarStokLimit";
 
 export const modalsContext = createContext();
 export const DaftarBelanjaModals = (props) => {
@@ -27,7 +28,7 @@ export const DaftarBelanjaModals = (props) => {
   const [items, setItems] = useState([]);
   const [invoice, setInvoice] = useState('')
   const [modals, setModals] = useState(false);
-  const { modalStok, setModalStok } = useContext(modalStokContext);
+  const { modalStok, setModalStok } = props.sumber == "stokLimit" ? useContext(modalStokContext) : useContext(modalStokContext2);
   const [produkKategori, setProdukKategori] = useState([]);
   const [pilihKategori, setPilihKategori] = useState([]);
   const navigate = useNavigate(0);

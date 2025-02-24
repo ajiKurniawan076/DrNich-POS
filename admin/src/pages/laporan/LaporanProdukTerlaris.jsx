@@ -12,10 +12,14 @@ export const LaporanProdukTerlaris = () => {
   const { setNav, setLink } = useContext(navContext)
   const [data, setData] = useState([])
   const [datax, setDatax] = useState([])
+  const [tampilProduk, setTampilProduk] = useState([])
+  const [tampilKategori, setTampilKategori] = useState([])
   const [tampil, setTampil] = useState("jumlah")
   const [tampilx, setTampilx] = useState("pendapatan")
   const tampilRef = useRef()
   const tampilRefx = useRef()
+  const jenisRef = useRef()
+  const jenisRefx = useRef()
 
   // Array gambar yang akan digunakan secara dinamis
     const productImages = [i1, i2, i3, i4]
@@ -29,11 +33,15 @@ export const LaporanProdukTerlaris = () => {
           autoClose: 1000,
         })
         const sortedData = response.data.produklist.sort((a, b) => b.jumlah - a.jumlah);
-        const sortedDatax = response.data.kategorilist.sort((a, b) => b.jumlah - a.jumlah);
+        const sortedDatax = response.data.kategorilist.sort((a, b) => b.pendapatan - a.pendapatan);
         const short = sortedData.slice(0, 4);
         const shortx = sortedDatax.slice(0, 4);
-        setData(short)
-        setDatax(shortx)
+        setData(response.data.produklist)
+        setTampilProduk(short)
+        setDatax(response.data.kategorilist)
+        setTampilKategori(shortx)
+        console.log(response.data.produklist)
+        console.log(response.data.kategorilist)
       } catch (error) {
         console.error("Error Fetching data:", error)
         toast.error("Terjadi Kesalahan", {
@@ -44,12 +52,57 @@ export const LaporanProdukTerlaris = () => {
     fetchData()
   }, [])
 
+  const pilihJenisProduk = () =>{
+    if(jenisRef.current.value == 'semua'){
+      setTampilProduk(data)
+    }
+    else if(jenisRef.current.value == 'jasa'){
+      const filter = data.filter((a) => a.jenis == 'jasa')
+      setTampilProduk(filter)
+    }
+    else if(jenisRef.current.value == 'produk'){
+      const filter = data.filter((a) => a.jenis == 'produk')
+      setTampilProduk(filter)
+    }
+  }
+
   const PilihProduk = () => {
     setTampil(tampilRef.current.value)
+    if(tampilRef.current.value == 'pendapatan'){
+      const filter = data.sort((a,b) => b.pendapatan - a.pendapatan)
+      setTampilProduk(filter.slice(0,4))
+    }
+    else if(tampilRef.current.value == 'jumlah'){
+      const filter = data.sort((a,b) => b.jumlah - a.jumlah)
+      setTampilProduk(filter.slice(0,4))
+    }
+  }
+
+  const pilihJenisKategori =()=>{
+      if(jenisRefx.current.value == 'semua'){
+        setTampilKategori(datax)
+      }
+      else if(jenisRefx.current.value == 'jasa'){
+        const filter = datax.filter((a) => a.jenis == 'jasa')
+        setTampilKategori(filter)
+      }
+      else if(jenisRefx.current.value == 'produk'){
+        const filter = datax.filter((a) => a.jenis == 'produk')
+        setTampilKategori(filter)
+      }
+    
   }
 
   const PilihKategori = () => {
     setTampilx(tampilRefx.current.value)
+    if(tampilRefx.current.value == 'pendapatan'){
+      const filter = datax.sort((a,b) => b.pendapatan - a.pendapatan)
+      setTampilKategori(filter.slice(0,4))
+    }
+    else if(tampilRefx.current.value == 'jumlah'){
+      const filter = datax.sort((a,b) => b.jumlah - a.jumlah)
+      setTampilKategori(filter.slice(0,4))
+    }
   }
     
   useEffect(() => {
@@ -83,6 +136,8 @@ export const LaporanProdukTerlaris = () => {
         {/* Select kedua */}
         <div className="relative w-[30%]">
           <select
+          onChange={pilihJenisProduk}
+          ref={jenisRef}
             className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
             <option value={"semua"}>Semua</option>
             <option value={"jasa"}>Jasa</option>
@@ -97,7 +152,7 @@ export const LaporanProdukTerlaris = () => {
       </div>
       
       {/* Render produk terlaris */}
-      {data.map((item, i) => (
+      {tampilProduk.map((item, i) => (
         <div key={i} className='grid'>
           <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px]'>
             <div className='flex items-center text-center gap-3'>
@@ -134,7 +189,10 @@ export const LaporanProdukTerlaris = () => {
 
         {/* Select kedua */}
         <div className="relative w-[30%]">
-          <select className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
+          <select 
+          onChange={pilihJenisKategori}
+          ref={jenisRefx}
+          className="appearance-none w-full border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 h-[130%]">
             <option value={"semua"}>Semua</option>
             <option value={"jasa"}>Jasa</option>
             <option value={"produk"}>Produk</option>
@@ -148,7 +206,7 @@ export const LaporanProdukTerlaris = () => {
       </div>
 
       {/* Render kategori teratas */}
-      {datax.map((itemx, i) => (
+      {tampilKategori.map((itemx, i) => (
         <div key={i} className='grid'>
           <div className='flex justify-between p-4 border border-[#BDBDBD] rounded-xl my-1 text-[12px]'>
             <div className='flex items-center text-center gap-3'>

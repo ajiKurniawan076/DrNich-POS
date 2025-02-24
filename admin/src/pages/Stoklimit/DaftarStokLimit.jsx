@@ -56,6 +56,7 @@ return (
                 placeholder="Cari..."
             ></input>
         </form>
+        {/* <button onClick={() => console.log(tampil)}>Debug ProdukList</button> */}
         <div className='grid place-items-start gap-[15px]'>
             {tampil.length === 0 ?
                 (
@@ -68,7 +69,7 @@ return (
                     <>
                         {tampil?.map((item, i) => (
                             <>
-                                <a key={i} href='DetailDaftarStokLimit' className='grid place-items-start w-full'>
+                                <a key={i} href={`DetailDaftarStokLimit/${item.id}`} className='grid place-items-start w-full'>
                                     <p>{item.namaProduk}</p>
                                     <div className='flex justify-between items-start text-[#BDBDBD] w-full'>
                                         <p>Minimum : {item.minStok}</p>

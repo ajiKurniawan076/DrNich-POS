@@ -118,7 +118,7 @@ return (
                     setModalStok(true)
                 }}  className="flex justify-center items-center w-full gap-2 h-[45px] bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-xl"><img src={iTambahP} alt="" /> Tambah Stok</button>
             </div>
-        <DaftarBelanjaModals data={produk} />
+        <DaftarBelanjaModals data={produk} sumber={"stokLimit"} />
         </div>
     </modalStokContext.Provider>
 )

@@ -61,7 +61,7 @@ export const DaftarProdukUpdate = () => {
       await axios
         .get("https://api.drnich.co.id/api/pos/produk/jenisproduk")
         .then((response) => {
-          const jenislist = response.data.map((item) => item.jenis);
+          const jenislist = response.data
           setJenis(jenislist);
           console.log(response);
         });
@@ -137,7 +137,7 @@ export const DaftarProdukUpdate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      jenis: selectedNamaJenis,
+      jenis: jenisRef.current.value,
       namaProduk: namaProdukRef.current.value,
       hargaJual: hargaJR,
       hargaBeli: hargaBR,
@@ -201,8 +201,8 @@ export const DaftarProdukUpdate = () => {
             pilih
           </option>
           {jenis.map((item, i) => (
-            <option key={i} value={item.jenis}>
-              {item}
+            <option key={i} value={item._id}>
+              {item.jenis}
             </option>
           ))}
         </select>
@@ -217,7 +217,7 @@ export const DaftarProdukUpdate = () => {
           id="Gender"
         >
           <option
-            value={ketegorix.idkategori}
+            value={ketegorix._id}
             className="text-gray-300"
             selected
             disabled
