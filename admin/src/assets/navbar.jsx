@@ -50,7 +50,7 @@ export const Navbar = () => {
                 {nav=='home'?
                 <h4 className='pos-title'>Point Of Sale</h4>
                 :
-                <h4 className='font-medium text-[14px]'>{nav}</h4>
+                <button onClick={(e)=>{e.preventDefault(); window.location.reload();}}><h4 className='font-medium text-[14px]'>{nav}</h4></button>
                 }
             </div>
             <div className={` items-center gap-4 cursor-pointer ${nav!='home'?'absolute start-5':''}`}>

@@ -163,12 +163,12 @@ export const LaporanPenjualanProduk = () => {
     // ;
 
     return (
-      <div className='w-full flex justify-center items-center my-1 '>
+      <div className='w-full flex justify-center items-center my-1'>
         <ul style={{ listStyle: 'none', display: 'flex', padding: 0, cursor: 'pointer' }}>
-          {payload.map((entry, index) => (
+          {tampil && tampil.map((entry, index) => (
           <>
             <svg width={20} height={20} className='rounded-md'>
-              <rect x={0} y={0} width={20} height={20} fill={entry.color} />
+              <rect x={0} y={0} width={20} height={20} fill={`url(#colorGradient${index})`} />
             </svg>
             <select
               onChange={gantiTampil}
@@ -177,13 +177,18 @@ export const LaporanPenjualanProduk = () => {
               ref={(el) => (pilihProdukRef.current[index] = el)} // Assign dynamically
               style={{
                 marginRight: 10,
-                color: visibleBars[index] ? entry.color : '#ccc',
+                color: visibleBars[index] ? `url(#colorGradient${index})` : '#ccc',
                 appearance: 'none',
               }}
             >
-              <option value={tampil[index].namaProduk}>{tampil[index].namaProduk}</option>
               {produkList.map((item, i) => (
-                <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
+                <>
+                {item.namaProduk == entry.namaProduk ? 
+                  <option selected disabled key={i} value={item.namaProduk}>{entry.namaProduk}</option>
+                  :
+                  <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
+                }
+                </>
               ))}
             </select>
           </>
@@ -354,8 +359,9 @@ export const LaporanPenjualanProduk = () => {
             <p>Grafik Penjualan Seminggu Terakhir</p>
           </div>
           {tampil.length > 0 && chartTampil.length > 0 && (
-            <div style={{ width: '100%', height: 400 }}>
-              <ResponsiveContainer width="100%" height={400}>
+            <div style={{ width: '100%', height: 400, overflowX: 'auto' }}> {/* Scrollable container */}
+            <div className='relative' style={{ width: 'max-content', minWidth: '100%' }}> {/* Ensures BarChart does not shrink */}
+              <ResponsiveContainer width={chartTampil.length * 80} height={400}>
                 <BarChart
                   data={chartTampil}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -363,13 +369,17 @@ export const LaporanPenjualanProduk = () => {
                   barGap={-5}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" tick={{ fontSize: 12, dy: 2, angle: -45 }} textAnchor="middle" />
-                  <YAxis tickFormatter={(val) => {
-                    if (val >= 1000000) return `${(val / 1000000).toLocaleString("id-ID")}jt`;
-                    return val.toLocaleString('id-ID');
-                  }} />
+                  <XAxis 
+                    dataKey="name" 
+                    tick={{ fontSize: 12, dy: 2 }} 
+                    textAnchor="middle" 
+                  />
+                  <YAxis 
+                    tickFormatter={(val) => val >= 1000000 
+                      ? `${(val / 1000000).toLocaleString("id-ID")}jt` 
+                      : val.toLocaleString('id-ID')} 
+                  />
                   <Tooltip />
-                  <Legend content={<CustomLegend />} />
                   {tampil.map((produk, i) => (
                     <Bar
                       key={i}
@@ -397,7 +407,11 @@ export const LaporanPenjualanProduk = () => {
                 </BarChart>
               </ResponsiveContainer>
             </div>
+          </div>
+          
+          
           )}
+          <CustomLegend/>
         </div>
         <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
           <p>Data Penjualan Produk</p>

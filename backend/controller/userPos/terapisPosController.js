@@ -46,8 +46,9 @@ const updateterapis = asyncHandler(async (req, res) => {
     nomorRekening: req.body.nomorRekening,
     bank: req.body.bank,
     keteranganRek: req.body.keteranganRek,
-    image : req.file ? req.file.path : 'No Image'
   };
+  let image = req.file ? req.file.path : null;
+  if(image){newData.image = image}
   try {
     const terapis = await terapisPosModels.findByIdAndUpdate(
       id,
