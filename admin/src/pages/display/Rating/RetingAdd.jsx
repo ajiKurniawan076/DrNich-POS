@@ -3,6 +3,8 @@ import { AiFillPlusCircle, AiOutlineSearch } from "react-icons/ai";
 import { useContext, useEffect } from "react";
 import { navContext } from "../../../App2";
 import gkategori from "../../../assets/iconDisplay/Layanan/gkategori.svg";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -41,15 +43,18 @@ export const RetingAdd = () => {
       return;
     }
 
+    // useEffect(() => {
+    //   return () => {
+    //     if (previewURL) URL.revokeObjectURL(previewURL);
+    //   };
+    // }, [previewURL]);
+
     const fdata = new FormData();
     fdata.append("nama", namaRef.current.value);
     if (fotoRef.current.files.length > 0) {
       fdata.append("foto", fotoRef.current.files[0]);
-    } else {
-      toast.error("Harap pilih gambar sebelum mengunggah!");
-      return;
     }
-    // fdata.append("ulasan", ulasanRef.current.value);
+    fdata.append("ulasan", ulasanRef.current.value);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/ulasan/tambahulasan`,
