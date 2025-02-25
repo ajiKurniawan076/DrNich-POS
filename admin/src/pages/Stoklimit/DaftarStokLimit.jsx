@@ -56,7 +56,7 @@ return (
                 placeholder="Cari..."
             ></input>
         </form>
-        <button onClick={() => console.log(tampil)}>Debug ProdukList</button>
+        {/* <button onClick={() => console.log(tampil)}>Debug ProdukList</button> */}
         <div className='grid place-items-start gap-[15px]'>
             {tampil.length === 0 ?
                 (

@@ -41,7 +41,7 @@ return (
             </div>
             <div className='grid gap-1'>
                 <p>{transaksi.createdAt.substring(0, 10)} <span>/</span> {transaksi?.createdAt.substring(11, 16)}</p>
-                <p>Pembayaran Rp. {transaksi?.totalAkhir.toLocaleString('id-ID')}</p>
+                <p>Pembayaran Rp. {transaksi?.totalAkhir?.toLocaleString('id-ID')}</p>
             </div>
         </div>
         <div className='grid mt-2 gap-2 text-start border rounded-xl border-[#C2A353] p-4'>
@@ -62,11 +62,11 @@ return (
                     <div className='border border-dashed border-[#BDBDBD] my-3'></div>
                     <div className='flex justify-between'>
                         <p>Subtotal Produk</p>
-                        <p>Rp. {(Number(datax?.jumlah) * Number(datax?.produk?.hargaJual)).toLocaleString('id-ID')}</p>
+                        <p>Rp. {(Number(datax?.jumlah) * Number(datax?.produk?.hargaJual))?.toLocaleString('id-ID')}</p>
                     </div>
                     <div className='flex justify-between'>
                         <p>Promo Diskon</p>
-                        <p>Rp. {transaksi?.potongan.toLocaleString('id-ID')}</p>
+                        <p>Rp. {transaksi?.potongan?.toLocaleString('id-ID')}</p>
                     </div>
                     <div className='flex justify-between'>
                         <p>Total</p>
@@ -85,16 +85,16 @@ return (
             <p className='text-[10px] text-[#BDBDBD]'>Detail Pembayaran</p>
             <div className='flex justify-between'>
                 <p>Toral Produk</p>
-                <p>Rp. {transaksi?.totalAkhir.toLocaleString('id-ID')}</p>
+                <p>Rp. {transaksi?.totalAkhir?.toLocaleString('id-ID')}</p>
             </div>
             <div className='flex justify-between'>
                 <p>Tunai</p>
-                <p>Rp. {transaksi?.pembayaran.toLocaleString('id-ID')}</p>
+                <p>Rp. {transaksi?.pembayaran?.toLocaleString('id-ID')}</p>
             </div>
             <div className='border border-dashed border-[#BDBDBD] my-3'></div>
             <div className='flex justify-between'>
                 <p>Kembalian</p>
-                <p>Rp. {transaksi?.kembalian.toLocaleString('id-ID')}</p>
+                <p>Rp. {transaksi?.kembalian?.toLocaleString('id-ID')}</p>
             </div>
         </div>
         <a href={`/pos/LaporanLihatStruk/${transaksi?._id}`} className='grid mt-2 gap-2 text-start border rounded-xl border-[#C2A353] p-4 '>

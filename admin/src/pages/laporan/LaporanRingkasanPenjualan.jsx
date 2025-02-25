@@ -152,9 +152,9 @@ export const LaporanRingkasanPenjualan = () => {
                 placeholder="Cari..."
             ></input>
         </form> */}
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <div className='flex flex-col'>
-                <div className='flex flex-col h-full'>
+                <div className='flex flex-col h-fit'>
                     <p>Masa Berlaku</p>
                     <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>
                         <p>Dari :</p>
@@ -333,6 +333,7 @@ export const LaporanRingkasanPenjualan = () => {
                 </div>
 
 
+                
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start my-[17px] w-full">
                     <p className="">Laporan Promo</p>
                 </div>
