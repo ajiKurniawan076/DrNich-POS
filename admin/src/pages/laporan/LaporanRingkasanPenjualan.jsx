@@ -156,21 +156,24 @@ export const LaporanRingkasanPenjualan = () => {
     const fetchData = async () => {
       await axios
         .post(
-          // "https://api.drnich.co.id/api/pos/laporan/laporanpenjualan",
-          "http://localhost:8000/api/pos/laporan/laporanpenjualan",
+          "https://api.drnich.co.id/api/pos/laporan/laporanpenjualan",
+          // "http://localhost:8000/api/pos/laporan/laporanpenjualan",
           tanggal
         )
         .then((response) => {
-          // console.log(response.data.promo);
+          console.log(response.data);
 
           setDatax(response.data);
           // mengurutkan potongan
-          const sortPromo = [...response.data.promo].sort(
-            (a, b) => b.totalPotongan - a.totalPotongan
-          );
-          const sortpotongan = sortPromo.slice(0, 2);
-          setTopPromo(sortpotongan);
-          console.log(sortpotongan);
+          if (response.data.promo) {
+            const sortPromo = [...response.data.promo].sort(
+              (a, b) => b.totalPotongan - a.totalPotongan
+            );
+            const sortpotongan = sortPromo.slice(0, 2);
+            setTopPromo(sortpotongan);
+            console.log(sortpotongan);
+          }
+
           // console.log(response.data);
           // setData(response.data);
           // end
@@ -338,32 +341,19 @@ export const LaporanRingkasanPenjualan = () => {
             </a>
           </div>
 
-          {/* Mengatur GRafik */}
-          <div className="flex flex-col my-[10px]">
-            <select
-              name="options"
-              className="border border-[#C2A353] rounded-xl w-[50%] h-[45px] py-[13px] px-[20px]"
-              id="Gender"
-              defaultValue=""
-              ref={Minggu}
-              onChange={MBT}
-            >
-              <option value="mingguan">Minggu ini</option>
-              <option value="bulanan">Bulan Ini</option>
-              <option value="tahunan">Tahun Ini</option>
-            </select>
-          </div>
-
           {/* Grafik Penjualan menggunakan Recharts */}
           <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start mb-[17px] w-full">
             <p>Grafik Penjualan</p>
           </div>
           {chartData.length > 0 && (
-            <div style={{ width: "100%", height: 400, overflowX: "auto" }}>
+            <div
+              className="scrollvisible mb-[10px]"
+              style={{ width: "100%", height: 400, overflowX: "auto" }}
+            >
               {" "}
               {/* Scrollable container */}
               <div
-                className="relative"
+                className="relative flex justify-center"
                 style={{ width: "max-content", minWidth: "100%" }}
               >
                 {" "}
