@@ -286,8 +286,8 @@ export const LaporanRingkasanPenjualan = () => {
                 </div>
                 {
                     chartData.length>0 && 
-                    <div style={{ width: '100%', height: 400, overflowX: 'auto' }}> {/* Scrollable container */}
-                            <div className='relative' style={{ width: 'max-content', minWidth: '100%' }}> {/* Ensures BarChart does not shrink */}
+                    <div className='scrollvisible mb-[10px]' style={{ width: '100%', height: 400, overflowX: 'auto' }}> {/* Scrollable container */}
+                            <div className='relative flex justify-center' style={{ width: 'max-content', minWidth: '100%' }}> {/* Ensures BarChart does not shrink */}
                               <ResponsiveContainer width={chartData.length * 80} height={400}>
                     <BarChart
                         data={chartData}

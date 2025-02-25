@@ -259,7 +259,7 @@ export const LaporanPenjualanProduk = () => {
   document.title = 'Laporan Produk';
 
   return (
-    <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll scrollbar-hide px-10'>
+    <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll px-10'>
       <button onClick={() => console.log(dataProduk)}>Debug ProdukList</button>
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
@@ -359,8 +359,8 @@ export const LaporanPenjualanProduk = () => {
             <p>Grafik Penjualan Seminggu Terakhir</p>
           </div>
           {tampil.length > 0 && chartTampil.length > 0 && (
-            <div style={{ width: '100%', height: 400, overflowX: 'auto' }}> {/* Scrollable container */}
-            <div className='relative' style={{ width: 'max-content', minWidth: '100%' }}> {/* Ensures BarChart does not shrink */}
+            <div className='scrollvisible mb-[10px]' style={{ width: '100%', height: 400, overflowX: 'auto' }}> {/* Scrollable container */}
+            <div className='flex justify-center' style={{ width: 'max-content', minWidth: '100%' }}> {/* Ensures BarChart does not shrink */}
               <ResponsiveContainer width={chartTampil.length * 80} height={400}>
                 <BarChart
                   data={chartTampil}
