@@ -5,12 +5,15 @@ import transaksiDetailModels from "../../models/KasirPOS/detailTransaksiPos.js";
 import ProdukModels from "../../models/ProdukPOS/produkPos.js";
 import promoModels from "../../models/PromoPOS/promoPos.js";
 import pelangganModels from "../../models/User/pelangganPos.js";
+import promo from "../../models/promo/promo.js";
 
 const laporanPenjualan = asyncHandler(async (req, res) => {
   try {
     const { dari, sampai } = req.body;
     const from = new Date(dari);
     const to = new Date(sampai);
+    let dataPelanggan = [];
+    let dataPromo = [];
     const transaksi = await TransaksiModels.find({
       createdAt: { $gte: from, $lte: to },
     })
@@ -27,22 +30,64 @@ const laporanPenjualan = asyncHandler(async (req, res) => {
     let total = 0;
     for (const item of transaksi) {
       total += item.totalAkhir;
-    }
-    const totalTransaksi = transaksi.length;
 
-    res
-      .status(200)
-      .json({
-        transaksi: transaksi,
-        totalPendapatan: total,
-        totalTransaksi: totalTransaksi,
-      });
+      if (item.pelanggan && item.pelanggan.namaPelanggan) {
+        // Check if pelanggan exists
+        if (
+          dataPelanggan.some(
+            (data) => data.namaPelanggan == item.pelanggan.namaPelanggan
+          )
+        ) {
+          dataPelanggan = dataPelanggan.map((isi) =>
+            isi.namaPelanggan == item.pelanggan.namaPelanggan
+              ? { ...isi, totalPembelian: isi.totalPembelian + item.totalAkhir }
+              : isi
+          );
+        } else {
+          const isiDataPelanggan = {
+            namaPelanggan: item.pelanggan.namaPelanggan,
+            totalPembelian: item.totalAkhir,
+          };
+          dataPelanggan.push(isiDataPelanggan);
+        }
+      }
+      // menghitung data promo
+      if (item.promo && item.promo.namaPromo) {
+        if (
+          dataPromo.some((promo) => promo.namaPromo == item.promo.namaPromo)
+        ) {
+          dataPromo = dataPromo.map((promo) =>
+            promo.namaPromo == item.promo.namaPromo
+              ? {
+                  ...promo,
+                  totalPenggunaan: promo.totalPenggunaan + 1,
+                  totalPotongan: promo.totalPotongan + item.promo.potongan,
+                }
+              : promo
+          );
+        } else {
+          dataPromo.push({
+            namaPromo: item.promo.namaPromo,
+            totalPenggunaan: 1,
+            totalPotongan: item.promo.potongan,
+          });
+        }
+      }
+    }
+
+    const totalTransaksi = transaksi.length;
+    res.status(200).json({
+      transaksi: transaksi,
+      totalPendapatan: total,
+      totalTransaksi: totalTransaksi,
+      pelanggan: dataPelanggan,
+      promo: dataPromo,
+    });
+    // console.log(dataPromo);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
-
-
 
 const laporanPenjualanProduk = asyncHandler(async (req, res) => {
   try {
@@ -59,13 +104,37 @@ const laporanPenjualanProduk = asyncHandler(async (req, res) => {
       },
     });
     let totalProduk = 0;
+    let produklist = [];
     for (const item of penjualan) {
       for (const items of item.transaksiDetail) {
         totalProduk += items.jumlah;
+        if (
+          produklist.some((item) => item.namaProduk == items.produk.namaProduk)
+        ) {
+          produklist = produklist.map((item) =>
+            item.namaProduk == items.produk.namaProduk
+              ? {
+                  ...item,
+                  jumlah: item.jumlah + items.jumlah,
+                  pendapatan:
+                    item.pendapatan + items.jumlah * items.produk.hargaJual,
+                }
+              : item
+          );
+        } else {
+          const isi = {
+            namaProduk: items.produk.namaProduk,
+            jumlah: items.jumlah,
+            pendapatan: items.jumlah * items.produk.hargaJual,
+          };
+          produklist.push(isi);
+        }
       }
     }
 
-    res.status(200).json({ totalProduk: totalProduk });
+    res
+      .status(200)
+      .json({ totalProduk: totalProduk, penjualanProduk: produklist });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -307,6 +376,123 @@ const laporanGrafik = async (req, res) => {
   }
 };
 
+const laporanGrafikProduk = async (req, res) => {
+  try {
+    const { endOfWeek } = req.body;
+
+    if (!endOfWeek) {
+      return res
+        .status(400)
+        .json({ success: false, message: "endOfWeek is required" });
+    }
+
+    const weekDays = [
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu",
+      "Minggu",
+    ];
+
+    // Konversi endOfWeek ke Date object
+    const endDate = new Date(endOfWeek);
+    endDate.setHours(23, 59, 59, 999);
+
+    // Hitung startOfWeek (6 hari sebelumnya)
+    const startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - 6);
+    startDate.setHours(0, 0, 0, 0);
+
+    // Tentukan indeks hari mulai
+    const detectedDayIndex = startDate.getDay();
+    const detectedStartDay =
+      detectedDayIndex === 0 ? "Minggu" : weekDays[detectedDayIndex - 1];
+
+    // Susun ulang hari dalam urutan yang sesuai
+    const startIndex = weekDays.indexOf(detectedStartDay);
+    const orderedWeekDays = [
+      ...weekDays.slice(startIndex),
+      ...weekDays.slice(0, startIndex),
+    ];
+
+    // Ambil transaksi dalam rentang tanggal yang diberikan
+    const transactions = await TransaksiModels.find({
+      createdAt: { $gte: startDate, $lte: endDate },
+    }).populate({
+      path: "transaksiDetail",
+      populate: {
+        path: "produk",
+        model: "produkPos",
+      },
+    });
+
+    // Struktur data menggunakan Map untuk akses cepat
+    const transactionsByDay = new Map();
+    orderedWeekDays.forEach((day) =>
+      transactionsByDay.set(day, { name: day, penjualan: [] })
+    );
+    let produklist = [];
+    // Kelompokkan transaksi berdasarkan hari
+    transactions.forEach((transaction) => {
+      const transactionDate = new Date(transaction.createdAt);
+      const transactionDayIndex = transactionDate.getDay();
+      const adjustedDayName =
+        transactionDayIndex === 0
+          ? "Minggu"
+          : weekDays[transactionDayIndex - 1];
+
+      // Ambil referensi objek hari
+      const dayData = transactionsByDay.get(adjustedDayName);
+      if (!dayData) return;
+
+      const det = transaction.transaksiDetail;
+      for (const citem of det) {
+        const existingProduct = dayData.penjualan.find(
+          (item) => item.namaProduk === citem.produk.namaProduk
+        );
+
+        if (existingProduct) {
+          existingProduct.jumlah += citem.jumlah;
+          existingProduct.pendapatan += citem.jumlah * citem.produk.hargaJual;
+          const existproduklist = produklist.find(
+            (item) => item.namaProduk == citem.produk.namaProduk
+          );
+          if (!existproduklist) {
+            produklist.push({
+              namaProduk: citem.produk.namaProduk,
+            });
+          }
+        } else {
+          dayData.penjualan.push({
+            namaProduk: citem.produk.namaProduk,
+            jumlah: citem.jumlah,
+            pendapatan: citem.jumlah * citem.produk.hargaJual,
+          });
+          const existproduklist = produklist.find(
+            (item) => item.namaProduk == citem.produk.namaProduk
+          );
+          if (!existproduklist) {
+            produklist.push({
+              namaProduk: citem.produk.namaProduk,
+            });
+          }
+        }
+      }
+    });
+
+    // Konversi Map kembali ke array
+    res.json({
+      success: true,
+      penjualan: Array.from(transactionsByDay.values()),
+      produklist: produklist,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export {
   laporanPenjualan,
   laporanPenjualanProduk,
@@ -315,4 +501,5 @@ export {
   laporanLimit,
   laporanTerlaris,
   laporanGrafik,
+  laporanGrafikProduk,
 };
