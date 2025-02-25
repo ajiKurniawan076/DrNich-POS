@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const ProtectedLevel = ({ level }) => {
 
@@ -13,7 +14,10 @@ export const ProtectedLevel = ({ level }) => {
     if (parameter > 0) {
         return <Outlet />
     }
-    else { <Navigate to={'/pos'} replace /> }
+    else {
+        toast.error("Akses ditolak"),
+        <Navigate to={'/pos'} replace />
+    }
 
     return <Navigate to={'/pos'} replace />;
 }

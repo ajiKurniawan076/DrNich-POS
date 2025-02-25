@@ -4,12 +4,14 @@ import iPanah from "../../assets/iconkasir/iPanah.svg";
 import iFrame100 from "../../assets/iconkasir/iFrame100.svg";
 import iPan from "../../assets/iconkasir/iPan.svg";
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 export const DraftTransaksi3 = () => {
     const { setNav, setLink } = useContext(navContext)
     const {id} = useParams()
     const [transaksi, setTransaksi] = useState({})
+    const navigate = useNavigate()
     useEffect(()=>{
         const fetch = async() =>{
             await axios.get('https://api.drnich.co.id/api/pos/kasir/transaksi/'+id).then(response => 
@@ -27,7 +29,11 @@ export const DraftTransaksi3 = () => {
 
         const buy = async () => {
             await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/'+id, data).then(response=>
-                response.status==200 && console.log(response)
+                response.status == 200 && console.log(response),
+                toast.success("Berhasil Melakukan Pembayaran"),
+                setTimeout(() => {
+                    navigate("/pos/drafTransaksi2")
+                },2000)
             )
         }
         buy()
