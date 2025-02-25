@@ -339,7 +339,7 @@ export const LaporanPenjualanProduk = () => {
         <div className="flex flex-col my-[10px]">
           <select
             name="options"
-            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[13px] px-[20px]"
+            className="border border-[#C2A353] rounded-xl w-[50%] h-[45px] py-[13px] px-[20px]"
             id="Gender"
             defaultValue=""
             ref={Minggu}
