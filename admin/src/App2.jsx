@@ -336,9 +336,10 @@ function App2() {
                   <Route path="/TipeKulitEdit/:id" element={<TipeKulitEdit />} />
                 </Route>
                 
+                <Route path="/" element={<HomeAdmin />} />
+
                 <Route element={<ProtectedLevel level={[1]} />}>
                   <Route path="/laporan" element={<Laporan />} />
-                  <Route path="/" element={<HomeAdmin />} /> 
                   <Route path="/LaporanPenjualan/" lement={<LaporanPenjualan />} />
                   <Route path="/LaporanRingkasanPenjualan/" element={<LaporanRingkasanPenjualan />} />
                   <Route path="/LaporanDataPenjualan/" element={<LaporanDataPenjualan />} />
