@@ -79,7 +79,7 @@ export const DaftarBelanjaModals = (props) => {
         toast.success("Transaksi berhasil!");
         setTimeout(() => {
           toast.success("Redirecting...");
-          window.location.href = `/pos/pembayaranProduk/${response.data.belanja._id}`;
+          window.location.href = `/pos/PilihPembayaranProduk/${response.data.belanja._id}`;
         }, 1500);
       }
     } catch (error) {
