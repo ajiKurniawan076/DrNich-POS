@@ -168,7 +168,7 @@ export const Kasir4 = () => {
           </div>
           <div className="flex justify-between w-full">
             <p>Pendapatan Poin</p>
-            <p className="text-[#27AE60]">+100</p>
+            <p className="text-[#27AE60]">+{cashback}</p>
           </div>
           <div className="flex justify-between items-end text-[14px] mt-4 w-full h-full">
             <button

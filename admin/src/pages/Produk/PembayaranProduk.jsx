@@ -24,7 +24,7 @@ export const PembayaranProduk = () => {
     };
 
     fetchData();
-    setLink('/pos/produks')
+    setLink(-2)
     
     setTimeout(()=>{setFetched(true)},500)
   }, []);
@@ -110,7 +110,7 @@ export const PembayaranProduk = () => {
                 <img src={iDown} alt="iDownload" />
               </button>
               <button
-                onClick={() => navigasi("/pos/Daftarbelanja")}
+                onClick={() => navigasi(-2)}
                 className="border ml-2 border-[#C2A353] w-full rounded-xl flex justify-center items-center text-[#C2A353]"
               >
                 Kembali
