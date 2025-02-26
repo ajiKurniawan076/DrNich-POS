@@ -6,9 +6,8 @@ import ktp from "../../assets/ktp.svg";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import Produk from "../display/Produk";
 
-export const DaftarProdukUpdate = () => {
+export const DaftarProdukUpdateSupp = () => {
   const { setNav, setLink } = useContext(navContext);
   const [jenis, setJenis] = useState([]);
   const [availableKategori, setAvail] = useState([]);
@@ -81,7 +80,7 @@ export const DaftarProdukUpdate = () => {
     };
     fetchall();
     setNav("Ubah Daftar Produk");
-    setLink('/pos/daftarproduk')
+    setLink('/pos/DetailProdukSupp/' + id)
   }, []);
   // console.log(jenis);
 
@@ -164,7 +163,7 @@ export const DaftarProdukUpdate = () => {
         toast.success("Produk berhasil diperbarui!");
         setTimeout(() => {
           toast.success("Redirecting...");
-          window.location.href = "/pos/daftarproduk";
+          window.location.href = `/pos/DetailProdukSupp/${id}`;
         }, 1500);
       } else {
         toast.error("Gagal memperbarui produk");

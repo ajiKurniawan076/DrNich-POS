@@ -260,7 +260,7 @@ export const LaporanPenjualanProduk = () => {
 
   return (
     <div className='flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-screen overflow-auto overflow-y-scroll px-10'>
-      <button onClick={() => console.log(dataProduk)}>Debug ProdukList</button>
+      {/* <button onClick={() => console.log(dataProduk)}>Debug ProdukList</button> */}
       <div className='flex flex-col h-full'>
         <p>Masa Berlaku</p>
         <div className='flex flex-col gap-2 justify-between w-full mt-[5px]'>

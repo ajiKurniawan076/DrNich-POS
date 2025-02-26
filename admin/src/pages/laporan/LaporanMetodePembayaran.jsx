@@ -11,7 +11,8 @@ import iFrameKet from "../../assets/iconLaporanPenjualan/iFrameKet.svg";
 export const LaporanMetodePembayaran = () => {
     const { setNav, setLink } = useContext(navContext)
 
-setNav('Metode Pembayaran')   
+setNav('Metode Pembayaran') 
+setLink('/pos/laporanRingkasanPenjualan')
 document.title = 'Metode Pembayaran'
 return (
     <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full h-fit pt-8 text-[#454545] text-[12px]'>

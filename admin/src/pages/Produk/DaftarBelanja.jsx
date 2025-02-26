@@ -75,7 +75,8 @@ export const DaftarBelanja = () => {
         toast.success("Transaksi berhasil!");
         setTimeout(() => {
           toast.success("Redirecting...");
-          window.location.href = `/pos/pembayaranProduk/${response.data.belanja._id}`;
+          window.location.href = `/pos/PilihPembayaranProduk/${response.data.belanja._id}`;
+          // console.log(response.data)
         }, 1500);
       } else {
         toast.error("Terjadi kesalahan dalam transaksi");

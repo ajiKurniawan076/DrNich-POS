@@ -162,6 +162,8 @@ import { ProtectedLevel } from "./ProtectedLevel";
 import { DaftarProdukSupp } from "./pages/Produk/daftarProdukSupp";
 import { LaporanLogPelanggan } from "./pages/laporan/LaporanLogPelanggan";
 import { DetailProdukSupp } from "./pages/Produk/DetailProdukSupp";
+import { DaftarProdukUpdateSupp } from "./pages/Produk/DaftarProdukUpdateSupp";
+import { PilihPembayaranProduk } from "./pages/Produk/PilihPembayaranProduk";
 
 axios.defaults.withCredentials = true;
 
@@ -292,6 +294,8 @@ function App2() {
                   <Route path="/EditDiskon/:id" element={<EditDiskon />} />
                   <Route path="/EditCashback/:id" element={<EditCashback />} />
                   <Route path="/DetailProdukSupp/:id" element={<DetailProdukSupp />} />
+                  <Route path="/DaftarProdukUpdateSupp/:id" element={<DaftarProdukUpdateSupp />} />
+                  <Route path="/PilihPembayaranProduk/:id" element={<PilihPembayaranProduk />} />
                 </Route>
                 
                 <Route element={<ProtectedLevel level={[1, 4]} />}>
