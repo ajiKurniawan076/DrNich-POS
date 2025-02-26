@@ -105,7 +105,7 @@ export const SupplierDetail = () => {
       </div>
       <div className="mx-1 flex flex-col gap-3">
         <a href={`/pos/DaftarProdukSupp/${id}`} className=" w-full h-[50px]">
-          <span className="hover:scale-105 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5 mt-2">
+          <span className="w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5 mt-2">
             Lihat Daftar Produk
             <div className="flex ms-auto">
               <img src={iNext} alt="" />
@@ -113,7 +113,7 @@ export const SupplierDetail = () => {
           </span>
         </a>
         <a href={`/pos/riwayatsupplier/${id}`} className=" w-full h-[50px]">
-          <span className="hover:scale-105 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5">
+          <span className="w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5">
             Lihat Riwayat Terakhir
             <div className="flex ms-auto">
               <img src={iNext} alt="" />

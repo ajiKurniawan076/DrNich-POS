@@ -161,6 +161,7 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 import { ProtectedLevel } from "./ProtectedLevel";
 import { DaftarProdukSupp } from "./pages/Produk/daftarProdukSupp";
 import { LaporanLogPelanggan } from "./pages/laporan/LaporanLogPelanggan";
+import { DetailProdukSupp } from "./pages/Produk/DetailProdukSupp";
 
 axios.defaults.withCredentials = true;
 
@@ -290,6 +291,7 @@ function App2() {
                   <Route path="/cashbackDetail/:id" element={<CashbackDetail />} />
                   <Route path="/EditDiskon/:id" element={<EditDiskon />} />
                   <Route path="/EditCashback/:id" element={<EditCashback />} />
+                  <Route path="/DetailProdukSupp/:id" element={<DetailProdukSupp />} />
                 </Route>
                 
                 <Route element={<ProtectedLevel level={[1, 4]} />}>

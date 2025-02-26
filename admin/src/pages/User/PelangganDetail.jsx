@@ -37,13 +37,20 @@ export const PelangganDetail = () => {
               Data Tidak ada
             </div>
           ) : (
-            <>
-              <label className="text-start text-[#BDBDBD] text-[12px]">
-                Nama
-              </label>
-              <p className="text-start font-semibold h-[30px]">
-                {datax.namaPelanggan}
-              </p>
+              <>
+              <div className="flex justify-between w-full items-center">
+                <div>
+                  <label className="text-start text-[#BDBDBD] text-[12px]">
+                    Nama
+                  </label>
+                  <p className="text-start font-semibold h-[30px] mt-[6px]">
+                    {datax.namaPelanggan}
+                  </p>
+                </div>
+                <div className="w-[66px] h-[25px] text-[12px] rounded-[100px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white flex justify-center items-center text-center">
+                  <p>{datax.poin} Poin</p>
+                </div>
+              </div>
               <label className="text-start text-[#BDBDBD] text-[12px]">
                 Nomor Telepon
               </label>
@@ -83,7 +90,7 @@ export const PelangganDetail = () => {
           )}
         </div>
       </div>
-      <div className="flex justify-between text-start  font-medium bg-[#F6F6F6] text-[#BDBDBD] my-3 py-2">
+      <div className="flex justify-between text-start  font-medium bg-[#F6F6F6] text-[#BDBDBD] my-3 py-2 mx-5">
         <span className="ms-2">Terakhir Diperbaharui</span>
         <span className="text-end me-2">{new Date(datax?.updatedAt).toLocaleDateString('id-ID',
           {
@@ -99,7 +106,7 @@ export const PelangganDetail = () => {
       </div>
       <div className="w-full h-[50px] px-5">
         <a href={`/pos/LaporanLogPelanggan/${id}`} className=" w-full h-[50px]">
-          <span className="hover:scale-105 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5 mt-2">
+          <span className="w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5 mt-2">
             Lihat Riwayat Transaksi
             <div className="flex ms-auto">
               <AiOutlineRight className="text-yellow-300" size={15} />

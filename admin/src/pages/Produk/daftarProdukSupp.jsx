@@ -68,7 +68,7 @@ export const DaftarProdukSupp = () => {
             {filterDatax.map((pro, i) => (
               <Link
                 to={{
-                  pathname: `/pos/productdetail/${pro._id}`,
+                  pathname: `/pos/DetailProdukSupp/${pro._id}`,
                 }}
                 className="w-full border flex justify-between items-center rounded-xl border-[#BDBDBD] px-3 py-3"
                 key={i}

@@ -261,8 +261,8 @@ export const Kasir = () => {
                 ></input>
             </form>
             <div className='flex justify-between mt-5'>
-                <div className='relative flex justify-between border border-[#C2A353] appearance-none rounded-xl p-2 px-4 w-[49%]'>
-                    <select onChange={pilihJenisKategori} ref={jenisRef} className='appearance-none w-full outline-none' name="" id="">
+                <div className='relative flex justify-between border border-[#C2A353] appearance-none rounded-xl py-2 px-1 w-[49%]'>
+                    <select onChange={pilihJenisKategori} ref={jenisRef} className='appearance-none w-full outline-none px-4' name="" id="">
                         <option value="reset">Semua Jenis</option>
                         {jenis.map((item, i) => (
                             <option key={i} value={item._id}>{item.jenis}</option>
@@ -270,8 +270,8 @@ export const Kasir = () => {
                     </select>
                     <img src={iPanahB} className='absolute top-50 end-2' />
                 </div>
-                <div className='relative flex justify-between border border-[#C2A353] appearance-none rounded-xl p-2 px-4 w-[49%]'>
-                    <select onChange={pilihJenisKategori} ref={kategoriRef} className='appearance-none w-full outline-none' name="" id="">
+                <div className='relative flex justify-between border border-[#C2A353] appearance-none rounded-xl py-2 px-1 w-[49%]'>
+                    <select onChange={pilihJenisKategori} ref={kategoriRef} className='appearance-none w-full outline-none px-4' name="" id="">
                         <option value="reset">Semua Kategori</option>
                         {kategoriTampil.map((item, i) => (
                             <option key={i} value={item._id}>{item.kategori}</option>
