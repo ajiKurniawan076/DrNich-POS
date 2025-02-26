@@ -159,6 +159,8 @@ import { LaporanLihatStruk } from "./pages/laporan/LaporanLihatStruk";
 import { StrukPembelianStok } from "./pages/laporan/StrukPembelianStok";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import { ProtectedLevel } from "./ProtectedLevel";
+import { DaftarProdukSupp } from "./pages/Produk/daftarProdukSupp";
+import { LaporanLogPelanggan } from "./pages/laporan/LaporanLogPelanggan";
 
 axios.defaults.withCredentials = true;
 
@@ -218,7 +220,8 @@ function App2() {
                   <Route path="/kategoriproduk/" element={<KategoriProduk />} />
                   <Route path="/kategoridet/:Kategori" element={<DaftarProduk />} />
                   <Route path="/kategoridet/" element={<DaftarProduk />} />
-                  <Route path="/riwayatsupplier/" element={<RiwayatSupplier />} />
+                  <Route path="/riwayatsupplier/:id" element={<RiwayatSupplier />} />
+                  <Route path="/DaftarProdukSupp/:id" element={<DaftarProdukSupp />} />
                   <Route path="/transdetail/:id" element={<RiwayatDetail />} />
                   <Route path="/productdetail/:id" element={<DetailProduk />} />
                   <Route path="/produkbyjenis/:jenis" element={<DaftarProdukByJenis />} />
@@ -264,6 +267,7 @@ function App2() {
                   <Route path="/DetailRiwayatProduk/" element={<DetailRiwayatProduk />} />
                   <Route path="/PilihPelanggan/" element={<PilihPelanggan />} />
                   <Route path="/DetailPelanggan/" element={<DetailPelanggan />} />
+                  <Route path="/LaporanLogPelanggan/:id" element={<LaporanLogPelanggan />} />
                   <Route path="/DrafTransaksi/" element={<DraftTransaksi />} />
                   <Route path="/DrafTransaksi4/" element={<DraftTransaksi4 />} />
                   <Route path="/DrafTransaksi5/" element={<DraftTransaksi5 />} />

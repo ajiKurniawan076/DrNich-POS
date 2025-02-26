@@ -1,9 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { navContext } from "../../App2"
 import { AiOutlineSearch } from "react-icons/ai"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import DatePicker from "react-datepicker"
 import iTgl from '../../assets/iconproduk/iTgl.svg'
+import { toast } from "react-toastify"
+import axios from "axios"
 
 
 export const RiwayatSupplier = () => {
@@ -11,8 +13,9 @@ export const RiwayatSupplier = () => {
   const [trans, setTrans] = useState([])
   const [button, setButton] = useState(true)
   const [button2, setButton2] = useState(true)
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const {id} = useParams()
+  const [startDate, setStartDate] = useState(new Date("2025-01-01T00:00:00Z"));
+  const [endDate, setEndDate] = useState(new Date().toISOString().split('.')[0] + 'Z');
 
   const datePickerRef = useRef(null); // Create a ref for the DatePicker
       
@@ -35,13 +38,26 @@ export const RiwayatSupplier = () => {
       };
 
     useEffect(()=>{
-        fetch("/TransaksiSupplier.json").then(
-            (response) => response.json()
-          ).then((data)=>(setTrans(data)
-          ))
-          setNav('Riwayat Transaksi')
+        const fetch = async () => {
+          const data = {dari : startDate, sampai : endDate, id:id}
+          await axios.post('https://api.drnich.co.id/api/pos/user/supplier/riwayattransaksi/', data).then(
+            response => 
+            {
+              if (response.status==200)
+              {
+                toast.success('Berhasil Memperoleh Data')
+                setTrans(response.data)
+                console.log(response.data)
+              }
+            }
+          ).catch(e => {
+            toast.error('Gagal Memperoleh Data')
+          })
+        }
+        fetch()
           setLink('/pos/supplier')
-    },[])
+          setNav('Riwayat')
+    },[startDate, endDate])
   return (
     <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide p-7">
       <div className='Grid place-items-start mt-4 px-3'>
@@ -101,14 +117,20 @@ export const RiwayatSupplier = () => {
       <div className="flex flex-col w-full h-full items-center justify-center text-black/40">Belum Ada Data Supplier!</div>
       :
       <div className="flex flex-col gap-3 w-full h-full items-center justify-start">
-      {trans.map((pro)=>(
-        <Link to={{pathname: `/transdetail/${pro.id}`}}className="w-full text-[#454545] flex justify-between items-center rounded-xl border border-[#C2A353] px-[20px] py-[15px]"  key={pro.id}>
-        <ul className=" flex flex-col place-items-start">
-          <li className="font-semibold">{pro.id}</li>
-          <li>Rp. {pro.Total}</li>
-        </ul>
-            <p className="text-sm text-[#C2A353] h-full">Stok Pcs</p>
-        </Link>
+      {trans.map((pro, i)=>(
+        <div className="w-full flex flex-col justify-between items-center gap-[15px]" key={i}>
+          {pro.belanjaDetail.map((prox,j) => (
+          <Link to={{pathname: `/transdetail/${pro._id}`}}className="w-full text-[#454545] flex justify-between items-center rounded-xl border border-[#C2A353] px-[20px] py-[15px]" key={j}>
+            <>
+            <ul className=" flex flex-col place-items-start">
+              <li className="font-semibold">{prox.produk.namaProduk}</li>
+              <li>Rp. {prox.totalHarga}</li>
+            </ul>
+                <p className="text-sm text-[#C2A353] h-full">+{prox.jumlah} Stok Pcs</p>
+          </>  
+          </Link>
+          ))}
+        </div>
       ))}
       
       </div>

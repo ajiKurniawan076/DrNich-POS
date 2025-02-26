@@ -98,7 +98,7 @@ export const PelangganDetail = () => {
         )}</span>
       </div>
       <div className="w-full h-[50px] px-5">
-        <a href="#" className=" w-full h-[50px]">
+        <a href={`/pos/LaporanLogPelanggan/${id}`} className=" w-full h-[50px]">
           <span className="hover:scale-105 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5 mt-2">
             Lihat Riwayat Transaksi
             <div className="flex ms-auto">
