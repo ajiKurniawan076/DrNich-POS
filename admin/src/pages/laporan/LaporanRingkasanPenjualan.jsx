@@ -33,12 +33,14 @@ export const LaporanRingkasanPenjualan = () => {
     const [datax, setDatax] = useState([]);
     const [topCustomers, setTopCustomers] = useState([])
     const [atur, setAtur] = useState("mingguan")
+    const [aturPromo, setAturPromo] = useState("Diskon")
+    const [tampilPromo, setTampilPromo] = useState([])
 
     const handleNavigate = (e) => {
         e.preventDefault()
         const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z', sampai: endDate }
         navigate('/pos/laporanDataPenjualan', { state: { tanggal: tanggal } })
-        console.log(data.transaksi)
+        // console.log(data.transaksi)
     }
     const handleNavigatePs = (e) => {
         e.preventDefault()
@@ -76,17 +78,19 @@ export const LaporanRingkasanPenjualan = () => {
                     tanggal
                 )
                 .then((response) => {
-                    console.log(response.data);
+                    // console.log(response.data);
 
                     setData(response.data);
+                    // console.log(response.data)
                     // mengurutkan potongan
                     if (response.data.promo) {
                         const sortPromo = [...response.data.promo].sort(
                             (a, b) => b.totalPotongan - a.totalPotongan
                         );
                         const sortpotongan = sortPromo.slice(0, 2);
-                        setTopPromo(sortpotongan);
-                        console.log(sortpotongan);
+                        setTampilPromo(sortpotongan)
+                        setTopPromo(response.data.promo);
+                        // console.log(response.data.promo);
                     }
 
                     // console.log(response.data);
@@ -97,7 +101,7 @@ export const LaporanRingkasanPenjualan = () => {
                     );
                     const sort = sortedCustomers.slice(0, 4);
                     setTopCustomers(sort);
-                    console.log(sort);
+                    // console.log(sort);
                 })
                 .catch(function (error) {
                     console.log("error saat fetching", error);
@@ -123,7 +127,7 @@ export const LaporanRingkasanPenjualan = () => {
                 })
         }
         fetch()
-        console.log(tanggal)
+        // console.log(tanggal)
     }, [startDate, endDate])
 
     useEffect(() => {
@@ -134,7 +138,7 @@ export const LaporanRingkasanPenjualan = () => {
                 }
                 const response = await axios.post("https://api.drnich.co.id/api/pos/laporan/laporangrafik", tanggal)
                 setChartData(response.data.transactions)
-                console.log(response.data.transactions)
+                // console.log(response.data.transactions)
             } catch (error) {
                 console.log("Error Saat Fetching Chart data:", error)
             }
@@ -152,7 +156,7 @@ export const LaporanRingkasanPenjualan = () => {
                     const sortedCustomers = [...response.data.pelanggan].sort((a, b) => b.totalPembelian - a.totalPembelian);
                     const sort = sortedCustomers.slice(0, 4)
                     setTopCustomers(sort);
-                    console.log(sort)
+                    // console.log(sort)
                 })
                 .catch(function (error) {
                     console.log('error saat fetching', error);
@@ -165,6 +169,32 @@ export const LaporanRingkasanPenjualan = () => {
     const MBT = () => {
         setAtur(Minggu.current.value)
         // console.log("Minggu :", Minggu.current.value)
+    }
+    const GantiPromoRef = useRef(null)
+    const gantiPromo = () => {
+        const filterPromo = topPromo.filter(item => (
+            GantiPromoRef.current.value == "diskon" ? item.jenis == "Diskon" : item.jenis == "Cashback"
+        ))
+        const sortPromo = filterPromo.sort(
+            (a, b) => b.totalPotongan - a.totalPotongan
+        );
+        const sortpotongan = sortPromo.slice(0, 2);
+        setTampilPromo(sortpotongan)
+        console.log(filterPromo)
+    }
+
+    const GantiPelangganRef = useRef(null)
+    const gantiPelanggan = () => {
+        const sortedCustomers = topCustomers.sort(
+            (a, b) => b.jumlahPembelian - a.jumlahPembelian
+        )
+        const sortedCustomers2 = topCustomers.sort(
+            (a, b) => b.totalPembelian - a.totalPembelian
+        );
+        const sort = sortedCustomers.slice(0, 4);
+        const sort2 = sortedCustomers2.slice(0, 4)
+        GantiPelangganRef.current.value == "PendapatanPenjualan" ? setTopCustomers(sort2) : setTopCustomers(sort)
+        console.log(sort2)
     }
 
 
@@ -369,9 +399,13 @@ export const LaporanRingkasanPenjualan = () => {
                         <p className="">Laporan Promo</p>
                     </div>
                     <div className="relative w-full">
-                        <select className="appearance-none w-full p-[15px] border border-[#BDBDBD] rounded-xl">
-                            <option>Diskon</option>
-                            <option>Cashback</option>
+                        <select
+                            className="appearance-none w-full p-[15px] border border-[#BDBDBD] rounded-xl"
+                            ref={GantiPromoRef}
+                            onChange={gantiPromo}
+                        >
+                            <option value="diskon">Diskon</option>
+                            <option value="cashback">Cashback</option>
                         </select>
                         <img
                             src={iPanahB}
@@ -379,14 +413,14 @@ export const LaporanRingkasanPenjualan = () => {
                             className="absolute right-4 top-1/2 transform -translate-y-1/2 w-[20px] h-[20px] pointer-events-none"
                         />
                     </div>
-                    {topPromo.map((item, index) => (
+                    {tampilPromo.map((item, index) => (
                         <div
                             key={index}
                             className="flex justify-between text-center items-center border border-[#BDBDBD] rounded-xl p-[15px] my-[10px]"
                         >
                             <div className="grid text-start gap-2">
                                 <p>{item.namaPromo}</p>
-                                <p>Rp. {item.totalPotongan}</p>
+                                <p>Rp. {item.totalPendapatan?.toLocaleString("id-ID")}</p>
                             </div>
                             <div className="text-[#C2A353]">
                                 <p>{item.totalPenggunaan} Transaksi</p>
@@ -400,10 +434,13 @@ export const LaporanRingkasanPenjualan = () => {
                     <div className="grid">
                         <div className="flex h-full gap-3">
                             {/* Select dengan ikon panah sebagai background */}
-                            <div className="relative flex items-center w-[40%]">
-                            <select className="appearance-none flex justify-between items-center text-start gap-6 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-full h-[130%]">
-                                <option>Pendapatan Penjualan</option>
-                                <option>Banyak Produk Terjual</option>
+                            <div className="relative flex items-center w-full">
+                                <select
+                                    ref={GantiPelangganRef}
+                                    onChange={gantiPelanggan}
+                                    className="appearance-none flex justify-between items-center text-start gap-6 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-[8px] px-4 w-full h-[130%]">
+                                <option value="PendapatanPenjualan">Pendapatan Penjualan</option>
+                                <option value="BanyakPembelia">Banyak Pembelian</option>
                             </select>
                             <img
                                 src={iPanahB}
@@ -411,7 +448,7 @@ export const LaporanRingkasanPenjualan = () => {
                                 className="absolute right-2 pointer-events-none w-[20px] h-[20px]"
                             />
                             </div>
-                            <div className="relative flex items-center w-[40%]">
+                            {/* <div className="relative flex items-center w-[40%]">
                             <select className="appearance-none flex justify-between items-center text-start gap-16 border rounded-xl text-[12px] text-[#454545] border-[#BDBDBD] p-1 px-4 w-full h-[130%]">
                                 <option>Semua</option>
                                 <option>Option 2</option>
@@ -421,11 +458,11 @@ export const LaporanRingkasanPenjualan = () => {
                                 alt="panah"
                                 className="absolute right-2 pointer-events-none w-[20px] h-[20px]"
                             />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className='flex flex-col gap-[10px] h-fit'>
-                        <div className='flex flex-col gap-[10px] mt-[30px] h-fit'>
+                        <div className='flex flex-col gap-[10px] mt-[15px] h-fit'>
                             {topCustomers.map((customer, index) => (
                                 <div key={index} className='flex justify-between p-[15px] border border-[#BDBDBD] rounded-xl text-[12px]'>
                                     <div className='flex items-center text-center gap-[10px]'>
@@ -437,7 +474,15 @@ export const LaporanRingkasanPenjualan = () => {
                                         <p>{customer.namaPelanggan}</p>
                                     </div>
                                     <div className='text-[#C2A353]'>
-                                        <p>Rp {customer.totalPembelian.toLocaleString('id-ID')}</p>
+                                        {GantiPelangganRef.current.value == "PendapatanPenjualan" ?
+                                            <>
+                                                <p>Rp {customer?.totalPembelian?.toLocaleString('id-ID')}</p>
+                                            </>
+                                            :
+                                            <>
+                                                <p>{customer?.jumlahPembelian} Transaksi</p>
+                                            </>}
+                                        
                                     </div>
                                 </div>
                             ))}
