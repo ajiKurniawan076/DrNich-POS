@@ -22,9 +22,9 @@ router.get("/transaksi", getTransaksi);
 router.get("/transaksi/:id", getTransaksiByID); 
 router.get("/draftTransaksi", getTransaksiDraft);
 router.get("/transaksiinvoice", getTransaksiInvoice);
-router.post("/transaksi", newTransaksi);
+router.post("/transaksi", protect([1,3]), newTransaksi);
 router.post("/kalkulasiharga", kalkulasiHarga);
-router.put("/updatetransaksi/:id", updateTransaksi);
+router.put("/updatetransaksi/:id", protect([1,3]), updateTransaksi);
 router.delete("/deletetransaksi/:id", deleteTransaksi);
 
 router.get("/detailTransaksi", getDetailTransaksi);

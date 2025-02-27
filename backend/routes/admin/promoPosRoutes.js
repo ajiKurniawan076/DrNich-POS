@@ -19,8 +19,8 @@ const router = express.Router();
 router.get("/promo", getPromo);
 router.get("/promoaktif", getPromoAktif);
 router.get("/promo/:id", getPromoByID);
-router.post("/promo", newPromo);
-router.put("/updatepromoPos/:id", updatePromo);
+router.post("/promo", protect([1,2]), newPromo);
+router.put("/updatepromoPos/:id", protect([1,2]), updatePromo);
 router.delete("/deletepromoPos/:id", deletePromo);
 
 router.get("/promoDetail", getPromoDetail);

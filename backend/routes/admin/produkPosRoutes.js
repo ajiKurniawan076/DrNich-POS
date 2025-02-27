@@ -47,27 +47,27 @@ const router = express.Router();
 
 router.get("/jenisProduk", getjenisProdukPos);
 router.get("/jenisProduk/:id", getjenisProdukPosbyID);
-router.post("/jenisProduk", newjenisProdukPos);
-router.put("/updatejenisProdukPos/:id", updatejenisProdukPos);
+router.post("/jenisProduk", protect([1,2]), newjenisProdukPos);
+router.put("/updatejenisProdukPos/:id", protect([1,2]), updatejenisProdukPos);
 router.delete("/deletejenisProdukPos/:id", deletejenisProdukPos);
 
 router.get("/kategoriProduk", getkategoriProdukPos);
 router.get("/kategoriProduk/:id", getkategoriProdukPosbyID);
-router.post("/kategoriProduk", newkategoriProdukPos);
-router.put("/updatekategoriProdukPos/:id", updatekategoriProdukPos);
+router.post("/kategoriProduk", protect([1,2]), newkategoriProdukPos);
+router.put("/updatekategoriProdukPos/:id", protect([1,2]), updatekategoriProdukPos);
 router.delete("/deletekategoriProdukPos/:id", deletekategoriProdukPos);
 
 router.get("/produk", getproduk);
 router.get("/produk/:id", getprodukbyID);
-router.post("/produk", newproduk);
-router.put("/updateproduk/:id", updateproduk);
+router.post("/produk", protect([1,2]), newproduk);
+router.put("/updateproduk/:id", protect([1,2]), updateproduk);
 router.delete("/deleteproduk/:id", deleteproduk);
 
 router.get("/belanjaPos", getBelanja);
 router.get("/getInvoiceBelanja", getBelanjaInvoice);
 router.get("/belanjaPos/:id", getBelanjaByID);
-router.post("/belanjaPos", newBelanja);
-router.put("/updatebelanjaPos/:id", updateBelanja);
+router.post("/belanjaPos", protect([1,2]), newBelanja);
+router.put("/updatebelanjaPos/:id", protect([1,2]), updateBelanja);
 router.delete("/deletebelanjaPos/:id", deleteBelanja);
 
 router.get("/detailBelanjaPos", getDetailBelanja);
@@ -78,8 +78,8 @@ router.delete("/deletedetailBelanjaPos/:id", deleteDetailBelanja);
 
 router.get("/kurangStokPos", getkurangStok);
 router.get("/kurangStokPos/:id", getkurangStokByID);
-router.post("/kurangStokPos", newkurangStok);
-router.put("/updatekurangStokPos/:id", updatekurangStok);
+router.post("/kurangStokPos", protect([1,2]), newkurangStok);
+router.put("/updatekurangStokPos/:id", protect([1,2]), updatekurangStok);
 router.delete("/deletekurangStokPos/:id", deletekurangStok);
 
 export default router;
