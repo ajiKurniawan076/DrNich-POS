@@ -79,7 +79,15 @@ export const TerapisUpdate = () => {
     }
 
     axios
-      .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata)
+      .put(`https://api.drnich.co.id/api/pos/user/updateterapis/${id}`, fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         if (response.status === 200) {
           toast.success("Berhasil Edit Terapis");

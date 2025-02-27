@@ -35,7 +35,15 @@ export const PilihPembayaran = () => {
         else {
             const kembalian = tunaiR - transaksi.totalAkhir
             try {
-                await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/' + id, { status: 'Done', pembayaran: tunaiR, kembalian: kembalian }).then(
+                await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/' + id, { status: 'Done', pembayaran: tunaiR, kembalian: kembalian }, 
+                    {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    withCredentials: true,
+                    }
+                ).then(
                     response => {
                         if (response.status == 200) {
                             toast.success('Pembayaran Berhasil')

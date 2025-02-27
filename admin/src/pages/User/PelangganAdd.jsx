@@ -48,7 +48,15 @@ export const PelangganAnd = () => {
     }
     console.log(data)
     try {
-      const response = await axios.post("https://api.drnich.co.id/api/pos/user/pelanggan", data);
+      const response = await axios.post("https://api.drnich.co.id/api/pos/user/pelanggan", data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
   
       if (response.status === 200) {
         toast.success("Pelanggan berhasil ditambahkan!");

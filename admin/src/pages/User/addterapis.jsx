@@ -76,7 +76,14 @@ export const Addterapis = () => {
 
     try {
       const response = await axios.post(
-      "https://api.drnich.co.id/api/pos/user/terapis",fdata
+        "https://api.drnich.co.id/api/pos/user/terapis", fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
     );
 
     if (response.status === 200) {

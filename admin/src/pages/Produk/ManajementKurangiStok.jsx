@@ -45,7 +45,15 @@ export const ManajementKurangiStok = () => {
     };
 
     axios
-      .post("https://api.drnich.co.id/api/pos/produk/kurangstokpos", data)
+      .post("https://api.drnich.co.id/api/pos/produk/kurangstokpos", data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      )
       .then(
         (response) =>
           response.status == 200 && navigate(`../ManajementDetailStok/${id}`)

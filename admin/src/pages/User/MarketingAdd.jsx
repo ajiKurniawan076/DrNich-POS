@@ -76,7 +76,15 @@ export const MarketingAdd = () => {
     //     response.status == 200 && navigate("../marketing");
     //   });
     try {
-      const response = await axios.post("https://api.drnich.co.id/api/pos/user/marketing", fdata);
+      const response = await axios.post("https://api.drnich.co.id/api/pos/user/marketing", fdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+      );
   
       if (response.status === 200) {
         toast.success("Marketing berhasil ditambahkan!");

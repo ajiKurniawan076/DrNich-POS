@@ -110,7 +110,15 @@ export const EditCashback = () => {
         // )
         // navigate("../cashback")
         try {
-        const response = await axios.put('https://api.drnich.co.id/api/pos/promo/promo', data);
+            const response = await axios.put('https://api.drnich.co.id/api/pos/promo/promo', data,
+            {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+        );
     
         if (response.status === 200) {
             toast.success("Cashback berhasil ditambahkan!");

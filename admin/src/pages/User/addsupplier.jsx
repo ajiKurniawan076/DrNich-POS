@@ -57,7 +57,14 @@ export const Addsupplier = () => {
     try {
       const response = await axios.post(
       "https://api.drnich.co.id/api/pos/user/supplier",
-      data
+        data,
+      {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
     );
 
     if (response.status === 200) {

@@ -63,7 +63,14 @@ export const PelangganUpdate = () => {
     try {
             const response = await axios.put(
             `https://api.drnich.co.id/api/pos/user/updatepelanggan/${id}`,
-            data
+              data,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              withCredentials: true,
+            }
         );
 
         if (response.status === 200) {

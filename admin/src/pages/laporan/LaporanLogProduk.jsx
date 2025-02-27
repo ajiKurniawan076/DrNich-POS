@@ -59,7 +59,7 @@ export const LaporanLogProduk = () => {
 
     useEffect(() => {
         setNav('Log Produk')
-        setLink('/pos/daftarProduk')
+        setLink(-1)
         // setSort(true)
         document.title = 'Log Produk'
     }, [])

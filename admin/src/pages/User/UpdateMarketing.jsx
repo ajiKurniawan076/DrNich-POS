@@ -88,7 +88,14 @@ export const UpdateMarketing = () => {
     //   });
     try {
             const response = await axios.put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, 
-            fdata
+              fdata,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              withCredentials: true,
+            }
         );
 
         if (response.status === 200) {

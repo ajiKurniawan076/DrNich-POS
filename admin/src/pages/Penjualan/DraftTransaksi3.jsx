@@ -31,7 +31,15 @@ export const DraftTransaksi3 = () => {
         }
 
         const buy = async () => {
-            await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/'+id, data).then(response=>
+            await axios.put('https://api.drnich.co.id/api/pos/kasir/updatetransaksi/' + id, data, 
+                {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                withCredentials: true,
+                }
+            ).then(response=>
                 response.status == 200 && console.log(response),
                 toast.success("Berhasil Melakukan Pembayaran"),
                 setTimeout(() => {

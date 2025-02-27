@@ -80,7 +80,15 @@ export const EditDiskon = () => {
         // )
         // navigate("../TambahDiskon4")
         try {
-        const response = await axios.put(`https://api.drnich.co.id/api/pos/promo/updatepromoPos/${id}`,data);
+            const response = await axios.put(`https://api.drnich.co.id/api/pos/promo/updatepromoPos/${id}`, data, 
+            {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
+        );
     
         if (response.status === 200) {
             toast.success("Diskon berhasil ditambahkan!");

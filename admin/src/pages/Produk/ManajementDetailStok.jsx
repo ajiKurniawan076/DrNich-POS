@@ -40,7 +40,7 @@ return (
             <div className='flex justify-between p-4 border rounded-xl border-[#C2A353]'>
                 <div className='grid text-start'>
                     <p className='text-[#BDBDBD] text-[10px]'>Supplier</p>
-                    <p className='text-[12px]'>PT.BEAUTY</p>
+                    <p className='text-[12px]'>{produk?.supplier?.namaPerusahaan}</p>
                 </div>
                 <img src={iPan} alt="Panah" />
             </div>
@@ -106,7 +106,7 @@ return (
                     </div>
                 </div>
             </div>
-            <a href='ManajementLihatLogProduk' className='flex justify-between p-4 border rounded-xl border-[#C2A353] mt-2'>
+            <a href={`/pos/laporanlogproduk/${id}`} className='flex justify-between p-4 border rounded-xl border-[#C2A353] mt-2'>
                 <p className='text-[12px] text-[#C2A353]'>Lihat Log Produk</p>
                 <img src={iPan} alt="" />
             </a>

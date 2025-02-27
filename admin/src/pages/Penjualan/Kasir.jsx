@@ -161,10 +161,11 @@ export const Kasir = () => {
                     "https://api.drnich.co.id/api/pos/kasir/kalkulasiharga/",
                     datax,
                     {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        withCredentials: true,
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    withCredentials: true,
                     }
                 );
     
@@ -199,10 +200,11 @@ export const Kasir = () => {
                     "https://api.drnich.co.id/api/pos/kasir/kalkulasiharga/",
                     datax,
                     {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        withCredentials: true,
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    withCredentials: true,
                     }
                 );
     

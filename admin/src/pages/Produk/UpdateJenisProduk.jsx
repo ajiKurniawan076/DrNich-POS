@@ -40,7 +40,14 @@ export const UpdateJenisProduk = () => {
     axios
       .put(
         `https://api.drnich.co.id/api/pos/produk/updatejenisProdukPos/${id}`,
-        data
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }
       ) // Menggunakan method PUT
       .then((response) => {
         if (response.status === 200) {
