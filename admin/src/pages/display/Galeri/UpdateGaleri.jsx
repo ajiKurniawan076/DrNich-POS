@@ -12,13 +12,14 @@ export const UpdateGaleri = () => {
   const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const [judul, setJudul] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
   const [linkSosmed, setLinkSosmed] = useState("");
   const [channel, setChannel] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
   const [sosmed, setSosmed] = useState("");
   const [nameFile, setNameFile] = useState("");
-
+  const [prev, setPrev] = useState(null)
+  const gambarRef = useRef(null)
   const fetchData = async () => {
     try {
       const response = (
@@ -42,16 +43,37 @@ export const UpdateGaleri = () => {
   };
   useEffect(() => {
     fetchData();
-    setNav("Ubah Galeri");
+    setNav("Ubah Galeris");
     setLink(`/pos/galeridetail/${id}`);
   }, []);
 
   const handleAddContent = async (e) => {
     e.preventDefault();
     console.log("token", localStorage.getItem("token"));
+    let data = {}
+    if(gambarRef.current.files.length>0){
+      data = {
+        judul: judul,
+        thumbnail: thumbnail,
+        link: linkSosmed,
+        channel: channel,
+        sosmed: sosmed,
+        deskripsi: deskripsi,
+      }
+    }
+    else{
+      data = {
+        judul: judul,
+        link: linkSosmed,
+        channel: channel,
+        sosmed: sosmed,
+        deskripsi: deskripsi,
+      }
+    }
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/gallery/editGaleri/${id}`,
+        
         {
           judul: judul,
           thumbnail: thumbnail,
@@ -62,7 +84,7 @@ export const UpdateGaleri = () => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           withCredentials: true,
@@ -106,7 +128,8 @@ export const UpdateGaleri = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setThumbnail(reader.result);
+      setPrev(reader.result);
+      setThumbnail(gambarRef.current.files[0])
       setNameFile(file.name); // Set the file name
     };
   };
@@ -115,7 +138,7 @@ export const UpdateGaleri = () => {
   const [supstat, setsupstat] = useState(false);
   return (
     <form
-      className="flex flex-col px-0 p-3 gap-2 bg-white w-full h-full"
+      className="flex flex-col px-0 p-3 gap-2 bg-white w-full h-fit"
       onSubmit={handleAddContent}>
       <ToastContainer />
       <div className="flex flex-col gap-1 px-3">
@@ -124,24 +147,25 @@ export const UpdateGaleri = () => {
             Upload Foto
           </label>
           <div className="flex gap-6">
-            {thumbnail ? (
+            {!prev ? (
               <img
                 src={thumbnail}
                 alt={judul}
                 className="h-[115px] w-[115px] rounded shadow-lg border"
               />
             ) : (
-              <div className="h-[115px] w-[115px] bg-white rounded shadow-lg border flex items-center justify-center">
-                <h1 className="w-full text-sm text-center text-opacity-55">
-                  Masukan gambar
-                </h1>
-              </div>
+              <img
+                src={prev}
+                alt={judul}
+                className="h-[115px] w-[115px] rounded shadow-lg border"
+              />
             )}
 
             <div className="flex flex-col items-start text-[10px]">
               <p className="text-[#454545] mb-3">{nameFile || "File name"}</p>
               <div className="flex justify-star text-[#C2A353] pt-2 mb-2">
                 <input
+                ref={gambarRef}
                   type="file"
                   className="border border-[#C2A353] h-[25px] w-[78px] rounded shadow-sm text-[12px]"
                   onChange={convertBase64} // Fix: Add this event handler

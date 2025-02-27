@@ -47,6 +47,7 @@ export const Rating = () => {
     // ).then((data) => (setdatax(data)
     // ))
     setNav("Rating");
+    setLink(-1)
   }, []);
 
   document.title = "Rating";

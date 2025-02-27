@@ -8,10 +8,12 @@ import { ToastContainer, toast } from "react-toastify";
 export const GaleriAdd = () => {
   const { setNav } = useContext(navContext);
   const navigate = useNavigate();
+  const gambarRef = useRef(null)
 
   const [formData, setFormData] = useState({
+    prev: '',
     judul: "",
-    tumbnail: "", // Ensure consistency in naming
+    thumbnail: "", // Ensure consistency in naming
     link: "",
     channel: "",
     sosmed: "",
@@ -28,13 +30,22 @@ export const GaleriAdd = () => {
   const handleAddContent = async (e) => {
     e.preventDefault();
     console.log("token", localStorage.getItem("token"));
+    console.log(formData)
+    const fdata = new FormData()
+    fdata.append( 'judul', formData.judul )
+    fdata.append( 'thumbnail', formData.thumbnail )// Ensure consistency in naming
+    fdata.append( 'link', formData.link )
+    fdata.append( 'channel', formData.channel )
+    fdata.append( 'sosmed', formData.sosmed )
+    fdata.append( 'deskripsi', formData.deskripsi )
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/api/gallery/createGaleri`,
-        { ...formData },
+        fdata,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           withCredentials: true,
@@ -79,10 +90,8 @@ export const GaleriAdd = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        tumbnail: reader.result, // Ensure consistency
-      }));
+      
+      setFormData({ ...formData, prev: reader.result, thumbnail: gambarRef.current.files[0] })
       setNameFile(file.name); // Set the file name
     };
   };
@@ -91,7 +100,7 @@ export const GaleriAdd = () => {
 
   return (
     <form
-      className="flex flex-col px-0 p-3 gap-2 bg-white w-full h-full"
+      className="flex flex-col px-0 p-3 gap-2 bg-white w-full h-fit"
       onSubmit={handleAddContent}>
       <ToastContainer />
       <div className="flex flex-col gap-1 px-3">
@@ -100,9 +109,9 @@ export const GaleriAdd = () => {
             Upload Foto
           </label>
           <div className="flex gap-6">
-            {formData.tumbnail ? (
+            {formData.prev ? (
               <img
-                src={formData.tumbnail}
+                src={formData.prev}
                 alt={formData.judul}
                 className="h-[115px] w-[115px] rounded shadow-lg border"
               />
@@ -117,6 +126,7 @@ export const GaleriAdd = () => {
               <div className="flex justify-star text-[#C2A353] pt-2 mb-2">
                 <input
                   type="file"
+                  ref={gambarRef}
                   className="border border-[#C2A353] h-[25px] w-[78px] rounded shadow-sm text-[12px]"
                   onChange={convertBase64} // Fix: Add this event handler
                 />

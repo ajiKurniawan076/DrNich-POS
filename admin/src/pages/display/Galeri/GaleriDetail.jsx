@@ -12,7 +12,6 @@ export const GaleriDetail = () => {
   const lokasi = useLocation();
   const dummyData = lokasi.state;
   const { setNav, setLink } = useContext(navContext);
-
   const [judul, setJudul] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [linkSosmed, setLinkSosmed] = useState("");
@@ -111,7 +110,7 @@ export const GaleriDetail = () => {
             Hapus{" "}
           </a>
           <Link
-            to={{ pathname: "/pos/UpdateGaleri" }}
+            to={{ pathname: `/pos/UpdateGaleri/${id}` }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] ">
             Edit
           </Link>
