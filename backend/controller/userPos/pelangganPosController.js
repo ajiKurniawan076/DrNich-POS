@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import pelangganPosModels from "../../models/User/pelangganPos.js";
+import transaksiModels from "../../models/KasirPOS/transaksiPos.js";
 
 const newpelanggan = asyncHandler(async (req, res) => {
   const newpelanggan = {
@@ -81,4 +82,24 @@ const getpelangganbyID = asyncHandler(async (req, res) => {
   }
 });
 
-export { newpelanggan, getpelanggan, updatepelanggan, deletepelanggan, getpelangganbyID };
+const getLogPelanggan = asyncHandler(async (req, res) => {
+  const { id, dari ,sampai } = req.body;
+  try {
+    const transaksi = await transaksiModels.find({pelanggan : id, updatedAt : {$gte: dari, $lte : sampai}}).sort({updatedAt : -1})
+    .populate({
+      path : 'transaksiDetail',
+      populate : {
+        path : 'produk'
+      }
+    })
+
+    if (!transaksi) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(transaksi);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+});
+export { newpelanggan, getpelanggan, updatepelanggan, deletepelanggan, getpelangganbyID, getLogPelanggan };

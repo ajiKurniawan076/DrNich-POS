@@ -11,7 +11,7 @@ import { navContext } from "../../App2";
 import axios from "axios";
 
 export const Pelanggan = () => {
-  const { setNav, setSort, asc, setLink } = useContext(navContext);
+  const { setNav, setSort, asc, setLink, ascP } = useContext(navContext);
   const [datax, setdatax] = useState([]);
   const [tampil, setTampil] = useState([]);
   const cariRef = useRef(null)
@@ -32,16 +32,26 @@ export const Pelanggan = () => {
   useEffect(()=>{
 
     if(asc=='asc'){
-      const sorting = [...tampil].sort((a,b)=> a.namaMarketing.localeCompare(b.namaMarketing))
+      const sorting = [...tampil].sort((a,b)=> a.namaPelanggan.localeCompare(b.namaPelanggan))
       console.log(sorting)
       setTampil(sorting)
     }
     else if(asc=='desc'){
-      const sorting = [...tampil].sort((a,b)=> b.namaMarketing.localeCompare(a.namaMarketing))
+      const sorting = [...tampil].sort((a,b)=> b.namaPelanggan.localeCompare(a.namaPelanggan))
       console.log(sorting)
       setTampil(sorting)
     }
-  },[asc])
+    else if(ascP=='ascP'){
+      const sorting = [...tampil].sort((a,b)=> b.poin - a.poin)
+      console.log(sorting)
+      setTampil(sorting)
+    }
+    else if(ascP=='descP'){
+      const sorting = [...tampil].sort((a,b)=> a.poin - b.poin)
+      console.log(sorting)
+      setTampil(sorting)
+    }
+  },[asc, ascP])
   const filterData = () => {
     
     const filterr =  datax.filter(

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import UserIcon from "../assets/icon/userLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,14 +15,9 @@ function RegisterAdmin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log({
-    //       name: username,
-    //       password: password,
-    //       level: leveling,
-    //     },)
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/pos/registeradmin`,
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/pos/newadmin`,
         {
           name: username,
           password: password,
@@ -31,9 +26,7 @@ function RegisterAdmin() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`
           },
-          withCredentials: true
         }
       );
       console.log(res.data);
@@ -43,11 +36,6 @@ function RegisterAdmin() {
       toast.error(error.response?.data?.message || "Registrasi Gagal");
     }
   };
-  const berubahRef = useRef(null)
-  const berubah = () => {
-    setLeveling(berubahRef.current.value)
-    console.log(berubahRef.current.value)
-  }
 
   return (
     <main className="w-full h-screen bg-gradient-to-l from-[#c2a353] to-[#eac464] flex flex-col items-center justify-between">
@@ -103,7 +91,7 @@ function RegisterAdmin() {
                   Level Admin
                 </p>
               </label>
-              <select onChange={berubah} ref={berubahRef} className="w-full h-[40px] border border-[#BDBDBD] rounded-lg px-3 text-xs font-Inter font-normal">
+              <select className="w-full h-[40px] border border-[#BDBDBD] rounded-lg px-3 text-xs font-Inter font-normal">
                 <option
                   className="w-full h-[40px] border lg:text-sm border-[#BDBDBD] rounded-lg px-3 text-xs font-Inter font-normal text-disable-text"
                   disabled

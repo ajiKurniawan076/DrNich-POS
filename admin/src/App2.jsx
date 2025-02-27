@@ -176,6 +176,7 @@ function App2() {
   const [link, setLink] = useState("");
   const [sort, setSort] = useState(false);
   const [asc, setasc] = useState("");
+  const [ascP, setascP] = useState("");
   const [showsort, setshowsort] = useState(false);
 
   return (
@@ -187,6 +188,8 @@ function App2() {
         setSort,
         asc,
         setasc,
+        ascP,
+        setascP,
         showsort,
         setshowsort,
         link,

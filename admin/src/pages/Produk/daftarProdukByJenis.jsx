@@ -50,7 +50,7 @@ export const DaftarProdukByJenis = () => {
             {filterData.map((pro, i) => (
               <Link
                 to={{
-                  pathname: `/productdetail/${pro._id}`,
+                  pathname: `/pos/productdetail/${pro._id}`,
                 }}
                 className="w-full text-[#454545] border flex justify-start items-center rounded-xl border-yellow-600/30 px-[20px] py-[15px]"
                 key={i}

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export const Cashback4 = () => {
   const [kesbek, setKesbek] = useState([]);
-  const { setNav, setLink } = useContext(navContext);
+  const { setNav, setLink, asc, setSort } = useContext(navContext);
   const { dataKorup, setDataKorup } = useState([]);
   const [tampil,setTampil] = useState([])
   const cariRef = useRef(null)
@@ -34,16 +34,31 @@ export const Cashback4 = () => {
     };
     fetchdata();
     setLink('/pos/promo')
-
+    setSort(true)
     setNav("Cashback");
+    document.title = "Cashback";
   }, []);
+
+useEffect(()=>{
+
+        if(asc=='asc'){
+          const sorting = [...tampil].sort((a,b)=> a.namaPromo.localeCompare(b.namaPromo))
+          console.log(sorting)
+          setTampil(sorting)
+        }
+        else if(asc=='desc'){
+          const sorting = [...tampil].sort((a,b)=> b.namaPromo.localeCompare(a.namaPromo))
+          console.log(sorting)
+          setTampil(sorting)
+        }
+      },[asc])
 
   kesbek.forEach((promo) => {
     console.log(promo.promoDetail);
   });
 
  
-  document.title = "Cashback";
+
   return (
     <div className="flex flex-col px-7 py-8 gap-1 bg-white w-full min-h-screen h-full pt-8 text-[#454545] text-[12px]">
       {kesbek.length === 0 ? (

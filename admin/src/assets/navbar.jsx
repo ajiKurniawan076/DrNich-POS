@@ -9,24 +9,28 @@ import iClose from "../assets/iClose.svg"
 import axios from "axios"
 import { toast, ToastContainer } from "react-toastify"
 export const Navbar = () => {
-    const { nav, sort, asc, setasc, showsort, setshowsort, link } = useContext(navContext)
+    const { nav, sort, asc, setasc, showsort, setshowsort, link, ascP, setascP } = useContext(navContext)
     const back = useNavigate()  
 
     const klikasc =(e) => {
         e.preventDefault()
         setasc("asc")
+        setascP('')
     }
     const klikascPoin = (e) => {
         e.preventDefault()
-        setasc("ascP")
+        setascP("ascP")
+        setasc('')
     }
     const klikdescPoin =(e) => {
         e.preventDefault()
-        setasc("descP")
+        setascP("descP")
+        setasc('')
     }
     const klikdesc =(e) => {
         e.preventDefault()
         setasc("desc")
+        setascP('')
     }
 
     const handleLogout = async(e) => {
@@ -72,11 +76,11 @@ export const Navbar = () => {
                     <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'asc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikasc}>A-Z</button>
                     
                     <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'desc' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdesc}>Z-A</button>
-                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'ascP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikascPoin}>Poin Terbanyak</button>
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${ascP == 'ascP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikascPoin}>Poin Terbanyak</button>
                 </div>
                 <div className="flex w-full justify-between">
                     
-                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${asc == 'descP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdescPoin}>Poin Tersedikit</button>
+                    <button className={`border rounded-xl px-[20px] py-[10px] border-[#EAC564] ${ascP == 'descP' ? 'bg-[#EAC564] text-white' : 'bg-white'}`} onClick={klikdescPoin}>Poin Tersedikit</button>
                 </div>
                 </div>
             </div>

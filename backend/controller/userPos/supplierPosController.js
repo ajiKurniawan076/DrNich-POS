@@ -1,5 +1,7 @@
 import asyncHandler from "express-async-handler";
 import supplierPosModels from "../../models/User/supplierPos.js";
+import belanjaModels from "../../models/ProdukPOS/belanjaPos.js";
+import produkModels from "../../models/ProdukPOS/produkPos.js";
 
 const newsupplier = asyncHandler(async (req, res) => {
   const newsupplier = {
@@ -89,4 +91,45 @@ const getsupplierbyID = asyncHandler(async (req, res) => {
   }
 });
 
-export { newsupplier, getsupplier, updatesupplier, deletesupplier, getsupplierbyID };
+const getProdukSupplier = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const produk = await produkModels
+    .find({supplier : id})
+    .sort({updatedAt : -1})
+
+    if (!produk) {
+      return res.status(404).json({ message: "Products not found" });
+    }
+
+    res.json(produk);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+})
+
+const riwayattransaksi = asyncHandler(async (req, res) => {
+  const { id, dari, sampai } = req.body;
+  try {
+    const belanja = await belanjaModels
+    .find({supplier : id, updatedAt : {$gte : dari, $lte : sampai}})
+    .sort({updatedAt : -1})
+    .populate({
+      path : 'belanjaDetail',
+      populate : {
+        path : 'produk',
+        model : 'produkPos'
+      }
+  })
+
+    if (!belanja) {
+      return res.status(404).json({ message: "Transaction not found" });
+    }
+
+    res.json(belanja);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+});
+
+export { newsupplier, getsupplier, updatesupplier, deletesupplier, getsupplierbyID, riwayattransaksi, getProdukSupplier };

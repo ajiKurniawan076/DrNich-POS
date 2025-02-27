@@ -48,8 +48,9 @@
       nomorRekening: req.body.nomorRekening,
       bank: req.body.bank,
       keteranganRek: req.body.keteranganRek,
-    image : req.file ? req.file.path : 'No Image'
     };
+    let image = req.file ? req.file.path : null;
+    if(image){newData.image = image}
     try {
       const marketing = await marketingPosModels.findByIdAndUpdate(
         id,

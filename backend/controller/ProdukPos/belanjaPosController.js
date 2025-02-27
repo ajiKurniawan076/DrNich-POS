@@ -90,12 +90,14 @@ const getBelanja = asyncHandler(async (req, res) => {
 
 const updateBelanja = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { poin } = req.body;
+  const { pembayaran, kembalian } = req.body;
+
+  const data = {pembayaran : pembayaran, kembalian : kembalian}
 
   try {
     const belanja = await BelanjaModels.findByIdAndUpdate(
       id,
-      { $set: { poin } },
+      { $set: data },
       { new: true }
     );
     res.send(belanja);

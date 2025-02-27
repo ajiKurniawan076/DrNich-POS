@@ -71,7 +71,7 @@ const DiskonDetail = () => {
                 Potongan
               </p>
               <p className="text-start text-[14px] text-[#454545]">
-                {datax.potongan}
+                {datax.jenisPotongan == 'persen' ? datax.potongan+' %' : 'Rp. '+datax.potongan?.toLocaleString('id-ID')}
               </p>
               {/* kusus produk */}
               <p className="text-start text-[#454545] text-[14px] font-bold mt-2">

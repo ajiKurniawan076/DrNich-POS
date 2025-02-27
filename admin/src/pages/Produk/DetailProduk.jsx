@@ -22,7 +22,7 @@ export const DetailProduk = () => {
     };
     fetchData();
     setNav("Daftar Produk");
-    setLink('/pos/daftarproduk')
+    setLink(-1)
     setSort(false)
   }, []);
 
