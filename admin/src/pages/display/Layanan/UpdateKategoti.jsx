@@ -32,7 +32,7 @@ export const UpdateKategoti = () => {
 
       // ✅ Correct Image Handling
       if (data.foto) {
-        setPreviewURL(`${import.meta.env.VITE_BASE_URL_BACKEND}/${data.foto}`);
+        setPreviewURL(`${data.foto}`);
         setNamaGambar(data.foto);
       } else {
         setPreviewURL(null);

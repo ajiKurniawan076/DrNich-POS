@@ -34,7 +34,7 @@ export const KategoriDetail = () => {
         )
       ).data;
       setNama(response.nama);
-      setImage(`${import.meta.env.VITE_BASE_URL_BACKEND}/${response.foto}`);
+      setImage(`${response.foto}`);
       setDeskripsi(response.deskripsi);
 
       console.log(response);

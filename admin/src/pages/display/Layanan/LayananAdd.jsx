@@ -25,11 +25,7 @@ export const LayananAdd = () => {
   const [namaGambarx, setNamaGambarx] = useState("");
 
   useEffect(() => {
-    const dataDummy = () => [
-      { id: 1, nama: "fecial Wols" },
-      { id: 2, nama: "fecial series" },
-    ];
-    setdatax(dataDummy);
+    setLink(-1)
     setNav("Tambah Layanan");
   }, []);
 
@@ -53,6 +49,7 @@ export const LayananAdd = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const data = {
       kategoriProduk: kateforiRef.current.value,
       namaLayanan: namaLayananRef.current.value.trim(),
@@ -67,13 +64,29 @@ export const LayananAdd = () => {
     } else {
       console.log(data);
     }
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BASE_URL_BACKEND
+          }/api/layanan/tambahLayanan`, data
+        );
+        if (response.status === 200) {
+          toast.success("Berhasil menambahkan Layanan");
+          setTimeout(() => navigate("/pos/Layanan"), 2000);
+        }
+        } catch (error) {
+            console.log(error.response?.data?.message || "An error occurred");
+            toast.error("Ada masalah. Silahkan coba lagi!");
+        }
+    };
+    fetchData()
   };
 
   document.title = "Tambah Layanan";
   const [supstat, setsupstat] = useState(false);
   return (
     <form
-      className="flex flex-col px-0 p-3 gap-1 bg-white w-full h-full"
+      className="flex flex-col px-0 p-3 gap-1 bg-white w-full min-h-screen h-fit"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-1 px-3">
