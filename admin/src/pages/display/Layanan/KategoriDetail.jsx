@@ -1,9 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  AiFillPlusCircle,
-  AiOutlineRightCircle,
-  AiOutlineSearch,
-} from "react-icons/ai";
 import { data, Link, useNavigate } from "react-router-dom";
 import { navContext } from "../../../App2";
 import { useLocation, useParams } from "react-router-dom";
@@ -33,8 +28,9 @@ export const KategoriDetail = () => {
           }/api/layanan/getJenisLayananById/${id}`
         )
       ).data;
+      console.log("data : ", response);
       setNama(response.nama);
-      setImage(`${import.meta.env.VITE_BASE_URL_BACKEND}/${response.foto}`);
+      setImage(`${response.foto}`);
       setDeskripsi(response.deskripsi);
 
       console.log(response);
@@ -117,14 +113,12 @@ export const KategoriDetail = () => {
         <div className="flex gap-1">
           <a
             onClick={deleteHandler}
-            className="flex justify-center items-center gap-2 h-[44px] w-full max-w-[115px]  border border-[#C2A353] font-medium rounded-lg text-[14px] bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-transparent bg-clip-text cursor-pointer"
-          >
+            className="flex justify-center items-center gap-2 h-[44px] w-full max-w-[115px]  border border-[#C2A353] font-medium rounded-lg text-[14px] bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-transparent bg-clip-text cursor-pointer">
             Hapus{" "}
           </a>
           <Link
             to={{ pathname: `/pos/UpdateKategoriJenisTreatment/${id}` }}
-            className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "
-          >
+            className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] ">
             Edit
           </Link>
         </div>
@@ -133,8 +127,7 @@ export const KategoriDetail = () => {
         className="w-10 h-10 bg-black/300 text-white"
         onClick={() => {
           setdatax([]);
-        }}
-      >
+        }}>
         RESET
       </button>
     </div>

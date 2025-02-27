@@ -6,22 +6,24 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 export const MesinEdit = () => {
-    const {id} = useParams()
-    const { setNav, setLink } = useContext(navContext);
+  const { id } = useParams();
+  const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
   const imageRef = useRef(null);
   const [gambarname, setGambarName] = useState("");
   const [gambar, setgambar] = useState(null);
 
   useEffect(() => {
-    const fachingData = async() => {
-        await axios.get(`${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/getmesinbyid/${id}`).then(
-          (response)=>setgambar(response.data.foto)
+    const fachingData = async () => {
+      await axios
+        .get(
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/getmesinbyid/${id}`
         )
-      }
-      fachingData()
+        .then((response) => setgambar(response.data.foto));
+    };
+    fachingData();
     setNav("Ubah Mesin");
-    setLink("/pos/mesin")
+    setLink("/pos/mesin");
   }, []);
 
   const handleImg = (e) => {
@@ -40,7 +42,7 @@ export const MesinEdit = () => {
     setGambarName(fileImage.name);
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fdata = new FormData();
     if (imageRef.current.files.length > 0) {
@@ -52,9 +54,7 @@ export const MesinEdit = () => {
 
     try {
       const response = await axios.put(
-        `${
-          import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/foto/editSertif/:id`,
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/foto/editMesin/${id}`,
         fdata,
         {
           headers: {
@@ -73,12 +73,10 @@ export const MesinEdit = () => {
       }
     } catch (error) {
       console.error(
-        error.response?.data?.message ||
-          "Gagal menambahkan Mesin, coba lagi!"
+        error.response?.data?.message || "Gagal menambahkan Mesin, coba lagi!"
       );
       toast.error(
-        error.response?.data?.message ||
-          "Gagal menambahkan Mesin, coba lagi!"
+        error.response?.data?.message || "Gagal menambahkan Mesin, coba lagi!"
       );
     }
   };
@@ -88,9 +86,8 @@ export const MesinEdit = () => {
   return (
     <form
       className="flex flex-col px-0 p-3 gap-2 bg-white w-full min-h-screen justify-between"
-      onSubmit={handleSubmit}
-    >
-      <ToastContainer/>
+      onSubmit={handleSubmit}>
+      <ToastContainer />
       <div className="flex flex-col gap-1 px-3 flex-grow">
         <div className="flex flex-col gap-2">
           <label className="text-start text-[#454545] text-[12px]">
@@ -133,12 +130,10 @@ export const MesinEdit = () => {
             gambar
               ? "bg-gradient-to-r from-[#EAC564] to-[#C2A353]"
               : " bg-[#DCDCDC] border-2 "
-          }`}
-        >
+          }`}>
           Simpan
         </button>
       </div>
     </form>
   );
-}
-
+};

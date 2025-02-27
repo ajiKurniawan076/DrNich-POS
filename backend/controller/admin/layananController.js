@@ -63,14 +63,11 @@ const updateJenisLayanan = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const newData = {
     nama: req.body.nama,
-    foto: req.file ? `${BASE_URL}${req.file.path}` : "No Image",
     deskripsi: req.body.deskripsi,
   };
+  foto= req.file ? `${BASE_URL}${req.file.path}` : null;
+  if (foto) {newData.foto = foto}
   try {
-    const isExist = await JenisLayanan.findOne({ nama: req.body.nama });
-    if (isExist) {
-      throw new Error("Jenis Layanan Sudah Ada");
-    }
     const jenisLayanan = await JenisLayanan.findByIdAndUpdate(
       id,
       { $set: newData },

@@ -6,8 +6,7 @@ import gkategori from "../../../../assets/iconDisplay/Layanan/gkategori.svg";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { set } from "date-fns";
-
+import { toast, ToastContainer } from "react-toastify";
 export const TambahProduk = () => {
   const { setNav, setLink } = useContext(navContext);
   const navigate = useNavigate();
@@ -137,7 +136,7 @@ export const TambahProduk = () => {
     fetchTipeKulit();
     fetchTipeProduk();
     setNav("Tambah Produk");
-    setLink("/pos/produk1")
+    setLink("/pos/produk1");
   }, []);
 
   document.title = "Tambah Produk";
@@ -145,9 +144,9 @@ export const TambahProduk = () => {
   return (
     <form
       className="flex flex-col px-0 p-3 gap-1 bg-white w-full h-full"
-      onSubmit={handleSubmit}
-    >
+      onSubmit={handleSubmit}>
       <div className="flex flex-col gap-1 px-3">
+        <ToastContainer />
         <div className="flex flex-col">
           <label className="text-start text-[454545] text-[12px]">
             Upload Foto
@@ -188,8 +187,7 @@ export const TambahProduk = () => {
           name="options"
           className="px-4 border text-[#454545] text-[12px] border-[#454545] rounded-lg h-[48px]"
           id=""
-          defaultValue=""
-        >
+          defaultValue="">
           <option value="" className="text-[#cdcdcd]" disabled>
             pilih kategori produk
           </option>
@@ -213,8 +211,7 @@ export const TambahProduk = () => {
           name="options"
           className="px-4 border text-[#454545] text-[12px] border-[#454545] rounded-lg h-[48px]"
           id=""
-          defaultValue=""
-        >
+          defaultValue="">
           <option value="" className="text-white-300" disabled>
             Pilih Tipe Produk
           </option>
@@ -231,8 +228,7 @@ export const TambahProduk = () => {
           ref={tipeKulitRef}
           name="options"
           className="px-4 border text-[#454545] text-[12px] border-[#454545] rounded-lg h-[48px]"
-          id=""
-        >
+          id="">
           <option value="" className="text-white-300" disabled>
             Pilih Tipe Kulit
           </option>
@@ -286,12 +282,10 @@ export const TambahProduk = () => {
           cols="auto"
           rows="2"
           className="border rounded-lg px-2 text-[12px] p-1"
-          placeholder="Contoh : Masukan deskripsi"
-        ></textarea>
+          placeholder="Contoh : Masukan deskripsi"></textarea>
         <button
           type="submit"
-          className="flex justify-center items-center h-[44px] mt-4  bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg "
-        >
+          className="flex justify-center items-center h-[44px] mt-4  bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg ">
           Simpan
         </button>
       </div>

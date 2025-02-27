@@ -6,6 +6,7 @@ import gkategori from "../../../assets/iconDisplay/Layanan/gkategori.svg";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 export const RetingAdd = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -83,8 +84,8 @@ export const RetingAdd = () => {
   return (
     <form
       className="flex flex-col px-0 p-3 gap-2 bg-white w-full min-h-screen justify-between"
-      onSubmit={handleSubmit}
-    >
+      onSubmit={handleSubmit}>
+      <ToastContainer />
       <div className="flex flex-col gap-1 px-3 flex-grow">
         <div className="flex flex-col">
           <label className="text-start text-[#454545] text-[12px]">
@@ -135,14 +136,12 @@ export const RetingAdd = () => {
           cols="auto"
           rows="5"
           className=" border rounded-lg text-[12px] p-2"
-          placeholder="Review"
-        ></textarea>
+          placeholder="Review"></textarea>
       </div>
       <div className="mt-auto w-full ">
         <button
           type="submit"
-          className="flex justify-center items-center w-full h-[44px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg"
-        >
+          className="flex justify-center items-center w-full h-[44px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg">
           Simpan
         </button>
       </div>
