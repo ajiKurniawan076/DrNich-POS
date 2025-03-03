@@ -25,6 +25,8 @@ export const DaftarProdukAdd = () => {
   const [bonusTR, setBonusTR] = useState(0)
   const supplierRef = useRef(null)
   const namaProdukRef = useRef(null);
+  const SKURef = useRef(null)
+  const HPPRef = useRef(null)
   const hargaJualRef = useRef(null);
   const hargaBeliRef = useRef(null);
   const kategoriRef = useRef(null);
@@ -37,6 +39,8 @@ export const DaftarProdukAdd = () => {
   const checkFormFilled = () => {
     if (
       namaProdukRef.current?.value &&
+      SKURef.current?.value &&
+      HPPRef.current?.value &&
       hargaJualRef.current?.value &&
       hargaBeliRef.current?.value &&
       kategoriRef.current?.value &&
@@ -130,6 +134,8 @@ export const DaftarProdukAdd = () => {
     const data = {
       jenis: selectedNamaJenis,
       namaProduk: namaProdukRef.current.value,
+      sku: SKURef.current.value,
+      hpp: HPPRef.current.value,
       hargaJual: hargaJR,
       hargaBeli: hargaBR,
       kategori: kategoriRef.current.value,
@@ -236,6 +242,20 @@ export const DaftarProdukAdd = () => {
           ref={namaProdukRef}
           type="text"
           placeholder="Contoh : Viva Milk Cleanser"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+        />
+        <label className="text-start font-semibold mb-[5px]">SKU</label>
+        <input
+          ref={SKURef}
+          type="text"
+          placeholder=""
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+        />
+        <label className="text-start font-semibold mb-[5px]">HPP</label>
+        <input
+          ref={HPPRef}
+          type="text"
+          placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
         <label className="text-start font-semibold mb-[5px]">Harga Beli</label>
