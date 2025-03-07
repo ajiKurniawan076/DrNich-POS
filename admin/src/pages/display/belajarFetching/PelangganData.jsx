@@ -32,7 +32,7 @@ const PelangganData = () => {
           value={search}
           type="search"
           placeholder="cari data"
-          className="sticky top-0 hover:scale-110 translate duration-200 h-9 border-yellow-700 border p-3 rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-yellow-700"
+          className="sticky top-0  translate duration-200 h-9 border-yellow-700 border p-3 rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-yellow-700"
         />
       </form>
       <div className="flex flex-col justify-center gap-2 mt-2">
@@ -44,7 +44,7 @@ const PelangganData = () => {
           filterdata.map((data, i) => (
             <Link
               to={{ pathname: `/pelanngandetailni/${data._id}` }}
-              className="py-2 px-3 shadow rounded-lg border hover:scale-110 duration-200 hover:border-yellow-600"
+              className="py-2 px-3 shadow rounded-lg border  duration-200 hover:border-yellow-600"
               key={i}
             >
               <p className="text-[14px] text-start  mb-1 font-semibold">
@@ -60,7 +60,7 @@ const PelangganData = () => {
       <div className="flex items-center justify-center">
         <Link
           to={{ pathname: "/menambahkanpelanggan" }}
-          className="absolute py-2 bottom-0  h-10 bg-yellow-500 w-full rounded-md shadow-sm hover:scale-110 duration-500"
+          className="absolute py-2 bottom-0  h-10 bg-yellow-500 w-full rounded-md shadow-sm  duration-500"
         >
           Tambah Data
         </Link>

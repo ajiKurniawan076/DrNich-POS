@@ -8,6 +8,7 @@ import iPan  from "../../assets/iconproduk/iPan.svg";
 import axios from 'axios'
 import { Kasir4 } from './Kasir4'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 export const kasirContext = createContext()
 export const Kasir = () => {
@@ -33,6 +34,7 @@ export const Kasir = () => {
     const [kategoriTerpilih, setKategoriTerpilih] = useState('')
     const [jenisTerpilih, setJenisTerpilih] = useState('')
     const [produkTampil, setProdukTampil] = useState([])
+    const [simpanDraft, setSimpanDraft] = useState(false)
     const [cart, setCart] = useState([])
     const jenisRef = useRef(null)
     const kategoriRef = useRef(null)
@@ -178,6 +180,48 @@ export const Kasir = () => {
                 console.error("Error fetching calculation:", error);
             }
     }
+    const kalkulasi2 = async() => {
+        
+        setTotal(0);
+        setTotalAkhir(0);
+    
+        // Calculate total price
+        const totalHarga = cart.reduce((acc, item) => acc + item.jumlah * item.hargaJual, 0);
+        setTotal(totalHarga);
+        setTotalAkhir(totalHarga);
+    
+        const datax = {
+            promo: promoTerpilih._id,
+            produks: cart,
+        };
+    
+    
+        
+            try {
+                const response = await axios.post(
+                    "https://api.drnich.co.id/api/pos/kasir/kalkulasiharga/",
+                    datax,
+                    {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    withCredentials: true,
+                    }
+                );
+                if (response.status === 200) {
+                    setPotongan(response.data.kalkulasi.potongan);
+                    setCashback(response.data.kalkulasi.cashback);
+                    setTotalAkhir(totalHarga - response.data.kalkulasi.potongan);
+                }
+            } catch (error) {
+                console.error("Error fetching calculation:", error);
+            }
+            
+    }
+    useEffect(()=>{
+        simpanDraft == true && handleDraft()
+    },[simpanDraft])
     useEffect(() => {
         setTotal(0);
         setTotalAkhir(0);
@@ -220,8 +264,8 @@ export const Kasir = () => {
     
         kalkulasi();
     }, [ promoTerpilih]);
-    const handleDraft =(e)=>{
-            e.preventDefault()
+    const handleDraft =async()=>{
+            
             const data = {
                 pelanggan : pelangganTerpilih._id,
                 promo : promoTerpilih._id,
@@ -236,14 +280,42 @@ export const Kasir = () => {
                 kembalian: 0,
             }
             console.log(data)
-            axios.post('https://api.drnich.co.id/api/pos/kasir/transaksi', data).then(response =>{
-                response.status==200 && navigate(0)
-            })
+            try {
+                const response = await axios.post(
+                  "https://api.drnich.co.id/api/pos/kasir/transaksi",
+                  data,
+                  {
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    withCredentials: true,
+                  }
+                );
+              
+                if (response.status === 200) {
+                  toast.success("Berhasil menyimpan draft");
+                } else {
+                  toast.error("Terjadi kesalahan dalam transaksi");
+                  console.log(response);
+                }
+              } catch (error) {
+                console.error("Error dalam transaksi:", error);
+                toast.error("Terjadi kesalahan saat memproses transaksi");
+              }
         }
+        const updateJml = (id, value) => {
+            setCart((prevCart) =>
+              prevCart.map((item) =>
+                item._id === id ? { ...item, jumlah: parseInt(value) || 0 } : item
+              )
+            );
+          };
 
     return (
-        <kasirContext.Provider value={{totalAkhir, handleDraft, potongan, cashback, total, promo, invoice, cart, setCart, pelanggan, setPelangganTerpilih, pelangganTerpilih, promoTerpilih, setPromoTerpilih, modal, setModal}}>
-        <div className='flex flex-col px-10 py-8 gap-1 bg-white w-full h-fit min-h-full pt-8 text-[#454545] text-[12px]'>
+        <kasirContext.Provider value={{totalAkhir, handleDraft, potongan, cashback, total, promo, invoice, cart, setCart, pelanggan, setPelangganTerpilih, pelangganTerpilih, promoTerpilih, setPromoTerpilih, modal, setModal}}>    
+        <div className='flex flex-col px-10 py-8 gap-1 bg-white w-full h-full min-h-full pt-8 text-[#454545] text-[12px]'>
+        <div className='max-h-[90%] overflow-auto w-full flex flex-col'>
             <button className='flex justify-between'>
                 <button className='border-b-2 border-[#C2A353] text-[#C2A353] w-[50%] shadow-md'>  
                     <p>Transaksi</p>
@@ -295,8 +367,8 @@ export const Kasir = () => {
                             <button onClick={() => min(item._id)}>
                                 <img src={iMin} alt="minus" />
                             </button>
-                            <p>{item.jumlah}</p>
-                            <button onClick={() => plus(item._id)}>
+                            <input className="w-12 text-center appearance-none outline-none" value={item.jumlah} onChange={(e)=>updateJml(item._id, e.target.value)} type="text" />
+                    <button onClick={() => plus(item._id)}>
                                 <img src={iPlus} alt="plus" />
                             </button>
                             <button onClick={
@@ -329,9 +401,14 @@ export const Kasir = () => {
 
                 </button>
             ))}
-            <div className='flex justify-between text-center text-[14px] mt-auto'>
+            </div>
+            <div className=' flex justify-between text-center text-[14px] mt-auto'>
                     <button 
-                    onClick={handleDraft}
+                    onClick={(e)=>{
+                        e.preventDefault()
+                        kalkulasi2()
+                        setSimpanDraft(true)
+                    }}
                     className='border border-[#C2A353] text-[#C2A353] w-[39%] p-4 rounded-xl'>
                         <p>Simpan Draft</p>
                     </button>

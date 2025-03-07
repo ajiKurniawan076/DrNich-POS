@@ -40,12 +40,12 @@ export const DraftTransaksi2 = () => {
                 {item.transaksiDetail.length>0 && item.transaksiDetail.map((isi,j) => (
                     <div key={j} className='w-full flex justify-between'>
                    <p>{isi.produk.namaProduk}</p> 
-                   <p>Rp. {isi.produk.hargaJual}</p> 
+                   <p>Rp. {isi.produk.hargaJual?.toLocaleString('id-ID')}</p> 
                    </div>
                 ))}
                 <div className='w-full border-t mt-2 mb-2 flex justify-between'>
                    <p>Total</p> 
-                   <p>Rp. {item.totalAkhir}</p> 
+                   <p>Rp. {item.totalAkhir?.toLocaleString('id-ID')}</p> 
                    </div>
                 </div>
                 </div>

@@ -144,7 +144,8 @@ export const TambahDiskon3 = () => {
 
 return (
     <modalsContext.Provider value={{modals, setModals, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriName}}>
-    <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-full h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
+    <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-full h-full overflow-auto overflow-y-scroll scrollbar-hide px-7">
+        <div className='w-full h-full flex flex-col overflow-y-auto'>
         <div className='flex flex-col px-3 h-full'>
             <p>Kategori Diskon</p>
             <div className="relative w-full mt-[5px]">
@@ -271,7 +272,8 @@ return (
             ))}
             
         </div>
-        <div className='flex items-end mt-auto h-full'>
+        </div>
+        <div className='flex items-end mt-auto'>
             <button type='submit' className='flex justify-center text-[14px] text-white bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 '>
                 Simpan
             </button>

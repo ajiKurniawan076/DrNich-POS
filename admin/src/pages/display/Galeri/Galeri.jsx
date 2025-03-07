@@ -55,7 +55,7 @@ export const Galeri = () => {
   document.title = "Galeri";
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
-      <div className="flex flex-col justify-between w-full h-full py-3 px-3">
+      <div className="flex flex-col justify-between w-full h-full overflow-auto py-3 px-3">
         {datax.length === 0 ? (
           <div className="flex flex-col w-full h-full items-center justify-center text-black/40">
             Belum Ada Data Galeri
@@ -80,12 +80,12 @@ export const Galeri = () => {
             ))}
           </div>
         )}
+      </div>
         <Link
           to={{ pathname: "/pos/galeriAdd" }}
           className="flex justify-center items-center gap-2 h-[44px]  bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] ">
           <AiFillPlusCircle size={20} /> Tambah Galeri
         </Link>
-      </div>
     </div>
   );
 };

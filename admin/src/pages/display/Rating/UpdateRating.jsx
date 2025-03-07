@@ -6,6 +6,7 @@ import gkategori from "../../../assets/iconDisplay/Layanan/gkategori.svg";
 
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const UpdateRating = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -14,6 +15,7 @@ export const UpdateRating = () => {
   const fotoRef = useRef(null);
   const namaRef = useRef(null);
   const ulasanRef = useRef(null);
+  const ratingRef = useRef(null)
   const [gambar, setGambar] = useState();
   const [namaGambar, setNamaGambar] = useState("");
   const [datax, setdatax] = useState([]);
@@ -36,6 +38,7 @@ export const UpdateRating = () => {
   useEffect(() => {
     fetchData();
     setNav("Ubah Rating");
+    setLink(-1)
   }, []);
   const handleGambar = (e) => {
     e.preventDefault();
@@ -61,18 +64,17 @@ export const UpdateRating = () => {
 
     const fdata = new FormData();
     fdata.append("nama", namaRef.current.value);
+    fdata.append("ulasan", ulasanRef.current.value)
+    fdata.append("rating", ratingRef.current.value)
     if (fotoRef.current.files.length > 0) {
       fdata.append("foto", fotoRef.current.files[0]);
-    } else {
-      toast.error("Harap pilih gambar sebelum mengunggah!");
-      return;
     }
     // fdata.append("ulasan", ulasanRef.current.value);
     try {
       const response = await axios.put(
         `${
           import.meta.env.VITE_BASE_URL_BACKEND
-        }/api/ulasan//updateulasan${id}`,
+        }/api/ulasan//updateulasan/${id}`,
         fdata,
         {
           headers: {
@@ -83,7 +85,7 @@ export const UpdateRating = () => {
         }
       );
       if (response.status === 200) {
-        toast.success("Berhasil menambahkan Rating");
+        toast.success("Berhasil mengupdate Rating");
         setTimeout(() => {
           navigate("/pos/rating");
         }, 3000);
@@ -99,7 +101,7 @@ export const UpdateRating = () => {
   };
 
   setNav("Edit Rating")
-  setLink("/pos/rating")
+  setLink(-1)
   document.title = "Ubah Rating";
   const [supstat, setsupstat] = useState(false);
   return (
@@ -141,7 +143,7 @@ export const UpdateRating = () => {
           </div>
         </div>
         <label className="text-[#454545] text-start text-[12px]">
-          Nama Ketegori
+          Nama Reviewer
         </label>
         <input
           defaultValue={datax.nama}
@@ -150,6 +152,15 @@ export const UpdateRating = () => {
           placeholder="Contoh: diana"
           className="px-2 border text-[12px] border-black/30 rounded-lg h-[48px]"
         />
+        <label htmlFor=""  className="text-[#454545] text-start text-[12px]">Rating</label>
+        <select className="text-[#454545] text-start text-[12px] border-2 p-2 rounded-xl outline-none" name="" ref={ratingRef} id="">
+          <option selected value={datax.rating}>{datax.rating}</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
         <label className="text-[#454545] text-start text-[12px]">Review</label>
         <textarea
           defaultValue={datax.ulasan}

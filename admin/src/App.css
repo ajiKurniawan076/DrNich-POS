@@ -72,7 +72,11 @@
 .main-content {
   -webkit-overflow-scrolling: touch; /* Improves scrolling on mobile */
 }
-.main-content div {
+.main-content div{
+  -webkit-overflow-scrolling: inherit;
+  scrollbar-width: inherit;
+}
+.main-content form{
   -webkit-overflow-scrolling: inherit;
   scrollbar-width: inherit;
 }

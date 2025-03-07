@@ -135,8 +135,9 @@ export const Cashback3 = () => {
     document.title = 'Tambah Cashback'
     return (
         <modalContext.Provider value={{ modal, setModal, jenis, kategori, produk, produkTerpilih, setProdukTerpilih, kategoriname }}>
-            <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-full h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
-                <div className='flex flex-col px-3 h-full'>
+            <form onSubmit={handleSubmit} className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] h-full px-7">
+                <div className='flex flex-col h-full overflow-y-auto'>
+                <div className='flex flex-col px-3'>
                     <p>Kategori Cashback</p>
                     <div className="relative w-full mt-[5px]">
                         <select
@@ -162,12 +163,12 @@ export const Cashback3 = () => {
                         />
                     </div>
                 </div>
-                <div className='flex flex-col px-3 h-full'>
+                <div className='flex flex-col px-3'>
                     <p>Nama Promo Cashback</p>
                     <input ref={namaPromoRef} type='text' placeholder='Nama Promo Cashback' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                     </input>
                 </div>
-                <div className='flex flex-col px-3 h-full'>
+                <div className='flex flex-col px-3'>
                     <p>Jumlah Cashback</p>
                     <div className='flex relative justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                         <input type='number' ref={cashbackRef} placeholder='100' className='outline-none flex justify-between w-full text-start items-center'>
@@ -250,7 +251,8 @@ export const Cashback3 = () => {
                     ))}
 
                 </div>
-                <div className='flex items-end h-full mt-auto'>
+                </div>
+                <div className='flex items-end mt-auto'>
                     <button type='submit' className=' flex justify-center text-[14px] text-white bg-gradient-to-r rounded-xl from-[#EAC564] to-[#C2A353] w-full p-4 '>
                         Simpan
                     </button>

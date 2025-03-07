@@ -25,14 +25,23 @@ export const LayananAdd = () => {
   const [gambarx, setGambarx] = useState(null);
   const [namaGambarx, setNamaGambarx] = useState("");
 
+  const fetchCategory = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/getAllJenisLayanan`
+      );
+      const data = response.data;
+      setdatax(data);
+    } catch (error) {
+      console.log(error.response?.data?.message || "An error occurred");
+      toast.error("Ada masalah. Silahkan coba lagi!");
+    }
+  };
+
   useEffect(() => {
-    const dataDummy = () => [
-      { id: 1, nama: "fecial Wols" },
-      { id: 2, nama: "fecial series" },
-    ];
-    setdatax(dataDummy);
+    fetchCategory();
     setNav("Tambah Layanan");
-    setLink(-1)
+    setLink(-1);
   }, []);
 
   const handleFile = (e) => {
@@ -60,9 +69,9 @@ export const LayananAdd = () => {
       nama: namaLayananRef.current.value,
       harga: hargaRef.current.value.trim(),
       durasi: durasiRef.current.value,
-      deskripsiDetail: deskripsiDetailRef.current.value,
-      deskripsiKartu: deskripsikartuRef.current.value,
-      filesGambar: gambarx,
+      deskripsi: deskripsiDetailRef.current.value,
+      cardDeskripsi: deskripsikartuRef.current.value,
+      image: fileGambarRef.current.files[0],
     };
     if (!data.nama || !data.harga) {
       alert("tidak boleh kosong");
@@ -72,8 +81,8 @@ export const LayananAdd = () => {
     const postData = async () => {
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_BASE_URL_BACKEND
-          }/api/layanan/tambahLayanan`, data,
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/api/layanan/tambahLayanan`,
+          data,
           {
             headers: {
               "Content-Type": "multipart/form-data",
@@ -86,21 +95,19 @@ export const LayananAdd = () => {
           toast.success("Berhasil menambahkan Layanan");
           setTimeout(() => navigate("/pos/Layanan"), 2000);
         }
-        } catch (error) {
-            console.log(error.response?.data?.message || "An error occurred");
-            toast.error("Ada masalah. Silahkan coba lagi!");
-        }
+      } catch (error) {
+        console.log(error.response?.data?.message || "An error occurred");
+        toast.error("Ada masalah. Silahkan coba lagi!");
+      }
     };
-    postData()
+    postData();
   };
-  
 
   document.title = "Tambah Layanan";
   return (
     <form
       className="flex flex-col px-0 p-3 gap-1 bg-white w-full h-full"
-      onSubmit={handleSubmit}
-    >
+      onSubmit={handleSubmit}>
       <div className="flex flex-col gap-1 px-3">
         <div className="flex flex-col">
           <label className="text-start text-[454545] text-[12px]">
@@ -138,21 +145,20 @@ export const LayananAdd = () => {
         </div>
 
         <label className="text-start text-[#454545]  text-[12px]">
-          Kategori Produk
+          Kategori Layanan
         </label>
         <select
           ref={kateforiRef}
           name="options"
           className="px-4 border text-black text-[12px] border-[#DCDCDC] rounded-lg h-[48px]"
-          id=""
-        >
+          id="">
           {datax.length === 0 ? (
             <option value="" className="text-white-300 " disabled>
               Pilih kategori
             </option>
           ) : (
             datax.map((data, i) => (
-              <option className="text-black" key={i} value={data.nama}>
+              <option className="text-black" key={i} value={data._id}>
                 {data.nama}
               </option>
             ))
@@ -191,8 +197,7 @@ export const LayananAdd = () => {
           cols="auto"
           rows="2"
           className="border rounded-lg text-[12px] p-2"
-          placeholder="Contoh : Masukan deskripsi"
-        ></textarea>
+          placeholder="Contoh : Masukan deskripsi"></textarea>
         <label className="text-[#454545] text-start  text-[12px]">
           Deskripsi Kartu
         </label>
@@ -203,8 +208,7 @@ export const LayananAdd = () => {
           cols="auto"
           rows="2"
           className="border rounded-lg text-[12px] p-2"
-          placeholder="Contoh : Masukan deskripsi kartu"
-        ></textarea>
+          placeholder="Contoh : Masukan deskripsi kartu"></textarea>
         <button
           disabled={!gambarx}
           type="submit"
@@ -214,8 +218,7 @@ export const LayananAdd = () => {
               ? "bg-[#DCDCDC]"
               : "bg-gradient-to-r from-[#EAC564] to-[#C2A353]"
           }
-          flex justify-center items-center h-[44px] mt-4   text-white font-medium rounded-lg `}
-        >
+          flex justify-center items-center h-[44px] mt-4   text-white font-medium rounded-lg `}>
           Simpan
         </button>
       </div>

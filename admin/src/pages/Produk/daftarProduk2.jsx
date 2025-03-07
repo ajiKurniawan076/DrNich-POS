@@ -48,7 +48,7 @@ export const DaftarProduk2 = () => {
   }, [cari, products, asc]);
 
   return (
-    <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
+    <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] h-full overflow-auto overflow-y-scroll scrollbar-hide px-7">
       <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
         <AiOutlineSearch size={20} />
         <input
@@ -89,22 +89,22 @@ export const DaftarProduk2 = () => {
             ))}
           </div>
         )}
-        <div className="flex gap-5 w-full h-full justify-between items-end text-[14px] mt-6">
+      </div>
+        <div className="flex gap-5 w-full justify-between items-end text-[14px] mt-6">
           <a
             // href="/pos/adddaftarproduk"
             href=""
-            className="flex justify-center items-center border-[#C2A353] text-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] hover:scale-105 gap-1"
+            className="flex justify-center items-center border-[#C2A353] text-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px]  gap-1"
           >
             <img src={iBar} /> Scan
           </a>
           <a
             href="/pos/adddaftarproduk"
-            className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px] hover:scale-105 gap-1"
+            className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px]  gap-1"
           >
             <AiFillPlusCircle size={20} /> Tambah Manual
           </a>
         </div>
-      </div>
     </div>
   );
 };

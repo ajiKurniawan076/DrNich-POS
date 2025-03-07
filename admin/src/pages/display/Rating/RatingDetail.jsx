@@ -4,12 +4,13 @@ import {
   AiOutlineRightCircle,
   AiOutlineSearch,
 } from "react-icons/ai";
-import { data, Link, useParams } from "react-router-dom";
+import { data, Link, useNavigate, useParams } from "react-router-dom";
 import { navContext } from "../../../App2";
 import { useLocation } from "react-router-dom";
 
 import gkategori from "../../../assets/iconDisplay/Layanan/gkategori.svg";
 import axios from "axios";
+import { toast } from "react-toastify";
 // import { BiLockAlt } from "react-icons/bi"
 
 export const RatingDetail = () => {
@@ -20,7 +21,7 @@ export const RatingDetail = () => {
   const datadummy = lokasi.state;
   const { id } = useParams();
   console.log(id);
-
+  const navigate = useNavigate()
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -36,7 +37,28 @@ export const RatingDetail = () => {
 
   useEffect(() => {
     fetchData();
+    setLink(-1);
+    setNav('Detail Rating')
   }, []);
+
+  const handleHapus = () => {
+    try{
+    axios.delete(`${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/ulasan/deleteulasan/${id}`).then(
+      response =>{
+        response.status==200 && toast.success("Berhasil Menghapus Review")
+        setTimeout(()=>{
+          toast.success('Kembali ke halaman rating')
+          navigate(-1)
+        },1000)
+      }
+    )
+  }
+    catch{
+      toast.error("Gagal menghapus rating")
+    }
+  }
 
   document.title = "Detail";
   return (
@@ -60,12 +82,12 @@ export const RatingDetail = () => {
           </div>
         </div>
         <div className="flex gap-1">
-          <a
-            href=""
+          <button
+            onClick={handleHapus}
             className="flex justify-center items-center gap-2 h-[44px] w-full max-w-[115px]  border border-[#C2A353] font-medium rounded-lg text-[14px] bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-transparent bg-clip-text"
           >
-            Hapus{" "}
-          </a>
+            Hapus
+          </button>
           <Link
             to={{ pathname: `/pos/UpdateRating/${id}` }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "
@@ -74,14 +96,6 @@ export const RatingDetail = () => {
           </Link>
         </div>
       </div>
-      <button
-        className="w-10 h-10 bg-black/300 text-white"
-        onClick={() => {
-          setdatax([]);
-        }}
-      >
-        RESET
-      </button>
     </div>
   );
 };

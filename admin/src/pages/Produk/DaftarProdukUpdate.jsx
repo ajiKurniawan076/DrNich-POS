@@ -133,6 +133,8 @@ export const DaftarProdukUpdate = () => {
   const kategoriRef = useRef(null);
   const bonusTerapisRef = useRef(null);
   const stokRef = useRef(null);
+  const hppRef = useRef(null);
+  const skuRef = useRef(null);
   const minStokRef = useRef(null);
 
   const handleSubmit = async (e) => {
@@ -145,6 +147,8 @@ export const DaftarProdukUpdate = () => {
       kategori: kategoriRef.current.value,
       bonusTerapis: bonusTR,
       stok: stokRef?.current?.value,
+      hpp: hppRef?.current?.value,
+      sku: skuRef?.current?.value,
       minStok: minStokRef?.current?.value,
     };
     console.log(data);
@@ -241,6 +245,20 @@ export const DaftarProdukUpdate = () => {
           placeholder="Contoh : Viva Milk Cleanser"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
+        <label className="text-start font-semibold mb-[5px]">SKU</label>
+        <input
+          ref={skuRef}
+          type="text"
+          placeholder=""
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+        />
+        <label className="text-start font-semibold mb-[5px]">HPP</label>
+        <input
+          ref={hppRef}
+          type="text"
+          placeholder=""
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+        />
         <label className="text-start font-semibold">Harga Beli</label>
         <input
           defaultValue={product.hargaBeli}
@@ -287,6 +305,7 @@ export const DaftarProdukUpdate = () => {
           Nominal Keuntngan
         </label>
         <input
+          disabled
           value={`Rp ${hargaJR - hargaBR}`}
           type="text"
           placeholder=""

@@ -14,10 +14,13 @@ export const RetingAdd = () => {
   const fotoRef = useRef(null);
   const namaRef = useRef(null);
   const ulasanRef = useRef(null);
+  const ratingRef = useRef(null);
+  const [rating, setRating] = useState(5)
   const [gambar, setGambar] = useState();
   const [namaGambar, setNamaGambar] = useState("");
   useEffect(() => {
     setNav("Tambah Reting");
+    setLink(-1)
   }, []);
 
   const handleGambar = (e) => {
@@ -43,6 +46,8 @@ export const RetingAdd = () => {
     }
 
     const fdata = new FormData();
+    fdata.append("ulasan", ulasanRef.current.value)
+    fdata.append('rating', rating)
     fdata.append("nama", namaRef.current.value);
     if (fotoRef.current.files.length > 0) {
       fdata.append("foto", fotoRef.current.files[0]);
@@ -78,6 +83,9 @@ export const RetingAdd = () => {
       );
     }
   };
+  const changeRating =() =>{
+    setRating(ratingRef.current.value)
+  }
 
   document.title = "Tambah Reting";
   const [supstat, setsupstat] = useState(false);
@@ -120,7 +128,7 @@ export const RetingAdd = () => {
           </div>
         </div>
         <label className="text-[#454545] text-start text-[12px]">
-          Nama Ketegori
+          Nama Reviewer
         </label>
         <input
           ref={namaRef}
@@ -128,6 +136,14 @@ export const RetingAdd = () => {
           placeholder="Contoh: diana"
           className="px-2 border text-[12px] border-black/30 rounded-lg h-[48px]"
         />
+        <label htmlFor=""  className="text-[#454545] text-start text-[12px]">Rating</label>
+        <select className="text-[#454545] text-start text-[12px] border-2 p-2 rounded-xl outline-none" name="" ref={ratingRef} onChange={changeRating} id="">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option selected value="5">5</option>
+        </select>
         <label className="text-[#454545] text-start text-[12px]">Review</label>
         <textarea
           ref={ulasanRef}
