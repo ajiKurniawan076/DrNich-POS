@@ -49,6 +49,14 @@ export const DaftarBelanja = () => {
       )
     );
   };
+
+  const updateJml = (id, value) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item._id === id ? { ...item, jumlah: parseInt(value) || 0 } : item
+      )
+    );
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTombol(false)
@@ -159,7 +167,8 @@ export const DaftarBelanja = () => {
         setCart,
       }}
     >
-      <form className="flex flex-col px-7 py-3 gap-1 bg-white w-full min-h-screen h-fit text-[12px] text-[#454545] overflow-auto overflow-y-scroll scrollbar-hide">
+      <form className="flex flex-col px-7 py-3 gap-1 bg-white w-full h-full text-[12px] text-[#454545] overflow-auto overflow-y-scroll scrollbar-hide">
+        <div className="w-full h-full overflow-y-auto flex flex-col">
         <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
           <AiOutlineSearch size={20} />
           <input
@@ -209,18 +218,18 @@ export const DaftarBelanja = () => {
                   <p>({item.stok})</p>
                 </div>
                 <div className="flex items-center justify-start w-full gap-10 text-[#454545] border-b-2 pb-4 text-[12px] mt-2">
-                  <div className="">
-                    <img src={iCen} alt="kocen" />
+                  <div className="font-bold">
+                    -
                   </div>
                   <div className="text-start">
                     <p>{item.namaProduk}</p>
                     <p>Rp. {item.hargaBeli.toLocaleString("id-ID")}</p>
                   </div>
-                  <div className="flex gap-4 ms-auto">
+                  <div className="flex gap-4 ms-auto justify-end">
                     <button onClick={() => min(item._id)}>
                       <img src={iMin} alt="minus" />
                     </button>
-                    <p>{item.jumlah}</p>
+                    <input className="w-12 text-center appearance-none outline-none " value={item.jumlah} onChange={(e)=>updateJml(item._id, e.target.value)} type="text" />
                     <button onClick={() => plus(item._id)}>
                       <img src={iPlus} alt="plus" />
                     </button>
@@ -236,7 +245,8 @@ export const DaftarBelanja = () => {
             </div>
           ))}
         </div>
-        <div className="flex w-full h-full justify-end px-3 mt-auto">
+        </div>
+        <div className="flex w-full justify-end px-3 mt-auto">
           <div className="flex flex-col justify-end w-full md:w-[50%]">
             <button
               onClick={handleSubmit}

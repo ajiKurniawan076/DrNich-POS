@@ -108,12 +108,12 @@ export const DetailProduk = () => {
           </span>
         </a>
         <div className="flex gap-5 w-full justify-between text-[14px] mt-auto">
-          <button className="flex justify-center items-center border-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] bg-white text-[#C2A353] hover:scale-105">
+          <button className="flex justify-center items-center border-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] bg-white text-[#C2A353] ">
             Hapus
           </button>
           <Link
             to={{ pathname: `/pos/DaftarProdukUpdate/${id}` }}
-            className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px] hover:scale-105"
+            className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px] "
           >
             Edit
           </Link>

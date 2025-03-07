@@ -7,8 +7,9 @@ import {
 import { data, Link, useParams } from "react-router-dom";
 import { navContext } from "../../../../App2";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const ProdukDetail = () => {
   const lokasi = useLocation();
@@ -44,6 +45,31 @@ export const ProdukDetail = () => {
     setLink('/pos/produktipe')
   }, []);
 
+  const navigate = useNavigate()
+const handleHapus = () => {
+    try{
+    axios.delete(`${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/produk/deleteproducttype/${id}`,  {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          withCredentials: true,
+        }).then(
+      response =>{
+        response.status==200 && toast.success("Berhasil Menghapus Tipe Produk")
+        setTimeout(()=>{
+          toast.success('Kembali ke halaman Tipe Produk')
+          navigate('/pos/produktipe')
+        },1000)
+      }
+    )
+  }
+    catch{
+      toast.error("Gagal menghapus Tipe Produk")
+    }
+  }
+
   document.title = "Detail";
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
@@ -55,12 +81,12 @@ export const ProdukDetail = () => {
           </div>
         </div>
         <div className="flex gap-1">
-          <a
-            href=""
+        <button
+            onClick={handleHapus}
             className="flex justify-center items-center gap-2 h-[44px] w-full max-w-[115px]  border border-[#C2A353] font-medium rounded-lg text-[14px] bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-transparent bg-clip-text"
           >
             Hapus{" "}
-          </a>
+          </button>
           <Link
             to={{ pathname: `/pos/UpdateTipeProduk/${id}` }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "
@@ -69,14 +95,6 @@ export const ProdukDetail = () => {
           </Link>
         </div>
       </div>
-      <button
-        className="w-10 h-10 bg-black/300 text-white"
-        onClick={() => {
-          setdatax([]);
-        }}
-      >
-        RESET
-      </button>
     </div>
   );
 };

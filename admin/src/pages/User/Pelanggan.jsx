@@ -65,7 +65,7 @@ export const Pelanggan = () => {
 
   document.title = "Pelanggan";
   return (
-    <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7">
+    <div className="flex flex-col py-3 gap-1 bg-white w-full text-[12px] text-[#454545] h-full overflow-auto overflow-y-scroll scrollbar-hide px-7">
       <form className="my-5 flex gap-2 mx-3 border border-[#BDBDBD] rounded-xl items-center p-3">
         <AiOutlineSearch size={20} />
         <input
@@ -76,7 +76,7 @@ export const Pelanggan = () => {
           placeholder="Cari..."
         ></input>
       </form>
-      <div className="flex flex-col justify-between w-full h-full py-3 px-3 text-[12px]">
+      <div className="flex flex-col justify-between w-full h-full overflow-auto py-3 px-3 text-[12px]">
         {tampil.length === 0 ? (
           <div className="flex flex-col w-full min-h-screen items-center justify-center text-[#cdcdcd]">
             Tidak Ada Data

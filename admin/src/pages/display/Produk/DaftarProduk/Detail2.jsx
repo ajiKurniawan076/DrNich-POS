@@ -4,11 +4,12 @@ import {
   AiOutlineRightCircle,
   AiOutlineSearch,
 } from "react-icons/ai";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { navContext } from "../../../../App2";
 import gkategori from "../../../../assets/iconDisplay/Layanan/gkategori.svg";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const Detail2 = () => {
   const lokasi = useLocation();
@@ -43,6 +44,26 @@ export const Detail2 = () => {
     setNav("Detail");
     setLink("/pos/produk1")
   }, []);
+  const navigate = useNavigate()
+const handleHapus = () => {
+    try{
+    axios.delete(`${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/foto/deleteMesin/${id}`).then(
+      response =>{
+        response.status==200 && toast.success("Berhasil Menghapus Sertifikat")
+        setTimeout(()=>{
+          toast.success('Kembali ke halaman Sertifikat')
+          navigate('/pos/sertifikat')
+        },1000)
+      }
+    )
+  }
+    catch{
+      toast.error("Gagal menghapus Sertifikat")
+    }
+  }
+
 
   document.title = "Detail";
   return (
@@ -86,12 +107,12 @@ export const Detail2 = () => {
           </div>
         </div>
         <div className="flex gap-1">
-          <a
-            href=""
+        <button
+            onClick={handleHapus}
             className="flex justify-center items-center gap-2 h-[44px] w-full max-w-[115px]  border border-[#C2A353] font-medium rounded-lg text-[14px] bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-transparent bg-clip-text"
           >
             Hapus{" "}
-          </a>
+          </button>
           <Link
             to={{ pathname: `/pos/UpdateDaftarProduk/${di}` }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "

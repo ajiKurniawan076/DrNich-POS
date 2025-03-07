@@ -73,6 +73,26 @@ export const GaleriDetail = () => {
     setLink("/pos/galeri");
   }, []);
 
+const handleHapus = () => {
+    try{
+    axios.delete(`${
+          import.meta.env.VITE_BASE_URL_BACKEND
+        }/api/gallery/deletegaleri/${id}`).then(
+      response =>{
+        response.status==200 && toast.success("Berhasil Menghapus Galeri")
+        setTimeout(()=>{
+          toast.success('Kembali ke halaman Galeri')
+          navigate('/pos/galeri')
+        },1000)
+      }
+    )
+  }
+    catch{
+      toast.error("Gagal menghapus Sertifikat")
+    }
+  }
+
+
   document.title = "Detail";
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
@@ -104,11 +124,12 @@ export const GaleriDetail = () => {
           </div>
         </div>
         <div className="flex gap-1">
-          <a
-            onClick={deleteGallery}
-            className="flex justify-center items-center gap-2 h-[44px] w-full max-w-[115px]  border border-[#C2A353] font-medium rounded-lg text-[14px] bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-transparent bg-clip-text">
+        <button
+            onClick={handleHapus}
+            className="flex justify-center items-center gap-2 h-[44px] w-full max-w-[115px]  border border-[#C2A353] font-medium rounded-lg text-[14px] bg-gradient-to-r from-[#C2A353] to-[#EAC564] text-transparent bg-clip-text"
+          >
             Hapus{" "}
-          </a>
+          </button>
           <Link
             to={{ pathname: `/pos/UpdateGaleri/${id}` }}
             className="flex justify-center items-center gap-2 h-[44px] w-full min-m-[160px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] ">
@@ -116,18 +137,6 @@ export const GaleriDetail = () => {
           </Link>
         </div>
       </div>
-      <button
-        className="w-10 h-10 bg-black/300 text-white"
-        onClick={() => {
-          setJudul("");
-          setThumbnail("");
-          setLinkSosmed("");
-          setChannel("");
-          setSosmed("");
-          setDeskripsi("");
-        }}>
-        RESET
-      </button>
     </div>
   );
 };

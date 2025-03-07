@@ -36,8 +36,7 @@ export const Display = () => {
         to={{
           pathname: `/pos/sertifikat`,
         }}
-        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
-      >
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={iserti} className="ms-[25px]" />
@@ -53,8 +52,7 @@ export const Display = () => {
         to={{
           pathname: `/pos/layananKategori`,
         }}
-        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
-      >
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={ilaya} className="ms-[25px]" />
@@ -67,7 +65,9 @@ export const Display = () => {
         </span>
       </Link>
 
-      <Link to={{ pathname: "/pos/Mesin" }} className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+      <Link
+        to={{ pathname: "/pos/Mesin" }}
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={imes} className="ms-[25px]" />
@@ -82,8 +82,7 @@ export const Display = () => {
 
       <Link
         to={{ pathname: "/pos/produk" }}
-        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
-      >
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={iproduk} className="ms-[25px]" />
@@ -97,8 +96,7 @@ export const Display = () => {
       </Link>
       <Link
         to={{ pathname: "/pos/galeri" }}
-        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
-      >
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={igaleri} className="ms-[25px]" />
@@ -110,7 +108,9 @@ export const Display = () => {
           </div>
         </span>
       </Link>
-      <Link className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
+      <Link
+        to={{ pathname: "/pos/displayPromo" }}
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />
           <img src={ipromo} className="ms-[25px]" />
@@ -126,8 +126,7 @@ export const Display = () => {
         to={{
           pathname: "/pos/rating",
         }}
-        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md"
-      >
+        className="w-full h-[80px] p-[1px] bg-gradient-to-r from-[#EAC564] to-[#C2A353] rounded-xl shadow-md">
         {" "}
         <span className="w-full h-full rounded-xl px-[15px] py-[20px] flex items-center bg-white">
           <img src={iLine} />

@@ -6,6 +6,7 @@ import iTambah from "../../assets/iconproduk/Itambah.svg";
 import { modalContext } from "./DaftarBelanja";
 import { modalsContext } from "./DaftarBelanjaModals";
 import { toast } from "react-toastify";
+import Select from "react-select"
 
 export const PembelianStok = (props) => {
   const { setNav, setSort, setLink } = useContext(navContext);
@@ -29,6 +30,7 @@ export const PembelianStok = (props) => {
   const [jumlahPembelian, setJumlahPembelian] = useState([]);
   const [produkTerpilih, setProdukTerpilih] = useState([]);
   const [produkKategoriTampil, setProdukKategoriTampil] = useState([])
+  const [options, setoptions] = useState([])
 
   const handleTambah = (e) => {
     e.preventDefault();
@@ -45,10 +47,11 @@ export const PembelianStok = (props) => {
     setModals(false);
     console.log(produkTerpilih);
   };
-  const pilihproduk = () => {
+  const pilihproduk = (selected) => {
     const filterr = produkKategori.filter(
-      (item) => item.namaProduk == produkpilihanRef.current.value
+      (item) => item.namaProduk == selected.value
     );
+    console.log(selected.value)
     setProdukTerpilih(filterr);
   };
 
@@ -73,6 +76,10 @@ export const PembelianStok = (props) => {
       (item) => item.kategori._id == kategoriTerpilih
     );
     setProdukKategoriTampil(filterr);
+    const produk = []
+    filterr.map(item=>produk.push({value: item.namaProduk, label: item.namaProduk+ ' ( Supplier : '+item.supplier.namaPerusahaan+ ' )'}))
+    setoptions(produk)
+    console.log(produk)
   }, [kategoriTerpilih]);
 
   document.title = "Pembelian Stok";
@@ -119,12 +126,12 @@ export const PembelianStok = (props) => {
             <label className="text-start text-[12px] text-[#454545] font-medium text-sm mb-1">
               Nama Produk
             </label>
-            <input
-              onChange={pilihproduk}
-              ref={produkpilihanRef}
-              list="pilihProduk"
-              placeholder="Pilih Produk"
-              className="text-[12px] py-2 px-4 w-full border text-sm text-black border-[#BDBDBD] rounded-xl"
+            <Select
+            onChange={pilihproduk}
+            options ={options || []}
+            issearchable
+            placeholder='Pilih Produk'
+            className='w-full'
             />
           </div>
         </div>
@@ -135,7 +142,7 @@ export const PembelianStok = (props) => {
                 SKU
               </label>
               <label className="text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] ">
-                { }
+                {item?.sku }
               </label>
             </div>
             <div className="grid py-2">

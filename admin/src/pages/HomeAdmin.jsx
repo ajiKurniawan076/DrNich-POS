@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react"
 import { AiOutlineUser, AiOutlineRead, AiFillFolderAdd, AiFillDatabase, AiOutlineFile, AiOutlineBook, AiOutlineAlert, AiOutlineFileZip, AiOutlineShop } from "react-icons/ai"
 import { navContext } from "../App2"
-import Ava from "../assets/img.svg";
+import Ava from "../assets/img.jpg";
 import iUser from "../assets/iconuser.svg";
 import iProduk from "../assets/iconproduk.svg";
 import iLaporan from "../assets/iconlaporan.svg";
@@ -24,8 +24,8 @@ export const HomeAdmin = () => {
               
       {/* Super Admin section */}
       <div className="admin-section">
-        <div className="grid absolute top-4 place-items-center">
-          <img src={Ava} className="rounded-full h-auto w-[100px]" />
+        <div className="grid absolute top-2 place-items-center">
+          <img src={Ava} className="rounded-full h-auto w-[170px]" />
           <h5 className="mt-3 font-semibold text-[16px]">Super Admin</h5>
         </div>
       </div>

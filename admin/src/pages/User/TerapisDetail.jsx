@@ -92,15 +92,6 @@ export const TerapisDetail = () => {
         <p className="text-start font-semibold h-[30px]">{datax.keterangan}</p>
       </div>
       <div className="mx-1 flex flex-col gap-3">
-        <a href="#" className=" w-full h-[50px] mt-2">
-          <span className="hover:scale-105 w-full  h-full border rounded-xl text-[#C2A353] border-[#C2A353] flex items-center font-semibold px-5">
-            Lihat Foto KTP
-            <div className="flex ms-auto">
-              <AiOutlineRight className="text-yellow-300" size={15} />
-              <AiOutlineRight className="text-yellow-600" size={15} />
-            </div>
-          </span>
-        </a>
         <div className="flex gap-5 w-full justify-between text-[14px]">
           <div className="flex justify-center items-center border-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px]">
             <button className="bg-white text-[#C2A353]">Hapus</button>

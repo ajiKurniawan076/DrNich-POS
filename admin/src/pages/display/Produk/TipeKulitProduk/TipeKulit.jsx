@@ -19,7 +19,7 @@ const TipeKulit = () => {
     document.title = 'Tipe Kulit'
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
-            <div className="flex flex-col justify-between w-full gap-3 h-full py-3 px-3">
+            <div className="flex flex-col justify-between w-full gap-3 h-full overflow-auto py-3 px-3">
                 <form className="mt-5 flex h-[50px] gap-3 border border-black rounded-xl items-center px-2">
                     <AiOutlineSearch size={20} />
                     <input type="text" className="text-sm w-full h-[30px] focus:outline-none" placeholder="Cari..."></input>
@@ -44,11 +44,10 @@ const TipeKulit = () => {
                     </div>
                 }
 
+            </div>
                 <Link
                     to={{ pathname: '/pos/TipeKulitTambah' }}
                     className="flex justify-center items-center gap-2 h-[44px]  bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-medium rounded-lg text-[14px] "><AiFillPlusCircle size={20} /> Tambah Tipe Kulit</Link>
-            </div>
-            <button className="w-10 h-10 bg-black/300 text-white" onClick={() => { setdatax([]) }}>RESET</button>
         </div>
   )
 }

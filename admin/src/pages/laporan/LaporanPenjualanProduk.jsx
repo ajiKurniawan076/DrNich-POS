@@ -19,6 +19,8 @@ import {
   Legend,
   CartesianGrid,
 } from "recharts";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 export const LaporanPenjualanProduk = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -252,6 +254,23 @@ export const LaporanPenjualanProduk = () => {
     // console.log(Minggu.current.value)
   }
 
+  const download = async (e,jsonData, fileName = "data.xlsx") => {
+    e.preventDefault()
+    console.log(data)
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Sheet1");
+            
+    // Add header row
+    worksheet.columns = Object.keys(jsonData[0]).map((key) => ({ header: key, key }));
+            
+    // Add data rows
+    jsonData.forEach((row) => worksheet.addRow(row));
+            
+    // Write to file
+    const buffer = await workbook.xlsx.writeBuffer();
+    saveAs(new Blob([buffer]), fileName);
+  }
+
 
   // Set judul halaman dan link navigasi
   setLink('/pos/laporan');
@@ -308,6 +327,13 @@ export const LaporanPenjualanProduk = () => {
       </div>
       
       <div>
+        <button
+          onClick={(e)=>{download(e,data.penjualanProduk,'laporan.xlsx')}}
+          className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px] w-full'
+        >
+          <p>Download Laporan</p>
+          <img src={iPan} alt="Panah" />
+        </button>
         <div className='flex justify-between gap-[5px] text-start items-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] my-[10px]'>
           <div className='flex gap-2 w-full '>
             <p>Total Produk Terjual</p>

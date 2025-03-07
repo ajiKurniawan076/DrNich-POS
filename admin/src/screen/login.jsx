@@ -3,6 +3,7 @@ import UserIcon from "../assets/icon/userLogo.svg";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { AiFillEye, AiFillEyeInvisible, AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 function Login() {
   const navigate = useNavigate();
@@ -94,7 +95,7 @@ function Login() {
                   Password
                 </p>
               </label>
-              <div className="relative">
+              <div className="relative bg-red-400/30">
                 <input
                   type={openPass ? "text" : "password"}
                   className="w-full h-[40px] border border-[#BDBDBD] rounded-lg px-3 text-xs font-Inter font-normal"
@@ -104,9 +105,9 @@ function Login() {
                 />
                 <button
                   type="button"
-                  className="absolute translate-y-1/2"
+                  className="absolute end-3 top-3"
                   onClick={() => setOpenPass(!openPass)}>
-                  {openPass ? "Hide" : "Show"}
+                  {openPass ? <AiOutlineEye/> : <AiOutlineEyeInvisible/>}
                 </button>
               </div>
             </div>

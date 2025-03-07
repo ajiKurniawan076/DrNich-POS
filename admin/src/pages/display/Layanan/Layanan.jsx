@@ -31,10 +31,10 @@ export const Layanan = () => {
   }, []);
 
   return (
-    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-full h-fit">
+    <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full h-full">
       <ToastContainer />
 
-      <div className="flex flex-col justify-between w-full h-full py-3 px-3">
+      <div className="flex flex-col justify-between w-full h-full overflow-auto py-3 px-3">
         {/* Jika data kosong */}
         {datax.length === 0 ? (
           <div className="flex flex-col w-full h-full items-center justify-center text-black/40">
@@ -61,6 +61,7 @@ export const Layanan = () => {
           </div>
         )}
 
+      </div>
         {/* Tombol Tambah Layanan */}
         <Link
           to="/pos/layananadd"
@@ -68,7 +69,6 @@ export const Layanan = () => {
         >
           <AiFillPlusCircle size={20} /> Tambah Layanan
         </Link>
-      </div>
     </div>
   );
 };

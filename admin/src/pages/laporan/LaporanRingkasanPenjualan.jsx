@@ -16,7 +16,8 @@ import { toDate } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from "recharts";
-
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 
 export const LaporanRingkasanPenjualan = () => {
@@ -197,6 +198,23 @@ export const LaporanRingkasanPenjualan = () => {
         console.log(sort2)
     }
 
+    const download = async (e,jsonData, fileName = "data.xlsx") => {
+            e.preventDefault()
+            console.log(data)
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = workbook.addWorksheet("Sheet1");
+          
+            // Add header row
+            worksheet.columns = Object.keys(jsonData[0]).map((key) => ({ header: key, key }));
+          
+            // Add data rows
+            jsonData.forEach((row) => worksheet.addRow(row));
+          
+            // Write to file
+            const buffer = await workbook.xlsx.writeBuffer();
+            saveAs(new Blob([buffer]), fileName);
+          
+    }
 
     setLink('/pos/laporan')
     setNav('Ringkasan Penjualan')
@@ -306,6 +324,12 @@ export const LaporanRingkasanPenjualan = () => {
                         </div>
                     </div>
                     <div className='flex flex-col gap-[10px]'>
+                        <button
+                            onClick={(e)=>{download(e,data.transaksi,'laporan.xlsx')}}
+                            className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
+                            <p>Download Laporan</p>
+                            <img src={iPan} alt="Panah" />
+                        </button>
                         <button
                             onClick={handleNavigate}
                             className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>

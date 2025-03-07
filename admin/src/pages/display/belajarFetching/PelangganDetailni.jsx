@@ -62,13 +62,13 @@ const PelangganDetailni = () => {
       <div className="flex absolute bottom-0 justify-center items-center w-full gap-2">
         <button
           onClick={handleHapus}
-          className="w-full h-10 bg-yellow-500 rounded-md hover:scale-110 duration-200"
+          className="w-full h-10 bg-yellow-500 rounded-md  duration-200"
         >
           Hapus
         </button>
         <Link
           to={{ pathname: `/PelangganEdit/${id}` }}
-          className="w-full h-10 bg-blue-500 rounded-md hover:scale-110 duration-200"
+          className="w-full h-10 bg-blue-500 rounded-md  duration-200"
         >
           Ubah
         </Link>

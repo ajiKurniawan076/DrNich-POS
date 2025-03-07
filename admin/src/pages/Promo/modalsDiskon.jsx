@@ -89,6 +89,7 @@ export const ModalsDiskon = () => {
     >
       <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white overflow-auto min-h-full px-3">
         <form className="h-full flex flex-col">
+          <div className="h-full flex flex-col overflow-y-auto">
           <div className="flex gap-[10px] justify-between mt-4">  
             <div className="relative w-full mt-1">
               <select
@@ -155,6 +156,7 @@ export const ModalsDiskon = () => {
               </p>
             </button>
           ))}
+          </div>
           <div className="flex items-end h-fit mt-auto">
             <button
             onClick={(e) => {

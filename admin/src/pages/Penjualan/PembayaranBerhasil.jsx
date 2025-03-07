@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import { FaWhatsapp } from "react-icons/fa";
 
 export const PembayaranBerhasil = () => {
   const { setNav, setLink } = useContext(navContext);
@@ -33,7 +34,7 @@ export const PembayaranBerhasil = () => {
 
     fetchData();
     setNav("Pembayaran");
-    setLink("/pos/kasir");
+    setLink(-2);
     setTimeout(() => {
       setFetched(true);
     }, 500);
@@ -66,6 +67,27 @@ export const PembayaranBerhasil = () => {
       pdf.save("invoice.pdf"); // Simpan file PDF
     });
   };
+
+  const sendWhatsApp = () => {
+  const phoneNumber = datax.pelanggan.nomorTelepon; // Ganti dengan nomor pelanggan
+  const message = encodeURIComponent(
+    `*Pembayaran Berhasil!*\n\n` +
+    `Invoice: ${datax.invoice}\n` +
+    `Tanggal: ${new Date().toLocaleString("id-ID", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}\n` +
+    `Total: IDR ${datax.totalAkhir?.toLocaleString("id-ID")}\n\n` +
+    `*Detail Pembelian:*\n` +
+    dataDalam.map(item => `- ${item.produk.namaProduk} (${item.jumlah} x Rp. ${item.produk.hargaJual?.toLocaleString("id-ID")})\n`).join("") +
+    `\nTerima kasih telah berbelanja!`
+  );
+
+  // Buat URL WhatsApp
+  const waURL = `https://wa.me/${phoneNumber}?text=${message}`;
+
+  // Redirect ke WhatsApp
+  window.open(waURL, "_blank");
+};
+
+
 
   return (
     <div className="flex flex-col px-5 py-3 gap-1 bg-white w-full min-h-screen h-fit pt-8">
@@ -126,31 +148,11 @@ export const PembayaranBerhasil = () => {
               <p className="font-semibold">Rp. {datax.kembalian?.toLocaleString("id-ID")}</p>
             </div>
           </div>
-        {/* <div className="flex justify-between text-[14px]">
-          <p>Total</p>
-          <p>Rp. {datax.total?.toLocaleString("id-ID")}</p>
-        </div>
-        <div className="flex justify-between text-[14px]">
-          <p>Potongan</p>
-          <p>Rp. {datax.potongan?.toLocaleString("id-ID")}</p>
-        </div>
-        <div className="flex justify-between text-[14px]">
-          <p>Total Pembayaran</p>
-          <p>Rp. {datax.totalAkhir?.toLocaleString("id-ID")}</p>
-        </div>
-        <div className="flex justify-between text-[14px] my-[10px]">
-          <p>Uang Pembayaran</p>
-          <p>Rp. </p>
-        </div>
-        <div className="flex justify-between text-[14px] my-[10px] font-bold">
-          <p>Uang Kembalian</p>
-          <p>Rp. </p>
-        </div> */}
       </div>
     </div>
 
       <div className="flex h-full items-end px-3">
-        <div className="flex justify-end w-full">
+        <div className="flex justify-end w-full gap-[10px]">
           {/* ✅ Panggil downloadPDF saat tombol ditekan */}
           <button
             onClick={downloadPDF}
@@ -159,8 +161,14 @@ export const PembayaranBerhasil = () => {
             <img src={iDown} alt="iDownload" />
           </button>
           <button
+            onClick={sendWhatsApp}
+            className="bg-[#25D366] hover:bg-[#1ebe5d] w-[90px] p-3 rounded-xl flex justify-center items-center text-white font-semibold gap-2 transition-all"
+          >
+            <FaWhatsapp size={24} />
+          </button>
+          <button
             onClick={() => navigasi("/pos/Kasir")}
-            className="border ml-2 border-[#C2A353] w-full rounded-xl flex justify-center items-center text-[#C2A353]"
+            className="border border-[#C2A353] w-full rounded-xl flex justify-center items-center text-[#C2A353]"
           >
             Kembali
           </button>

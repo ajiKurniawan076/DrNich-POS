@@ -36,7 +36,7 @@ export const BelajarDisplay = () => {
         }}
         className="w-full h-[80px]"
       >
-        <span className="hover:scale-110 w-full h-[80px] border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className=" w-full h-[80px] border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={iserti} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
@@ -54,7 +54,7 @@ export const BelajarDisplay = () => {
         }}
         className="w-full h-[80px]"
       >
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className=" w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={ilaya} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545] font-medium text-[14px]">
@@ -68,7 +68,7 @@ export const BelajarDisplay = () => {
       </Link>
 
       <Link to={{ pathname: "" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className=" w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={imes} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
@@ -82,7 +82,7 @@ export const BelajarDisplay = () => {
       </Link>
 
       <Link to={{ pathname: "/produk" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
+        <span className=" w-full h-full border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center font-bold">
           <img src={iLine} className="ms-[15px]" />
           <img src={iproduk} className="ms-[25px]" />
           <p className="ms-[15px] text-[#454545]  font-medium text-[14px]">
@@ -95,7 +95,7 @@ export const BelajarDisplay = () => {
         </span>
       </Link>
       <Link to={{ pathname: "/galeri" }} className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
+        <span className=" w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
           <img src={iLine} className="ms-[15px]" />
           <img src={igaleri} className="ms-[25px]" />
           <p className="ms-[15px] text-[14px]">Galeri</p>
@@ -106,7 +106,7 @@ export const BelajarDisplay = () => {
         </span>
       </Link>
       <Link className="w-full h-[80px]">
-        <span className="hover:scale-110 w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
+        <span className=" w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
           <img src={iLine} className="ms-[15px]" />
           <img src={ipromo} className="ms-[25px]" />
           <p className="ms-[15px] text-[14px]">Promo</p>
@@ -123,7 +123,7 @@ export const BelajarDisplay = () => {
         className="w-full h-[80px]"
       >
         {" "}
-        <span className="hover:scale-110 w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
+        <span className=" w-full h-full text-[#454545]  font-medium border rounded-xl px-0 py-[20px] border-yellow-700 flex items-center ">
           <img src={iLine} className="ms-[15px]" />
           <img src={irating} className="ms-[25px]" />
           <p className="ms-[15px] text-[14px]">Rating</p>
