@@ -75,13 +75,13 @@ return (
             <p>#{transaksi?.invoice}</p>
         </div>
         {transaksi?.transaksiDetail?.map((item,i) => (
-           <div key={i} className='flex justify-between w-full mt-2'>
-           <div className='grid place-items-start w-fitt font-semibold'>
-               <p>{item?.produk?.namaProduk}</p>
-               <p>{item?.jumlah} x Rp {item?.produk?.hargaJual}</p>
-           </div>
-           <p className='font-semibold'>Rp {item?.jumlah * item?.produk?.hargaJual}</p>
-       </div>
+            <div key={i} className='flex justify-between w-full mt-2'>
+            <div className='grid place-items-start w-fitt font-semibold'>
+                <p>{item?.produk?.namaProduk}</p>
+                <p>{item?.jumlah} x Rp {item?.produk?.hargaJual}</p>
+            </div>
+            <p className='font-semibold'>Rp {item?.jumlah * item?.produk?.hargaJual}</p>
+        </div>
         ))}
         <div className='border border-dashed border-[#BDBDBD] my-5'></div>
         <div className='flex justify-between w-full'>
