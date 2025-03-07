@@ -22,6 +22,8 @@ export const PelangganAnd = () => {
   const alamatRef = useRef(null);
   const keteranganRef = useRef(null);
   const [isFilled, setIsFilled] = useState(false);
+  const [notel, setNotel] = useState('')
+  const [notelR, setNotelR] = useState('')
 
   const checkFormFilled = () => {
     if (
@@ -41,7 +43,7 @@ export const PelangganAnd = () => {
     const data = {
       namaPelanggan: namaPelangganRef.current.value,
       poin: 0,
-      nomorTelepon: nomorTeleponRef.current.value,
+      nomorTelepon: notelR,
       gender: genderRef.current.value,
       alamat: alamatRef.current.value,
       keterangan: keteranganRef.current.value,
@@ -73,6 +75,12 @@ export const PelangganAnd = () => {
     }
   }
 
+  const NoTel = () => {
+    const a = nomorTeleponRef.current.value.replace(/\D/g, "")
+    setNotelR(a)
+    setNotel(Number(a))
+  }
+
   const toasts = () => {
     toast.error('gagal')
   }
@@ -85,15 +93,14 @@ export const PelangganAnd = () => {
       onSubmit={handleSubmit}
     >
     <ToastContainer/>
-      <div className="flex flex-col gap-[20px] px-3 h-full">
+      <div onChange={checkFormFilled} className="flex flex-col gap-[20px] px-3 h-full">
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Nama Pelanggan</label>
+          <label className="text-start font-semibold mb-[5px]">Nama Pelanggan *</label>
           <input
             ref={namaPelangganRef}
             type="text"
             placeholder="Contoh : Aji"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
             />
         </div>
         <div className="flex flex-col">
@@ -106,23 +113,23 @@ export const PelangganAnd = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Nomor Telepon</label>
+          <label className="text-start font-semibold mb-[5px]">Nomor Telepon * ( Diawali Dengan 62***** )</label>
           <input
             ref={nomorTeleponRef}
-            type="number"
-            placeholder="Contoh : 0892323232"
+            value={notel}
+            onChange={NoTel}
+            type="text"
+            placeholder="Contoh : 62892323232"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Jenis Kelamin</label>
+          <label className="text-start font-semibold mb-[5px]">Jenis Kelamin *</label>
           <select
             ref={genderRef}
             name="options"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px]"
             id="Gender"
-            onChange={checkFormFilled}
           >
           <option value="" className="text-gray-300" selected disabled>
             Pilih Jenis Kelamin
@@ -132,13 +139,12 @@ export const PelangganAnd = () => {
           </select>
         </div>
         <div className="flex flex-col">
-          <label className="text-start font-semibold mb-[5px]">Alamat</label>
+          <label className="text-start font-semibold mb-[5px]">Alamat *</label>
           <input
             ref={alamatRef}
             type="text"
             placeholder="Contoh : Jalan Kalitaman 22 Salatiga"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
           />
         </div>
         <div className="flex flex-col">
@@ -148,7 +154,6 @@ export const PelangganAnd = () => {
             type="text"
             placeholder="Contoh : Karyawan"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
-            onChange={checkFormFilled}
           />
         </div>
       </div>

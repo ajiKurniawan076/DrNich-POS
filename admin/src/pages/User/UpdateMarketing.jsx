@@ -18,12 +18,15 @@ export const UpdateMarketing = () => {
   const bankRef = useRef(null);
   const nomorRekeningRef = useRef(null);
   const imageRef = useRef(null);
-
   const { id } = useParams();
   const [datax, setDatax] = useState([]);
   const [imagePreview, setImagePreview] = useState(null); // State to store image preview
   const [imageFile, setImageFile] = useState(null); // State to store the selected image file
   const [isFilled, setIsFilled] = useState(false)
+  const [norek, setNorek] = useState('')
+  const [norekR, setNorekR] = useState('')
+  const [notel, setNotel] = useState('')
+  const [notelR, setNotelR] = useState('')
 
   const checkFormFilled = () => {
     if (
@@ -58,34 +61,34 @@ export const UpdateMarketing = () => {
 
     const fdata = new FormData();
     fdata.append('namaMarketing', namaMarketingRef.current.value);
-    fdata.append('nomorTelepon', nomorTeleponRef.current.value);
+    fdata.append('nomorTelepon', notelR);
     fdata.append('alamat', alamatRef.current.value);
     fdata.append('keterangan', keteranganRef.current.value);
     fdata.append('namaRekening', namaRekeningRef.current.value);
     fdata.append('bank', bankRef.current.value);
-    fdata.append('nomorRekening', nomorRekeningRef.current.value);
+    fdata.append('nomorRekening', norekR);
     if (imageFile) {
       fdata.append('image', imageFile); // Append the image if there's a selected file
     }
 
-    // axios
-    //   .put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, fdata, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data", // Set content type for file upload
-    //     },
-    //   })
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       console.log(response);
-    //       navigate("../marketing"); // Redirect after successful update
-    //     } else {
-    //       alert("Gagal menyimpan data!");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error saat menyimpan data:", error);
-    //     alert("Terjadi kesalahan saat menyimpan data!");
-    //   });
+    axios
+      .put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, fdata, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Set content type for file upload
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response);
+          navigate("../marketing"); // Redirect after successful update
+        } else {
+          alert("Gagal menyimpan data!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error saat menyimpan data:", error);
+        alert("Terjadi kesalahan saat menyimpan data!");
+      });
     try {
             const response = await axios.put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, 
               fdata,
@@ -113,6 +116,17 @@ export const UpdateMarketing = () => {
         }
   };
 
+  const NoTel = () => {
+    const a = nomorTeleponRef.current.value.replace(/\D/g, "")
+    setNotelR(a)
+    setNotel(Number(a))
+  }
+  const Norek = () => {
+    const a = nomorRekeningRef.current.value.replace(/\D/g, "")
+    setNorekR(a)
+    setNorek(Number(a))
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,6 +134,8 @@ export const UpdateMarketing = () => {
           `https://api.drnich.co.id/api/pos/user/marketing/${id}`
         );
         setDatax(response.data);
+        setNotel(response.data.nomorTelepon || "");
+        setNorek(response.data.nomorRekening || "");
         if (response.data.image) {
           setImagePreview(response.data.image); // Set the current image from the server if available
         }
@@ -141,7 +157,7 @@ export const UpdateMarketing = () => {
       onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">Nama Lengkap</label>
+        <label className="text-start font-semibold">Nama Lengkap *</label>
         <input
           ref={namaMarketingRef}
           defaultValue={datax.namaMarketing}
@@ -149,15 +165,16 @@ export const UpdateMarketing = () => {
           placeholder="Contoh : Nikita"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Nomor Telepon</label>
-        <input
+        <label className="text-start font-semibold">Nomor Telepon * ( Diawali Dengan 62***** )</label>
+          <input
           ref={nomorTeleponRef}
-          defaultValue={datax.nomorTelepon}
-          type="number"
-          placeholder="Contoh : 0892323232"
-          className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-        />
-        <label className="text-start font-semibold">Alamat</label>
+          value={notel}
+            onChange={NoTel}
+            type="text"
+            placeholder="Contoh : 62892323232"
+            className="border border-[#BDBDBD] rounded-xl py-2 px-3"
+          />
+        <label className="text-start font-semibold">Alamat *</label>
         <input
           ref={alamatRef}
           defaultValue={datax.alamat}
@@ -166,7 +183,7 @@ export const UpdateMarketing = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
         
-        <label className="text-start font-semibold">Upload Foto KTP</label>
+        <label className="text-start font-semibold">Upload Foto KTP *</label>
         <input
           ref={imageRef}
           hidden
@@ -195,7 +212,7 @@ export const UpdateMarketing = () => {
       </div>
 
       <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">Nama Pemilik Rekening</label>
+        <label className="text-start font-semibold">Nama Pemilik Rekening *</label>
         <input
           ref={namaRekeningRef}
           defaultValue={datax.namaRekening}
@@ -203,7 +220,7 @@ export const UpdateMarketing = () => {
           placeholder="Contoh : Hana"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Bank</label>
+        <label className="text-start font-semibold">Bank *</label>
         <input
           ref={bankRef}
           defaultValue={datax.bank}
@@ -211,11 +228,12 @@ export const UpdateMarketing = () => {
           placeholder="Contoh : BCA"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Nomor Rekening</label>
+        <label className="text-start font-semibold">Nomor Rekening *</label>
         <input
           ref={nomorRekeningRef}
-          defaultValue={datax.nomorRekening}
-          type="number"
+          onChange={Norek}
+          value={norek}
+          type="text"
           placeholder="Contoh : 5670019288493"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />

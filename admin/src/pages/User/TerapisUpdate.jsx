@@ -17,7 +17,10 @@ export const TerapisUpdate = () => {
     const fetchData = async () => {
       await axios
         .get(`https://api.drnich.co.id/api/pos/user/terapis/${id}`)
-        .then((response) => setDatax(response.data));
+        .then((response) => {
+          setDatax(response.data)
+          setNotel(response.data.nomorTelepon || ""),
+          setNorek(response.data.nomorRekening || "")})
     };
     fetchData();
 
@@ -35,6 +38,10 @@ export const TerapisUpdate = () => {
   const bankRef = useRef(null);
   const imageRef = useRef(null); // Ref for the image input
   const [isFilled, setIsFilled] = useState(false);
+  const [notel, setNotel] = useState('')
+  const [notelR, setNotelR] = useState('')
+  const [norek, setNorek] = useState('')
+  const [norekR, setNorekR] = useState('')
 
   const checkFormFilled = () => {
     if (
@@ -68,11 +75,11 @@ export const TerapisUpdate = () => {
     
     const fdata = new FormData();
     fdata.append("namaTerapis", namaTerapisRef.current.value);
-    fdata.append("nomorTelepon", nomorTeleponRef.current.value);
+    fdata.append("nomorTelepon", notelR);
     fdata.append("alamat", alamatRef.current.value);
     fdata.append("keterangan", keteranganRef.current.value);
     fdata.append("namaRekening", namaRekeningRef.current.value);
-    fdata.append("nomorRekening", nomorRekeningRef.current.value);
+    fdata.append("nomorRekening", norekR);
     fdata.append("bank", bankRef.current.value);
     if (imageFile) {
       fdata.append("image", imageFile); // Append the selected image if available
@@ -105,6 +112,17 @@ export const TerapisUpdate = () => {
       });
   };
 
+  const Notel = () => {
+    const a = nomorTeleponRef.current.value.replace(/\D/g, "")
+    setNotelR(a)
+    setNotel(Number(a).toLocaleString("id-ID"))
+  }
+  const Norek = () => {
+    const a = nomorRekeningRef.current.value.replace(/\D/g, "")
+    setNorekR(a)
+    setNorek(Number(a).toLocaleString("id-ID"))
+  }
+
   document.title = "Edit Terapis";
 
   return (
@@ -114,7 +132,7 @@ export const TerapisUpdate = () => {
       onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold">Nama Lengkap</label>
+        <label className="text-start font-semibold">Nama Lengkap *</label>
         <input
           ref={namaTerapisRef}
           defaultValue={datax.namaTerapis}
@@ -122,15 +140,16 @@ export const TerapisUpdate = () => {
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Nomor Telepon</label>
+        <label className="text-start font-semibold">Nomor Telepon * ( Diawali Dengan 62***** )</label>
         <input
-          defaultValue={datax.nomorTelepon}
+          value={notel}
+          onChange={Notel}
           ref={nomorTeleponRef}
-          type="number"
-          placeholder="Contoh : 0892323232"
+          type="text"
+          placeholder="Contoh : 62892323232"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Alamat</label>
+        <label className="text-start font-semibold">Alamat *</label>
         <input
           defaultValue={datax.alamat}
           ref={alamatRef}
@@ -139,7 +158,7 @@ export const TerapisUpdate = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
 
-        <label className="text-start font-semibold">Upload Foto KTP</label>
+        <label className="text-start font-semibold">Upload Foto KTP *</label>
         <input
           ref={imageRef}
           type="file"
@@ -177,7 +196,7 @@ export const TerapisUpdate = () => {
 
       <div className="flex flex-col gap-1 px-3">
         <label className="text-start font-semibold">
-          Nama Pemilik Rekening
+          Nama Pemilik Rekening *
         </label>
         <input
           defaultValue={datax.namaRekening}
@@ -187,7 +206,7 @@ export const TerapisUpdate = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
 
-        <label className="text-start font-semibold">Bank</label>
+        <label className="text-start font-semibold">Bank *</label>
         <input
           defaultValue={datax.bank}
           ref={bankRef}
@@ -196,11 +215,12 @@ export const TerapisUpdate = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
 
-        <label className="text-start font-semibold">Nomor Rekening</label>
+        <label className="text-start font-semibold">Nomor Rekening *</label>
         <input
-          defaultValue={datax.nomorRekening}
+          value={norek}
+          onChange={Norek}
           ref={nomorRekeningRef}
-          type="number"
+          type="text"
           placeholder="Contoh : 5670019288493"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />

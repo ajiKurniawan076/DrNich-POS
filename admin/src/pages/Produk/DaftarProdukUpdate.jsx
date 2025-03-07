@@ -148,7 +148,7 @@ export const DaftarProdukUpdate = () => {
       bonusTerapis: bonusTR,
       stok: stokRef?.current?.value,
       hpp: hppRef?.current?.value,
-      sku: skuRef?.current?.value,
+      // sku: skuRef?.current?.value,
       minStok: minStokRef?.current?.value,
     };
     console.log(data);
@@ -190,7 +190,7 @@ export const DaftarProdukUpdate = () => {
       onChange={checkFormFilled}
     >
       <div className="flex flex-col gap-3 px-3">
-        <label className="text-start font-semibold">Jenis Produk</label>
+        <label className="text-start font-semibold">Jenis Produk *</label>
         <select
           ref={jenisRef}
           onChange={changeJenis}
@@ -214,7 +214,7 @@ export const DaftarProdukUpdate = () => {
           ))}
         </select>
         <label className="text-start font-semibold">
-          Kategori Produk
+          Kategori Produk *
         </label>
         <select
           ref={kategoriRef}
@@ -237,7 +237,7 @@ export const DaftarProdukUpdate = () => {
             </option>
           ))}
         </select>
-        <label className="text-start font-semibold">Nama Produk</label>
+        <label className="text-start font-semibold">Nama Produk *</label>
         <input
           defaultValue={product.namaProduk}
           ref={namaProdukRef}
@@ -252,14 +252,14 @@ export const DaftarProdukUpdate = () => {
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold mb-[5px]">HPP</label>
+        <label className="text-start font-semibold mb-[5px]">HPP *</label>
         <input
           ref={hppRef}
           type="text"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold">Harga Beli</label>
+        <label className="text-start font-semibold">Harga Beli *</label>
         <input
           defaultValue={product.hargaBeli}
           ref={hargaBeliRef}
@@ -269,7 +269,7 @@ export const DaftarProdukUpdate = () => {
           placeholder="0"
           className="px-2 bg-gray-400/10 border border-black/30 rounded-xl h-[30px]"
         />
-        <label className="text-start font-semibold">Harga Jual</label>
+        <label className="text-start font-semibold">Harga Jual *</label>
         <input
           defaultValue={product.hargaJual}
           ref={hargaJualRef}
@@ -280,7 +280,7 @@ export const DaftarProdukUpdate = () => {
           className="px-2 bg-gray-400/10 border border-black/30 rounded-xl h-[30px]"
         />
         <label className="text-start font-semibold">
-          Bonus Terapis
+          Bonus Terapis *
         </label>
         <input
           defaultValue={product.bonusTerapis}
@@ -306,12 +306,12 @@ export const DaftarProdukUpdate = () => {
         </label>
         <input
           disabled
-          value={`Rp ${hargaJR - hargaBR}`}
+          value={`Rp ${(hargaJR - hargaBR).toLocaleString("id-ID")}`}
           type="text"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Stok</label>
+        <label className="text-start font-semibold">Stok *</label>
         <input
           defaultValue={product.stok}
           ref={stokRef}
@@ -319,7 +319,7 @@ export const DaftarProdukUpdate = () => {
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
-        <label className="text-start font-semibold">Min Stok</label>
+        <label className="text-start font-semibold">Min Stok *</label>
         <input
           defaultValue={product.minStok}
           ref={minStokRef}

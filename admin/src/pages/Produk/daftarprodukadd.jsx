@@ -89,7 +89,6 @@ export const DaftarProdukAdd = () => {
     const a = hargaBeliRef.current.value.replace(/\D/g, "")
     setHargaBR(a)
     setHargaB(Number(a).toLocaleString("id-ID"))
-
   }
   const CharJ = () => {
     const b = hargaJualRef.current.value.replace(/\D/g, "")
@@ -134,7 +133,7 @@ export const DaftarProdukAdd = () => {
     const data = {
       jenis: selectedNamaJenis,
       namaProduk: namaProdukRef.current.value,
-      sku: SKURef.current.value,
+      // sku: SKURef.current.value,
       hpp: HPPRef.current.value,
       hargaJual: hargaJR,
       hargaBeli: hargaBR,
@@ -183,7 +182,7 @@ export const DaftarProdukAdd = () => {
       onChange={checkFormFilled}
     >
       <div className="flex flex-col px-3 h-full">
-        <label className="text-start font-semibold mb-[5px]">Jenis Produk</label>
+        <label className="text-start font-semibold mb-[5px]">Jenis Produk *</label>
         <select
           ref={jenisRef}
           onChange={changeJenis}
@@ -201,7 +200,7 @@ export const DaftarProdukAdd = () => {
           ))}
         </select>
         <label className="text-start font-semibold mb-[5px]">
-          Kategori Produk
+          Kategori Produk *
         </label>
         <select
           ref={kategoriRef}
@@ -220,7 +219,7 @@ export const DaftarProdukAdd = () => {
           ))}
         </select>
         <label className="text-start font-semibold mb-[5px]">
-          Pilih Suplier
+          Pilih Suplier *
         </label>
         <select
           ref={supplierRef}
@@ -237,7 +236,7 @@ export const DaftarProdukAdd = () => {
             </option>
           ))}
         </select>
-        <label className="text-start font-semibold mb-[5px]">Nama Produk</label>
+        <label className="text-start font-semibold mb-[5px]">Nama Produk *</label>
         <input
           ref={namaProdukRef}
           type="text"
@@ -251,14 +250,14 @@ export const DaftarProdukAdd = () => {
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold mb-[5px]">HPP</label>
+        <label className="text-start font-semibold mb-[5px]">HPP *</label>
         <input
           ref={HPPRef}
           type="text"
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold mb-[5px]">Harga Beli</label>
+        <label className="text-start font-semibold mb-[5px]">Harga Beli *</label>
         <input
           ref={hargaBeliRef}
           onChange={CharB}
@@ -267,7 +266,7 @@ export const DaftarProdukAdd = () => {
           placeholder="0"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold mb-[5px]">Harga Jual</label>
+        <label className="text-start font-semibold mb-[5px]">Harga Jual *</label>
         <input
           ref={hargaJualRef}
           onChange={CharJ}
@@ -278,7 +277,7 @@ export const DaftarProdukAdd = () => {
 
         />
         <label className="text-start font-semibold mb-[5px]">
-          Bonus Terapis
+          Bonus Terapis *
         </label>
         <input
           ref={bonusTerapisRef}
@@ -308,7 +307,7 @@ export const DaftarProdukAdd = () => {
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold mb-[5px]">Stok</label>
+        <label className="text-start font-semibold mb-[5px]">Stok *</label>
         <input
           ref={stokRef}
           defaultValue={1}
@@ -316,7 +315,7 @@ export const DaftarProdukAdd = () => {
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
-        <label className="text-start font-semibold mb-[5px]">Min Stok</label>
+        <label className="text-start font-semibold mb-[5px]">Min Stok *</label>
         <input
           ref={minStokRef}
           defaultValue={1}

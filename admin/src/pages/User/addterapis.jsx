@@ -24,6 +24,10 @@ export const Addterapis = () => {
   const bankRef = useRef(null);
   const imageRef = useRef(null);
   const [isFilled, setIsFilled] = useState(false);
+  const [norek, setNorek] = useState('')
+  const [norekR, setNorekR] = useState('')
+  const [notel, setNotel] = useState('')
+  const [notelR, setNotelR] = useState('')
 
   const checkFormFilled = () => {
     if (
@@ -67,10 +71,10 @@ export const Addterapis = () => {
     const fdata = new FormData();
 
     fdata.append('namaTerapis', namaTerapisRef.current.value);
-    fdata.append('nomorTelepon', nomorTeleponRef.current.value);
+    fdata.append('nomorTelepon', notelR);
     fdata.append('alamat', alamatRef.current.value);
     fdata.append('namaRekening', namaRekeningRef.current.value);
-    fdata.append('nomorRekening', nomorRekeningRef.current.value);
+    fdata.append('nomorRekening', norekR);
     fdata.append('bank', bankRef.current.value);
     fdata.append('image', imageRef.current.files[0]);
 
@@ -101,44 +105,54 @@ export const Addterapis = () => {
       }
   };
 
+  const NoTel = () => {
+    const a = nomorTeleponRef.current.value.replace(/\D/g, "")
+    setNotelR(a)
+    setNotel(Number(a).toLocaleString("id-ID"))
+  }
+  const Norek = () => {
+    const a = nomorRekeningRef.current.value.replace(/\D/g, "")
+    setNorekR(a)
+    setNorek(Number(a).toLocaleString("id-ID"))
+  }
+
   document.title = 'Tambah Terapis';
   const [supstat, setsupstat] = useState(false);
 
   return (
     <form
-    onChange={checkFormFilled}
+      onChange={checkFormFilled}
       className="flex flex-col py-3 bg-white w-full text-[12px] text-[#454545] min-h-screen h-fit overflow-auto overflow-y-scroll scrollbar-hide px-7"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col px-3 h-full">
-        <label className="text-start font-semibold mb-[5px]">Nama Lengkap</label>
+        <label className="text-start font-semibold mb-[5px]">Nama Lengkap *</label>
         <input
           ref={namaTerapisRef}
           type="text"
           placeholder="Contoh : Nikita"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold mb-[5px]">Nomor Telepon</label>
+        <label className="text-start font-semibold mb-[5px]">Nomor Telepon * ( Diawali Dengan 62***** )</label>
         <input
           ref={nomorTeleponRef}
-          type="number"
-          placeholder="Contoh : 0892323232"
+          value={notel}
+          onChange={NoTel}
+          type="text"
+          placeholder="Contoh : 62892323232"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold mb-[5px]">Alamat</label>
+        <label className="text-start font-semibold mb-[5px]">Alamat *</label>
         <input
           ref={alamatRef}
           type="text"
           placeholder="Contoh : Jalan Kalitaman 22 Salatiga"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
         />
         
-        <label className="text-start font-semibold mb-[5px]">Upload Foto KTP</label>
+        <label className="text-start font-semibold mb-[5px]">Upload Foto KTP *</label>
         <input
           ref={imageRef}
           hidden
@@ -163,31 +177,33 @@ export const Addterapis = () => {
       </div>
 
       <div className="flex flex-col gap-1 px-3">
-        <label className="text-start font-semibold mb-[5px]">Nama Pemilik Rekening</label>
+        <label className="text-start font-semibold mb-[5px]">Nama Pemilik Rekening *</label>
         <input
           ref={namaRekeningRef}
           type="text"
           placeholder="Contoh : Hana"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
+          
         />
         
-        <label className="text-start font-semibold mb-[5px]">Bank</label>
+        <label className="text-start font-semibold mb-[5px]">Bank *</label>
         <input
           ref={bankRef}
           type="text"
           placeholder="Contoh : BCA"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
+          
         />
         
-        <label className="text-start font-semibold mb-[5px]">Nomor Rekening</label>
+        <label className="text-start font-semibold mb-[5px]">Nomor Rekening *</label>
         <input
           ref={nomorRekeningRef}
-          type="number"
+          value={norek}
+          onChange={Norek}
+          type="text"
           placeholder="Contoh : 5670019288493"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
-          onChange={checkFormFilled}
+          
         />
         
         <label className="text-start font-semibold mb-[5px]">Keterangan <span className="text-[#BDBDBD]">( Optional )</span></label>

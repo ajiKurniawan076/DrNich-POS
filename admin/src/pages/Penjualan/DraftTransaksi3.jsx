@@ -6,12 +6,15 @@ import iPan from "../../assets/iconkasir/iPan.svg";
 import axios from 'axios'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import PelangganModal from './PelangganModal';
 
 export const DraftTransaksi3 = () => {
     const { setNav, setLink } = useContext(navContext)
     const {id} = useParams()
     const [transaksi, setTransaksi] = useState({})
     const navigate = useNavigate()
+    const [modalOpen, setModalOpen] = useState(false)
+
     useEffect(()=>{
         const fetch = async() =>{
             await axios.get('https://api.drnich.co.id/api/pos/kasir/transaksi/'+id).then(response => 
@@ -45,14 +48,18 @@ export const DraftTransaksi3 = () => {
                   
             window.location.href = `/pos/kasir`;
           }, 1500);
-    }   
+    }
+
     return (
     <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full min-h-full pt-8 text-[#454545] text-[12px] onverflow-y-auto'>
         <div className='flex justify-between text-[#BDBDBD]'>
             <p>ID Transaksi</p>
             <p>#{transaksi?.invoice}</p>
         </div>
-        <div className='flex justify-between border border-[#BDBDBD] rounded-xl p-4 mt-2'>
+        <div
+            onClick={() => setModalOpen(true)}
+            className='flex justify-between border border-[#BDBDBD] rounded-xl p-4 mt-2'
+        >
             <p>{transaksi?.pelanggan?.namaPelanggan}</p>
             <img src={iFrame100} alt="" />
         </div>
@@ -103,6 +110,7 @@ export const DraftTransaksi3 = () => {
                 <img src={iPan} alt="" />
             </button>
         </div>
+        <PelangganModal pelanggan={transaksi?.pelanggan} open={modalOpen} onClose={() => setModalOpen(false)} />
     </div>
 )
 }

@@ -24,6 +24,10 @@ export const Editsupplier = () => {
     const { id } = useParams();
     const { setNav, setLink } = useContext(navContext);
     const [isFilled, setIsFilled] = useState(false)
+    const [notel, setNotel] = useState('');
+    const [notelR, setNotelR] = useState('')
+    const [norek, setNorek] = useState('')
+    const [norekR, setNorekR] = useState('')
 
     const checkFormFilled = () => {
         if (
@@ -48,12 +52,12 @@ export const Editsupplier = () => {
         namaPerusahaan: namaPerusahaanRef.current.value,
         namaKontak: namaKontakRef.current.value,
         email: emailRef.current.value,
-        nomorTelepon: noTeleponRef.current.value,
+        nomorTelepon: notelR,
         alamat: AlamatRef.current.value,
         keterangan: keteranganRef.current.value,
         namaRekening: namaRekeningRef.current.value,
         bank: bankRef.current.value,
-        nomorRekening: nomorRekeningRef.current.value,
+        nomorRekening: norekR,
         keteranganRek: keteranganRekRef.current.value,
         };
         console.log(data);
@@ -91,6 +95,8 @@ export const Editsupplier = () => {
             try {
                 const response = await axios.get(`https://api.drnich.co.id/api/pos/user/supplier/${id}`);
                 setDatax(response.data);
+                setNotel(response.data.nomorTelepon || "");
+                setNorek(response.data.nomorRekening || "");
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -102,7 +108,17 @@ export const Editsupplier = () => {
         setLink('/pos/supplier')
     }, [id]);
     
-    const [supstat, setsupstat] = useState(false);
+    const NoTel = () => {
+        const a = noTeleponRef.current.value.replace(/\D/g, "")
+        setNotelR(a)
+        setNotel(Number(a).toLocaleString("id-ID"))
+    }
+    const Norek = () => {
+        const a = nomorRekeningRef.current.value.replace(/\D/g, "")
+        setNorekR(a)
+        setNorek(Number(a).toLocaleString("id-ID"))
+    }
+
     return (
         <form
             onChange={checkFormFilled}
@@ -111,7 +127,7 @@ export const Editsupplier = () => {
         >
             <div className="flex flex-col gap-1 px-3">
                 <label className="text-start font-semibold">
-                    Nama Perusahaan
+                    Nama Perusahaan *
                 </label>
                 <input
                     ref={namaPerusahaanRef}
@@ -121,7 +137,7 @@ export const Editsupplier = () => {
                     placeholder="Contoh : PT.BEAUTY"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
-                <label className="text-start font-semibold">Nama Kontak</label>
+                <label className="text-start font-semibold">Nama Kontak *</label>
                 <input
                     ref={namaKontakRef}
                     defaultValue={datax.namaKontak}
@@ -130,7 +146,7 @@ export const Editsupplier = () => {
                     placeholder="Contoh : Agus"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
-                <label className="text-start font-semibold">Email</label>
+                <label className="text-start font-semibold">Email *</label>
                 <input
                     ref={emailRef}
                     defaultValue={datax.email}
@@ -140,17 +156,18 @@ export const Editsupplier = () => {
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
                 <label className="text-start font-semibold">
-                Nomor Telepon
+                Nomor Telepon * ( Diawali Dengan 62***** )
                 </label>
                 <input
                     ref={noTeleponRef}
-                    defaultValue={datax.nomorTelepon}
-                    onSubmit={(e) => setDatax({...datax, nomorTelepon: e.target.value})}
-                    type="number"
-                    placeholder="Contoh : 081000000000"
+                    onSubmit={(e) => setDatax({ ...datax, nomorTelepon: e.target.value })}
+                    onChange={NoTel}
+                    value={notel}
+                    type="text"
+                    placeholder="Contoh : 6281000000000"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
-                <label className="text-start font-semibold">Alamat</label>
+                <label className="text-start font-semibold">Alamat *</label>
                 <input
                     ref={AlamatRef}
                     defaultValue={datax.alamat}
@@ -174,7 +191,7 @@ export const Editsupplier = () => {
             </div>
             <div className="flex flex-col gap-1 px-3">
                 <label className="text-start font-semibold">
-                Nama Pemilik Rekening
+                Nama Pemilik Rekening *
                 </label>
                 <input
                     ref={namaRekeningRef}
@@ -184,7 +201,7 @@ export const Editsupplier = () => {
                     placeholder="Contoh : Hana"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
-                <label className="text-start font-semibold">Bank</label>
+                <label className="text-start font-semibold">Bank *</label>
                 <input
                     ref={bankRef}
                     defaultValue={datax.bank}
@@ -194,13 +211,14 @@ export const Editsupplier = () => {
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
                 <label className="text-start font-semibold">
-                Nomor Rekening
+                Nomor Rekening *
                 </label>
                 <input
                     ref={nomorRekeningRef}
-                    defaultValue={datax.nomorRekening}
-                    onSubmit={(e) => setDatax({...datax, nomorRekening: e.target.value})}
-                    type="number"
+                    onSubmit={(e) => setDatax({ ...datax, nomorRekening: e.target.value })}
+                    value={norek}
+                    onChange={Norek}
+                    type="text"
                     placeholder="Contoh : 5670019288493"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>

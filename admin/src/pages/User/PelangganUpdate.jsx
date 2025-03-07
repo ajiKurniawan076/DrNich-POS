@@ -17,7 +17,7 @@ export const PelangganUpdate = () => {
     const fetchData = async () => {
       await axios
         .get(`https://api.drnich.co.id/api/pos/user/pelanggan/${id}`)
-        .then((response) => setDatax(response.data));
+        .then((response) => { setDatax(response.data), setNotel(response.data.nomorTelepon || "") });
     };
     fetchData();
     setNav("Edit Pelanggan");
@@ -30,6 +30,8 @@ export const PelangganUpdate = () => {
   const alamatRef = useRef(null);
   const keteranganRef = useRef(null);
   const [isFilled, setIsFilled] = useState(false)
+  const [notel, setNotel] = useState('')
+  const [notelR, setNotelR] = useState('')
 
   const checkFormFilled = () => {
     if (
@@ -87,6 +89,12 @@ export const PelangganUpdate = () => {
         toast.error("Terjadi kesalahan saat Edit Pelanggan");
         }
   };
+  
+  const NoTel = () => {
+    const a = nomorTeleponRef.current.value.replace(/\D/g, "")
+    setNotelR(a)
+    setNotel(Number(a))
+  }
 
   document.title = "Edit Pelanggan";
   const [supstat, setsupstat] = useState(false);
@@ -98,7 +106,7 @@ export const PelangganUpdate = () => {
     >
       <div className="flex flex-col gap-1 px-3">
         <label className="text-start font-semibold">
-          Nama Pelanggan
+          Nama Pelanggan *
         </label>
         <input
           defaultValue={datax.namaPelanggan}
@@ -116,17 +124,18 @@ export const PelangganUpdate = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
         <label className="text-start font-semibold">
-          Nomor Telepon
+          Nomor Telepon * ( Diawali Dengan 62***** )
         </label>
         <input
-          defaultValue={datax.nomorTelepon}
+          value={notel}
+          onChange={NoTel}
           ref={nomorTeleponRef}
-          type="number"
-          placeholder="Contoh : 0892323232"
+          type="text"
+          placeholder="Contoh : 62892323232"
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
         <label className="text-start font-semibold">
-          Jenis Kelamin
+          Jenis Kelamin *
         </label>
         <select
           defaultValue={datax.gender}
@@ -152,7 +161,7 @@ export const PelangganUpdate = () => {
             </>
           )} */}
         </select>
-        <label className="text-start font-semibold">Alamat</label>
+        <label className="text-start font-semibold">Alamat *</label>
         <input
           defaultValue={datax.alamat}
           ref={alamatRef}

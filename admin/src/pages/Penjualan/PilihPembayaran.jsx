@@ -84,11 +84,14 @@ export const PilihPembayaran = () => {
                     className='w-full outline-none'
                 />
             </div>
-            <div className='flex justify-between my-2 w-full text-[#C2A353]'>
+            <div className='flex justify-between items-center text-center my-2 w-full text-[#C2A353] gap-2'>
+                <div className='border border-[#C2A353] rounded-xl p-2 w-[20%]'>
+                    <p>Tunai</p>
+                </div>
                 <div className='border border-[#C2A353] rounded-xl p-2 w-[35%]'>
                     <p>Kartu Debit</p>
                 </div>
-                <div className='border border-[#C2A353] rounded-xl p-2 w-[26%]'>
+                <div className='border border-[#C2A353] rounded-xl p-2 w-[20%]'>
                     <p>QRIS</p>
                 </div>
                 <div className='border border-[#C2A353] rounded-xl p-2 w-[35%]'>
