@@ -7,8 +7,6 @@ import iTamPu from "../../assets/iconkasir/iTamPu.svg";
 import { modaltransaksi } from './Kasir4'
 
 
-
-
 export const PilihPelanggan = () => {
     const { setNav, setLink } = useContext(navContext)
     const {modalPel, setModalPel, pelanggan, pelangganTerpilih, setPelangganTerpilih} = useContext(modaltransaksi)
