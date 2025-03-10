@@ -3,11 +3,12 @@ import { navContext } from "../../App2"
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iTam from "../../assets/iconkasir/iTam.svg";
 import { modaltransaksi } from './Kasir4'
+import { draftcontext } from './DraftTransaksi3';
 
 
-export const PilihPromo = () => {
+export const PilihPromo = ({draft}) => {
     const { setNav, setLink } = useContext(navContext)
-    const {modalPro, setModalPro, promo, promoTerpilih, setPromoTerpilih} = useContext(modaltransaksi)
+    const {modalPro, setModalPro, promo, promoTerpilih, setPromoTerpilih} = draft ? useContext(draftcontext) : useContext(modaltransaksi)
     const [filter, setFilter] = useState([])
     const [pencarian, setpencarian] = useState([])
     const [pilihan, setPilihan] = useState('Diskon')
