@@ -5,11 +5,12 @@ import iFrame100 from "../../assets/iconkasir/iFrame100.svg";
 import iCari from "../../assets/iconLaporanPenjualan/iCari.svg";
 import iTamPu from "../../assets/iconkasir/iTamPu.svg";
 import { modaltransaksi } from './Kasir4'
+import { draftcontext } from './DraftTransaksi3';
 
 
-export const PilihPelanggan = () => {
+export const PilihPelanggan = ({draft}) => {
     const { setNav, setLink } = useContext(navContext)
-    const { modalPel, setModalPel, pelanggan, pelangganTerpilih, setPelangganTerpilih } = useContext(modaltransaksi)
+    const {modalPel, setModalPel, pelanggan, pelangganTerpilih, setPelangganTerpilih} = !draft ? useContext(modaltransaksi) : useContext(draftcontext)
     const [filterPelanggan, setFilterPelanggan] = useState([])
     const cariRef = useRef(null)
     useEffect(() => {
