@@ -28,7 +28,7 @@ export const LaporanMetodePembayaran = () => {
     const [tampil, setTampil] = useState([]);        // produk yang akan ditampilkan (misalnya, 3 produk)
     const [visibleBars, setVisibleBars] = useState([]);        // produk yang akan ditampilkan (misalnya, 3 produk)
     const [dataProduk, setDataProduk] = useState([]);        // produk yang akan ditampilkan (misalnya, 3 produk)
-    
+    const pilihProdukRef = useRef([])
 
     const datePickerRef = useRef(null); // Create a ref for the DatePicker
     
@@ -88,7 +88,7 @@ export const LaporanMetodePembayaran = () => {
                         const initialChart = penjualan.map(item => ({ name: item.name, terisi: 0 }));
                         setChartTampil(initialChart);
                         setProdukList(response.data.produklist || []);
-                        console.log(response.data.produklist)
+                        // console.log(response.data)
                     })
                     .catch(function (error) {
                         console.log("error saat fetching", error);
@@ -100,6 +100,10 @@ export const LaporanMetodePembayaran = () => {
     useEffect(() => {
         if (produkList.length >= 3) {
             const visibleChart = produkList.slice(0, 3);
+            setTampil(visibleChart);
+        }
+        else {
+            const visibleChart = produkList.slice(0, produkList.length);
             setTampil(visibleChart);
         }
     }, [produkList]);
@@ -116,7 +120,7 @@ export const LaporanMetodePembayaran = () => {
             let newItem = { name: item.name, terisi: 0 };
             item.penjualan.forEach(datax => {
                 // Cari apakah produk ini termasuk dalam array tampil
-                const indexProduk = tampil.findIndex(tp => tp.namaProduk === datax.namaProduk);
+                const indexProduk = tampil.findIndex(tp => tp.metode === datax.metode);
                 if (indexProduk !== -1) {
                 if (indexProduk === 0) {
                     newItem = { ...newItem, penjualan1: datax.jumlah, pendapatan1: datax.pendapatan, terisi: 1 };
@@ -135,9 +139,9 @@ export const LaporanMetodePembayaran = () => {
 
     const gantiTampil = () => {
         const data = [
-            { namaProduk: pilihProdukRef.current[0].value },
-            { namaProduk: pilihProdukRef.current[1].value },
-            { namaProduk: pilihProdukRef.current[2].value },
+            { metode: pilihProdukRef.current[0].value },
+            { metode: pilihProdukRef.current[1].value },
+            { metode: pilihProdukRef.current[2].value },
             ]
             setTampil(data)
     }
@@ -174,10 +178,10 @@ export const LaporanMetodePembayaran = () => {
                 >
                 {produkList.map((item, i) => (
                     <>
-                    {item.namaProduk == entry.namaProduk ? 
-                    <option selected disabled key={i} value={item.namaProduk}>{entry.namaProduk}</option>
+                    {item.metode == entry.metode ? 
+                    <option selected disabled key={i} value={item.metode}>{entry.metode}</option>
                     :
-                    <option key={i} value={item.namaProduk}>{item.namaProduk}</option>
+                    <option key={i} value={item.metode}>{item.metode}</option>
                     }
                     </>
                 ))}
@@ -207,15 +211,15 @@ export const LaporanMetodePembayaran = () => {
 
     useEffect(() => {
         let isi = [
-            { namaProduk: tampil[0]?.namaProduk || "", penjualan: 0 },
-            { namaProduk: tampil[1]?.namaProduk || "", penjualan: 0 },
-            { namaProduk: tampil[2]?.namaProduk || "", penjualan: 0 },
+            { metode: tampil[0]?.metode || "", penjualan: 0 },
+            { metode: tampil[1]?.metode || "", penjualan: 0 },
+            { metode: tampil[2]?.metode || "", penjualan: 0 },
             ];
         
             tampil.forEach((item, i) => { 
             chartTampil.forEach((itemx) => { 
                 isi = isi.map((itemz) => {
-                if (itemz.namaProduk === item.namaProduk) {
+                if (itemz.penjualan === item.penjualan) {
                     return {
                     ...itemz,
                     penjualan:
