@@ -21,7 +21,8 @@ export const LaporanMetodePembayaran = () => {
     const [chartData, setChartData] = useState([])
     const [tampilanMetode, setTampilanMetode] = useState([])
     const [atur, setAtur] = useState("harian")
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
+    const [datax, setDatax] = useState([])
     const [chart, setChart] = useState([])
     const [chartTampil, setChartTampil] = useState([])
     const [produkList, setProdukList] = useState([])
@@ -53,8 +54,8 @@ export const LaporanMetodePembayaran = () => {
     useEffect(() => {
         const tanggal = { dari: "2025-01-01T00:00:00Z", sampai: new Date().toISOString().split('.')[0] + 'Z' };
         axios
-        .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
-        .then(response => setData(response.data))
+        .post("https://api.drnich.co.id/api/pos/laporan/laporanmetode", tanggal)
+        .then(response => setDatax(response.data))
         .catch(error => console.error(error));
     }, []);
 
@@ -62,9 +63,9 @@ export const LaporanMetodePembayaran = () => {
     useEffect(() => {
         const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z', sampai: endDate };
         axios
-        .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
+        .post("https://api.drnich.co.id/api/pos/laporan/laporanmetode", tanggal)
         .then(response => {
-            setData(response.data);
+            setDatax(response.data);
             toast.success("Berhasil Masuk", { autoClose: 1000 });
         })
         .catch(error => {
@@ -133,7 +134,7 @@ export const LaporanMetodePembayaran = () => {
             });
             return newItem;
         });
-        console.log(updatedChart)
+        // console.log(updatedChart)
         setChartTampil(updatedChart);
     }, [tampil]);
 
@@ -219,7 +220,7 @@ export const LaporanMetodePembayaran = () => {
             tampil.forEach((item, i) => { 
             chartTampil.forEach((itemx) => { 
                 isi = isi.map((itemz) => {
-                if (itemz.penjualan === item.penjualan) {
+                if (itemz.metode === item.metode) {
                     return {
                     ...itemz,
                     penjualan:
@@ -239,6 +240,7 @@ export const LaporanMetodePembayaran = () => {
             });
             });
         setDataProduk(isi);
+        console.log(chartTampil)
     }, [chartTampil, tampil]);
     
     const download = async (e,jsonData, fileName = "data.xlsx") => {
@@ -327,7 +329,7 @@ return (
                     <p>Total Transaksi</p>
                     <img src={iSeruTrans} alt="seru" />
                 </div>
-                <p className='text-[14px] font-semibold'>{data?.total}</p>
+                <p className='text-[14px] font-semibold'>{datax?.total}</p>
             </div>
             <div className='flex justify-between gap-2 text-start items-center border rounded-xl border-[#C2A353] p-4 mt-2'>
                 <div className='grid text-start'>
@@ -335,7 +337,7 @@ return (
                         <p>Total Metode Pembayaran</p>
                         <img src={iSeruTrans} alt="seru" />
                     </div>
-                    {/* <p className='text-[14px] font-semibold'>{data.metodePembayaran}</p> */}
+                    <p className='text-[14px] font-semibold'>{datax?.penjualanProduk?.length}</p>
                 </div>
                 <img src={iPan}  alt="" />
             </div>
@@ -348,7 +350,7 @@ return (
                     ref={hari}
                     onChange={MBT}
                 >
-                    <option value="mingguan">Hari Ini</option>
+                    <option value="harian">Hari Ini</option>
                     <option value="mingguan">Minggu Ini</option>
                     <option value="bulanan">Bulan Ini</option>
                     <option value="tahunan">Tahun Ini</option>
@@ -418,36 +420,16 @@ return (
         <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] text-start mt-3 w-full">
             <p className="">Data Metode Pembayaran</p>
         </div>
-        {/* {produkList.map((item, i) => (
-            <div key={i} className='flex justify-between items-center border rounded-xl border-[#BDBDBD] p-4 mt-4'>
-                <div className='grid text-start'>
-                    <p>Tunai</p>
-                    <p className='text-[14px] font-semibold'>Rp {item.total.ToLocaleString("id-ID")}</p>
-                </div>
-                <p>{item.jumlah} Transaksi</p>
+        {dataProduk.map((produx, i) => (
+          <div key={i} className='flex justify-between items-center border rounded-xl border-[#BDBDBD] px-[20px] py-[15px] mt-[10px]'>
+            <div className='grid text-start gap-[5px]'>
+              <p>{produx.metode}</p>
+              <p className='text-[14px] font-semibold'>Rp {produx?.pendapatan?.toLocaleString('id-ID')}</p>
             </div>
-        ))} */}
-        <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] p-4 mt-4'>
-            <div className='grid text-start'>
-                <p>Tunai</p>
-                <p className='text-[14px] font-semibold'>Rp 7.200.000</p>
-            </div>
-            <p>296 Transaksi</p>
-        </div>
-        <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] p-4 mt-2'>
-            <div className='grid text-start'>
-                <p>Kartu Debit</p>
-                <p className='text-[14px] font-semibold'>Rp 5.437.000</p>
-            </div>
-            <p>194 Transaksi</p>
-        </div>
-        <div className='flex justify-between items-center border rounded-xl border-[#BDBDBD] p-4 mt-2'>
-            <div className='grid text-start'>
-                <p>Transfer</p>
-                <p className='text-[14px] font-semibold'>Rp 1.200.000</p>
-            </div>
-            <p>13 Transaksi</p>
-        </div>
+            <p>{produx.penjualan} Transaksi</p>
+          </div>
+        ))}
+        
         {/* <span className='text-white'>a</span> */}
     </div>
 )
