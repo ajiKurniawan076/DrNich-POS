@@ -34,7 +34,6 @@ export const Addterapis = () => {
       namaTerapisRef.current?.value &&
       nomorTeleponRef.current?.value &&
       alamatRef.current?.value &&
-      keteranganRef.current?.value &&
       namaRekeningRef.current?.value &&
       nomorRekeningRef.current?.value &&
       bankRef.current?.value &&
@@ -108,12 +107,12 @@ export const Addterapis = () => {
   const NoTel = () => {
     const a = nomorTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a).toLocaleString("id-ID"))
+    setNotel(Number(a))
   }
   const Norek = () => {
     const a = nomorRekeningRef.current.value.replace(/\D/g, "")
     setNorekR(a)
-    setNorek(Number(a).toLocaleString("id-ID"))
+    setNorek(Number(a))
   }
 
   document.title = 'Tambah Terapis';

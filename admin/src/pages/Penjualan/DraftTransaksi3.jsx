@@ -21,19 +21,23 @@ export const DraftTransaksi3 = () => {
     const [pelangganTerpilih, setPelangganTerpilih] = useState([])
     const [modalPro, setModalPro] = useState(false)
     const [promo, setPromo] = useState([])
+    const [promoOri, setPromoOri] = useState([])
     const [promoTerpilih, setPromoTerpilih] = useState([])
 
     useEffect(() => {
         const fetch = async () => {
-            await axios.get('https://api.drnich.co.id/api/pos/kasir/transaksi/' + id).then(response =>
+            await axios.get('https://api.drnich.co.id/api/pos/kasir/transaksi/' + id).then(response =>{
                 response.status == 200 && setTransaksi(response.data)
+                response.status == 200 && response.data.promo && setPromoTerpilih(response.data.promo)
+                response.status == 200 && response.data.pelanggan && setPelangganTerpilih(response.data.pelanggan)
+            }
             )
             await axios.get('https://api.drnich.co.id/api/pos/user/pelanggan').then(response => {
                 setPelanggan(response.data)
             }
             )
             await axios.get('https://api.drnich.co.id/api/pos/promo/promoaktif').then(response => {
-                setPromo(response.data)
+                setPromoOri(response.data)
             }
             )
         }
@@ -79,6 +83,29 @@ export const DraftTransaksi3 = () => {
         }, 1500);
     }
 
+    useEffect(()=>{
+        if (promoOri.length>0 && transaksi.invoice) {
+            let promoada = [];
+        
+            console.log('zz',promoOri);
+            promoOri?.forEach(item => {
+                
+                transaksi.transaksiDetail?.forEach(itemx => {
+                    item.promoDetail?.forEach(itemy => {
+                        if (
+                            itemy.produk?.namaProduk?.trim().toLowerCase() === itemx?.produk?.namaProduk?.trim().toLowerCase() &&
+                            !promoada.some(itemz => itemz._id.toString() === item._id.toString())
+                        ) {
+                            promoada.push(item);
+                        }
+                    });
+                });
+            });
+        
+            setPromo(promoada);
+        }
+        
+    },[promoOri, transaksi])
     return (
         <draftcontext.Provider value={{ modalPel, setModalPel, pelanggan, pelangganTerpilih, setPelangganTerpilih, modalPro, setModalPro, promo, promoTerpilih, setPromoTerpilih }}>
             <div className='flex flex-col px-5 py-8 gap-1 bg-white w-full min-h-full pt-8 text-[#454545] text-[12px] onverflow-y-auto'>
@@ -94,10 +121,13 @@ export const DraftTransaksi3 = () => {
                         console.log(pelangganTerpilih.namaPelanggan)
                     }
                     }
-                    className='flex justify-between border border-[#BDBDBD] rounded-xl p-4 mt-2'
+                    className='flex justify-between border border-[#EAC564] rounded-xl p-4 mt-2'
                 >
-                    {transaksi?.pelanggan ? <p>{transaksi?.pelanggan?.namaPelanggan}</p> : pelangganTerpilih.namaPelanggan ? <p>{pelangganTerpilih.namaPelanggan}</p> : <p>Pilih Pelanggan</p>}
-                    <img src={iFrame100} alt="" />
+                    {pelangganTerpilih.namaPelanggan ? <p>{pelangganTerpilih.namaPelanggan}</p> : <p>Pilih Pelanggan</p>}
+                    { pelangganTerpilih.namaPelanggan ? <button onClick={(e)=>{
+                        e.preventDefault()
+                        setPelangganTerpilih([])
+                    }} className="text-[16px] text-red-500 z-50">x</button> : <img src={iPanah} alt="panah" />}
                 </div>
                 <div
                 onClick={(e) => 
@@ -105,9 +135,13 @@ export const DraftTransaksi3 = () => {
                         e.preventDefault()
                         setModalPro(true)}
                     }
-                className='flex justify-between border border-[#BDBDBD] rounded-xl p-4 mt-2'>
-                {transaksi?.promo ? <p>{transaksi?.promo?.namaPromo}</p> : promoTerpilih.namaPromo ? <p>{promoTerpilih.namaPromo}</p> : <p>Pilih Promo</p>}
-                    <img src={iPanah} alt="panah" />
+                className='flex justify-between border border-[#EAC564] rounded-xl p-4 mt-2'>
+                {promoTerpilih.namaPromo ? <p>{promoTerpilih.namaPromo}</p> : <p>Pilih Promo</p>}
+                    
+                    { promoTerpilih.namaPromo ? <button onClick={(e)=>{
+                        e.preventDefault()
+                        setPromoTerpilih([])
+                    }} className="text-[16px] text-red-500 z-50">x</button> : <img src={iPanah} alt="panah" />}
                 </div>
                 <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] py-0.5 text-start mt-4 w-full">
                     <p>Rincian Pembelian</p>

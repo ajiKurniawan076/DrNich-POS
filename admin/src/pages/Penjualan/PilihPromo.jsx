@@ -31,7 +31,7 @@ export const PilihPromo = ({draft}) => {
     }
 return (
     <div className={`fixed z-50 top-0 bg-black/20 start-0 flex justify-center w-full h-full overflow-scroll ${modalPro ? '' : 'hidden'}`}>
-    <div className='flex mt-[75px] flex-col px-5 py-8 gap-1 bg-white max-w-[550px] w-[100%] md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] h-full pt-8 text-[#454545] text-[12px] overflow-auto'>
+    <div className='flex flex-col px-5 py-8 gap-1 bg-white max-w-[550px] w-[100%] md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] h-full pt-8 text-[#454545] text-[12px] overflow-auto'>
         <div className='flex justify-between'>
             <button
             onClick={(e)=>{

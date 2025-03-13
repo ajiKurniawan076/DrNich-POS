@@ -33,7 +33,7 @@ export const LaporanRingkasanPenjualan = () => {
     const [topPromo, setTopPromo] = useState([]);
     const [datax, setDatax] = useState([]);
     const [topCustomers, setTopCustomers] = useState([])
-    const [atur, setAtur] = useState("mingguan")
+    const [atur, setAtur] = useState("harian")
     const [aturPromo, setAturPromo] = useState("Diskon")
     const [tampilPromo, setTampilPromo] = useState([])
 
@@ -154,10 +154,11 @@ export const LaporanRingkasanPenjualan = () => {
                 .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualan", tanggal)
                 .then((response) => {
                     setData(response.data);
+                    console.log(response.data)
                     const sortedCustomers = [...response.data.pelanggan].sort((a, b) => b.totalPembelian - a.totalPembelian);
                     const sort = sortedCustomers.slice(0, 4)
                     setTopCustomers(sort);
-                    // console.log(sort)
+                    // console.log(response.data)
                 })
                 .catch(function (error) {
                     console.log('error saat fetching', error);
@@ -198,23 +199,36 @@ export const LaporanRingkasanPenjualan = () => {
         console.log(sort2)
     }
 
-    const download = async (e,jsonData, fileName = "data.xlsx") => {
-            e.preventDefault()
-            console.log(data)
-            const workbook = new ExcelJS.Workbook();
-            const worksheet = workbook.addWorksheet("Sheet1");
-          
-            // Add header row
-            worksheet.columns = Object.keys(jsonData[0]).map((key) => ({ header: key, key }));
-          
+    const download = async (e, jsonData1, jsonData2, fileName = "data.xlsx") => {
+        e.preventDefault();
+    
+        const workbook = new ExcelJS.Workbook();
+        
+        // Create first sheet
+        const worksheet1 = workbook.addWorksheet("Transaksi");
+        const worksheet2 = workbook.addWorksheet("Detail Produk");
+    
+        // Function to add data to a sheet
+        const addDataToSheet = (worksheet, jsonData) => {
+            if (!jsonData || jsonData.length === 0) return;
+    
+            // Extract headers dynamically
+            const headers = Object.keys(jsonData[0]);
+            worksheet.columns = headers.map(header => ({ header, key: header }));
+    
             // Add data rows
-            jsonData.forEach((row) => worksheet.addRow(row));
-          
-            // Write to file
-            const buffer = await workbook.xlsx.writeBuffer();
-            saveAs(new Blob([buffer]), fileName);
-          
-    }
+            jsonData.forEach(row => worksheet.addRow(row));
+        };
+    
+        // Add data to both sheets
+        addDataToSheet(worksheet1, jsonData1);
+        addDataToSheet(worksheet2, jsonData2);
+    
+        // Write to file
+        const buffer = await workbook.xlsx.writeBuffer();
+        saveAs(new Blob([buffer]), fileName);
+    };
+    
 
     setLink('/pos/laporan')
     setNav('Ringkasan Penjualan')
@@ -286,7 +300,7 @@ export const LaporanRingkasanPenjualan = () => {
                     <div className='flex justify-between gap-[10px] text-[12px] w-full'>
                         <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] mt-[20px] w-full'>
                             <div className='flex items-center text-center gap-[5px]'>
-                                <p>Total Produk</p>
+                                <p>Total Penjualan</p>
                                 <img src={iSeruTrans} alt="iSeru" />
                             </div>
                             <div className='flex items-center text-center'>
@@ -299,7 +313,7 @@ export const LaporanRingkasanPenjualan = () => {
                                 <img src={iSeruTrans} alt="iSeru" />
                             </div>
                             <div className='flex items-center text-center'>
-                                <p className='font-semibold text-[14px]'>Rp.</p>
+                            <p className='font-semibold text-[14px]'>Rp. {data?.hpp?.toLocaleString('id-ID')}</p>
                             </div>
                         </div>
                     </div>
@@ -310,7 +324,7 @@ export const LaporanRingkasanPenjualan = () => {
                                 <img src={iSeruTrans} alt="iSeru" />
                             </div>
                             <div className='flex items-center text-center'>
-                                <p className='font-semibold text-[14px]'>Rp.</p>
+                                <p className='font-semibold text-[14px]'>Rp. {(data?.totalPendapatan - data?.hpp).toLocaleString('id-ID')}</p>
                             </div>
                         </div>
                         <div className='flex flex-col gap-[10px] border rounded-xl border-[#C2A353] px-[20px] py-[15px] w-full'>
@@ -325,7 +339,7 @@ export const LaporanRingkasanPenjualan = () => {
                     </div>
                     <div className='flex flex-col gap-[10px]'>
                         <button
-                            onClick={(e)=>{download(e,data.transaksi,'laporan.xlsx')}}
+                            onClick={(e)=>{download(e,data.laporan,data.detailLaporan,'laporan.xlsx')}}
                             className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
                             <p>Download Laporan</p>
                             <img src={iPan} alt="Panah" />
@@ -358,9 +372,8 @@ export const LaporanRingkasanPenjualan = () => {
                             ref={Minggu}
                             onChange={MBT}
                         >
-                            <option value="mingguan">
-                                Minggu ini
-                            </option>
+                            <option value="harian"> Hari ini </option>
+                            <option value="mingguan"> Minggu ini </option>
                             <option value="bulanan">Bulan Ini</option>
                             <option value="tahunan">Tahun Ini</option>
                         </select>

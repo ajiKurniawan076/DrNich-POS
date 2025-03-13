@@ -98,6 +98,7 @@ export const Kasir4 = () => {
         setPromoTerpilih,
         setModalPro,
         promo,
+        cart
       }}
     >
       <div
@@ -105,7 +106,7 @@ export const Kasir4 = () => {
           modal ? "" : "hidden"
         }`}
       >
-        <div className="flex mx-auto md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] flex-col px-5 py-8 gap-1 w-[100%] bg-white max-w-[500px] min-h-full h-fit pt-8 text-[#454545] text-[12px] mt-[75px]">
+        <div className="flex mx-auto md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] flex-col px-5 py-8 gap-1 w-[100%] bg-white max-w-[500px] min-h-full h-fit pt-8 text-[#454545] text-[12px]">
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -118,7 +119,10 @@ export const Kasir4 = () => {
             ) : (
               <p>Pilih Pelanggan</p>
             )}
-            <img src={iPanah} alt="" />
+            {!pelangganTerpilih.namaPelanggan ? <img src={iPanah} alt="" /> : <button  onClick={(e)=>{
+              e.preventDefault()
+              setPelangganTerpilih([])
+            }} className="text-[16px] text-red-500 z-50">x</button>}
           </button>
           <button
             onClick={(e) => {
@@ -132,7 +136,11 @@ export const Kasir4 = () => {
             ) : (
               <p>Pilih Promo</p>
             )}
-            <img src={iPanah} alt="" />
+            {!promoTerpilih.namaPromo ? <img src={iPanah} alt="" /> : <button  onClick={(e)=>{
+              e.preventDefault()
+              setPromoTerpilih([])
+            }} className="text-[16px] text-red-500 z-50">x</button>}
+            
           </button>
           <div className="text-[12px] bg-[#F6F6F6] text-[#BDBDBD] py-0.5 text-start mt-4 w-full">
             <p>Rincian Pembelian</p>

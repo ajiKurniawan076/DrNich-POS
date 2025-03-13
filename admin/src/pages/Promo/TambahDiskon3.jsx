@@ -23,6 +23,7 @@ export const TambahDiskon3 = () => {
     const [tombol, setTombol] = useState(false)
     const [button, setButton] = useState(true)
     const [button2, setButton2] = useState(true)
+    const reqref = useRef(null)
     const [kategoriName, setKategoriName] = useState('')
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
@@ -68,7 +69,8 @@ export const TambahDiskon3 = () => {
             berlakuSampai : endDate.toISOString().split('T')[0],
             promoDetail  :   produkTerpilih,
             jenisPotongan : jenisPotongan,
-            jenis   : "Diskon"
+            jenis   : "Diskon",
+            reqr : reqref.current.value
         }
         console.log(data)
         // await axios.post('https://api.drnich.co.id/api/pos/promo/promo',data).then(
@@ -174,6 +176,11 @@ return (
         <div className='flex flex-col px-3 h-full'>
             <p>Nama Diskon</p>
             <input ref={namaPromoRef} type='text' placeholder='Nama Promo Diskon' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
+            </input>
+        </div>
+        <div className='flex flex-col px-3 h-full'>
+            <p>Syarat Limit ( Untuk kategori kuantitas atau total transaksi )</p>
+            <input ref={reqref} type='number' placeholder='Nama Promo Diskon' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
             </input>
         </div>
         <div className='gflex flex-col px-3 h-full'>

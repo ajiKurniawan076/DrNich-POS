@@ -30,13 +30,35 @@ export const DetailProduk = () => {
     product.kategori && setFetched(true);
   }, [product]);
 
-  const deleteData = async () => {
+  const hapusproduk = async () => {
     await axios
-      .delete("https://api.drnich.co.id/api/pos/produk/deleteproduk/" + id)
+      .put("https://api.drnich.co.id/api/pos/produk/updateproduk/" + id, {status: "off"} ,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        withCredentials: true,
+      })
       .then(
         (response) => response.status == 200 && navigate("../daftarproduk")
       );
   };
+
+  const restoreproduk = async () => {
+    await axios
+      .put("https://api.drnich.co.id/api/pos/produk/updateproduk/" + id, {status: "on"} ,{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        withCredentials: true,
+      })
+      .then(
+        (response) => response.status == 200 && navigate("../daftarproduk")
+      );
+  };
+
+
   return (
     <div className="flex flex-col py-5 gap-[10px] bg-white w-full text-[12px] text-[#454545] min-h-screen h-full overflow-auto overflow-y-scroll scrollbar-hide px-9">
       {fetched == false ? (
@@ -108,9 +130,17 @@ export const DetailProduk = () => {
           </span>
         </a>
         <div className="flex gap-5 w-full justify-between text-[14px] mt-auto">
-          <button className="flex justify-center items-center border-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] bg-white text-[#C2A353] ">
+          {
+            product?.status == "on" ? 
+            <button onClick={hapusproduk} className="flex justify-center items-center border-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] bg-white text-[#C2A353] ">
             Hapus
           </button>
+            : 
+            <button onClick={restoreproduk} className="flex justify-center items-center border-[#C2A353] border rounded-lg w-[30%] p-3 text-[14px] bg-white text-[#C2A353] ">
+            Restore
+          </button>
+          }
+          
           <Link
             to={{ pathname: `/pos/DaftarProdukUpdate/${id}` }}
             className="flex justify-center items-center bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white rounded-lg w-[70%] p-3 text-[14px] "

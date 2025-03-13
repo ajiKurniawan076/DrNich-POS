@@ -16,6 +16,7 @@ export const PembayaranBerhasil = () => {
   const { id } = useParams();
   const [fetched, setFetched] = useState(false);
   const invoiceRef = useRef(); // Pindahkan useRef ke luar
+  const formData = new FormData()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,14 +25,14 @@ export const PembayaranBerhasil = () => {
           `https://api.drnich.co.id/api/pos/kasir/transaksi/${id}`,
           { withCredentials: true }
         );
-        console.log(response)
+        // console.log(response)
         setDataDalam(response.data.transaksiDetail);
         setDatax(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+    setFetched(true)
     fetchData();
     setNav("Pembayaran");
     setLink(-2);
@@ -42,7 +43,7 @@ export const PembayaranBerhasil = () => {
   }, [id, setNav, setLink]);
 
   // ✅ Fungsi downloadPDF sekarang ada di sini
-  const downloadPDF = () => {
+  const downloadPDF = async() => {
     const input = invoiceRef.current;
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
@@ -64,7 +65,7 @@ export const PembayaranBerhasil = () => {
         heightLeft -= pageHeight;
       }
 
-      pdf.save("invoice.pdf"); // Simpan file PDF
+      pdf.save(`invoice_${datax.invoice}.pdf`); // Simpan file PDF
     });
   };
 

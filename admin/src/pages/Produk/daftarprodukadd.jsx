@@ -23,6 +23,8 @@ export const DaftarProdukAdd = () => {
   const [hargaBR, setHargaBR] = useState(0)
   const [hargaJR, setHargajR] = useState(0)
   const [bonusTR, setBonusTR] = useState(0)
+  const [hpp, sethpp] = useState("")
+  const [hppr, sethppr] = useState(0)
   const supplierRef = useRef(null)
   const namaProdukRef = useRef(null);
   const SKURef = useRef(null)
@@ -102,6 +104,11 @@ export const DaftarProdukAdd = () => {
     setBonusT(Number(c).toLocaleString("id-ID"))
 
   }
+  const chpp =() => {
+    const d = HPPRef.current.value.replace(/\D/g, "")
+    sethppr(d)
+    sethpp(Number(d).toLocaleString('id-ID'))
+  }
 
   const jenisRef = useRef(null);
   const changeJenis = (e) => {
@@ -134,7 +141,7 @@ export const DaftarProdukAdd = () => {
       jenis: selectedNamaJenis,
       namaProduk: namaProdukRef.current.value,
       // sku: SKURef.current.value,
-      hpp: HPPRef.current.value,
+      hpp: hppr,
       hargaJual: hargaJR,
       hargaBeli: hargaBR,
       kategori: kategoriRef.current.value,
@@ -254,6 +261,8 @@ export const DaftarProdukAdd = () => {
         <input
           ref={HPPRef}
           type="text"
+          onChange={chpp}
+          value={hpp}
           placeholder=""
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />

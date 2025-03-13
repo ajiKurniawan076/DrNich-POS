@@ -139,6 +139,18 @@ export const PembelianStok = (props) => {
           <>
             <div className="grid py-2">
               <label className="text-start text-[12px] text-[#454545] text-sm px-4 py-1">
+                Jumlah Pembelian
+              </label>
+              <input
+                onChange={Pembelian}
+                ref={jumlahPembelianRef}
+                type="number"
+                placeholder="0"
+                className="text-[12px] items-end mx-3 px-4 border text-sm text-black border-black/30 rounded-xl h-[40px] "
+              />
+            </div>
+            <div className="grid py-2">
+              <label className="text-start text-[12px] text-[#454545] text-sm px-4 py-1">
                 SKU
               </label>
               <label className="text-[12px] mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] ">
@@ -153,18 +165,7 @@ export const PembelianStok = (props) => {
                 {item?.stok}
               </label>
             </div>
-            <div className="grid py-2">
-              <label className="text-start text-[12px] text-[#454545] text-sm px-4 py-1">
-                Jumlah Pembelian
-              </label>
-              <input
-                onChange={Pembelian}
-                ref={jumlahPembelianRef}
-                type="number"
-                placeholder="0"
-                className="text-[12px] items-end mx-3 px-4 bg-gray-400/10 border text-sm text-black border-black/30 rounded-xl h-[40px] "
-              />
-            </div>
+            
             <div className="grid py-2">
               <label className="text-start text-[12px] text-[#454545] text-sm px-4 py-1">
                 Harga Produk
