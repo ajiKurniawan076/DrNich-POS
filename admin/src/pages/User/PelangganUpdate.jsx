@@ -76,7 +76,9 @@ export const PelangganUpdate = () => {
         );
 
         if (response.status === 200) {
-        toast.success("Berhasil Edit Pelanggan");
+          toast.success("Berhasil Edit Pelanggan");
+          setNotelR(data.nomorTelepon);
+          setNotel(data.nomorTelepon);
         setTimeout(() => {
             toast.success("Redirecting...");
             window.location.href = "/pos/pelanggan";
@@ -89,11 +91,25 @@ export const PelangganUpdate = () => {
         toast.error("Terjadi kesalahan saat Edit Pelanggan");
         }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://api.drnich.co.id/api/pos/user/supplier/${id}`);
+        setNotel(response.data.nomorTelepon || "");
+        setNotelR(response.data.nomorTelepon || "");
+        console.log(response.data.nomorRekening)
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+    };
+      fetchData();
+  }, [id]);
   
   const NoTel = () => {
     const a = nomorTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a))
+    setNotel((a))
   }
 
   document.title = "Edit Pelanggan";

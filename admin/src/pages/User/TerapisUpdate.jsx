@@ -98,6 +98,10 @@ export const TerapisUpdate = () => {
       .then((response) => {
         if (response.status === 200) {
           toast.success("Berhasil Edit Terapis");
+            setNotelR(fdata.nomorTelepon);
+            setNorekR(fdata.nomorRekening);
+            setNotel(fdata.nomorTelepon);
+            setNorek(fdata.nomorRekening);
           setTimeout(() => {
             toast.success("Redirecting...");
             window.location.href = "/pos/terapis"; // Redirect ke halaman terapis
@@ -112,15 +116,32 @@ export const TerapisUpdate = () => {
       });
   };
 
+  useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`https://api.drnich.co.id/api/pos/user/terapis/${id}`);
+                setDatax(response.data);
+                setNotel(response.data.nomorTelepon || "");
+                setNorek(response.data.nomorRekening || "");
+                setNotelR(response.data.nomorTelepon || "");
+                setNorekR(response.data.nomorRekening || "");
+                console.log(response.data.nomorRekening)
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+  }, [id]);
+
   const Notel = () => {
     const a = nomorTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a))
+    setNotel((a))
   }
   const Norek = () => {
     const a = nomorRekeningRef.current.value.replace(/\D/g, "")
     setNorekR(a)
-    setNorek(Number(a))
+    setNorek((a))
   }
 
   document.title = "Edit Terapis";

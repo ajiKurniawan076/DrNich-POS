@@ -75,7 +75,11 @@ export const Editsupplier = () => {
         );
 
         if (response.status === 200) {
-        toast.success("Berhasil Edit Supplier");
+            toast.success("Berhasil Edit Supplier");
+            setNotelR(data.nomorTelepon);
+            setNorekR(data.nomorRekening);
+            setNotel(data.nomorTelepon);
+            setNorek(data.nomorRekening);
         setTimeout(() => {
             toast.success("Redirecting...");
             window.location.href = "/pos/supplier";
@@ -97,26 +101,28 @@ export const Editsupplier = () => {
                 setDatax(response.data);
                 setNotel(response.data.nomorTelepon || "");
                 setNorek(response.data.nomorRekening || "");
+                setNotelR(response.data.nomorTelepon || "");
+                setNorekR(response.data.nomorRekening || "");
+                console.log(response.data.nomorRekening)
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
         fetchData();
-        console.log(datax);
         setNav("Edit Supplier");
         document.title = "Edit Supplier";
         setLink('/pos/supplier')
     }, [id]);
     
     const NoTel = () => {
-        const a = nomorTeleponRef.current.value.replace(/\D/g, "")
+        const a = noTeleponRef.current.value.replace(/\D/g, "")
         setNotelR(a)
-        setNotel(Number(a))
+        setNotel((a))
       }
       const Norek = () => {
         const a = nomorRekeningRef.current.value.replace(/\D/g, "")
         setNorekR(a)
-        setNorek(Number(a))
+        setNorek((a))
       }
 
     return (

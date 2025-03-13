@@ -87,14 +87,14 @@ export const Addsupplier = () => {
   };
 
   const NoTel = () => {
-    const a = nomorTeleponRef.current.value.replace(/\D/g, "")
+    const a = noTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a))
+    setNotel((a))
   }
   const Norek = () => {
     const a = nomorRekeningRef.current.value.replace(/\D/g, "")
     setNorekR(a)
-    setNorek(Number(a))
+    setNorek((a))
   }
 
   const { setNav, setLink } = useContext(navContext);
@@ -147,7 +147,7 @@ export const Addsupplier = () => {
             ref={noTeleponRef}
             value={notel}
             type="text"
-            placeholder="Contoh : 6281000000000"
+            placeholder="Contoh : 6281*********"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
           ></input>
         </div>

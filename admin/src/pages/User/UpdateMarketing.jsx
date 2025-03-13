@@ -87,7 +87,6 @@ export const UpdateMarketing = () => {
       })
       .catch((error) => {
         console.error("Error saat menyimpan data:", error);
-        alert("Terjadi kesalahan saat menyimpan data!");
       });
     try {
             const response = await axios.put(`https://api.drnich.co.id/api/pos/user/updatemarketing/${id}`, 
@@ -102,7 +101,11 @@ export const UpdateMarketing = () => {
         );
 
         if (response.status === 200) {
-        toast.success("Berhasil Edit Pelanggan");
+          toast.success("Berhasil Edit Pelanggan");
+          setNotelR(fdata.nomorTelepon);
+          setNorekR(fdata.nomorRekening);
+          setNotel(fdata.nomorTelepon);
+          setNorek(fdata.nomorRekening);
         setTimeout(() => {
             toast.success("Redirecting...");
             window.location.href = "/pos/marketing";
@@ -119,12 +122,12 @@ export const UpdateMarketing = () => {
   const NoTel = () => {
     const a = nomorTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a))
+    setNotel((a))
   }
   const Norek = () => {
     const a = nomorRekeningRef.current.value.replace(/\D/g, "")
     setNorekR(a)
-    setNorek(Number(a))
+    setNorek((a))
   }
 
   useEffect(() => {
@@ -136,6 +139,8 @@ export const UpdateMarketing = () => {
         setDatax(response.data);
         setNotel(response.data.nomorTelepon || "");
         setNorek(response.data.nomorRekening || "");
+        setNotelR(response.data.nomorTelepon || "");
+        setNorekR(response.data.nomorRekening || "");
         if (response.data.image) {
           setImagePreview(response.data.image); // Set the current image from the server if available
         }

@@ -78,7 +78,7 @@ export const PelangganAnd = () => {
   const NoTel = () => {
     const a = nomorTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a))
+    setNotel((a))
   }
 
   const toasts = () => {

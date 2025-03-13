@@ -107,12 +107,12 @@ export const Addterapis = () => {
   const NoTel = () => {
     const a = nomorTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a))
+    setNotel((a))
   }
   const Norek = () => {
     const a = nomorRekeningRef.current.value.replace(/\D/g, "")
     setNorekR(a)
-    setNorek(Number(a))
+    setNorek((a))
   }
 
   document.title = 'Tambah Terapis';
@@ -139,7 +139,7 @@ export const Addterapis = () => {
           value={notel}
           onChange={NoTel}
           type="text"
-          placeholder="Contoh : 62892323232"
+          placeholder="Contoh : 6281*********"
           className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
         />
         
