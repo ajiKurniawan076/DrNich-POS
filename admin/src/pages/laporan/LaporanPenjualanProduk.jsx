@@ -40,7 +40,7 @@ export const LaporanPenjualanProduk = () => {
   const pilihProdukRef = useRef([])
   // State untuk visibilitas bar (legend interaktif)
   const [visibleBars, setVisibleBars] = useState([]);
-  const [pilihMinggu, setPilihMinggu] = useState("mingguan")
+  const [pilihMinggu, setPilihMinggu] = useState("harian")
 
   const datePickerRef = useRef(null);
   const datePickerRef2 = useRef(null);
@@ -94,6 +94,8 @@ export const LaporanPenjualanProduk = () => {
       .post("https://api.drnich.co.id/api/pos/laporan/laporangrafikproduk", tanggal)
       .then(response => {
         // Pastikan struktur data: response.data.penjualan dan response.data.produklist
+        
+        console.log(response.data.penjualan)
         const penjualan = response.data.penjualan || [];
         setChart(penjualan);
         // Inisialisasi chartTampil berdasarkan data penjualan
@@ -108,6 +110,10 @@ export const LaporanPenjualanProduk = () => {
   useEffect(() => {
     if (produkList.length >= 3) {
       const visibleChart = produkList.slice(0, 3);
+      setTampil(visibleChart);
+    }
+    else{
+      const visibleChart = produkList.slice(0, produkList.length);
       setTampil(visibleChart);
     }
   }, [produkList]);
@@ -141,6 +147,7 @@ export const LaporanPenjualanProduk = () => {
     });
     console.log('update chart')
     setChartTampil(updatedChart);
+    console.log({"nih" : chart})
   }, [tampil]);
 
   const gantiTampil = () => {
@@ -371,9 +378,8 @@ export const LaporanPenjualanProduk = () => {
             ref={Minggu}
             onChange={MBT}
           >
-            <option value="mingguan">
-              Minggu ini
-            </option>
+            <option value="harian"> Hari ini </option>
+            <option value="mingguan"> Minggu ini </option>
             <option value="bulanan">Bulan Ini</option>
             <option value="tahunan">Tahun Ini</option>
           </select>

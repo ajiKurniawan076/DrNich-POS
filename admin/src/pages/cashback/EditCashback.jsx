@@ -28,6 +28,7 @@ export const EditCashback = () => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const { id } = useParams();
+    const reqref = useRef(null)
     const [data, setData] = useState([])
     const [tombol, setTombol] = useState()
     const [jenisPotongan, setJenisPotongan] = useState('rupiah')    
@@ -102,7 +103,8 @@ export const EditCashback = () => {
             berlakuDari : startDate.toISOString().split('T')[0],
             berlakuSampai : endDate.toISOString().split('T')[0],
             promoDetail  :   produkTerpilih,
-            jenis   : "Cashback"
+            jenis   : "Cashback",
+            reqr : reqref.current.value
         } 
         console.log(data)
         // await axios.post('https://api.drnich.co.id/api/pos/promo/promo', data).then(
@@ -186,6 +188,11 @@ export const EditCashback = () => {
                         className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
                     </input>
                 </div>
+                <div className='flex flex-col px-3 h-full'>
+                        <p>Syarat Limit ( Untuk kategori kuantitas atau total transaksi )</p>
+                        <input ref={reqref} type='number' defaultValue={data.reqr} placeholder='Nama Promo Diskon' className='border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>
+                        </input>
+                    </div>
                 <div className='flex flex-col px-3 h-full'>
                     <p>Jumlah Cashback</p>
                     <div className='flex relative justify-start border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[14px] px-[20px] mb-[20px] mt-[5px]'>

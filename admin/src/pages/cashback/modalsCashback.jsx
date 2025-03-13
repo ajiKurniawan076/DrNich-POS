@@ -68,6 +68,17 @@ export const ModalsCashback = () => {
     useEffect(() => {
         produk.length > 0 && setProdukM(produk)
     }, [produk])
+
+    const selekal = (e) => {
+        e.preventDefault()
+        produkM.map(item=>(
+            handleProduk2(item)
+        ))
+    }
+    const handleProduk2 = (item) => {
+        const exist = produkTerpilih.filter(itemx => itemx._id == item._id)
+        exist.length == 0 && setProdukTerpilih((prev) => [...prev, item])
+    }
     return (
         <div className={`fixed z-50 flex flex-col items-center top-0 start-0 w-full overflow-auto bg-black/20 h-full ${modal == true ? '' : 'hidden'}`}>
             <div className="md:max-w-[700px] md:w-[80%] lg:max-w-[900px] lg:w-[60%] w-[100%] max-w-[500px] border-2 border-[#454545] rounded-xl bg-white h-full flex flex-col px-3">
@@ -121,6 +132,9 @@ export const ModalsCashback = () => {
                             :
                             <></>}
 
+                    </div>
+                    <div className='flex h-fit w-full justify-center mt-4'>
+                        <button onClick={selekal} className='bg-[#BDBDBD] text-white text-[14px] w-full p-4 rounded-xl'>Select All</button>
                     </div>
                     <div className='h-full flex flex-col gap-[10px]'>
                         {produkM.map((item, i) => (

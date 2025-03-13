@@ -122,7 +122,7 @@ export const DaftarBelanjaModals = (props) => {
             setProduk(filterProduk);
             setProdukKategori(filterProduk);
             const filterlimit = response.data.filter(
-              (item) => (item.stok < item.minStok,
+              (item) => (item.stok < item.minStok &&
                  item.jenis.jenis == "produk")
             );
             console.log(filterlimit);

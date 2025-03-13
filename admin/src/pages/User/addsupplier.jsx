@@ -87,14 +87,14 @@ export const Addsupplier = () => {
   };
 
   const NoTel = () => {
-    const a = noTeleponRef.current.value.replace(/\D/g, "")
+    const a = nomorTeleponRef.current.value.replace(/\D/g, "")
     setNotelR(a)
-    setNotel(Number(a).toLocaleString("id-ID"))
+    setNotel(Number(a))
   }
   const Norek = () => {
     const a = nomorRekeningRef.current.value.replace(/\D/g, "")
     setNorekR(a)
-    setNorek(Number(a).toLocaleString("id-ID"))
+    setNorek(Number(a))
   }
 
   const { setNav, setLink } = useContext(navContext);
