@@ -348,7 +348,7 @@ return (
                     ref={hari}
                     onChange={MBT}
                 >
-                    <option value="mingguan">Hari Ini</option>
+                    <option value="harian">Hari Ini</option>
                     <option value="mingguan">Minggu Ini</option>
                     <option value="bulanan">Bulan Ini</option>
                     <option value="tahunan">Tahun Ini</option>
