@@ -8,10 +8,10 @@ const newPromo = asyncHandler(async (req, res) => {
   const newPromo = {
     nama: req.body.nama,
     detail: req.body.detail,
-    syarat: req.body.syarat,
-    fotoDesktop: `${BASE_URL}${fotoDesktop.filename}`,
-    fotoMobile: `${BASE_URL}${fotoMobile.filename}`,
+    syarat: req.body.syarat
   };
+  if (fotoDesktop){newPromo.fotoDesktop = `${BASE_URL}${fotoDesktop.filename}`}
+  if (fotoMobile){newPromo.fotoMobile= `${BASE_URL}${fotoMobile.filename}`}
   try {
     const isExist = await promoModels.findOne({ nama: newPromo.nama });
     if (isExist) {
@@ -50,10 +50,10 @@ const updatePromo = asyncHandler(async (req, res) => {
  const newData = {
    nama: req.body.nama,
    detail: req.body.detail,
-   syarat: req.body.syarat,
-   fotoDesktop: `${BASE_URL}${fotoDesktop.filename}`,
-   fotoMobile: `${BASE_URL}${fotoMobile.filename}`,
+   syarat: req.body.syarat
  };
+ if (fotoDesktop){newPromo.fotoDesktop = `${BASE_URL}${fotoDesktop.filename}`}
+ if (fotoMobile){newPromo.fotoMobile= `${BASE_URL}${fotoMobile.filename}`}
   try {
     const promo = await promoModels.findByIdAndUpdate(
       id,

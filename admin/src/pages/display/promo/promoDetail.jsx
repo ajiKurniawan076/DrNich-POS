@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { navContext } from "../../../App2";
 
 function PromoDetail() {
   const { id } = useParams();
+  const {setNav, setLink} = useContext(navContext)
   const [datax, setDatax] = useState({});
 
   const fetchData = async () => {
@@ -40,6 +42,8 @@ function PromoDetail() {
 
   useEffect(() => {
     fetchData();
+    setLink(-1)
+    setNav("Detail Promo")
   }, [id]);
 
   return (

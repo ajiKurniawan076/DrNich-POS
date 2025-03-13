@@ -167,6 +167,7 @@ import { LaporanLogPelanggan } from "./pages/laporan/LaporanLogPelanggan";
 import { DetailProdukSupp } from "./pages/Produk/DetailProdukSupp";
 import { DaftarProdukUpdateSupp } from "./pages/Produk/DaftarProdukUpdateSupp";
 import { PilihPembayaranProduk } from "./pages/Produk/PilihPembayaranProduk";
+import { PromoEdit } from "./pages/display/promo/PromoEdit";
 
 axios.defaults.withCredentials = true;
 
@@ -442,6 +443,7 @@ function App2() {
                   <Route path="/display" element={<Display />} />
                   <Route path="/displayPromo" element={<DisplayPromo />} />
                   <Route path="/promoadd" element={<PromoAdd />} />
+                  <Route path="/UpdateDisplayPromo/:id" element={<PromoEdit />} />
                   <Route path="/detailpromo/:id" element={<PromoDetail />} />
 
                   <Route path="/sertifikat" element={<Sertifikat />} />
