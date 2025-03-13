@@ -16,7 +16,7 @@ export const LaporanLogProduk = () => {
     const { setNav, setLink, setSort } = useContext(navContext)
     const [data, setData] = useState([])
     const [supllier, setSupllier] = useState([])
-    const { id } = useParams()
+    const { _id } = useParams()
     const [button, setButton] = useState();
     const [button2, setButton2] = useState();
     const [startDate, setStartDate] = useState(new Date("2025-01-01T00:00:00Z"));
@@ -24,7 +24,7 @@ export const LaporanLogProduk = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z', sampai: endDate, id : id }
+            const tanggal = { dari: startDate?.toISOString().split('.')[0] + 'Z', sampai: endDate, id : _id }
             const response = await axios.post(`https://api.drnich.co.id/api/pos/laporan/laporanlogproduk/`, tanggal)
             try {
                 setData(response.data.logProduk)

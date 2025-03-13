@@ -25,7 +25,7 @@ export const PembayaranBerhasil = () => {
           `https://api.drnich.co.id/api/pos/kasir/transaksi/${id}`,
           { withCredentials: true }
         );
-        // console.log(response)
+        console.log(response.data)
         setDataDalam(response.data.transaksiDetail);
         setDatax(response.data);
       } catch (error) {
@@ -109,7 +109,8 @@ export const PembayaranBerhasil = () => {
               hour12: false,
             })
             .replace("pukul ", ",")}
-        </p>
+          </p>
+          <p className="text-[12px] text-[#bdbdbd] font-bold">VIA {datax.metode}</p>
         <p className="text-[24px] text-[#454545] font-bold mt-3">
           IDR {datax.totalAkhir?.toLocaleString("id-ID")}
         </p>

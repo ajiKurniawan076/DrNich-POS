@@ -593,7 +593,7 @@ function App2() {
                     element={<LaporanPersediaanDetail />}
                   />
                   <Route
-                    path="/LaporanLogProduk/:id"
+                    path="/LaporanLogProduk/:_id"
                     element={<LaporanLogProduk />}
                   />
                   <Route

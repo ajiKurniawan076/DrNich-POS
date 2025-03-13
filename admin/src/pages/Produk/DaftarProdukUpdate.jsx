@@ -34,7 +34,8 @@ export const DaftarProdukUpdate = () => {
       hargaJualRef.current?.value &&
       kategoriRef.current?.value &&
       bonusTerapisRef.current?.value &&
-      minStokRef.current?.value
+      minStokRef.current?.value &&
+      stokRef.current?.value
     ) {
       setIsFilled(true)
     } else {
