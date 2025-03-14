@@ -87,7 +87,7 @@ const PromoAdd = () => {
       if (response.status === 200) {
         toast.success("Berhasil menambahkan Promo");
         setTimeout(() => {
-          navigate("/pos/promo");
+          navigate("/pos/displaypromo");
         }, 2000);
       }
     } catch (error) {

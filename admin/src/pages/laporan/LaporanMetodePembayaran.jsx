@@ -10,7 +10,8 @@ import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { toast } from 'react-toastify';
-
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 export const LaporanMetodePembayaran = () => {
     const { setNav, setLink } = useContext(navContext)
@@ -318,7 +319,7 @@ return (
         <div>
             <div className='flex flex-col gap-[10px]'>
                 <button
-                    onClick={(e)=>{download(e,data.transaksi,'laporan.xlsx')}}
+                    onClick={(e)=>{download(e,datax.penjualanProduk,'laporan.xlsx')}}
                     className='flex justify-between items-center text-center border rounded-xl border-[#C2A353] px-[20px] py-[15px] text-[12px]'>
                     <p>Download Laporan</p>
                     <img src={iPan} alt="Panah" />

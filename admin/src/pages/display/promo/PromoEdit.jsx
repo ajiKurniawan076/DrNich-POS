@@ -79,8 +79,8 @@ const PromoEdit = () => {
     fdata.append("nama", name);
     fdata.append("syarat", syarat);
     fdata.append("detail", deskripsi);
-    if(imageDesktopRef.current.files[0]){fdata.append("fotoDesktop", imageDesktopRef.current.files[0]);}
-    if(imageMobileRef.current.files[0]){fdata.append("fotoMobile", imageMobileRef.current.files[0]);}
+    if(imageDesktopRef.current.files.length>0){fdata.append("fotoDesktop", imageDesktopRef.current.files[0]);}
+    if(imageMobileRef.current.files.length>0){fdata.append("fotoMobile", imageMobileRef.current.files[0]);}
     
     
 
