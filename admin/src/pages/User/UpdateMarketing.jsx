@@ -171,14 +171,15 @@ export const UpdateMarketing = () => {
           className="border border-[#BDBDBD] rounded-xl py-2 px-3"
         />
         <label className="text-start font-semibold">Nomor Telepon * ( Diawali Dengan 62***** )</label>
-          <input
+        <input
           ref={nomorTeleponRef}
           value={notel}
             onChange={NoTel}
             type="text"
             placeholder="Contoh : 62892323232"
             className="border border-[#BDBDBD] rounded-xl py-2 px-3"
-          />
+        />
+        <p className={`text-[10px] text-red-500 font-bold ${notel[0] === "0" ? "" : "hidden"}`}>( Tidak diperbolehkan menggunakan 085****, awali dengan 6285**** )</p>
         <label className="text-start font-semibold">Alamat *</label>
         <input
           ref={alamatRef}

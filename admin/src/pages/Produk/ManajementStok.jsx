@@ -65,8 +65,10 @@ export const ManajementStok = () => {
         <p>Daftar Stok Limit</p>
       </div>
       <div className="grid text-start text-[12px] px-5 py-2">
-        <p className="text-[#EB5757] pb-1">Stok Melewati Minimum</p>
-        {produklimit.map((item, i) => (
+        {produklimit.length > 0 ? <p className="text-[#EB5757]">Stok Melewati Minimum</p>
+          :
+          <p className="text-[#EB5757]">Tidak Ada Stok Limit</p>}
+        {produklimit.length > 0 ? produklimit.map((item, i) => (
           <div key={i}>
             <a
               href={`ManajementDetailStok/${item._id}`}
@@ -77,7 +79,11 @@ export const ManajementStok = () => {
             </a>
             <div className="border"></div>
           </div>
-        ))}
+        ))
+          :
+          <></>
+        }
+        <></>
       </div>
 
       {/* Daftar Produk */}

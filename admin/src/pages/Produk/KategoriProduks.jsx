@@ -100,7 +100,7 @@ export const KategoriProduks = () => {
           to="/pos/addkategoriproduk"
           className="flex justify-center items-center gap-2 bg-gradient-to-r from-[#EAC564] to-[#C2A353] text-white font-bold rounded-xl p-3 text-[14px] mt-auto"
         >
-          <AiFillPlusCircle size={20} /> Tambah Jenis
+          <AiFillPlusCircle size={20} /> Tambah Kategori Produks
         </Link>
     </div>
   );

@@ -67,7 +67,10 @@ export const LaporanPenjualanProduk = () => {
     const tanggal = { dari: "2025-01-01T00:00:00Z", sampai: new Date().toISOString().split('.')[0] + 'Z' };
     axios
       .post("https://api.drnich.co.id/api/pos/laporan/laporanpenjualanproduk", tanggal)
-      .then(response => setData(response.data))
+      .then(response => {
+        setData(response.data)
+        console.log("hari ini", response.data)
+      })
       .catch(error => console.error(error));
   }, []);
 
@@ -95,7 +98,6 @@ export const LaporanPenjualanProduk = () => {
       .then(response => {
         // Pastikan struktur data: response.data.penjualan dan response.data.produklist
         
-        console.log(response.data.penjualan)
         const penjualan = response.data.penjualan || [];
         setChart(penjualan);
         // Inisialisasi chartTampil berdasarkan data penjualan
@@ -354,7 +356,7 @@ export const LaporanPenjualanProduk = () => {
               <p>Total Produk Keseluruhan</p>
               <img src={iSeruTrans} alt="seru" />
             </div>
-            <p className='text-[14px] font-semibold'>blm</p>
+            <p className='text-[14px] font-semibold'>{data?.penjualanProduk?.length}</p>
           </div>
           <img src={iPan} alt="" />
         </div>
@@ -364,7 +366,7 @@ export const LaporanPenjualanProduk = () => {
               <p>Total Kategori Keseluruhan</p>
               <img src={iSeruTrans} alt="seru" />
             </div>
-            <p className='text-[14px] font-semibold'>blm</p>
+            <p className='text-[14px] font-semibold'>{data?.kategoriList?.length}</p>
           </div>
           <img src={iPan} alt="" />
         </div>

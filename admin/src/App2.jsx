@@ -599,11 +599,11 @@ function App2() {
                     element={<LaporanLogProduk />}
                   />
                   <Route
-                    path="/LaporanLogProduk2/"
+                    path="/LaporanLogProduk2/:id"
                     element={<LaporanLogProduk2 />}
                   />
                   <Route
-                    path="/LaporanLogProduk3/"
+                    path="/LaporanLogProduk3/:id"
                     element={<LaporanLogProduk3 />}
                   />
                   <Route

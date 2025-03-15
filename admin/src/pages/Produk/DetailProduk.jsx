@@ -21,7 +21,7 @@ export const DetailProduk = () => {
         });
     };
     fetchData();
-    setNav("Daftar Produk");
+    setNav("Detail Produk");
     setLink(-1)
     setSort(false)
   }, []);
@@ -64,7 +64,11 @@ export const DetailProduk = () => {
       {fetched == false ? (
         <></>
       ) : (
-        <>
+          <>
+          <div className="flex justify-between items-center text-center p-[20px] rounded-xl border border-[#C2A353] mx-1">
+              <p className="font-bold">{product?.supplier.namaPerusahaan}</p>
+              <img src={iNext} alt="" className="w-[18px] h-[18px]" />
+          </div>
           <div className="flex flex-col p-[20px] rounded-xl border border-[#C2A353] mx-1">
             <label className="text-start font-light">
               Jenis Produk

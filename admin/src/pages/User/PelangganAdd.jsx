@@ -122,6 +122,7 @@ export const PelangganAnd = () => {
             placeholder="Contoh : 62892323232"
             className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
           />
+          <p className={`text-[10px] text-red-500 font-bold ${notel[0] === "0" ? "" : "hidden"}`}>( Tidak diperbolehkan menggunakan 085****, awali dengan 6285**** )</p>
         </div>
         <div className="flex flex-col">
           <label className="text-start font-semibold mb-[5px]">Jenis Kelamin *</label>

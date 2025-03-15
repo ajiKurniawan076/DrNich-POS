@@ -128,7 +128,7 @@ return (
                         </div>
         {data.map((item, i) => (
             <>
-                <div key={i} className='flex justify-between items-center text-[12px] border rounded-xl border-[#BDBDBD] px-4 py-2 mt-2 w-auto'>
+                <a href={item.jenis === "belanja" ? "/pos/laporanlogproduk2/"+item.id : item.jenis === "transaksi" ? "/pos/laporanlogproduk3/"+item.id : "#"} key={i} className='flex justify-between items-center text-[12px] border rounded-xl border-[#BDBDBD] px-4 py-2 mt-2 w-auto'>
                     <div className='flex items-center gap-3'>
                         <div>
                             {/* Conditional Rendering untuk Gambar */}
@@ -148,12 +148,13 @@ return (
                                 : item.jenis
                                 }
                             </p>
+                            <p>{item.jumlah} Pcs</p>
                         </div>
                     </div>
                     <div className='text-[#BDBDBD]'>
                         <p>{item?.waktu?.toLocaleString("id-ID").split('T')[0]}</p>
                     </div>
-                </div>
+                </a>
             </>
         ))}
     </div>

@@ -81,6 +81,7 @@ export const PembayaranProduk = () => {
               })
               .replace("pukul ", ",")}
           </p>
+          <p className="text-[12px] text-[#bdbdbd] font-bold">VIA {datax.metode}</p>
           <p className="text-[24px] text-[#454545] font-bold mt-3">
             IDR {datax?.total?.toLocaleString("id-ID")}
           </p>

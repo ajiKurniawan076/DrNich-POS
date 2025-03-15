@@ -140,10 +140,10 @@ export const Addterapis = () => {
           onChange={NoTel}
           type="text"
           placeholder="Contoh : 6281*********"
-          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px] mb-[20px]"
+          className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
         />
-        
-        <label className="text-start font-semibold mb-[5px]">Alamat *</label>
+        <p className={`text-[10px] text-red-500 font-bold ${notel[0] === "0" ? "" : "hidden"}`}>( Tidak diperbolehkan menggunakan 085****, awali dengan 6285**** )</p>
+        <label className="text-start font-semibold mb-[5px] mt-[20px]">Alamat *</label>
         <input
           ref={alamatRef}
           type="text"

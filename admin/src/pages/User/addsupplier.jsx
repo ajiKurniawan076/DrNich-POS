@@ -148,8 +148,9 @@ export const Addsupplier = () => {
             value={notel}
             type="text"
             placeholder="Contoh : 6281*********"
-            className="border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]"
+            className={`border border-[#BDBDBD] rounded-xl w-full h-[45px] py-[15px] px-[20px]`}
           ></input>
+          <p className={`text-[10px] text-red-500 font-bold ${notel[0] === "0" ? "" : "hidden"}`}>( Tidak diperbolehkan menggunakan 085****, awali dengan 6285**** )</p>
         </div>
         <div className="flex flex-col">
           <label className="text-start font-semibold mb-[5px]">Alamat *</label>

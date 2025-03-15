@@ -173,6 +173,7 @@ export const Editsupplier = () => {
                     placeholder="Contoh : 6281000000000"
                     className="border border-[#BDBDBD] rounded-xl py-2 px-3"
                 ></input>
+                <p className={`text-[10px] text-red-500 font-bold ${notel[0] === "0" ? "" : "hidden"}`}>( Tidak diperbolehkan menggunakan 085****, awali dengan 6285**** )</p>
                 <label className="text-start font-semibold">Alamat *</label>
                 <input
                     ref={AlamatRef}
